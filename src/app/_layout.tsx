@@ -18,7 +18,7 @@ import { shouldShowWelcome } from '../domain/onboarding';
 import { AuthProvider, useAuth } from '../state/AuthContext';
 import { FavouritesProvider } from '../state/FavouritesContext';
 import { SearchProvider } from '../state/SearchContext';
-import { SCREENSHOT_MODE } from '../config';
+import { SCREENSHOT_MODE, SCREENSHOT_STEP_MS, SCREENSHOT_TOUR } from '../config';
 import { colors, darkPalette, lightPalette, type Palette } from '../theme';
 
 // Keep the splash screen up until we know whether to show the welcome screen, so the tabs never flash first.
@@ -77,6 +77,14 @@ function WelcomeGate() {
     }
     SplashScreen.hideAsync().catch(() => {});
   }, [decided, navigationReady, welcomeSeen, session, localProfile, router]);
+
+  // Screenshot build only: walk through the screens on a fixed timetable so the workflow can
+  // capture each one (simulator deep links show a confirmation prompt, so they can't be used).
+  useEffect(() => {
+    if (!SCREENSHOT_MODE || !decided || !navigationReady) return;
+    const timers = SCREENSHOT_TOUR.map((href, i) => setTimeout(() => router.navigate(href), SCREENSHOT_STEP_MS * (i + 1)));
+    return () => timers.forEach(clearTimeout);
+  }, [decided, navigationReady, router]);
 
   return decided ? null : <View style={[StyleSheet.absoluteFill, styles.cover]} />;
 }

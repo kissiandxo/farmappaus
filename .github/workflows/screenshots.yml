@@ -50,21 +50,17 @@ jobs:
       - name: Take screenshots
         run: |
           mkdir -p shots
-          shot() { sleep "$2"; xcrun simctl io "$UDID" screenshot "shots/$1.png"; }
-          open_link() { xcrun simctl openurl "$UDID" "$1"; }
+          # The app (screenshot mode) moves to the next screen every 20 s after launch:
+          # Explore, Map, a market, a farm shop, Saved, then Explore again (taken in dark mode).
           xcrun simctl launch "$UDID" au.farmdirect.app
-          shot 01-explore 25
-          open_link "farmdirect://map"
-          shot 02-map 12
-          open_link "farmdirect://farm/real-nsw-carriageworks-farmers-market"
-          shot 03-market 10
-          open_link "farmdirect://farm/real-sa-beerenberg-farm"
-          shot 04-farm-shop 10
-          open_link "farmdirect://saved"
-          shot 05-saved 10
+          sleep 14
+          for name in 01-explore 02-map 03-market 04-farm-shop 05-saved; do
+            xcrun simctl io "$UDID" screenshot "shots/$name.png"
+            sleep 20
+          done
           xcrun simctl ui "$UDID" appearance dark
-          open_link "farmdirect://"
-          shot 06-explore-dark 10
+          sleep 6
+          xcrun simctl io "$UDID" screenshot "shots/06-explore-dark.png"
           sips -g pixelWidth -g pixelHeight shots/*.png
       - uses: actions/upload-artifact@v4
         if: always()

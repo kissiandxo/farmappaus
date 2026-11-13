@@ -19,3 +19,13 @@ export const SCREENSHOT_SAVED_IDS: readonly string[] = [
   'real-sa-beerenberg-farm',
   'real-act-capital-region-farmers-market',
 ];
+
+/** Screens the screenshot build visits in order, one every SCREENSHOT_STEP_MS after launch. */
+export const SCREENSHOT_STEP_MS = 20000;
+export const SCREENSHOT_TOUR: readonly string[] = [
+  '/map',
+  '/farm/real-nsw-carriageworks-farmers-market',
+  '/farm/real-sa-beerenberg-farm',
+  '/saved',
+  '/',
+];
