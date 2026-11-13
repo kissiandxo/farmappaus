@@ -18,7 +18,7 @@ const RESEARCH_DIR = join(ROOT, 'docs/research/listings');
 const CACHE_FILE = join(RESEARCH_DIR, 'geocode-cache.json');
 const OUT_FILE = join(ROOT, 'src/data/realListings.json');
 const POSTCODES_FILE = join(ROOT, 'src/data/auPostcodes.json');
-const FILES = ['nsw-act', 'vic-tas', 'qld-nt', 'sa-wa'];
+const FILES = ['nsw-act', 'vic-tas', 'qld-nt', 'sa-wa', 'east-2', 'north-west-2'];
 
 const USER_AGENT = 'farm-direct-build/1.0';
 const MIN_INTERVAL_MS = 1100; // Nominatim policy: at most 1 request per second
@@ -38,6 +38,10 @@ const EXCLUDE = [
     name: "Baudin's Macadamias",
     reason:
       'Seasonal stall (nuts on sale late May until stocks run out); the research notes the season may already be ending and asks to confirm before listing. No opening hours are published.',
+  },
+  {
+    name: 'HOTA Farmers and Artisan Markets',
+    reason: "The market's own event page still shows 2025 dates, so it is not confirmed as running now.",
   },
 ];
 
@@ -150,14 +154,17 @@ const hasUsableAddress = (a) => !!a && !/not stated/i.test(a);
 async function locate(listing) {
   const { address, locality, state, postcode } = listing;
   const localityPart = [locality, state, postcode].filter(Boolean).join(' ');
-  const centre = localityCentre(locality, state, postcode);
+  // The town as OpenStreetMap places it is the reference point. The bundled postcode list is only a
+  // last resort: its centres are postcode-wide and can sit tens of kilometres from a rural town.
+  const town = await geocode(`${localityPart}, Australia`);
+  const townOk = plausible(town, state, null);
+  const centre = townOk ? town : localityCentre(locality, state, postcode);
 
   if (hasUsableAddress(address)) {
     const hit = await geocode(`${cleanAddress(address)}, ${localityPart}, Australia`);
     if (plausible(hit, state, centre)) return { ...hit, precision: 'address' };
   }
-  const hit = await geocode(`${localityPart}, Australia`);
-  if (plausible(hit, state, centre)) return { ...hit, precision: 'locality' };
+  if (townOk) return { ...town, precision: 'locality' };
   if (centre && plausible(centre, state, null)) return { ...centre, precision: 'locality', viaCentroid: true };
   return null;
 }

@@ -12,7 +12,7 @@ The app ships with clearly labelled **sample** farms and no real ones. A map wit
 
 ## What is loaded (app version 0.3.0)
 
-When no backend is configured, the app shows **55 real places** from public sources instead of sample farms (43 farmers' markets, 7 farm shops, 4 farm-gate stalls, 1 farm), across every state and territory. They were researched by hand on 13 Nov 2026 from each place's own site, council pages and tourism pages. When Supabase **is** configured, behaviour is unchanged: the app shows only reviewed live listings from the database.
+When no backend is configured, the app shows **87 real places** from public sources instead of sample farms (62 farmers' markets, 15 farm shops, 5 farm-gate stalls, 5 farms; two research passes), across every state and territory. They were researched by hand on 13 Nov 2026 from each place's own site, council pages and tourism pages. When Supabase **is** configured, behaviour is unchanged: the app shows only reviewed live listings from the database.
 
 | Step | File |
 |---|---|

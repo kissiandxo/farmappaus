@@ -1566,8 +1566,8 @@
     "caveats": "Council and NT tourism agree Saturday 8-1 (some web results say Sunday, ignore). Street address and postcode not given on pages; venue is the Multi-Purpose Hall at Freds Pass Sport and Recreation Reserve. NT tourism says produce is 'mostly organic' (not certified). Market's own website was not found.",
     "researchedOn": "2026-11-13",
     "region": "QLD/NT",
-    "lat": -11.758,
-    "lng": 130.625,
+    "lat": -12.5364,
+    "lng": 131.0537,
     "locationPrecision": "locality"
   },
   {
@@ -2457,5 +2457,1552 @@
     "lat": -32.00815,
     "lng": 116.09882,
     "locationPrecision": "address"
+  },
+  {
+    "name": "The Central Coast Farmers Market",
+    "type": "farmers_market",
+    "address": "Gosford Showground, Showground Road",
+    "locality": "Gosford",
+    "state": "NSW",
+    "postcode": "2250",
+    "products": [],
+    "otherProducts": "Locally grown farm produce alongside artisan food, bakery stalls and coffee/brew, as described on the market's site.",
+    "tags": [],
+    "hours": {
+      "kind": "weekly",
+      "days": {
+        "sun": [
+          [
+            "07:00",
+            "12:00"
+          ]
+        ]
+      },
+      "note": "Described as an all-weather event, rain or shine."
+    },
+    "hoursAsStated": "Every Sunday, 7am to 12pm.",
+    "website": "https://www.thecentralcoastfarmersmarket.com",
+    "phone": null,
+    "description": "A weekly Sunday market at Gosford Showground selling locally grown farm produce and artisan food.",
+    "sources": [
+      "https://www.thecentralcoastfarmersmarket.com",
+      "https://www.visitnsw.com/destinations/central-coast/gosford-area/gosford/events/the-central-coast-farmers-market"
+    ],
+    "confidence": "high",
+    "caveats": "Own site copyright line says 2025; the Visit NSW listing shows the event running weekly from 15 Nov 2026. Other listings gave older or different domains and a 1pm finish; the market's own 7am-12pm used.",
+    "researchedOn": "2026-11-13",
+    "region": "NSW/ACT/VIC/TAS (second pass)",
+    "lat": -33.41758,
+    "lng": 151.34247,
+    "locationPrecision": "address"
+  },
+  {
+    "name": "Lismore Farmers Market",
+    "type": "farmers_market",
+    "address": "116 Alexandra Parade",
+    "locality": "North Lismore",
+    "state": "NSW",
+    "postcode": "2480",
+    "products": [
+      "eggs",
+      "honey",
+      "pork",
+      "lamb",
+      "fruit",
+      "veg"
+    ],
+    "otherProducts": "Also plants, mulch and compost, nuts, salami, bread, pastries, preserves, ferments and breakfast/coffee.",
+    "tags": [],
+    "hours": {
+      "kind": "weekly",
+      "days": {
+        "sat": [
+          [
+            "07:30",
+            "11:30"
+          ]
+        ]
+      },
+      "note": "The NSW Government event page lists individual Saturday dates; a few Saturdays (for example 23 May 2026) are not listed."
+    },
+    "hoursAsStated": "Saturdays, 7:30am to 11:30am (individual dates listed on the NSW Government events page through December 2026).",
+    "website": "https://www.facebook.com/Lismore.Farmers.Market/",
+    "phone": null,
+    "description": "A Saturday-morning market with fruit and vegetable growers and other local producers, with undercover shopping.",
+    "sources": [
+      "https://www.nsw.gov.au/visiting-and-exploring-nsw/nsw-events/lismore-farmers-market"
+    ],
+    "confidence": "high",
+    "caveats": "Only website given by the official page is a Facebook page. Page says check with organiser for latest times.",
+    "researchedOn": "2026-11-13",
+    "region": "NSW/ACT/VIC/TAS (second pass)",
+    "lat": -28.788,
+    "lng": 153.2772,
+    "locationPrecision": "locality"
+  },
+  {
+    "name": "Mullum Farmers Market",
+    "type": "farmers_market",
+    "address": "Mullumbimby Showgrounds, Main Arm Road",
+    "locality": "Mullumbimby",
+    "state": "NSW",
+    "postcode": "2483",
+    "products": [
+      "honey",
+      "fruit",
+      "veg"
+    ],
+    "otherProducts": "Stallholder categories on the site include vegetables, fruit and herbs, honey, artisan condiments and native bushfoods; the site describes fresh organic produce from local farmers.",
+    "tags": [],
+    "hours": {
+      "kind": "weekly",
+      "days": {
+        "fri": [
+          [
+            "07:00",
+            "11:00"
+          ]
+        ]
+      },
+      "note": "Site notes a change to Wednesday 23 December 2026 (Christmas Day falls on a Friday) and open on Friday 1 January 2027."
+    },
+    "hoursAsStated": "Every Friday from 7am to 11am.",
+    "website": "https://mullumfarmersmarket.org.au/",
+    "phone": null,
+    "description": "A weekly Friday market at the Mullumbimby Showgrounds where local farmers sell fresh produce directly.",
+    "sources": [
+      "https://mullumfarmersmarket.org.au/",
+      "https://mullumfarmersmarket.org.au/meet-the-producers/"
+    ],
+    "confidence": "high",
+    "caveats": "Site announcement was dated 9 Nov 2026. 'Organic' is described generally; no certification per stallholder was verified, so no tags.",
+    "researchedOn": "2026-11-13",
+    "region": "NSW/ACT/VIC/TAS (second pass)",
+    "lat": -28.55335,
+    "lng": 153.49931,
+    "locationPrecision": "locality"
+  },
+  {
+    "name": "Torquay Farmers Market",
+    "type": "farmers_market",
+    "address": "1 Merrijig Drive",
+    "locality": "Torquay",
+    "state": "VIC",
+    "postcode": "3228",
+    "products": [
+      "eggs",
+      "honey",
+      "fruit",
+      "veg"
+    ],
+    "otherProducts": "Also meat, artisan cheeses and breads, smoked fish, salami, olive oil, jams, preserves, nuts and coffee. Described as plastic-bag free.",
+    "tags": [],
+    "hours": {
+      "kind": "weekly",
+      "days": {
+        "sat": [
+          [
+            "08:30",
+            "13:00"
+          ]
+        ]
+      },
+      "note": null
+    },
+    "hoursAsStated": "Open 8.30am to 1.00pm every Saturday.",
+    "website": "https://visitgreatoceanroad.org.au/great-ocean-road-adventures/torquay-farmers-market",
+    "phone": null,
+    "description": "A weekly Saturday market selling local fresh produce and artisan foods.",
+    "sources": [
+      "https://visitgreatoceanroad.org.au/great-ocean-road-adventures/torquay-farmers-market",
+      "https://www.otwayharvesttrail.org.au/listing/torquay-farmers-market"
+    ],
+    "confidence": "medium",
+    "caveats": "Market's own website not located; website field is the regional tourism listing. Phone appears only on tourism pages so left blank. Meat type not stated so not tagged.",
+    "researchedOn": "2026-11-13",
+    "region": "NSW/ACT/VIC/TAS (second pass)",
+    "lat": -38.30712,
+    "lng": 144.32505,
+    "locationPrecision": "address"
+  },
+  {
+    "name": "Bendigo Community Farmers Market",
+    "type": "farmers_market",
+    "address": "Bendigo Food Share, 227 Breen Street",
+    "locality": "Golden Square",
+    "state": "VIC",
+    "postcode": "3555",
+    "products": [
+      "eggs",
+      "fruit",
+      "veg"
+    ],
+    "otherProducts": "Also herbs, meat, bread, cheese, wine, olives, baked goods and dumplings.",
+    "tags": [],
+    "hours": {
+      "kind": "weekly",
+      "days": {},
+      "note": "Second Saturday of each month, 9am to 12.30pm (not expressible as weekly days)."
+    },
+    "hoursAsStated": "The second Saturday of each month from 9am - 12.30pm.",
+    "website": "https://www.bendigoregion.com.au/explore-bendigo/local-farmers-market",
+    "phone": null,
+    "description": "A monthly market where regional farmers sell seasonal produce directly.",
+    "sources": [
+      "https://www.bendigoregion.com.au/explore-bendigo/local-farmers-market"
+    ],
+    "confidence": "medium",
+    "caveats": "Other listings place it at the Bendigo Pony Club (Breen St and Belle Vue Rd) 9am-1pm; the official regional tourism page's venue and times used. Days left empty because monthly.",
+    "researchedOn": "2026-11-13",
+    "region": "NSW/ACT/VIC/TAS (second pass)",
+    "lat": -36.77109,
+    "lng": 144.26208,
+    "locationPrecision": "locality"
+  },
+  {
+    "name": "The Berry Dairy",
+    "type": "farm",
+    "address": "379 Mewburn Park Road",
+    "locality": "Maffra",
+    "state": "VIC",
+    "postcode": "3860",
+    "products": [
+      "fruit"
+    ],
+    "otherProducts": "Pick-your-own strawberries (described as spray-free), farm cafe with real fruit ice cream, animal farmyard.",
+    "tags": [],
+    "hours": {
+      "kind": "weekly",
+      "days": {
+        "mon": [
+          [
+            "10:00",
+            "16:30"
+          ]
+        ],
+        "thu": [
+          [
+            "10:00",
+            "16:30"
+          ]
+        ],
+        "fri": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "sat": [
+          [
+            "10:00",
+            "16:30"
+          ]
+        ],
+        "sun": [
+          [
+            "10:00",
+            "16:30"
+          ]
+        ]
+      },
+      "note": "Closed Tuesday and Wednesday. Kitchen last orders 3pm; seasonal October to May."
+    },
+    "hoursAsStated": "Open Thursday-Monday, 10am-4.30pm (kitchen last orders 3pm); Fridays open until 6pm; closed Tuesday and Wednesday; seasonal October-May.",
+    "website": "https://theberrydairy.com.au/",
+    "phone": "03 4148 9821",
+    "description": "A family-run pick-your-own strawberry farm and farm cafe in Gippsland, open for the 2026 season.",
+    "sources": [
+      "https://theberrydairy.com.au/",
+      "https://theberrydairy.com.au/plan-your-visit/"
+    ],
+    "confidence": "high",
+    "caveats": "Farm Pass entry applies to picking. Site shows 'now open for the season'.",
+    "researchedOn": "2026-11-13",
+    "region": "NSW/ACT/VIC/TAS (second pass)",
+    "lat": -37.9492,
+    "lng": 146.94245,
+    "locationPrecision": "address"
+  },
+  {
+    "name": "Ripe 'N' Ready Cherry Farm",
+    "type": "farm",
+    "address": "52 Arkwells Lane",
+    "locality": "Red Hill",
+    "state": "VIC",
+    "postcode": "3937",
+    "products": [
+      "eggs",
+      "honey",
+      "fruit"
+    ],
+    "otherProducts": "Pick-your-own cherries; farm shop with cherries, berries, garlic, cherry juice and other seasonal produce.",
+    "tags": [],
+    "hours": {
+      "kind": "weekly",
+      "days": {
+        "sun": [
+          [
+            "09:00",
+            "17:00"
+          ]
+        ],
+        "mon": [
+          [
+            "09:00",
+            "17:00"
+          ]
+        ],
+        "tue": [
+          [
+            "09:00",
+            "17:00"
+          ]
+        ],
+        "wed": [
+          [
+            "09:00",
+            "17:00"
+          ]
+        ],
+        "thu": [
+          [
+            "09:00",
+            "17:00"
+          ]
+        ],
+        "fri": [
+          [
+            "09:00",
+            "17:00"
+          ]
+        ],
+        "sat": [
+          [
+            "09:00",
+            "17:00"
+          ]
+        ]
+      },
+      "note": "Last orchard entry 4pm; closes 4pm on New Year's Eve. Cherry picking opens from mid-November to January, weather and fruit dependent."
+    },
+    "hoursAsStated": "9.00 am - 5.00 pm 7 days a week; pick-your-own cherries open mid-November to January.",
+    "website": "https://ripenreadycherryfarm.com",
+    "phone": null,
+    "description": "A Mornington Peninsula cherry and berry farm with a farm shop and pick-your-own cherries in season.",
+    "sources": [
+      "https://ripenreadycherryfarm.com",
+      "https://ripenreadycherryfarm.com/pick-your-own"
+    ],
+    "confidence": "medium",
+    "caveats": "Page does not carry a dated 2026 notice; picking start is described as mid-November and depends on the fruit. Site copyright runs to 2027.",
+    "researchedOn": "2026-11-13",
+    "region": "NSW/ACT/VIC/TAS (second pass)",
+    "lat": -38.36473,
+    "lng": 145.01266,
+    "locationPrecision": "address"
+  },
+  {
+    "name": "Hillwood Berries (Pick Your Own farm and farmgate cafe)",
+    "type": "farm",
+    "address": "105 Hillwood Road",
+    "locality": "Hillwood",
+    "state": "TAS",
+    "postcode": "7252",
+    "products": [
+      "fruit"
+    ],
+    "otherProducts": "Pick-your-own berries, berry-inspired cafe, fruit wines, vinegars and jams.",
+    "tags": [],
+    "hours": {
+      "kind": "weekly",
+      "days": {
+        "sun": [
+          [
+            "10:00",
+            "16:00"
+          ]
+        ],
+        "mon": [
+          [
+            "10:00",
+            "16:00"
+          ]
+        ],
+        "tue": [
+          [
+            "10:00",
+            "16:00"
+          ]
+        ],
+        "wed": [
+          [
+            "10:00",
+            "16:00"
+          ]
+        ],
+        "thu": [
+          [
+            "10:00",
+            "16:00"
+          ]
+        ],
+        "fri": [
+          [
+            "10:00",
+            "16:00"
+          ]
+        ],
+        "sat": [
+          [
+            "10:00",
+            "16:00"
+          ]
+        ]
+      },
+      "note": "Hours quoted are for the farmgate cafe; the site says to follow Facebook for seasonal opening hours."
+    },
+    "hoursAsStated": "Cafe is open everyday from 10am - 4pm. Follow us on Facebook for frequent updates on our offering and seasonal opening hours.",
+    "website": "https://www.hillwoodberries.com.au",
+    "phone": "03 6394 8180",
+    "description": "A pick-your-own berry farm near Launceston with an on-site farmgate cafe.",
+    "sources": [
+      "https://www.hillwoodberries.com.au/pick-your-own",
+      "https://www.hillwoodberries.com.au"
+    ],
+    "confidence": "medium",
+    "caveats": "Picking hours are not separately stated; the working farm at 139 Hillwood Road is by appointment only.",
+    "researchedOn": "2026-11-13",
+    "region": "NSW/ACT/VIC/TAS (second pass)",
+    "lat": -41.23528,
+    "lng": 146.98733,
+    "locationPrecision": "address"
+  },
+  {
+    "name": "Touchwood Farm Goat Dairy",
+    "type": "farm_shop",
+    "address": "7777 Huon Highway",
+    "locality": "Strathblane",
+    "state": "TAS",
+    "postcode": "7109",
+    "products": [],
+    "otherProducts": "Goat milk soap and lotions, goat cheese and seasonal farm produce, per the Huon Valley Council directory.",
+    "tags": [],
+    "hours": {
+      "kind": "weekly",
+      "days": {
+        "sun": [
+          [
+            "11:00",
+            "16:00"
+          ]
+        ]
+      },
+      "note": "The council directory lists Thursday to Sunday 10am-4pm instead."
+    },
+    "hoursAsStated": "Own site: from 11am to 4pm Sundays. Council directory: Thursdays to Sundays 10am to 4pm.",
+    "website": "https://touchwoodfarm.com",
+    "phone": null,
+    "description": "A goat dairy farm in the Huon Valley selling goat products directly from the farm gate.",
+    "sources": [
+      "https://touchwoodfarm.com",
+      "https://www.huonvalley.tas.gov.au/service/touchwood-farm-goat-dairy/"
+    ],
+    "confidence": "medium",
+    "caveats": "Own site and council differ on hours; own site used. Confirm before visiting.",
+    "researchedOn": "2026-11-13",
+    "region": "NSW/ACT/VIC/TAS (second pass)",
+    "lat": -43.35666,
+    "lng": 146.95886,
+    "locationPrecision": "address"
+  },
+  {
+    "name": "Bowral Honey Farm",
+    "type": "farm",
+    "address": "Retford Park, 1325 Old South Road",
+    "locality": "Bowral",
+    "state": "NSW",
+    "postcode": "2576",
+    "products": [],
+    "otherProducts": "Working apiary with hands-on tours and honey tastings; the listing does not itemise what is sold.",
+    "tags": [],
+    "hours": {
+      "kind": "weekly",
+      "days": {
+        "sat": [
+          [
+            "10:00",
+            "16:00"
+          ]
+        ],
+        "sun": [
+          [
+            "10:00",
+            "16:00"
+          ]
+        ]
+      },
+      "note": null
+    },
+    "hoursAsStated": "Trading Hours Sat & Sun from 10am to 4pm.",
+    "website": "http://www.bowralhoneyfarm.com",
+    "phone": null,
+    "description": "A working apiary at Retford Park open weekends for tours and honey tastings.",
+    "sources": [
+      "https://www.visitsouthernhighlands.com.au/operator/bowral-honey-farm"
+    ],
+    "confidence": "medium",
+    "caveats": "Own domain did not load; hours are from the Visit Southern Highlands operator listing. Sale of honey for takeaway is not itemised there, so products left empty. Postcode not on the opened page.",
+    "researchedOn": "2026-11-13",
+    "region": "NSW/ACT/VIC/TAS (second pass)",
+    "lat": -34.48116,
+    "lng": 150.41551,
+    "locationPrecision": "locality"
+  },
+  {
+    "name": "Meredith Farm Produce Store and Cafe",
+    "type": "farm_shop",
+    "address": "30 Staughton Street",
+    "locality": "Meredith",
+    "state": "VIC",
+    "postcode": "3333",
+    "products": [
+      "honey"
+    ],
+    "otherProducts": "Cheese, yoghurts, meats, preserves and drinks from the Meredith Dairy farm, plus a cafe.",
+    "tags": [],
+    "hours": {
+      "kind": "weekly",
+      "days": {
+        "wed": [
+          [
+            "08:30",
+            "15:30"
+          ]
+        ],
+        "thu": [
+          [
+            "08:30",
+            "15:30"
+          ]
+        ],
+        "fri": [
+          [
+            "08:30",
+            "15:30"
+          ]
+        ],
+        "sat": [
+          [
+            "08:30",
+            "15:30"
+          ]
+        ],
+        "sun": [
+          [
+            "08:30",
+            "15:30"
+          ]
+        ]
+      },
+      "note": "Closed Monday and Tuesday."
+    },
+    "hoursAsStated": "Closed Monday and Tuesday; Wednesday to Sunday 8:30am to 3:30pm.",
+    "website": "https://www.meredithfarmproduce.com.au",
+    "phone": null,
+    "description": "A shop and cafe selling food from the Meredith Dairy farm.",
+    "sources": [
+      "https://www.visitgeelongbellarine.com.au/products/meredith-farm-produce-store-and-cafe",
+      "https://timesnewsgroup.com.au/goldenplains/news/from-farm-to-plate-with-produce-store"
+    ],
+    "confidence": "high",
+    "caveats": "A 2024 local news article gave 9am start; the current tourism listing's 8:30am used. Phone is on tourism page only.",
+    "researchedOn": "2026-11-13",
+    "region": "NSW/ACT/VIC/TAS (second pass)",
+    "lat": -37.84535,
+    "lng": 144.07616,
+    "locationPrecision": "address"
+  },
+  {
+    "name": "Myrtlebank Roaming Farms Farmgate (The Chook House)",
+    "type": "farm_gate_stall",
+    "address": "1030 Maffra-Sale Road",
+    "locality": "Myrtlebank",
+    "state": "VIC",
+    "postcode": "3851",
+    "products": [
+      "eggs",
+      "beef"
+    ],
+    "otherProducts": "Online shop lists ready-to-eat meals, baked goods, fresh produce, pantry items and vegetables as well.",
+    "tags": [],
+    "hours": {
+      "kind": "always",
+      "days": {},
+      "note": "Own site: open daily, 7.30am to 7.30pm. Wellington Shire tourism page lists 7am-8pm."
+    },
+    "hoursAsStated": "Open 365 days a year, from 7.30am to 7.30pm.",
+    "website": "https://www.myrtlebankfarm.com",
+    "phone": null,
+    "description": "A farm shop selling eggs from the farm's free-range hens and grass-fed Black Angus beef.",
+    "sources": [
+      "https://www.myrtlebankfarm.com",
+      "https://themiddleofeverywhere.com.au/en/profiles/myrtlebank-roaming-farms-farmgate"
+    ],
+    "confidence": "high",
+    "caveats": "Wellington Shire page shows 7am-8pm; own site's hours used.",
+    "researchedOn": "2026-11-13",
+    "region": "NSW/ACT/VIC/TAS (second pass)",
+    "lat": -38.05752,
+    "lng": 147.02616,
+    "locationPrecision": "address"
+  },
+  {
+    "name": "Bilpin Fruit Bowl",
+    "type": "farm_shop",
+    "address": "2093 Bells Line of Road",
+    "locality": "Bilpin",
+    "state": "NSW",
+    "postcode": "2758",
+    "products": [
+      "honey",
+      "fruit"
+    ],
+    "otherProducts": "Shop stocks local honey, homemade jams, souvenirs and fresh seasonal fruit; pick-your-own when fruit is available.",
+    "tags": [],
+    "hours": {
+      "kind": "weekly",
+      "days": {
+        "sun": [
+          [
+            "08:00",
+            "17:00"
+          ]
+        ],
+        "mon": [
+          [
+            "08:00",
+            "17:00"
+          ]
+        ],
+        "tue": [
+          [
+            "08:00",
+            "17:00"
+          ]
+        ],
+        "wed": [
+          [
+            "08:00",
+            "17:00"
+          ]
+        ],
+        "thu": [
+          [
+            "08:00",
+            "17:00"
+          ]
+        ],
+        "fri": [
+          [
+            "08:00",
+            "17:00"
+          ]
+        ],
+        "sat": [
+          [
+            "08:00",
+            "17:00"
+          ]
+        ]
+      },
+      "note": "Farm picking 10am-3pm when fruit is available; the site says to call ahead."
+    },
+    "hoursAsStated": "Cafe and shop open 7 days, 8:00am-5:00pm. Farm 10:00am-3:00pm when fruit is available for picking.",
+    "website": "https://bilpinfruitbowl.com.au/",
+    "phone": "02 4567 1152",
+    "description": "A roadside fruit shop and orchard on Bells Line of Road with pick-your-own fruit in season.",
+    "sources": [
+      "https://bilpinfruitbowl.com.au/",
+      "https://bilpinfruitbowl.com.au/?p=147"
+    ],
+    "confidence": "high",
+    "caveats": "Older page said it closes only on Christmas Day; picking depends on seasonal fruit.",
+    "researchedOn": "2026-11-13",
+    "region": "NSW/ACT/VIC/TAS (second pass)",
+    "lat": -33.50918,
+    "lng": 150.5586,
+    "locationPrecision": "address"
+  },
+  {
+    "name": "Rusty's Markets",
+    "type": "farmers_market",
+    "address": "57-89 Grafton Street",
+    "locality": "Cairns City",
+    "state": "QLD",
+    "postcode": "4870",
+    "products": [
+      "fruit",
+      "veg"
+    ],
+    "otherProducts": "Flowers, delicatessen items including bread, dairy and seafood, and many non-food stalls.",
+    "tags": [],
+    "hours": {
+      "kind": "weekly",
+      "days": {
+        "fri": [
+          [
+            "05:00",
+            "16:00"
+          ]
+        ],
+        "sat": [
+          [
+            "05:00",
+            "16:00"
+          ]
+        ],
+        "sun": [
+          [
+            "05:00",
+            "15:00"
+          ]
+        ]
+      },
+      "note": "Three-day weekend market."
+    },
+    "hoursAsStated": "Friday-Saturday: 5am to 4pm. Sunday: 5am to 3pm.",
+    "website": "https://rustysmarkets.com.au",
+    "phone": "07 4040 2705",
+    "description": "Long-running weekend market in the Cairns CBD with fruit, vegetable and flower stalls among about 180 stalls.",
+    "sources": [
+      "https://rustysmarkets.com.au",
+      "https://rustysmarkets.com.au/location"
+    ],
+    "confidence": "high",
+    "caveats": "Mixed market (produce plus fashion, crafts and food stalls). Postcode not on the pages opened. Third-party sites give different hours; the market's own site was used.",
+    "researchedOn": "2026-11-13",
+    "region": "QLD/NT/SA/WA (second pass)",
+    "lat": -16.92444,
+    "lng": 145.77508,
+    "locationPrecision": "address"
+  },
+  {
+    "name": "Clifford's Honey Farm",
+    "type": "farm_shop",
+    "address": "1157 Elsegood Road",
+    "locality": "Haines",
+    "state": "SA",
+    "postcode": "5223",
+    "products": [
+      "honey"
+    ],
+    "otherProducts": "Honey ice-cream, honey mead and a honey wheat ale, dressings and chutneys, honey drinks and biscuits, candles, cosmetics, wax products, local arts and crafts; guided extracting-shed tours.",
+    "tags": [],
+    "hours": {
+      "kind": "weekly",
+      "days": {
+        "sun": [
+          [
+            "09:00",
+            "17:00"
+          ]
+        ],
+        "mon": [
+          [
+            "09:00",
+            "17:00"
+          ]
+        ],
+        "tue": [
+          [
+            "09:00",
+            "17:00"
+          ]
+        ],
+        "wed": [
+          [
+            "09:00",
+            "17:00"
+          ]
+        ],
+        "thu": [
+          [
+            "09:00",
+            "17:00"
+          ]
+        ],
+        "fri": [
+          [
+            "09:00",
+            "17:00"
+          ]
+        ],
+        "sat": [
+          [
+            "09:00",
+            "17:00"
+          ]
+        ]
+      },
+      "note": "Closed Christmas Day only."
+    },
+    "hoursAsStated": "Farm Gate Shop: Open 7 days, 9am to 5pm (Closed Christmas Day only).",
+    "website": "https://cliffordshoney.com.au",
+    "phone": "(08) 8553 8295",
+    "description": "Kangaroo Island honey farm with a farm-gate shop selling its Ligurian honey and honey products.",
+    "sources": [
+      "https://cliffordshoney.com.au"
+    ],
+    "confidence": "high",
+    "caveats": "Postcode not on the page opened.",
+    "researchedOn": "2026-11-13",
+    "region": "QLD/NT/SA/WA (second pass)",
+    "lat": -35.74771,
+    "lng": 137.56074,
+    "locationPrecision": "address"
+  },
+  {
+    "name": "Mount Claremont Farmers' Market",
+    "type": "farmers_market",
+    "address": "103 Alfred Road",
+    "locality": "Mount Claremont",
+    "state": "WA",
+    "postcode": "6010",
+    "products": [],
+    "otherProducts": "Fresh produce sold by farm stalls, plus food, drink and bread stalls (the site has separate pages for farm stalls, drinks and food, brunch and bread, and other stalls).",
+    "tags": [],
+    "hours": {
+      "kind": "weekly",
+      "days": {
+        "sat": [
+          [
+            "07:30",
+            "11:30"
+          ]
+        ]
+      },
+      "note": "Closed 26 December 2026; reopens 2 January 2027."
+    },
+    "hoursAsStated": "Open every Saturday 7.30-11.30am. Christmas closure: closed 26 December, open 2 January 2027.",
+    "website": "https://mtclaremontfarmersmarket.com.au",
+    "phone": "0411 895 101",
+    "description": "Saturday farmers' market run by the Mount Claremont Primary School P&C Association, billed as fresh produce from paddock to plate.",
+    "sources": [
+      "https://mtclaremontfarmersmarket.com.au/"
+    ],
+    "confidence": "high",
+    "caveats": "Home page banner says 7.30-11 am in one place and 7:30am-11:30am in another; 11:30 used. Specific products not itemised on the page opened.",
+    "researchedOn": "2026-11-13",
+    "region": "QLD/NT/SA/WA (second pass)",
+    "lat": -31.96811,
+    "lng": 115.7827,
+    "locationPrecision": "address"
+  },
+  {
+    "name": "Mundaring Garden and Farmers Market",
+    "type": "farmers_market",
+    "address": "3060 Jacoby Street (Mundaring Community Sculpture Park Amphitheatre)",
+    "locality": "Mundaring",
+    "state": "WA",
+    "postcode": "6073",
+    "products": [],
+    "otherProducts": "Garden and farmers market run by the Mundaring Chamber of Commerce; stall mix not itemised on the page.",
+    "tags": [],
+    "hours": {
+      "kind": "weekly",
+      "days": {
+        "sat": [
+          [
+            "08:00",
+            "12:00"
+          ]
+        ]
+      },
+      "note": "Shire listing shows every Saturday from 14 Nov to 19 Dec 2026."
+    },
+    "hoursAsStated": "Open every Saturday from 8-12.",
+    "website": "https://www.mundaringchamberofcommerce.com.au",
+    "phone": null,
+    "description": "Weekly Saturday garden and farmers market near the Sculpture Park in Mundaring, listed by the Shire of Mundaring.",
+    "sources": [
+      "https://www.mundaring.wa.gov.au/events/mundaring-garden-and-farmers-market/1135"
+    ],
+    "confidence": "medium",
+    "caveats": "Council event page lists dates only to 19 Dec 2026 and does not itemise produce. Postcode not on the event page. Website taken from the council listing; not opened.",
+    "researchedOn": "2026-11-13",
+    "region": "QLD/NT/SA/WA (second pass)",
+    "lat": -31.90334,
+    "lng": 116.16472,
+    "locationPrecision": "address"
+  },
+  {
+    "name": "Stirling Farmers Market",
+    "type": "farmers_market",
+    "address": "25 Cedric Street (City of Stirling Administration Building)",
+    "locality": "Stirling",
+    "state": "WA",
+    "postcode": "6021",
+    "products": [],
+    "otherProducts": "Site says it sells only produce direct from the grower or maker, plus community stalls.",
+    "tags": [],
+    "hours": {
+      "kind": "weekly",
+      "days": {
+        "sun": [
+          [
+            "07:30",
+            "11:30"
+          ]
+        ]
+      },
+      "note": "Rain or shine."
+    },
+    "hoursAsStated": "Every Sunday rain or shine 7:30 - 11:30am.",
+    "website": "https://www.stirlingfarmersmarket.com.au",
+    "phone": null,
+    "description": "Sunday farmers market at the City of Stirling administration building run as a project of the Rotary Club of Karrinyup.",
+    "sources": [
+      "https://www.stirlingfarmersmarket.com.au"
+    ],
+    "confidence": "medium",
+    "caveats": "Site footer is dated 2017 and no current dates or closures are shown, so hours are as stated but not independently confirmed as current.",
+    "researchedOn": "2026-11-13",
+    "region": "QLD/NT/SA/WA (second pass)",
+    "lat": -31.88983,
+    "lng": 115.80876,
+    "locationPrecision": "address"
+  },
+  {
+    "name": "Victor Harbor Farmers Market",
+    "type": "farmers_market",
+    "address": "Grosvenor Gardens (opposite Victor Harbor Central)",
+    "locality": "Victor Harbor",
+    "state": "SA",
+    "postcode": "5211",
+    "products": [],
+    "otherProducts": "Stallholders include fresh seasonal produce, baked goods, coffee and live music; site has a What's In Season page.",
+    "tags": [],
+    "hours": {
+      "kind": "weekly",
+      "days": {
+        "sat": [
+          [
+            "08:00",
+            "12:30"
+          ]
+        ]
+      },
+      "note": "Open rain, hail or shine."
+    },
+    "hoursAsStated": "Open every Saturday 8.00am - 12.30pm rain, hail or shine.",
+    "website": "https://victorharborfarmersmarket.com.au",
+    "phone": null,
+    "description": "Weekly Saturday farmers market in the park across from the main shopping centre in central Victor Harbor.",
+    "sources": [
+      "https://victorharborfarmersmarket.com.au"
+    ],
+    "confidence": "high",
+    "caveats": "Page footer is dated 2015 but the home page carries current-week news (stall count and a 14 Nov 2026 AGM). Postcode not on page.",
+    "researchedOn": "2026-11-13",
+    "region": "QLD/NT/SA/WA (second pass)",
+    "lat": -35.55323,
+    "lng": 138.62318,
+    "locationPrecision": "locality"
+  },
+  {
+    "name": "Bungaree Station Store",
+    "type": "farm_shop",
+    "address": "431 Bungaree Road (12 km north of Clare)",
+    "locality": "Clare",
+    "state": "SA",
+    "postcode": "5453",
+    "products": [
+      "lamb",
+      "chicken",
+      "honey"
+    ],
+    "otherProducts": "Quince paste from the station orchard, pasta and snack foods from a neighbouring property, local Clare Valley produce, coffee and cheeses; self-guided tours of the historic station.",
+    "tags": [],
+    "hours": {
+      "kind": "weekly",
+      "days": {
+        "sun": [
+          [
+            "10:00",
+            "16:00"
+          ]
+        ],
+        "mon": [
+          [
+            "10:00",
+            "16:00"
+          ]
+        ],
+        "tue": [
+          [
+            "10:00",
+            "16:00"
+          ]
+        ],
+        "wed": [
+          [
+            "10:00",
+            "16:00"
+          ]
+        ],
+        "thu": [
+          [
+            "10:00",
+            "16:00"
+          ]
+        ],
+        "fri": [
+          [
+            "10:00",
+            "16:00"
+          ]
+        ],
+        "sat": [
+          [
+            "10:00",
+            "16:00"
+          ]
+        ]
+      },
+      "note": "Extended hours for residential guests."
+    },
+    "hoursAsStated": "The Station Store is open daily between 10am and 4pm.",
+    "website": "https://www.bungareestation.com.au",
+    "phone": "(08) 8842 2677",
+    "description": "Historic station farm shop selling Bungaree lamb, free-range chicken and honey from the property, plus Clare Valley produce.",
+    "sources": [
+      "https://www.bungareestation.com.au/station-store",
+      "https://www.bungareestation.com.au/contact"
+    ],
+    "confidence": "high",
+    "caveats": "Page does not say whether lamb and chicken are always in stock.",
+    "researchedOn": "2026-11-13",
+    "region": "QLD/NT/SA/WA (second pass)",
+    "lat": -33.83331,
+    "lng": 138.61191,
+    "locationPrecision": "locality"
+  },
+  {
+    "name": "Stanthorpe Cheese",
+    "type": "farm_shop",
+    "address": "4 Duncan Lane",
+    "locality": "Thulimbah",
+    "state": "QLD",
+    "postcode": "4376",
+    "products": [],
+    "otherProducts": "Farmhouse cheeses, tasting room, picnic supplies and local produce such as chutneys, relishes, vinegars, juices and cheese pastes; Jersey Girl cafe.",
+    "tags": [],
+    "hours": {
+      "kind": "always",
+      "days": {},
+      "note": "Site says the cafe and cheese tastings are open daily; no times given on the pages opened."
+    },
+    "hoursAsStated": "Jersey Girl Cafe open daily for cheese tastings (no times stated).",
+    "website": "https://www.stanthorpecheese.com.au",
+    "phone": "(07) 4685 2277",
+    "description": "Dairy-farm cheese shop, tasting room and cafe on the Granite Belt.",
+    "sources": [
+      "https://www.stanthorpecheese.com.au",
+      "https://www.stanthorpecheese.com.au/pages/contact"
+    ],
+    "confidence": "medium",
+    "caveats": "Opening times not stated on the pages opened; call before visiting.",
+    "researchedOn": "2026-11-13",
+    "region": "QLD/NT/SA/WA (second pass)",
+    "lat": -28.54039,
+    "lng": 151.92279,
+    "locationPrecision": "address"
+  },
+  {
+    "name": "Berry Sweet Farm Shop",
+    "type": "farm_shop",
+    "address": "47 Davidson Street",
+    "locality": "Bullsbrook",
+    "state": "WA",
+    "postcode": "6084",
+    "products": [
+      "fruit"
+    ],
+    "otherProducts": "Farm grows strawberries; shop range not itemised on the page opened.",
+    "tags": [],
+    "hours": {
+      "kind": "weekly",
+      "days": {
+        "sun": [
+          [
+            "09:00",
+            "17:00"
+          ]
+        ],
+        "mon": [
+          [
+            "09:00",
+            "17:00"
+          ]
+        ],
+        "tue": [
+          [
+            "09:00",
+            "17:00"
+          ]
+        ],
+        "wed": [
+          [
+            "09:00",
+            "17:00"
+          ]
+        ],
+        "thu": [
+          [
+            "09:00",
+            "17:00"
+          ]
+        ],
+        "fri": [
+          [
+            "09:00",
+            "17:00"
+          ]
+        ],
+        "sat": [
+          [
+            "09:00",
+            "17:00"
+          ]
+        ]
+      },
+      "note": "Closed public holidays and a Christmas break from 25 Dec 2026, reopening Monday 11 Jan 2027."
+    },
+    "hoursAsStated": "The shop is open from 9am - 5pm, excluding public holidays (subject to change).",
+    "website": "https://berrysweet.com.au",
+    "phone": "(08) 9571 1077",
+    "description": "Strawberry grower's farm shop in Bullsbrook north-east of Perth.",
+    "sources": [
+      "https://berrysweet.com.au/farm-shop/",
+      "https://www.berrysweet.com.au/contact"
+    ],
+    "confidence": "medium",
+    "caveats": "Stock in the shop is not listed on the page opened; products inferred only from the site describing the farm's strawberries. Page says hours are subject to change.",
+    "researchedOn": "2026-11-13",
+    "region": "QLD/NT/SA/WA (second pass)",
+    "lat": -31.63691,
+    "lng": 115.97786,
+    "locationPrecision": "address"
+  },
+  {
+    "name": "Mount Pleasant Farmers Market",
+    "type": "farmers_market",
+    "address": "Mount Pleasant Showgrounds",
+    "locality": "Mount Pleasant",
+    "state": "SA",
+    "postcode": "5235",
+    "products": [],
+    "otherProducts": "Per Visit Adelaide Hills: fresh seasonal produce, baked goods, honey, olive oil, eggs, meat and seafood, plants, flowers, fruit products, cheese and milk, coffee.",
+    "tags": [],
+    "hours": {
+      "kind": "weekly",
+      "days": {
+        "sat": [
+          [
+            "08:00",
+            "12:00"
+          ]
+        ]
+      },
+      "note": "Held in the Show Hall and adjoining grassed areas."
+    },
+    "hoursAsStated": "Open every Saturday - 8am until 12pm.",
+    "website": "https://mtpleasantfarmersmarket.com.au",
+    "phone": "0493 280 881",
+    "description": "Saturday farmers market at the Mount Pleasant Showgrounds in the Adelaide Hills.",
+    "sources": [
+      "https://mtpleasantfarmersmarket.com.au",
+      "https://www.visitadelaidehills.com.au/markets"
+    ],
+    "confidence": "high",
+    "caveats": "Street number and postcode not on the pages opened. Products come from the tourism page's general description, so they are not placed in the structured products list.",
+    "researchedOn": "2026-11-13",
+    "region": "QLD/NT/SA/WA (second pass)",
+    "lat": -34.77355,
+    "lng": 139.0502,
+    "locationPrecision": "locality"
+  },
+  {
+    "name": "Yandina Country Markets",
+    "type": "farmers_market",
+    "address": null,
+    "locality": "Yandina",
+    "state": "QLD",
+    "postcode": "4561",
+    "products": [],
+    "otherProducts": "Per the regional guide: local fruit, vegetables and other produce.",
+    "tags": [],
+    "hours": {
+      "kind": "weekly",
+      "days": {
+        "sat": [
+          [
+            "06:00",
+            "12:00"
+          ]
+        ]
+      },
+      "note": ""
+    },
+    "hoursAsStated": "Open 6am-12pm every Saturday. Described as one of the largest produce markets on the coast with fruit, veg, deli products and local meat.",
+    "website": "https://www.visitsunshinecoast.com/guide/harvest-sunshine-at-these-sunshine-coast-farmers-markets",
+    "phone": null,
+    "description": "Sunshine Coast produce market listed by Visit Sunshine Coast.",
+    "sources": [
+      "https://www.visitsunshinecoast.com/guide/harvest-sunshine-at-these-sunshine-coast-farmers-markets"
+    ],
+    "confidence": "medium",
+    "caveats": "Only the Visit Sunshine Coast guide was opened (no market site opened), and it gives no street address. ",
+    "researchedOn": "2026-11-13",
+    "region": "QLD/NT/SA/WA (second pass)",
+    "lat": -26.55906,
+    "lng": 152.97007,
+    "locationPrecision": "locality"
+  },
+  {
+    "name": "Kawana Waters Farmers Market",
+    "type": "farmers_market",
+    "address": null,
+    "locality": "Kawana Waters",
+    "state": "QLD",
+    "postcode": "4575",
+    "products": [],
+    "otherProducts": "Per the regional guide: local fruit, vegetables and other produce.",
+    "tags": [],
+    "hours": {
+      "kind": "weekly",
+      "days": {
+        "sat": [
+          [
+            "07:00",
+            "12:00"
+          ]
+        ]
+      },
+      "note": ""
+    },
+    "hoursAsStated": "Every Saturday from 7am-12pm.",
+    "website": "https://www.visitsunshinecoast.com/guide/harvest-sunshine-at-these-sunshine-coast-farmers-markets",
+    "phone": null,
+    "description": "Sunshine Coast produce market listed by Visit Sunshine Coast.",
+    "sources": [
+      "https://www.visitsunshinecoast.com/guide/harvest-sunshine-at-these-sunshine-coast-farmers-markets"
+    ],
+    "confidence": "medium",
+    "caveats": "Only the Visit Sunshine Coast guide was opened (no market site opened), and it gives no street address. ",
+    "researchedOn": "2026-11-13",
+    "region": "QLD/NT/SA/WA (second pass)",
+    "lat": -26.70493,
+    "lng": 153.11566,
+    "locationPrecision": "locality"
+  },
+  {
+    "name": "Marcoola Farmers Market",
+    "type": "farmers_market",
+    "address": null,
+    "locality": "Marcoola",
+    "state": "QLD",
+    "postcode": "4564",
+    "products": [],
+    "otherProducts": "Per the regional guide: local fruit, vegetables and other produce.",
+    "tags": [],
+    "hours": {
+      "kind": "weekly",
+      "days": {
+        "sat": [
+          [
+            "08:00",
+            "12:00"
+          ]
+        ]
+      },
+      "note": ""
+    },
+    "hoursAsStated": "Saturday mornings from 8am-12pm; guide mentions organic fruit and veg, meats and cheese.",
+    "website": "https://www.visitsunshinecoast.com/guide/harvest-sunshine-at-these-sunshine-coast-farmers-markets",
+    "phone": null,
+    "description": "Sunshine Coast produce market listed by Visit Sunshine Coast.",
+    "sources": [
+      "https://www.visitsunshinecoast.com/guide/harvest-sunshine-at-these-sunshine-coast-farmers-markets"
+    ],
+    "confidence": "medium",
+    "caveats": "Only the Visit Sunshine Coast guide was opened (no market site opened), and it gives no street address. Guide places it at Berry Keeper, Marcoola.",
+    "researchedOn": "2026-11-13",
+    "region": "QLD/NT/SA/WA (second pass)",
+    "lat": -26.59225,
+    "lng": 153.0798,
+    "locationPrecision": "locality"
+  },
+  {
+    "name": "Maleny Cheese",
+    "type": "farm_shop",
+    "address": "1 Clifford Street",
+    "locality": "Balmoral Ridge",
+    "state": "QLD",
+    "postcode": "4552",
+    "products": [],
+    "otherProducts": "Own cheeses and yoghurt (cheddar, brie, fetta, buffalo cheeses; Greek-style yoghurt), cafe, tasting tours.",
+    "tags": [],
+    "hours": {
+      "kind": "weekly",
+      "days": {
+        "sun": [
+          [
+            "10:00",
+            "15:00"
+          ]
+        ],
+        "mon": [
+          [
+            "10:00",
+            "15:00"
+          ]
+        ],
+        "tue": [
+          [
+            "10:00",
+            "15:00"
+          ]
+        ],
+        "wed": [
+          [
+            "10:00",
+            "15:00"
+          ]
+        ],
+        "thu": [
+          [
+            "10:00",
+            "15:00"
+          ]
+        ],
+        "fri": [
+          [
+            "10:00",
+            "15:00"
+          ]
+        ],
+        "sat": [
+          [
+            "10:00",
+            "15:00"
+          ]
+        ]
+      },
+      "note": "Cafe menu Wednesday to Sunday 10am-2:30pm."
+    },
+    "hoursAsStated": "Our shop is open Monday to Sunday from 10 am - 3 pm.",
+    "website": "https://www.malenycheese.com.au",
+    "phone": "(07) 5494 2207",
+    "description": "Hinterland dairy processor with a retail shop and cafe beside its cheese factory; site says it also has its own dairy farm.",
+    "sources": [
+      "https://www.malenycheese.com.au",
+      "https://www.malenycheese.com.au/where-to-buy"
+    ],
+    "confidence": "medium",
+    "caveats": "Resolves the first-pass lead (site now loads). Milk is sourced from five small hinterland dairy farms plus the family's own farm, so this is a processor shop rather than a pure farm gate. Postcode not on page.",
+    "researchedOn": "2026-11-13",
+    "region": "QLD/NT/SA/WA (second pass)",
+    "lat": -26.76414,
+    "lng": 152.88569,
+    "locationPrecision": "address"
+  },
+  {
+    "name": "Palm Beach Farmers Market",
+    "type": "farmers_market",
+    "address": "Palm Beach Currumbin High School, Thrower Drive",
+    "locality": "Palm Beach",
+    "state": "QLD",
+    "postcode": "4221",
+    "products": [],
+    "otherProducts": "Per Experience Gold Coast: produce from local growers, olives, sourdough and bakery items, spice mixes, flowers, local honey, hot smoked salmon.",
+    "tags": [],
+    "hours": {
+      "kind": "weekly",
+      "days": {
+        "sat": [
+          [
+            "06:00",
+            "11:30"
+          ]
+        ]
+      },
+      "note": "Plastic-bag-free market."
+    },
+    "hoursAsStated": "Saturday, 6am - 11.30am.",
+    "website": "https://www.destinationgoldcoast.com/blog/gold-coast-markets-scene/",
+    "phone": null,
+    "description": "Saturday school-grounds farmers market on the southern Gold Coast.",
+    "sources": [
+      "https://www.destinationgoldcoast.com/blog/gold-coast-markets-scene/"
+    ],
+    "confidence": "medium",
+    "caveats": "Source is the Experience Gold Coast tourism blog (dated 4 Aug 2026); no market site opened. Postcode not given.",
+    "researchedOn": "2026-11-13",
+    "region": "QLD/NT/SA/WA (second pass)",
+    "lat": -28.13064,
+    "lng": 153.47456,
+    "locationPrecision": "address"
+  },
+  {
+    "name": "Burleigh Farmers Market",
+    "type": "farmers_market",
+    "address": "Burleigh Heads State School, 1750 Gold Coast Highway",
+    "locality": "Burleigh Heads",
+    "state": "QLD",
+    "postcode": "4220",
+    "products": [],
+    "otherProducts": "Per Experience Gold Coast: fresh fruit and in-season vegetables, preserves, local honey, flowers, plus food trucks and a barista.",
+    "tags": [],
+    "hours": {
+      "kind": "weekly",
+      "days": {
+        "sat": [
+          [
+            "07:00",
+            "12:00"
+          ]
+        ]
+      },
+      "note": "Rain, hail or shine."
+    },
+    "hoursAsStated": "Every Saturday from 7am, rain, hail or shine (tourism blog); 7am to 12pm (Scout Magazine guide).",
+    "website": "https://www.destinationgoldcoast.com/blog/gold-coast-markets-scene/",
+    "phone": null,
+    "description": "Saturday beachside farmers market in the grounds of Burleigh Heads State School.",
+    "sources": [
+      "https://www.destinationgoldcoast.com/blog/gold-coast-markets-scene/",
+      "https://www.scoutmagazine.com.au/every-farmers-market-on-the-gold-coast/"
+    ],
+    "confidence": "medium",
+    "caveats": "The 12:00 end time comes from an older Scout Magazine guide; the tourism blog gives only the 7am start. No market site opened.",
+    "researchedOn": "2026-11-13",
+    "region": "QLD/NT/SA/WA (second pass)",
+    "lat": -28.10794,
+    "lng": 153.42469,
+    "locationPrecision": "locality"
+  },
+  {
+    "name": "Helensvale Farmers Market",
+    "type": "farmers_market",
+    "address": "Helensvale State High School, 243 Discovery Drive",
+    "locality": "Helensvale",
+    "state": "QLD",
+    "postcode": "4212",
+    "products": [],
+    "otherProducts": "Per Experience Gold Coast: fresh fruit, vegetables, flowers, health food, plus breakfast and coffee.",
+    "tags": [],
+    "hours": {
+      "kind": "weekly",
+      "days": {
+        "sat": [
+          [
+            "06:00",
+            "11:00"
+          ]
+        ]
+      },
+      "note": ""
+    },
+    "hoursAsStated": "Saturday, 6am-11am.",
+    "website": "https://www.destinationgoldcoast.com/blog/gold-coast-markets-scene/",
+    "phone": null,
+    "description": "Saturday farmers market at Helensvale State High School on the northern Gold Coast.",
+    "sources": [
+      "https://www.destinationgoldcoast.com/blog/gold-coast-markets-scene/"
+    ],
+    "confidence": "medium",
+    "caveats": "Source is the Experience Gold Coast tourism blog (4 Aug 2026); the market's own site returned a server block. Older guide gave 6am-11am too.",
+    "researchedOn": "2026-11-13",
+    "region": "QLD/NT/SA/WA (second pass)",
+    "lat": -27.92475,
+    "lng": 153.33656,
+    "locationPrecision": "locality"
+  },
+  {
+    "name": "Organic Gold Coast Farmers Market",
+    "type": "farmers_market",
+    "address": "Merrimac State High School, Dunlop Court",
+    "locality": "Mermaid Waters",
+    "state": "QLD",
+    "postcode": "4218",
+    "products": [],
+    "otherProducts": "Per Experience Gold Coast: meats, honey, preserves, artisan ingredients and natural health products.",
+    "tags": [
+      "organic"
+    ],
+    "hours": {
+      "kind": "weekly",
+      "days": {
+        "sun": [
+          [
+            "06:00",
+            "11:00"
+          ]
+        ]
+      },
+      "note": ""
+    },
+    "hoursAsStated": "Sundays, 6am - 11am.",
+    "website": "https://www.destinationgoldcoast.com/blog/gold-coast-markets-scene/",
+    "phone": null,
+    "description": "Sunday market described as selling certified organically grown produce, held at Merrimac State High School.",
+    "sources": [
+      "https://www.destinationgoldcoast.com/blog/gold-coast-markets-scene/"
+    ],
+    "confidence": "medium",
+    "caveats": "Organic claim is the tourism blog's wording (certified organically grown produce); no certifier named and no market site opened.",
+    "researchedOn": "2026-11-13",
+    "region": "QLD/NT/SA/WA (second pass)",
+    "lat": -28.04062,
+    "lng": 153.41735,
+    "locationPrecision": "address"
+  },
+  {
+    "name": "Batchelor Markets",
+    "type": "farmers_market",
+    "address": "Batchelor Oval, Nurndina Street",
+    "locality": "Batchelor",
+    "state": "NT",
+    "postcode": "0845",
+    "products": [],
+    "otherProducts": "Local products and produce; stall mix not itemised.",
+    "tags": [],
+    "hours": {
+      "kind": "weekly",
+      "days": {
+        "sun": [
+          [
+            "08:00",
+            "13:00"
+          ]
+        ]
+      },
+      "note": "Runs April to December."
+    },
+    "hoursAsStated": "Every Sunday between April to December from 8am to 1pm.",
+    "website": "https://northernterritory.com/articles/markets-in-the-nt",
+    "phone": null,
+    "description": "Sunday community market under rain trees in Batchelor, near Litchfield National Park.",
+    "sources": [
+      "https://northernterritory.com/articles/markets-in-the-nt"
+    ],
+    "confidence": "medium",
+    "caveats": "Official NT tourism article only; no market site opened and produce focus is described only as local products and produce.",
+    "researchedOn": "2026-11-13",
+    "region": "QLD/NT/SA/WA (second pass)",
+    "lat": -13.0572,
+    "lng": 131.02467,
+    "locationPrecision": "locality"
   }
 ]

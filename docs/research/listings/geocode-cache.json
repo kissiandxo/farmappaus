@@ -244,5 +244,307 @@
   "95 Glenisla Road, Bickley WA 6076, Australia": {
     "lat": -32.0081454,
     "lng": 116.098816
+  },
+  "Gosford Showground, Showground Road, Gosford NSW 2250, Australia": {
+    "lat": -33.4175757,
+    "lng": 151.3424652
+  },
+  "116 Alexandra Parade, North Lismore NSW 2480, Australia": null,
+  "North Lismore NSW 2480, Australia": {
+    "lat": -28.788,
+    "lng": 153.2772
+  },
+  "Mullumbimby Showgrounds, Main Arm Road, Mullumbimby NSW 2483, Australia": null,
+  "Mullumbimby NSW 2483, Australia": {
+    "lat": -28.5533512,
+    "lng": 153.4993146
+  },
+  "1 Merrijig Drive, Torquay VIC 3228, Australia": {
+    "lat": -38.3071215,
+    "lng": 144.3250464
+  },
+  "Bendigo Food Share, 227 Breen Street, Golden Square VIC 3555, Australia": null,
+  "Golden Square VIC 3555, Australia": {
+    "lat": -36.7710872,
+    "lng": 144.2620757
+  },
+  "379 Mewburn Park Road, Maffra VIC 3860, Australia": {
+    "lat": -37.9492024,
+    "lng": 146.9424501
+  },
+  "Maffra VIC 3860, Australia": {
+    "lat": -37.9664974,
+    "lng": 146.9762318
+  },
+  "52 Arkwells Lane, Red Hill VIC 3937, Australia": {
+    "lat": -38.3647267,
+    "lng": 145.0126591
+  },
+  "105 Hillwood Road, Hillwood TAS 7252, Australia": {
+    "lat": -41.2352795,
+    "lng": 146.9873255
+  },
+  "7777 Huon Highway, Strathblane TAS 7109, Australia": {
+    "lat": -43.356657,
+    "lng": 146.9588551
+  },
+  "Strathblane TAS 7109, Australia": {
+    "lat": -43.3361006,
+    "lng": 146.9713023
+  },
+  "Retford Park, 1325 Old South Road, Bowral NSW 2576, Australia": null,
+  "Bowral NSW 2576, Australia": {
+    "lat": -34.4811609,
+    "lng": 150.4155059
+  },
+  "30 Staughton Street, Meredith VIC 3333, Australia": {
+    "lat": -37.8453452,
+    "lng": 144.0761604
+  },
+  "1030 Maffra-Sale Road, Myrtlebank VIC 3851, Australia": {
+    "lat": -38.0575226,
+    "lng": 147.0261576
+  },
+  "2093 Bells Line of Road, Bilpin NSW 2758, Australia": {
+    "lat": -33.5091768,
+    "lng": 150.5586
+  },
+  "57-89 Grafton Street, Cairns City QLD 4870, Australia": {
+    "lat": -16.9244437,
+    "lng": 145.7750754
+  },
+  "1157 Elsegood Road, Haines SA 5223, Australia": {
+    "lat": -35.7477143,
+    "lng": 137.5607407
+  },
+  "103 Alfred Road, Mount Claremont WA 6010, Australia": {
+    "lat": -31.9681089,
+    "lng": 115.7826977
+  },
+  "3060 Jacoby Street, Mundaring WA 6073, Australia": {
+    "lat": -31.9033449,
+    "lng": 116.1647189
+  },
+  "25 Cedric Street, Stirling WA 6021, Australia": {
+    "lat": -31.8898314,
+    "lng": 115.8087639
+  },
+  "Grosvenor Gardens, Victor Harbor SA 5211, Australia": null,
+  "Victor Harbor SA 5211, Australia": {
+    "lat": -35.5532303,
+    "lng": 138.6231773
+  },
+  "431 Bungaree Road, Clare SA 5453, Australia": null,
+  "Clare SA 5453, Australia": {
+    "lat": -33.8333057,
+    "lng": 138.6119088
+  },
+  "4 Duncan Lane, Thulimbah QLD 4376, Australia": {
+    "lat": -28.5403891,
+    "lng": 151.9227888
+  },
+  "47 Davidson Street, Bullsbrook WA 6084, Australia": {
+    "lat": -31.6369141,
+    "lng": 115.97786
+  },
+  "Mount Pleasant Showgrounds, Mount Pleasant SA 5235, Australia": null,
+  "Mount Pleasant SA 5235, Australia": {
+    "lat": -34.7735461,
+    "lng": 139.0502045
+  },
+  "Yandina QLD 4561, Australia": {
+    "lat": -26.5590587,
+    "lng": 152.9700696
+  },
+  "Kawana Waters QLD 4575, Australia": {
+    "lat": -26.7049256,
+    "lng": 153.115659
+  },
+  "Marcoola QLD 4564, Australia": {
+    "lat": -26.5922485,
+    "lng": 153.0797986
+  },
+  "1 Clifford Street, Balmoral Ridge QLD 4552, Australia": {
+    "lat": -26.7641396,
+    "lng": 152.8856906
+  },
+  "Palm Beach Currumbin High School, Thrower Drive, Palm Beach QLD 4221, Australia": {
+    "lat": -28.130645,
+    "lng": 153.474563
+  },
+  "Burleigh Heads State School, 1750 Gold Coast Highway, Burleigh Heads QLD 4220, Australia": null,
+  "Burleigh Heads QLD 4220, Australia": {
+    "lat": -28.1079429,
+    "lng": 153.4246915
+  },
+  "Helensvale State High School, 243 Discovery Drive, Helensvale QLD 4212, Australia": null,
+  "Helensvale QLD 4212, Australia": {
+    "lat": -27.9247462,
+    "lng": 153.3365564
+  },
+  "Mermaid Waters QLD 4218, Australia": {
+    "lat": -28.0437724,
+    "lng": 153.4079407
+  },
+  "Batchelor Oval, Nurndina Street, Batchelor NT 0845, Australia": null,
+  "Batchelor NT 0845, Australia": {
+    "lat": -13.0571965,
+    "lng": 131.0246738
+  },
+  "Eveleigh NSW 2015, Australia": {
+    "lat": -33.8947447,
+    "lng": 151.197007
+  },
+  "Kiama NSW 2533, Australia": {
+    "lat": -34.6717684,
+    "lng": 150.8563738
+  },
+  "Armidale NSW 2350, Australia": {
+    "lat": -30.5302199,
+    "lng": 151.6180566
+  },
+  "Coburg VIC 3058, Australia": {
+    "lat": -37.7458754,
+    "lng": 144.9659473
+  },
+  "Alphington VIC 3078, Australia": {
+    "lat": -37.7809188,
+    "lng": 145.0309053
+  },
+  "Main Ridge VIC 3928, Australia": {
+    "lat": -38.3965677,
+    "lng": 144.9719809
+  },
+  "New Farm QLD 4005, Australia": {
+    "lat": -27.4674305,
+    "lng": 153.0472003
+  },
+  "Kenilworth QLD 4574, Australia": {
+    "lat": -26.5952708,
+    "lng": 152.7276403
+  },
+  "Maleny QLD 4552, Australia": {
+    "lat": -26.757945,
+    "lng": 152.853254
+  },
+  "Kalbar QLD 4309, Australia": {
+    "lat": -27.9402193,
+    "lng": 152.6238118
+  },
+  "Noosaville QLD 4566, Australia": {
+    "lat": -26.4148242,
+    "lng": 153.0480958
+  },
+  "Rapid Creek NT 0810, Australia": {
+    "lat": -12.3808953,
+    "lng": 130.8623385
+  },
+  "Angaston SA 5353, Australia": {
+    "lat": -34.501128,
+    "lng": 139.0474516
+  },
+  "Mount Barker SA 5251, Australia": {
+    "lat": -35.0060525,
+    "lng": 138.7170881
+  },
+  "Hahndorf SA 5245, Australia": {
+    "lat": -35.0288458,
+    "lng": 138.8096715
+  },
+  "Subiaco WA 6008, Australia": {
+    "lat": -31.9544815,
+    "lng": 115.8237463
+  },
+  "East Perth WA 6004, Australia": {
+    "lat": -31.9570276,
+    "lng": 115.8769595
+  },
+  "Albany WA 6330, Australia": {
+    "lat": -35.0277407,
+    "lng": 117.8874729
+  },
+  "Herne Hill WA 6056, Australia": {
+    "lat": -31.8138161,
+    "lng": 116.0405721
+  },
+  "Caversham WA 6055, Australia": {
+    "lat": -31.8691531,
+    "lng": 115.9814285
+  },
+  "Dayton WA 6055, Australia": {
+    "lat": -31.8557737,
+    "lng": 115.9740664
+  },
+  "West Swan WA 6055, Australia": {
+    "lat": -31.8925405,
+    "lng": 116.0579399
+  },
+  "Henley Brook WA 6055, Australia": {
+    "lat": -31.8067345,
+    "lng": 115.9839963
+  },
+  "Bickley WA 6076, Australia": {
+    "lat": -32.0007909,
+    "lng": 116.1015523
+  },
+  "Gosford NSW 2250, Australia": {
+    "lat": -33.4249056,
+    "lng": 151.3437308
+  },
+  "Torquay VIC 3228, Australia": {
+    "lat": -38.3071442,
+    "lng": 144.3299168
+  },
+  "Hillwood TAS 7252, Australia": {
+    "lat": -41.2418076,
+    "lng": 146.9778777
+  },
+  "Meredith VIC 3333, Australia": {
+    "lat": -37.8436639,
+    "lng": 144.0754653
+  },
+  "Myrtlebank VIC 3851, Australia": {
+    "lat": -38.0644715,
+    "lng": 147.0291068
+  },
+  "Bilpin NSW 2758, Australia": {
+    "lat": -33.4978006,
+    "lng": 150.5217297
+  },
+  "Cairns City QLD 4870, Australia": {
+    "lat": -16.9206657,
+    "lng": 145.7721854
+  },
+  "Haines SA 5223, Australia": {
+    "lat": -35.8223658,
+    "lng": 137.6378972
+  },
+  "Mount Claremont WA 6010, Australia": {
+    "lat": -31.9712347,
+    "lng": 115.7878219
+  },
+  "Mundaring WA 6073, Australia": {
+    "lat": -31.9010616,
+    "lng": 116.167437
+  },
+  "Stirling WA 6021, Australia": {
+    "lat": -31.950652,
+    "lng": 115.7978755
+  },
+  "Bullsbrook WA 6084, Australia": {
+    "lat": -31.7302105,
+    "lng": 115.990729
+  },
+  "Balmoral Ridge QLD 4552, Australia": {
+    "lat": -26.7436335,
+    "lng": 152.8906222
+  },
+  "Palm Beach QLD 4221, Australia": {
+    "lat": -28.1222001,
+    "lng": 153.473069
+  },
+  "Merrimac State High School, Dunlop Court, Mermaid Waters QLD 4218, Australia": {
+    "lat": -28.040621,
+    "lng": 153.4173475
   }
 }

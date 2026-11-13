@@ -30,7 +30,7 @@ Buyers find farms, farm-gate stalls, farm shops and farmers’ markets near them
 | 7. Polish | “Saved listings” notice when offline; 20-second load timeout; “not updated for a while” warnings (90 days); friendly error screen; in-app privacy policy; colour contrast checked automatically (WCAG AA, main text AAA) |
 | 8. Release | App icon and splash; EAS preview and TestFlight workflows; release guide, App Store text and privacy answers; real-listings plan |
 
-With no Supabase keys the app runs as a free directory of **55 real places from public sources** (all marked “Unclaimed”), with no accounts: the last tab becomes “About”, and suggestions, reports and claims are pre-filled emails to `EXPO_PUBLIC_SUPPORT_EMAIL`. No farms are invented.
+With no Supabase keys the app runs as a free directory of **87 real places from public sources** (all marked “Unclaimed”), with no accounts: the last tab becomes “About”, and suggestions, reports and claims are pre-filled emails to `EXPO_PUBLIC_SUPPORT_EMAIL`. No farms are invented.
 
 ## What has and hasn’t been checked
 

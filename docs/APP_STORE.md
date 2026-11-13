@@ -1,6 +1,6 @@
 # App Store listing: Farm Direct 1.0 (directory launch)
 
-Text for App Store Connect, in Australian English. Version 1.0.0 is a **free directory with no accounts**: 55 real places from public sources, with list, filters, map, farm pages, saved places and directions. It has no backend. Everything below promises only what this build does. Limits are Apple's; each count is the number of characters in the text as written here.
+Text for App Store Connect, in Australian English. Version 1.0.0 is a **free directory with no accounts**: 87 real places from public sources, with list, filters, map, farm pages, saved places and directions. It has no backend. Everything below promises only what this build does. Limits are Apple's; each count is the number of characters in the text as written here.
 
 ## Basics
 
@@ -29,7 +29,7 @@ Comma-separated, no spaces after commas. Words already in the name, subtitle or 
 
 Farm Direct is a free directory of farmers’ markets, farm shops and farm-gate stalls across Australia. Find good local food near you, check when a place is open, and get there.
 
-The app starts with 55 places in every state and territory, taken from public sources such as each place’s own website and council or tourism pages. Their owners haven’t confirmed the details yet, so the app says so, and shows where each place’s details came from.
+The app starts with 87 places in every state and territory, taken from public sources such as each place’s own website and council or tourism pages. Their owners haven’t confirmed the details yet, so the app says so, and shows where each place’s details came from.
 
 • See places on a list, sorted by distance, or on a map with pins
 • Use your location, or search any suburb or postcode
@@ -85,7 +85,7 @@ Before you submit, check that no build variable turns on a backend: leave `EXPO_
 
 > **No sign-in is needed.** Farm Direct 1.0 is a free directory with no accounts, no payments and no purchases. Everything works from the first launch.
 >
-> **Where the data comes from:** the 55 places are real farmers' markets, farm shops and farm-gate stalls, researched from public sources (each place's own website, council and tourism pages). They are shown as "Unclaimed" because their owners have not confirmed them, and each place page lists its sources. Nothing is invented. Nobody can post content in the app.
+> **Where the data comes from:** the 87 places are real farmers' markets, farm shops and farm-gate stalls, researched from public sources (each place's own website, council and tourism pages). They are shown as "Unclaimed" because their owners have not confirmed them, and each place page lists its sources. Nothing is invented. Nobody can post content in the app.
 >
 > **How to try each feature:**
 > 1. First launch shows a short welcome. Tap **Get started**.
