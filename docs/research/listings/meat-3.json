@@ -1,0 +1,1376 @@
+{
+  "researchedOn": "2026-11-13",
+  "region": "Australia (meat direct from the farm, third pass)",
+  "listings": [
+    {
+      "name": "Martins Ridge Farm",
+      "type": "farm_shop",
+      "address": "Martins Ridge Road (off the Princes Highway)",
+      "locality": "Conjola",
+      "state": "NSW",
+      "postcode": "",
+      "products": [
+        "pork",
+        "beef"
+      ],
+      "otherProducts": "Goods made in the on-farm production kitchen and butchery",
+      "hours": {
+        "kind": "weekly",
+        "days": {
+          "fri": [
+            [
+              "10:00",
+              "16:00"
+            ]
+          ]
+        },
+        "note": "Also open by appointment."
+      },
+      "hoursAsStated": "Produce can be bought direct from the farm every Friday, 10am to 4pm, or by appointment; the farm gate is open to the public.",
+      "website": "https://www.martinsridgefarm.com.au/",
+      "phone": null,
+      "description": "A farm at Conjola on the NSW South Coast that raises pork and beef and sells its produce direct from the farm gate.",
+      "sources": [
+        "https://www.martinsridgefarm.com.au/",
+        "https://www.martinsridgefarm.com.au/contact-us"
+      ],
+      "meatEvidence": "The farm's home page says it farms pork and beef sustainably, makes products in its own on-farm kitchen and butchery, and sells direct from the farm each Friday or by appointment (https://www.martinsridgefarm.com.au/).",
+      "confidence": "high",
+      "caveats": "The site gives no street number or postcode. Its directions say to take the Martins Ridge Road turnoff, drive 500 m, turn right at the Martins Ridge Farm sign, and it is the first property on the left. The map pin needs checking. Corrected on verification: I opened the home and contact pages. The site is a JS-rendered page, so I read the text from the raw HTML. The home page says the farm raises pork and beef sustainably and sells direct from the farm each Friday 10am-4pm or by appointment, and that its farm gate is open to the public. The contact page gives the Martins Ridge Road directions in Conjola. The hours and products check out. The description was wrong in two places: it says 'near Milton' and 'family farm', and the site says neither. I rewrote it to stick to what the site says."
+    },
+    {
+      "name": "Stockinpiggle Farm Produce (Cootamundra store)",
+      "type": "farm_shop",
+      "address": "18 Adams Street",
+      "locality": "Cootamundra",
+      "state": "NSW",
+      "postcode": "2590",
+      "products": [
+        "pork",
+        "beef",
+        "chicken",
+        "lamb"
+      ],
+      "otherProducts": "Hogget, smallgoods, sausages and lard",
+      "hours": {
+        "kind": "weekly",
+        "days": {
+          "wed": [
+            [
+              "14:00",
+              "18:00"
+            ]
+          ],
+          "thu": [
+            [
+              "14:00",
+              "18:00"
+            ]
+          ],
+          "fri": [
+            [
+              "14:00",
+              "18:00"
+            ]
+          ],
+          "sat": [
+            [
+              "09:00",
+              "13:00"
+            ]
+          ]
+        },
+        "note": "Closed Sunday to Tuesday. A separate farm store at 2124 Stockinbingle Road has varying days and hours (see Facebook)."
+      },
+      "hoursAsStated": "Cootamundra store: closed Monday and Tuesday; Wednesday to Friday 2pm to 6pm; Saturday 9am to 1pm; closed Sunday.",
+      "website": "https://stockinpiggle.com.au/",
+      "phone": null,
+      "description": "A family farm and free-range pig stud based at Stockinbingle that sells its own pork, beef, lamb and chicken from a store in Cootamundra.",
+      "sources": [
+        "https://stockinpiggle.com.au/",
+        "https://visitcootamundra.com.au/food-and-wine/stockinpiggle/"
+      ],
+      "meatEvidence": "The business's own site says its pastured pork, grass-fed beef, lamb, hogget and pastured chicken come from its family farm, and gives the store's address and hours. Visit Cootamundra (council tourism) says it sells direct to consumers and has a store in Cootamundra (https://stockinpiggle.com.au/, https://visitcootamundra.com.au/food-and-wine/stockinpiggle/).",
+      "confidence": "high",
+      "caveats": "This store is in Cootamundra town, not on the farm. The postcode 2590 comes from the Visit Cootamundra page (council tourism), not the business site. The council page gives a phone number, but the business site does not, so phone is left null. The farm store at Stockinbingle is left out of the hours because its hours vary. Corrected on verification: I opened the business's own site (copyright 2026). It confirms the store at 18 Adams Street, Cootamundra, open Wed-Fri 2pm-6pm and Sat 9am-1pm, closed Sun-Tue. It names pastured pork, grass-fed beef, lamb, hogget and pastured chicken from its family farm. The Visit Cootamundra (council) page confirms the pig stud, direct-to-consumer sales and the Cootamundra store, and 2590 is the Cootamundra postcode shown on that council page. One fix to the description: 'near Cootamundra' is the researcher's inference. The council page places the farm at Stockinbingle, so the description now says that."
+    },
+    {
+      "name": "Integrity Meats (Tathra Place Free Range)",
+      "type": "farm_shop",
+      "address": "48 Union Street",
+      "locality": "Goulburn",
+      "state": "NSW",
+      "postcode": "2580",
+      "products": [
+        "beef",
+        "pork",
+        "chicken"
+      ],
+      "otherProducts": "Duck",
+      "hours": {
+        "kind": "weekly",
+        "days": {
+          "mon": [
+            [
+              "07:00",
+              "14:00"
+            ]
+          ],
+          "tue": [
+            [
+              "07:00",
+              "14:00"
+            ]
+          ],
+          "wed": [
+            [
+              "07:00",
+              "14:00"
+            ]
+          ],
+          "thu": [
+            [
+              "07:00",
+              "14:00"
+            ]
+          ]
+        },
+        "note": "The site flags these as new opening hours. Online orders are closed for now."
+      },
+      "hoursAsStated": "Open Monday to Thursday, 7am to 2pm (the site notes these are new opening hours).",
+      "website": "https://integritymeats.com.au/",
+      "phone": "0494 099 835",
+      "description": "A Goulburn butcher shop owned by the farmers of Tathra Place Free Range, selling meat from their own regenerative farm.",
+      "sources": [
+        "https://integritymeats.com.au/",
+        "https://www.tathraplacefreerange.com/"
+      ],
+      "meatEvidence": "Integrity Meats says the Tathra Place owners opened the shop and run every step in-house from paddock to plate with no middlemen (https://integritymeats.com.au/). The farm's own site says it raises pastured beef, pork and chicken plus free-range ducks, and sells through Integrity Meats (https://www.tathraplacefreerange.com/).",
+      "confidence": "medium",
+      "caveats": "The shop's page does not name meat types. Those come from the farm's site. The shop is in Goulburn town, not on the farm (the farm is at Wombeyan Caves). Goulburn sits between the Southern Highlands and the Canberra region. The hours were changed recently, so they are worth re-checking."
+    },
+    {
+      "name": "New Brighton Farmers Market",
+      "type": "farmers_market",
+      "address": "Tom Kendall Oval, River Street",
+      "locality": "New Brighton",
+      "state": "NSW",
+      "postcode": "2483",
+      "products": [
+        "lamb",
+        "honey",
+        "fruit",
+        "veg"
+      ],
+      "otherProducts": "Bread, coffee, olives, fermented foods and condiments",
+      "hours": {
+        "kind": "weekly",
+        "days": {
+          "tue": [
+            [
+              "07:00",
+              "11:00"
+            ]
+          ]
+        },
+        "note": null
+      },
+      "hoursAsStated": "Open every Tuesday, 7am to 11am, at Tom Kendall Oval, River Street, New Brighton.",
+      "website": "https://newbrightonfarmersmarket.org.au/",
+      "phone": null,
+      "description": "A weekly riverside growers' market in the Northern Rivers that links local producers with shoppers.",
+      "sources": [
+        "https://www.newbrightonfarmersmarket.org.au/",
+        "https://newbrightonfarmersmarket.org.au/meet-the-producers/"
+      ],
+      "meatEvidence": "The market's own producer directory has a Meat category with a 'Local Dorper Lamb' stall (https://newbrightonfarmersmarket.org.au/meet-the-producers/).",
+      "confidence": "high",
+      "caveats": "Only one meat stall (lamb) is listed. The directory does not say whether beef, pork or chicken are sold."
+    },
+    {
+      "name": "Braidwood Farmers Market",
+      "type": "farmers_market",
+      "address": "National Theatre, Wallace Street",
+      "locality": "Braidwood",
+      "state": "NSW",
+      "postcode": "",
+      "products": [
+        "beef",
+        "fruit",
+        "veg",
+        "honey"
+      ],
+      "otherProducts": "Wine, cider, non-alcoholic drinks, preserves, jam and black garlic",
+      "hours": {
+        "kind": "weekly",
+        "days": {},
+        "note": "Held on the first and third Saturday of each month, mornings only. The page gives no start or finish times."
+      },
+      "hoursAsStated": "Held in the National Theatre on Braidwood's main street on the first and third Saturday mornings of each month.",
+      "website": null,
+      "phone": null,
+      "description": "A farmers' market held twice a month in the National Theatre on Braidwood's main street, where shoppers can buy from local farmers.",
+      "sources": [
+        "https://visitcanberra.com.au/attractions/5db8e9a6904c07d94aff5247/braidwood-farmers-market"
+      ],
+      "meatEvidence": "VisitCanberra (ACT Government tourism) lists beef among the stalls and describes the market as a place to talk with your farmers about how your food is produced (https://visitcanberra.com.au/attractions/5db8e9a6904c07d94aff5247/braidwood-farmers-market).",
+      "confidence": "medium",
+      "caveats": "No exact times are given, so the hours days object is empty and the schedule is in the note. The postcode is not shown. The source is a tourism listing, not the market's own site, and it does not name the beef producer. Corrected on verification: I opened the VisitCanberra (ACT Government) page. It confirms the market is held in the National Theatre on Braidwood's main street (Wallace Street), opposite the bakery, on the first and third Saturday mornings of each month. It names beef among the stalls, along with fruit and veg, wine, cider, non-alcoholic drinks, preserves, jam, black garlic and honey, and calls it a place to chat with your farmers. I could not find an own site (the likely domains did not resolve), and the web search budget for this run was used up, so I could not check further. One fix: the description added 'inland from the South Coast in the Canberra region', which the page does not say, so I removed it."
+    },
+    {
+      "name": "Torello Farm",
+      "type": "farm_shop",
+      "address": "410 White Hill Rd",
+      "locality": "Dromana",
+      "state": "VIC",
+      "postcode": "3936",
+      "products": [
+        "beef",
+        "lamb",
+        "fruit",
+        "veg"
+      ],
+      "otherProducts": "Sourdough, goats' cheese, olive oil, preserves, flowers, seedlings and take-home meals",
+      "hours": {
+        "kind": "weekly",
+        "days": {
+          "sun": [
+            [
+              "08:00",
+              "18:00"
+            ]
+          ],
+          "mon": [
+            [
+              "08:00",
+              "18:00"
+            ]
+          ],
+          "tue": [
+            [
+              "08:00",
+              "18:00"
+            ]
+          ],
+          "wed": [
+            [
+              "08:00",
+              "18:00"
+            ]
+          ],
+          "thu": [
+            [
+              "08:00",
+              "18:00"
+            ]
+          ],
+          "fri": [
+            [
+              "08:00",
+              "18:00"
+            ]
+          ],
+          "sat": [
+            [
+              "08:00",
+              "18:00"
+            ]
+          ]
+        },
+        "note": null
+      },
+      "hoursAsStated": "Farm gate open 7 days a week, 8am to 6pm.",
+      "website": "https://www.torellofarm.com.au/",
+      "phone": "03 5981 0335",
+      "description": "Mornington Peninsula farm gate store selling grass-fed beef and lamb from the family's own cattle and sheep, along with seasonal fruit and vegetables.",
+      "sources": [
+        "https://www.torellofarm.com.au/",
+        "https://www.torellofarm.com.au/contact",
+        "https://www.torellofarm.com.au/about",
+        "https://www.torellofarm.com.au/meat"
+      ],
+      "meatEvidence": "The farm's own meat page says it grazes Belted Galloway cattle and Dorset Down sheep on the family's second property at nearby Tuerong, and sells the whole animal nose-to-tail at the farm gate. The homepage says the beef and lamb are processed each week (https://www.torellofarm.com.au/meat).",
+      "confidence": "high",
+      "caveats": "The animals are raised on a separate family property at Tuerong. The shop is at the Dromana farm."
+    },
+    {
+      "name": "Talbot Farmers' Market",
+      "type": "farmers_market",
+      "address": "Scandinavian Crescent and Camp Street",
+      "locality": "Talbot",
+      "state": "VIC",
+      "postcode": "3371",
+      "products": [
+        "lamb",
+        "veg"
+      ],
+      "otherProducts": "Pies, breads and other artisan foods",
+      "hours": {
+        "kind": "weekly",
+        "days": {
+          "sun": [
+            [
+              "09:00",
+              "13:00"
+            ]
+          ]
+        },
+        "note": "Third Sunday of each month only."
+      },
+      "hoursAsStated": "Third Sunday every month, 9.00am to 1.00pm.",
+      "website": "https://www.talbotfarmersmarket.org.au",
+      "phone": "0459 327 637",
+      "description": "Long-running Goldfields farmers' market held monthly in the heritage streets of Talbot, with local growers and small-scale producers.",
+      "sources": [
+        "https://talbotfarmersmarket.org.au/"
+      ],
+      "meatEvidence": "The market's own stallholder list includes a stall selling grass-fed lamb, vacuum-sealed in meal-size portions, which can be pre-ordered before market day (https://talbotfarmersmarket.org.au/).",
+      "confidence": "high",
+      "caveats": "Only one fresh-meat stall (lamb) is named on the site. A separate stall offers poultry, which may be live birds rather than meat, so chicken is not listed. The site's postcode comes from the market's PO Box in Talbot."
+    },
+    {
+      "name": "Kyneton Farmers' Market",
+      "type": "farmers_market",
+      "address": "St Paul's Park, 35 Piper St",
+      "locality": "Kyneton",
+      "state": "VIC",
+      "postcode": "3444",
+      "products": [
+        "lamb",
+        "pork",
+        "eggs",
+        "honey",
+        "fruit",
+        "veg"
+      ],
+      "otherProducts": "Fish, sourdough, cakes, jams, olives and local wine",
+      "hours": {
+        "kind": "weekly",
+        "days": {
+          "sat": [
+            [
+              "08:30",
+              "13:00"
+            ]
+          ]
+        },
+        "note": "Second Saturday of each month only."
+      },
+      "hoursAsStated": "Held on the 2nd Saturday of each month at St Paul's Park, Piper Street. The listing for 14 Nov 2026 shows 8:30am to 1:00pm.",
+      "website": null,
+      "phone": null,
+      "description": "Monthly Macedon Ranges farmers' market with more than 50 stalls of local farmers, food producers and makers.",
+      "sources": [
+        "https://www.visitmacedonranges.com/tourism-listing/kyneton-farmers-market/",
+        "https://www.visitmacedonranges.com/events/kyneton-farmers-market-macedon-ranges/"
+      ],
+      "meatEvidence": "The official Visit Macedon Ranges listing names local lamb and pork among the stalls (https://www.visitmacedonranges.com/tourism-listing/kyneton-farmers-market/).",
+      "confidence": "medium",
+      "caveats": "Confirmed from the shire tourism site only. The market has no website of its own, just Facebook. The meat stalls are described in general terms and no stallholders are named."
+    },
+    {
+      "name": "Serenity Farm",
+      "type": "farm",
+      "address": "251 Yarragon South Rd",
+      "locality": "Yarragon South",
+      "state": "VIC",
+      "postcode": "3823",
+      "products": [
+        "beef"
+      ],
+      "otherProducts": null,
+      "hours": {
+        "kind": "appointment",
+        "days": {},
+        "note": "The site says bookings are essential. Beef is sold as pre-ordered share packs, with the current round ready after Christmas."
+      },
+      "hoursAsStated": "Sells grass-fed Angus beef from its farm gate shop; bookings are essential, book your visit online.",
+      "website": "https://serenityfarmvic.com.au/",
+      "phone": "0418 137 468",
+      "description": "Family-run West Gippsland Highland cattle farm that also sells its own grass-fed Angus beef from a farm gate shop.",
+      "sources": [
+        "https://serenityfarmvic.com.au/",
+        "https://serenityfarmvic.com.au/contact-us",
+        "https://serenityfarmvic.com.au/grass-fed-beef-sales"
+      ],
+      "meatEvidence": "The homepage says the family breeds Highland cattle and sells grass-fed Angus beef from its farm gate shop. The beef page describes packs 'from our paddocks to your table' (https://serenityfarmvic.com.au/).",
+      "confidence": "medium",
+      "caveats": "Visits are by booking only, and the beef is sold in pre-ordered share packs. The site did not say how packs are collected. The farm's main business is farm tours and experiences."
+    },
+    {
+      "name": "Bob's Gardenfarm Shop and Farmgate",
+      "type": "farm_shop",
+      "address": "28 Dessents Rd",
+      "locality": "Hiawatha",
+      "state": "VIC",
+      "postcode": "3971",
+      "products": [
+        "beef",
+        "eggs",
+        "fruit",
+        "veg"
+      ],
+      "otherProducts": "Pies, sausages, jams, jellies and cordials",
+      "hours": {
+        "kind": "weekly",
+        "days": {
+          "sun": [
+            [
+              "11:00",
+              "14:00"
+            ]
+          ]
+        },
+        "note": null
+      },
+      "hoursAsStated": "Open Sunday 11:00 to 14:00; closed Monday to Saturday.",
+      "website": "https://www.gardenfarm.biz",
+      "phone": null,
+      "description": "Chemical-free permaculture farm near Yarram with a farm gate shop selling grass-fed beef, eggs, fruit, vegetables and homemade preserves.",
+      "sources": [
+        "https://themiddleofeverywhere.com.au/en/profiles/bobs-gardenfarm-shop-farmgate"
+      ],
+      "meatEvidence": "The Wellington Shire tourism listing describes a working paddock-to-plate permaculture farm, says no chemicals are used on the land or the animals, and says the farm gate is known for grass-fed Gippsland beef, steaks, pies and sausages (https://themiddleofeverywhere.com.au/en/profiles/bobs-gardenfarm-shop-farmgate).",
+      "confidence": "medium",
+      "caveats": "The listing calls the beef 'local' and does not plainly say the farm raises it. The farm's own website (gardenfarm.biz) did not load, so the hours come only from the council tourism listing. Corrected on verification: The Wellington Shire listing confirms 28 Dessents Rd Hiawatha VIC 3971, Sunday 11:00-14:00 (closed other days), and grass-fed Gippsland beef, steaks, pies, sausages, free-range eggs, fruit, vegetables, herbs, jams, jellies and cordials. It also says no chemicals are used on the land or the animals. The caveat was wrong, though: gardenfarm.biz does load now, but it only advertises accommodation (cottages, camping, tiny house) and does not mention the farm shop. Caveats corrected. All other fields are supported."
+    },
+    {
+      "name": "Gleneden Farm - Farm Shop & Farmyard",
+      "type": "farm_shop",
+      "address": "375 North Branch Rd",
+      "locality": "Maryvale",
+      "state": "QLD",
+      "postcode": "4370",
+      "products": [
+        "beef",
+        "lamb",
+        "pork",
+        "eggs",
+        "veg"
+      ],
+      "otherProducts": "Bacon, ham, salami and sausages; preserves and soaps",
+      "hours": {
+        "kind": "weekly",
+        "days": {
+          "fri": [
+            [
+              "10:00",
+              "16:00"
+            ]
+          ],
+          "sat": [
+            [
+              "10:00",
+              "16:00"
+            ]
+          ],
+          "sun": [
+            [
+              "10:00",
+              "16:00"
+            ]
+          ]
+        },
+        "note": "Open only on the first and last weekends of each month (Fri to Sun). Other times by phoning ahead. The site footer says the farm shop is open by appointment only, 7 days 9am to 4pm."
+      },
+      "hoursAsStated": "Homepage: the farm shop and farmyard open 10am to 4pm Friday to Sunday on the first and last weekends of each month; call ahead to visit at other times. Footer: farm shop, tours and displays open by appointment only, please call or book ahead, 7 days 9am to 4pm.",
+      "website": "https://www.glenedenfarm.com.au/",
+      "phone": "(07) 4666 1273",
+      "description": "Organic family farm near Cunningham's Gap with an on-farm shop selling pastured pork, grass-fed beef and lamb, eggs and seasonal vegetables, plus farm tours and camping.",
+      "sources": [
+        "https://www.glenedenfarm.com.au/",
+        "https://www.glenedenfarm.com.au/contact/"
+      ],
+      "meatEvidence": "The homepage says the farm shop stocks pastured pork and 100% grass-fed beef and lamb, sold direct from the farm. The CSA offers the farm's pork, bacon, ham, salami, sausages, beef and lamb (https://www.glenedenfarm.com.au/).",
+      "confidence": "medium",
+      "caveats": "The homepage hours (first and last weekends, Fri to Sun, 10 to 4) differ from the footer, which says by appointment only. Check which is current before publishing. The council produce map lists an older domain (glenedenfamilyfarm.com.au). Corrected on verification: Checked the farm's own homepage and contact page. Address (375 North Branch Rd, Maryvale QLD 4370), phone (07) 4666 1273, shop hours (10am to 4pm Fri to Sun on the first and last weekends; other times call ahead) and the by-appointment footer (7 days, 9am to 4pm) all match. Pork, beef, lamb, eggs and seasonal vegetables are named as farm shop stock. The only problem is the description: it says 'Goomburra/Maryvale area', but the site never mentions Goomburra. It describes the farm as being in a valley near Cunningham's Gap. Description reworded."
+    },
+    {
+      "name": "Lazy Cow Farm",
+      "type": "farm",
+      "address": "591 North Branch Rd",
+      "locality": "Goomburra",
+      "state": "QLD",
+      "postcode": "4362",
+      "products": [
+        "beef",
+        "lamb",
+        "pork",
+        "eggs"
+      ],
+      "otherProducts": "Sausages and kabana; farm-gate stall with gifts, cheese and honey sourced from other local producers",
+      "hours": {
+        "kind": "appointment",
+        "days": {},
+        "note": "Farm shop by appointment only (phone). Farm tours on weekends by appointment. Online orders delivered across South East Queensland."
+      },
+      "hoursAsStated": "Farm Shop: by appointment only (0407 103 998). Farm Tours: weekends, by appointment only.",
+      "website": "https://www.lazycowfarm.com.au/",
+      "phone": "0407 103 998",
+      "description": "Family grazing property in the Goomburra Valley producing grass-fed beef and lamb and pasture-raised pork and eggs, sold from an on-farm shop by appointment and online.",
+      "sources": [
+        "https://www.lazycowfarm.com.au/"
+      ],
+      "meatEvidence": "The farm's site says it produces 100% grass-fed beef and lamb, and pasture-raised free-range pork and eggs, on its Goomburra Valley farm, from its family farm to your table (https://www.lazycowfarm.com.au/).",
+      "confidence": "high",
+      "caveats": "Visits are by appointment only, so the app should say so clearly. Honey and cheese at the stall are bought in from other producers, not made on the farm."
+    },
+    {
+      "name": "Forage Farms",
+      "type": "farm",
+      "address": "87 Mullaly Road",
+      "locality": "Kybong",
+      "state": "QLD",
+      "postcode": "4570",
+      "products": [
+        "beef",
+        "pork",
+        "chicken",
+        "eggs"
+      ],
+      "otherProducts": null,
+      "hours": {
+        "kind": "appointment",
+        "days": {},
+        "note": "Order and collect. Order online, choose farm pickup, and collect at the farm when emailed that the order is ready. Pickup times are arranged with the farm; the site says weekend pickups can often be arranged."
+      },
+      "hoursAsStated": "Farm pickup: place an order online and select farm pickup. The order is prepared on the farm, you are emailed when it is ready, and you collect when it suits, at a time arranged with the farm (they are on the farm most days, and weekends can often work). Pickup is at Forage Farms, 87 Mullaly Road, Kybong QLD 4570.",
+      "website": "https://foragefarms.com.au/",
+      "phone": null,
+      "description": "Regenerative family farm at Kybong in the Mary Valley that raises grass-fed beef and pasture-raised pork, chicken and eggs, with on-farm order collection.",
+      "sources": [
+        "https://foragefarms.com.au/",
+        "https://foragefarms.com.au/pages/how-to-buy",
+        "https://foragefarms.com.au/pages/get-in-touch"
+      ],
+      "meatEvidence": "The farm's site describes 100% pasture-raised eggs, pork and chicken and grass-fed and finished beef raised on its own farm at Kybong. Orders are packed on the farm and can be collected there (https://foragefarms.com.au/pages/how-to-buy).",
+      "confidence": "high",
+      "caveats": "There is no walk-in shop; you must order first. Kybong is just south of Gympie (Mary Valley), on the northern edge of the Sunshine Coast hinterland."
+    },
+    {
+      "name": "Kandanga Farm Store",
+      "type": "farm_shop",
+      "address": "93 Main St",
+      "locality": "Kandanga",
+      "state": "QLD",
+      "postcode": "4570",
+      "products": [
+        "beef"
+      ],
+      "otherProducts": "Organic chicken and regeneratively farmed pork from other producers; organic dairy products; farm and garden supplies; Friday cafe",
+      "hours": {
+        "kind": "weekly",
+        "days": {
+          "fri": [
+            [
+              "09:00",
+              "16:00"
+            ]
+          ]
+        },
+        "note": "Other times by arrangement. The kitchen/cafe serves Fridays 9am to 1:30pm."
+      },
+      "hoursAsStated": "Store open to the public on Fridays from 9am to 4pm; other times by arrangement, with the office attended through the week for phone sales and support. Kitchen serves Fridays 9am to 1.30pm.",
+      "website": "https://www.kandangafarmstore.com.au/",
+      "phone": null,
+      "description": "Mary Valley farm supplies store and Friday cafe run by certified organic cattle farmers, selling their own K2 grass-fed beef from the freezer.",
+      "sources": [
+        "https://www.kandangafarmstore.com.au/",
+        "https://www.visitsunshinecoast.com/restaurant/60a731b3815f00436520c61b/kandanga-farm-store"
+      ],
+      "meatEvidence": "The store's site says its kitchen processes certified organic, grass-fed and finished K2 Beef produced in the Mary Valley by the store's founders on their certified organic cattle properties, and tells customers to look for K2 Beef in the freezer (https://www.kandangafarmstore.com.au/).",
+      "confidence": "medium",
+      "caveats": "The address comes from the Visit Sunshine Coast listing, not the store's own site. Only the K2 beef is stated to be the owners' own; the chicken and pork are stocked from other farms. The store is mainly a farm supplies shop. Corrected on verification: The store's own site confirms it is open to the public on Fridays 9am to 4pm (other times by arrangement), with the kitchen serving Fridays 9am to 1:30pm. It confirms the founders' own certified organic K2 Beef is in the freezer. The Visit Sunshine Coast listing gives 93 Main St, Kandanga QLD 4570. The site names the chicken and pork only as stock ('organic beef and chicken and regeneratively farmed pork') and never says they come from the founders' farms. In a farm-direct meat listing I moved them to otherProducts and kept only beef. The description's 'other organic meats' was also wrong, because the pork is described as regeneratively farmed, not organic."
+    },
+    {
+      "name": "Midway Farm Stall (Maasdorp Meats)",
+      "type": "farm_shop",
+      "address": "550 Paull Rd",
+      "locality": "West Pinjarra",
+      "state": "WA",
+      "postcode": "",
+      "products": [
+        "beef",
+        "lamb"
+      ],
+      "otherProducts": "Bakery pies, barista coffee, ice cream and local condiments",
+      "hours": {
+        "kind": "weekly",
+        "days": {
+          "sun": [
+            [
+              "07:00",
+              "17:00"
+            ]
+          ],
+          "mon": [
+            [
+              "07:00",
+              "17:00"
+            ]
+          ],
+          "tue": [
+            [
+              "07:00",
+              "17:00"
+            ]
+          ],
+          "wed": [
+            [
+              "07:00",
+              "17:00"
+            ]
+          ],
+          "thu": [
+            [
+              "07:00",
+              "17:00"
+            ]
+          ],
+          "fri": [
+            [
+              "07:00",
+              "17:00"
+            ]
+          ],
+          "sat": [
+            [
+              "07:00",
+              "17:00"
+            ]
+          ]
+        },
+        "note": "Spring and summer hours shown. In autumn and winter it opens at 8am and still closes at 5pm. Open 7 days, including school and public holidays."
+      },
+      "hoursAsStated": "Spring & Summer 7AM-5PM; Autumn & Winter 8AM-5PM; 7 days a week including school holidays and public holidays.",
+      "website": "https://midwayfarmstall.com.au/",
+      "phone": "08 9539 9092",
+      "description": "Family-run roadside farm stall off the Forrest Highway that sells grass-fed lamb and beef raised on the owners' own farm, alongside pies, coffee and local goods.",
+      "sources": [
+        "https://midwayfarmstall.com.au/",
+        "https://www.maasdorpmeats.com/",
+        "https://www.maasdorpmeats.com/pages/faqs",
+        "https://www.maasdorpmeats.com/pages/contact"
+      ],
+      "meatEvidence": "The stall's own site says the lamb and beef are produced at Midway Farm Stall and sold under the farm's own Maasdorp Meats label, grass-fed and finished with regenerative practices (https://midwayfarmstall.com.au/). The Maasdorp Meats site says the meat is raised on the family's farms at West Pinjarra and West Coolup, and orders can be collected free at the stall (https://www.maasdorpmeats.com/pages/faqs).",
+      "confidence": "high",
+      "caveats": "The postcode was not shown on the business's own pages; a directory gave 6208, so check it. The stall says cuts run out between restocks and it does not do custom butchery orders."
+    },
+    {
+      "name": "Caves Farm (formerly Margaret River Venison)",
+      "type": "farm_shop",
+      "address": "5103 Caves Rd",
+      "locality": "Cowaramup",
+      "state": "WA",
+      "postcode": "6284",
+      "products": [
+        "beef",
+        "lamb",
+        "pork"
+      ],
+      "otherProducts": "Venison, venison smallgoods, WA seafood, bakery goods, cheese and condiments",
+      "hours": {
+        "kind": "weekly",
+        "days": {
+          "sun": [
+            [
+              "09:00",
+              "16:00"
+            ]
+          ],
+          "mon": [
+            [
+              "09:00",
+              "16:00"
+            ]
+          ],
+          "tue": [
+            [
+              "09:00",
+              "16:00"
+            ]
+          ],
+          "wed": [
+            [
+              "09:00",
+              "16:00"
+            ]
+          ],
+          "thu": [
+            [
+              "09:00",
+              "16:00"
+            ]
+          ],
+          "fri": [
+            [
+              "09:00",
+              "16:00"
+            ]
+          ],
+          "sat": [
+            [
+              "09:00",
+              "16:00"
+            ]
+          ]
+        },
+        "note": "Barista coffee is served 9am to 3:30pm daily."
+      },
+      "hoursAsStated": "Open 7 days 9am – 4pm.",
+      "website": "https://cavesfarm.com.au/",
+      "phone": "0434 990 736",
+      "description": "Working venison and Angus cattle farm on Caves Road whose farm shop sells meat from its own farm and the wider South West, including venison, beef, lamb and pork.",
+      "sources": [
+        "https://cavesfarm.com.au/"
+      ],
+      "meatEvidence": "The farm's own site says it is the original home of Margaret River Venison, farms red deer and Angus cattle on over 300 acres, and its Farm Shop offers premium meats from its own farm and the South West. The shop stocks venison, beef, and lamb and pork from the South West (https://cavesfarm.com.au/).",
+      "confidence": "high",
+      "caveats": "The page says the lamb and pork come from the South West, not from this farm. It does not say outright that all beef in the shop is from its own herd. Older directories gave a 4:30pm close; the current own site says 4pm. Corrected on verification: The site confirms the address (5103 Caves Rd, Cowaramup WA 6284), hours (open 7 days 9am-4pm, coffee 9:00am-3:30pm), its own Angus beef and venison, and lamb and pork 'from the South West'. The phone is wrong. The visible 'Where to find us' contact gives 0434990736. (08) 9755 5028 appears only in the page's hidden metadata, not as a published contact."
+    },
+    {
+      "name": "Albany Farm Fresh Foods (Frankland River Pork farm shop)",
+      "type": "farm_shop",
+      "address": "Unit 4/191 Chester Pass Road",
+      "locality": "Milpara",
+      "state": "WA",
+      "postcode": "",
+      "products": [
+        "pork",
+        "eggs",
+        "beef",
+        "chicken"
+      ],
+      "otherProducts": "Goat meat, gourmet groceries and hampers",
+      "hours": {
+        "kind": "weekly",
+        "days": {
+          "mon": [
+            [
+              "09:00",
+              "17:00"
+            ]
+          ],
+          "tue": [
+            [
+              "09:00",
+              "17:00"
+            ]
+          ],
+          "wed": [
+            [
+              "09:00",
+              "17:00"
+            ]
+          ],
+          "thu": [
+            [
+              "09:00",
+              "17:00"
+            ]
+          ],
+          "fri": [
+            [
+              "09:00",
+              "17:00"
+            ]
+          ],
+          "sat": [
+            [
+              "08:30",
+              "13:00"
+            ]
+          ]
+        },
+        "note": null
+      },
+      "hoursAsStated": "Farm Shop opening times: Monday to Friday 9am to 5pm; Saturday 8.30am to 1pm.",
+      "website": "https://www.albanyfarmfreshfoods.com.au/",
+      "phone": "0492 861 999",
+      "description": "Family-run farm shop in Albany selling the family's own free-range eggs and certified free-range Frankland River pork, along with other local meats and groceries.",
+      "sources": [
+        "https://www.albanyfarmfreshfoods.com.au/"
+      ],
+      "meatEvidence": "The business's own site says the family runs Albany Farm Fresh Eggs and launched Frankland River Pork, a free-range pork operation, and sells both through its farm shop. It also stocks local beef, chicken and goat (https://www.albanyfarmfreshfoods.com.au/).",
+      "confidence": "high",
+      "caveats": "The shop is on Chester Pass Road in Milpara (Albany), not at the farm; the site gives directions as 'turn in between McIntosh & Elders'. Only the pork and eggs are the family's own; the beef and chicken are bought from other local suppliers. The postcode is not shown on the site."
+    },
+    {
+      "name": "Galloway Springs Farm",
+      "type": "farm_shop",
+      "address": "25270 South Western Highway",
+      "locality": "Bridgetown",
+      "state": "WA",
+      "postcode": "6255",
+      "products": [
+        "chicken",
+        "fruit",
+        "veg"
+      ],
+      "otherProducts": "Spray-free garlic",
+      "hours": {
+        "kind": "weekly",
+        "days": {},
+        "note": "Shop open Wednesday to Saturday during daylight hours only. No clock times are published, so none are recorded here. Online orders can also be collected."
+      },
+      "hoursAsStated": "Shop hours: Wed - Sat, daylight hours only.",
+      "website": "https://gallowaysprings.com.au/",
+      "phone": "0411 468 480",
+      "description": "Regenerative farm just outside Bridgetown that raises pasture-raised chicken and grows seasonal produce, sold from its on-farm shop and through online orders for collection.",
+      "sources": [
+        "https://gallowaysprings.com.au/",
+        "https://www.gallowaysprings.com.au/copy-of-about-the-farm",
+        "https://www.gallowaysprings.com.au/visit-us"
+      ],
+      "meatEvidence": "The farm's own produce page says it offers produce at its farm store just outside Bridgetown, including pastured fresh chicken it raises and hand-processes (https://www.gallowaysprings.com.au/copy-of-about-the-farm).",
+      "confidence": "medium",
+      "caveats": "The hours give days only ('daylight hours'), with no clock times, so the days object is left empty and the details are in the note. The site also links a 'Shop Denmark' page, which was not checked. The published phone is labelled with a person's first name; the name was left out here. Corrected on verification: The home, produce and contact pages confirm 25270 South Western Highway, Bridgetown WA 6255, and the farm shop opening Wed-Sat in daylight hours only. The produce page says pastured fresh chicken is sold at the farm store. That page also lists seasonal fruit and veg the farm grows and spray-free garlic, so I added those as supported products. All other fields check out."
+    },
+    {
+      "name": "Boyanup & Districts Farmers Market",
+      "type": "farmers_market",
+      "address": "Boyanup Memorial Park, South Western Highway",
+      "locality": "Boyanup",
+      "state": "WA",
+      "postcode": "6237",
+      "products": [
+        "lamb",
+        "eggs",
+        "honey",
+        "fruit",
+        "veg"
+      ],
+      "otherProducts": "Goat meat, seafood, goat and sheep cheese, olive oil, nuts and plants",
+      "hours": {
+        "kind": "weekly",
+        "days": {
+          "sun": [
+            [
+              "08:00",
+              "12:00"
+            ]
+          ]
+        },
+        "note": "Held on the 4th Sunday of every month only, not every Sunday."
+      },
+      "hoursAsStated": "Held at Boyanup Memorial Park on the South Western Highway in Boyanup between 8am & 12 noon on the 4th Sunday of every month.",
+      "website": "https://boyanupfarmersmarket.com.au/",
+      "phone": null,
+      "description": "Monthly farmers market in Boyanup selling locally grown produce, pasture-fed lamb and goat meat, seafood, cheeses and more.",
+      "sources": [
+        "https://boyanupfarmersmarket.com.au/",
+        "https://boyanupfarmersmarket.com.au/contact.htm",
+        "https://boyanupfarmersmarket.com.au/about.htm"
+      ],
+      "meatEvidence": "The market's own home page says goat meat and lamb vans sell high quality pasture-fed meat products at the market (https://boyanupfarmersmarket.com.au/).",
+      "confidence": "medium",
+      "caveats": "The market runs monthly, so the app should show '4th Sunday' rather than every Sunday. The council page lists dates on 22 November and 27 December 2026. Neither page says whether the meat stalls are run by the farms that raise the animals. Corrected on verification: The cited Shire of Capel page now returns a 404, so I removed it from the sources. The market's own contact page confirms Boyanup Memorial Park, South Western Highway, 8am-12 noon on the 4th Sunday of every month. The home page names goat meat and lamb vans selling pasture-fed meat. The site has a 2026 calendar and a 2025/26 committee, which suggests it is still running. The site's business details give Boyanup WA 6237, so I added the postcode."
+    }
+  ],
+  "unverified": [
+    {
+      "name": "Earth Market Maitland (Slow Food Hunter Valley)",
+      "locality": "",
+      "state": "",
+      "why": "The market's own page confirms the location (The Levee, Central Maitland) and schedule (1st and 3rd Thursday, trading from 8am) but does not mention meat. The only meat mention ('fresh and cured meats') is on the Slow Food Foundation's background page about the market's early years.",
+      "leadUrl": "https://www.slowfoodhuntervalley.org.au/earth-market/",
+      "region": "nsw-act"
+    },
+    {
+      "name": "Tathra Place Free Range butcher shop, Belconnen",
+      "locality": "",
+      "state": "",
+      "why": "The farm's own site lists a shop at Capital Food Market, Shop T29, 10 Lathlain St, Belconnen ACT, open Mon to Sun 8am to 5:30pm. The page footer is dated 2015, and I could not confirm the shop is still trading.",
+      "leadUrl": "https://www.tathraplacefreerange.com/",
+      "region": "nsw-act"
+    },
+    {
+      "name": "Claystone Meats (Dickson, ACT)",
+      "locality": "",
+      "state": "",
+      "why": "A farmer-owned butchery (own Hereford and Angus cattle). The site only says 'open Tues to Sat at the Dickson shops', with no street address or times. It also works with other producers, so not all meat is its own.",
+      "leadUrl": "https://claystonemeats.com.au/",
+      "region": "nsw-act"
+    },
+    {
+      "name": "Mae Hill Farm (Mittagong)",
+      "locality": "",
+      "state": "",
+      "why": "Tourism sites describe a paddock-to-plate butcher shop. The farm's website would not load, and no page I opened gave hours.",
+      "leadUrl": "https://www.visitsouthernhighlands.com.au/operator/mae-hill-farm",
+      "region": "nsw-act"
+    },
+    {
+      "name": "Maugers Meats (Burrawang / Moss Vale / Bowral)",
+      "locality": "",
+      "state": "",
+      "why": "A farm-linked butcher selling its own beef and lamb. The own site blocked automated access (Cloudflare), and search snippets disagree on addresses and hours.",
+      "leadUrl": "https://visitsouthernhighlands.com.au/operator/maugers-meats",
+      "region": "nsw-act"
+    },
+    {
+      "name": "Merrifield Farm (Merriwa, Upper Hunter)",
+      "locality": "",
+      "state": "",
+      "why": "An undated newspaper story describes an on-farm butcher shop selling its own free-range pork and beef. The farm website would not resolve, and I found no hours.",
+      "leadUrl": "https://www.singletonargus.com.au/story/4433392/merriwas-free-range-pork-a-success/",
+      "region": "nsw-act"
+    },
+    {
+      "name": "Bundarra Berkshires Free Range Pork (Barham)",
+      "locality": "",
+      "state": "",
+      "why": "Tourism listings give 929 East Barham Road, Barham NSW 2732, but say to call for opening hours. The own site would not load.",
+      "leadUrl": "https://www.visitthemurray.com.au/products/bundarra-berkshires-free-range-pork",
+      "region": "nsw-act"
+    },
+    {
+      "name": "Bungendore Country Butchery",
+      "locality": "",
+      "state": "",
+      "why": "Search snippets say it sells lamb and beef from the family's own farm at 17 Gibraltar St. The own website would not load, and I opened no page confirming current hours.",
+      "leadUrl": "https://www.australianbutchersguild.com.au/the-blog/the-abg-blog/meat-mates--mastery--bungendores-butcher-shop-that-does-it-all/",
+      "region": "nsw-act"
+    },
+    {
+      "name": "Casaco Meats (Mudgee region)",
+      "locality": "",
+      "state": "",
+      "why": "Described in the Mudgee Guardian as the region's only on-farm butchery selling its own meat. I found no own website, address or hours.",
+      "leadUrl": "https://www.mudgeeguardian.com.au/story/6161914/casaco-meats-is-a-first-of-its-kind-in-the-mudgee-region/",
+      "region": "nsw-act"
+    },
+    {
+      "name": "Riverside Meats / Coraki Riverside Butchery",
+      "locality": "",
+      "state": "",
+      "why": "Reported to sell beef from the owners' own cattle, at Shop 1/77 Richmond Tce, Coraki. The own site would not load, and directory hours are unreliable.",
+      "leadUrl": "https://indynr.com/new-kid-on-the-butchers-block/",
+      "region": "nsw-act"
+    },
+    {
+      "name": "Majura Valley Farm (ACT)",
+      "locality": "",
+      "state": "",
+      "why": "The farm's site says the honesty farm-gate shop is open every day (eggs, produce). Lamb is offered only as a half-lamb box deposit, and the site gives no address.",
+      "leadUrl": "https://www.majuravalleyfarm.com.au/visit/",
+      "region": "nsw-act"
+    },
+    {
+      "name": "Redleaf Farm (Fitzroy Falls)",
+      "locality": "",
+      "state": "",
+      "why": "Raises its own pork, lamb and beef, but sells by enquiry. Its 'Farm Shop' page lists only gifts and firewood, with no meat counter or hours.",
+      "leadUrl": "https://redleaf-farm.com/",
+      "region": "nsw-act"
+    },
+    {
+      "name": "Mudgee Meat (82 Depot Road, Mudgee)",
+      "locality": "",
+      "state": "",
+      "why": "Visit Mudgee Region says visitors can buy local produce and tour the facility. It is a meat supplier, the page gives no hours, and it does not say the meat is its own.",
+      "leadUrl": "https://www.visitmudgeeregion.com.au/products/mudgee-meat",
+      "region": "nsw-act"
+    },
+    {
+      "name": "Melanda Park Free Range Pork (Sackville, Hawkesbury)",
+      "locality": "",
+      "state": "",
+      "why": "Pasture-raised pork farm. I found no farm gate, address or hours on any opened page.",
+      "leadUrl": "https://www.homebeautiful.com.au/entertaining/melanda-park-free-range-pork/",
+      "region": "nsw-act"
+    },
+    {
+      "name": "Boxgum Grazing (near Young)",
+      "locality": "",
+      "state": "",
+      "why": "Has an on-farm butchery, but sells through the Capital Region Farmers Market. I found no farm shop with stated hours.",
+      "leadUrl": "https://capitalregionfarmersmarket.com.au/2023/05/producer-in-focus-boxgum-grazing/",
+      "region": "nsw-act"
+    },
+    {
+      "name": "Mudgee Farmers Market / Bathurst Farmers Market / SAGE Farmers Market Moruya / Bungendore Southern Harvest Market",
+      "locality": "",
+      "state": "",
+      "why": "Search snippets suggest meat stalls, but the markets' own sites and the tourism pages I tried either would not load or returned 404, so I could not confirm meat, address or times from an opened page.",
+      "leadUrl": "https://visitcanberra.com.au/attractions/5db8cc7b0decd2e75a44da67/bungendore-southern-harvest-markets",
+      "region": "nsw-act"
+    },
+    {
+      "name": "Fork it Farm (Meatshed farm shop)",
+      "locality": "",
+      "state": "",
+      "why": "The farm's own site describes its own pork and dry-aged beef butchered on the farm, but now says most meat goes to restaurants and retailers, with public sales through a third-party click-and-collect store. It gives no farm shop opening days, and the Discover Tasmania listing returned a 404.",
+      "leadUrl": "https://www.forkitfarm.com.au/our-produce.html",
+      "region": "vic-tas"
+    },
+    {
+      "name": "Woolumbi Farm (Tyabb)",
+      "locality": "",
+      "state": "",
+      "why": "Its own domains (woolumbi.com and woolumbifarm.com.au) did not resolve. The Fri-Sun hours and the 233 Coolart Rd address appeared only in third-party directory snippets, which I did not open as evidence.",
+      "leadUrl": "https://www.farmtransparency.org/facilities/9752f-woolumbi-farm",
+      "region": "vic-tas"
+    },
+    {
+      "name": "Macca's Farm (Glen Forbes)",
+      "locality": "",
+      "state": "",
+      "why": "The farm's own site could not be reached. The Visit Bass Coast page returned an error, the Visit Phillip Island page was empty, and search snippets give conflicting opening days.",
+      "leadUrl": "https://www.visitphillipisland.com.au/products/maccas-farm-1",
+      "region": "vic-tas"
+    },
+    {
+      "name": "Hill Top Farm Meats (Cowes)",
+      "locality": "",
+      "state": "",
+      "why": "The only page claiming the cattle come from their own Phillip Island farm is on an unofficial-looking pages.dev site. The Visit Bass Coast listing returned an error, so I confirmed neither the hours nor that the meat is their own.",
+      "leadUrl": "https://www.visitphillipisland.com/listing/hill-top-farm-meats/",
+      "region": "vic-tas"
+    },
+    {
+      "name": "Mount Gnomon Farm (Penguin, TAS)",
+      "locality": "",
+      "state": "",
+      "why": "The farm's own site promotes a restaurant (currently marked temporarily closed), dome stays and events. It shows no retail meat shop or shop hours.",
+      "leadUrl": "https://mountgnomonfarm.com.au/",
+      "region": "vic-tas"
+    },
+    {
+      "name": "Our Mates' Farm (Geeveston, TAS)",
+      "locality": "",
+      "state": "",
+      "why": "The farm raises organic beef, lamb and pork, but its own 'Buy Our Stuff' page sends buyers to a Hobart butcher and other retailers. It shows no farm gate meat sales or opening times.",
+      "leadUrl": "https://www.ourmatesfarm.com/buy-our-stuff/",
+      "region": "vic-tas"
+    },
+    {
+      "name": "Walden Park (Spring Hill, Macedon Ranges)",
+      "locality": "",
+      "state": "",
+      "why": "The farm's own site sells beef hampers by email sign-up. It gives only the town, with no street address and no farm gate opening days.",
+      "leadUrl": "https://www.waldenpark.com.au/",
+      "region": "vic-tas"
+    },
+    {
+      "name": "Hanging Rock Beef (Newham)",
+      "locality": "",
+      "state": "",
+      "why": "The guessed domain returned nothing, and the only hours found were in a 2021 magazine article.",
+      "leadUrl": "https://issuu.com/daylesfordmacedonranges/docs/daylesford_macedon_life_spring_2021/s/13111988",
+      "region": "vic-tas"
+    },
+    {
+      "name": "Koonwarra Farmers Market",
+      "locality": "",
+      "state": "",
+      "why": "Visit Gippsland confirms it runs on the first Saturday of each month but does not mention meat. The market's own site (kfm.org.au) could not be reached, and the meat mentions came only from search snippets.",
+      "leadUrl": "https://www.visitgippsland.com.au/products/koonwarra-farmers-market",
+      "region": "vic-tas"
+    },
+    {
+      "name": "Fat Pig Farm (Glaziers Bay, TAS)",
+      "locality": "",
+      "state": "",
+      "why": "The farm's own site says it is slowly reopening for events and lunches. It shows no retail meat sales or shop hours, and lunches would count as a restaurant anyway.",
+      "leadUrl": "https://www.fatpig.farm/",
+      "region": "vic-tas"
+    },
+    {
+      "name": "Braised Tasmania / Arundel Farm (Derwent Valley, TAS)",
+      "locality": "",
+      "state": "",
+      "why": "Search results describe lamb from the family farm sold at the Hobart Farm Gate Market, or bought from the farm by arrangement. I opened no own-site page confirming a place to visit or opening days.",
+      "leadUrl": "https://tasmania.foodtourist.com/?p=3012",
+      "region": "vic-tas"
+    },
+    {
+      "name": "Inglis River Meats (Wynyard, TAS)",
+      "locality": "",
+      "state": "",
+      "why": "Only a MapQuest listing turned up. There is no own-site or official page showing hours, or that the meat is raised by the business.",
+      "leadUrl": "https://www.mapquest.com/au/tasmania/inglis-river-meats-seafood-794623237",
+      "region": "vic-tas"
+    },
+    {
+      "name": "Happy Pig Farm (Good Food Farm Shop)",
+      "locality": "",
+      "state": "",
+      "why": "The council tourism page gives an address (32 Cameron Road, Stanthorpe), hours and the farm's own smoked ham and bacon, but it is dated 2018. The farm's own website would not load, so I could not confirm it still trades.",
+      "leadUrl": "https://southerndownsandgranitebelt.com.au/attractions/agri-mining-and-industry/happy-pig-farm/",
+      "region": "qld-nt"
+    },
+    {
+      "name": "Eva Valley Meats (Old Cameron Downs, near Batchelor NT)",
+      "locality": "",
+      "state": "",
+      "why": "The farm's own site describes paddock-to-plate beef from its own cattle, but it reads as an online butcher with a quarter-carcass minimum. It gives only a PO Box and no visitable shop address or opening hours.",
+      "leadUrl": "https://www.evavalleymeats.com.au/",
+      "region": "qld-nt"
+    },
+    {
+      "name": "Eastwell Farms (Kin Kin)",
+      "locality": "",
+      "state": "",
+      "why": "The farm's own site is delivery-focused (grass-fed beef, chicken, lamb) and shows no farm-gate shop hours. A tourism listing gives 84 Moran Group Road, Kin Kin, but no trading times.",
+      "leadUrl": "https://www.eastwellfarms.com.au/",
+      "region": "qld-nt"
+    },
+    {
+      "name": "Tin Shed Farm (Crohamhurst)",
+      "locality": "",
+      "state": "",
+      "why": "Its own site confirms its own beef, pork and eggs and farm-gate pickup, but visits are by appointment only and the address is given out only on request, so there is no public address.",
+      "leadUrl": "https://tinshedfarm.net/",
+      "region": "qld-nt"
+    },
+    {
+      "name": "Rangeview Farm / Mary River Meats 24-hour butcher shop (Hunchy)",
+      "locality": "",
+      "state": "",
+      "why": "The site shows a 24-hour self-serve shop at 486 Hunchy Road (map embed). Its current stock includes bought-in items such as Inglewood chicken and smoked salmon, and it does not say the beef is from the farm. Only a news article said it sells the farm's own beef.",
+      "leadUrl": "https://www.rangeviewfarm.com.au/",
+      "region": "qld-nt"
+    },
+    {
+      "name": "Bamboo Park farm shop (Valdora)",
+      "locality": "",
+      "state": "",
+      "why": "The site says the farm shop sells its own pasture-raised pork and eggs, open daily 9am to 2pm. It also has a banner saying all Bamboo Park stock has moved to Fairhill Gardens, 114 Fairhill Road, Ninderry, so the current location of the pork sales is unclear.",
+      "leadUrl": "https://bamboopark.com.au/",
+      "region": "qld-nt"
+    },
+    {
+      "name": "Echo Valley Farm (Goomburra)",
+      "locality": "",
+      "state": "",
+      "why": "The farm's own site shows its own beef and pork and an on-farm butchery at 157 Forest Springs Goomburra Rd, but sales run as weekly online orders delivered on Saturdays. I found no public shop hours or stated farm pickup.",
+      "leadUrl": "https://www.echovalley.com.au/pages/4goods-meathouse",
+      "region": "qld-nt"
+    },
+    {
+      "name": "Yajambee Farms (Mt Mee)",
+      "locality": "",
+      "state": "",
+      "why": "Reports mention an on-farm shop pickup for its own grass-fed beef, but no official website could be reached and I opened no page giving hours.",
+      "leadUrl": "https://www.visitmoretonbayregion.com.au/directory/yajambee-farms-luxury-farm-stay",
+      "region": "qld-nt"
+    },
+    {
+      "name": "Tommerup's Dairy Farm larder (Kerry, Scenic Rim)",
+      "locality": "",
+      "state": "",
+      "why": "Event listings mention a farm larder selling its own milk-fed pork and rose veal on market days, but the farm's own website did not load and I found no regular opening days.",
+      "leadUrl": "https://events.humanitix.com/tommerup-s-farm-market-day-qtpjtrq7",
+      "region": "qld-nt"
+    },
+    {
+      "name": "Bronel Natural Foods butcher (Murgon)",
+      "locality": "",
+      "state": "",
+      "why": "A butcher shop owned by graziers who sell their own cattle, but the only address found is in a 2013 news article and no official site could be reached to confirm current trading or hours.",
+      "leadUrl": "https://southburnett.com.au/news2/2013/09/26/graziers-buy-own-butcher-shop/",
+      "region": "qld-nt"
+    },
+    {
+      "name": "Wright Cut Meats (Cooroy)",
+      "locality": "",
+      "state": "",
+      "why": "News coverage says a cattle-farming family owns it and sells its own beef, but I opened no page from the business itself or an official body showing its address and hours.",
+      "leadUrl": "https://noosatoday.com.au/?p=92680",
+      "region": "qld-nt"
+    },
+    {
+      "name": "Granite Belt Farmers Market (Stanthorpe)",
+      "locality": "",
+      "state": "",
+      "why": "The council produce map lists meats among its products, but no market website loaded and listings disagree on the day (Friday or Saturday) and the address.",
+      "leadUrl": "https://southerndownsandgranitebelt.com.au/food-maps/farm-and-produce-map/",
+      "region": "qld-nt"
+    },
+    {
+      "name": "Picots Farm / Warwick Farmers Market",
+      "locality": "",
+      "state": "",
+      "why": "Picots Farm's own site says it sells its grass-fed beef at the Warwick Farmers Market (Saturdays 7 to 11am, Queens Park). The same site also says it would be back in beef 'later in 2021', so its current supply is uncertain, and I opened no page from the market itself.",
+      "leadUrl": "https://www.picotsfarm.com.au/",
+      "region": "qld-nt"
+    },
+    {
+      "name": "Carnevore",
+      "locality": "",
+      "state": "",
+      "why": "The farm's own site confirms the address (156 Cyanide Rd, Mt Torrens SA 5244) and that it raises and butchers its own grass-fed beef. It publishes no shop opening days or hours, and the SA tourism page that may list farm-gate days would not render as text.",
+      "leadUrl": "https://carnevore.com.au/",
+      "region": "sa-wa"
+    },
+    {
+      "name": "Lessismore Farm Shop (Myponga Beach, Fleurieu)",
+      "locality": "",
+      "state": "",
+      "why": "Its own website (lessismorefarm.com) returned an error page, and the Fleurieu tourism listing is JavaScript-only, so neither hours nor current products could be confirmed from an opened page.",
+      "leadUrl": "https://fleurieupeninsula.com.au/products/fleurieu-peninsula/food-and-drink/lessismore-farm-shop",
+      "region": "sa-wa"
+    },
+    {
+      "name": "Gum Park Beef (Mount Jagged, Fleurieu)",
+      "locality": "",
+      "state": "",
+      "why": "Its own site confirms its own grass-fed beef and free-range pork and an on-farm butchery. It gives no shop address or opening hours, only a phone and order form, and its Farmers Markets page is missing.",
+      "leadUrl": "https://gumparkbeef.com.au/butchery/",
+      "region": "sa-wa"
+    },
+    {
+      "name": "Pfitzner Meats & Butchery (Nairne, Adelaide Hills)",
+      "locality": "",
+      "state": "",
+      "why": "Its own site gives a shop address (Shop 5, 121 Old Princes Highway, Nairne 5252) and says the meat comes from the family's own paddocks. No opening hours were found on the pages opened.",
+      "leadUrl": "https://www.pfitznermeats.com.au/",
+      "region": "sa-wa"
+    },
+    {
+      "name": "Denmark Grass Fed Meats (Denmark, WA)",
+      "locality": "",
+      "state": "",
+      "why": "Shop hours and an address (Shop 8/63 Strickland St) appear only on a private travel-guide site and Facebook. No own website or official page was found to confirm them.",
+      "leadUrl": "https://rainbowcoast.com.au/guide-features/denmark-grass-fed-meats",
+      "region": "sa-wa"
+    },
+    {
+      "name": "Margaret River Organic Farmer (Rosa Brook, WA)",
+      "locality": "",
+      "state": "",
+      "why": "Its own site confirms its own grass-finished beef and lamb and a mudbrick farm shop open monthly and by appointment. It gives no street address, only 'Rosa Brook'.",
+      "leadUrl": "https://www.mrorganicfarmer.com/produce",
+      "region": "sa-wa"
+    },
+    {
+      "name": "Chestnut Brae (Carlotta, WA)",
+      "locality": "",
+      "state": "",
+      "why": "Its own site confirms the address (106 McKittrick Road, Carlotta WA 6275), opening times of 10am to 4pm every day except Tuesday, and chestnut-fed pork. It describes its shop as delivering, so it is unclear whether pork can be bought on site.",
+      "leadUrl": "https://www.chestnutbrae.com.au/",
+      "region": "sa-wa"
+    },
+    {
+      "name": "Open Gate Farms (Langhorne Creek, SA)",
+      "locality": "",
+      "state": "",
+      "why": "Its own site mentions farm gate sales of its own grass-fed beef and pasture-raised turkey but publishes no address or farm-gate days or hours.",
+      "leadUrl": "https://www.opengatefarms.com.au/",
+      "region": "sa-wa"
+    },
+    {
+      "name": "Organic & Biodynamic Meats WA (Donnybrook)",
+      "locality": "",
+      "state": "",
+      "why": "The only hours seen were in a chamber-of-commerce directory snippet (that page did not render). The co-op's old domain is parked and no street address was found.",
+      "leadUrl": "https://collierivervalley.com.au/local-listings/organic-biodynamic-meats-wa",
+      "region": "sa-wa"
+    },
+    {
+      "name": "Gloria Dieu Farm (Mount Barker, WA)",
+      "locality": "",
+      "state": "",
+      "why": "Said to sell its own grass-fed lamb from a farm shop on Muir Highway, but the local listing returned 404 and no own site loaded, so hours could not be confirmed.",
+      "leadUrl": "https://mountbarkerwa.com.au/business/gloria-dieu-farm/",
+      "region": "sa-wa"
+    },
+    {
+      "name": "Mount Gambier Farmers Market",
+      "locality": "",
+      "state": "",
+      "why": "The council event page returned 404 and the market's own domain shows a Wix error. Meat stallholders were seen only in old news articles.",
+      "leadUrl": "https://discovermountgambier.com.au/",
+      "region": "sa-wa"
+    },
+    {
+      "name": "Stoney Banks Farm (Mount Pleasant, SA)",
+      "locality": "",
+      "state": "",
+      "why": "A directory says it sells its own Dorper lamb at the farm gate, but its website returned no content, so address and hours were not confirmed.",
+      "leadUrl": "http://www.stoneybanksfarm.com.au/",
+      "region": "sa-wa"
+    },
+    {
+      "name": "Garryowen Direct Grassfed Beef (Riverton, SA)",
+      "locality": "",
+      "state": "",
+      "why": "A directory says it sells its own Hereford beef from the farm gate, but its website would not load.",
+      "leadUrl": "http://www.garryowen.com.au/",
+      "region": "sa-wa"
+    },
+    {
+      "name": "Serpentine Jarrahdale Farmers Market (Mundijong, WA)",
+      "locality": "",
+      "state": "",
+      "why": "The market's own site returned no content, and the shire event page that loaded had no readable market details. Meat stalls were seen only in older news reports.",
+      "leadUrl": "https://sjfarmersmarket.com.au/",
+      "region": "sa-wa"
+    },
+    {
+      "name": "Kwoorabup Community Market (Denmark, WA)",
+      "locality": "",
+      "state": "",
+      "why": "Local meat and Sunday 9am to 1pm hours appear only in an RAC travel article from search results. No official page was opened.",
+      "leadUrl": "https://rac.com.au/horizons/explore/farmers-markets-wa",
+      "region": "sa-wa"
+    },
+    {
+      "name": "The Co-op Growers Market (Bowral)",
+      "locality": "",
+      "state": "",
+      "why": "Dropped on verification: The Destination Southern Highlands page loads and confirms Bowral Co-op, 85 Kirkham Road, every Thursday 2:30pm-6pm. But it only says 'farm fresh meat' with no species named, and it does not say the meat is sold by the farmers who raised it. That is the only source; the market has no site of its own. Because no meat species can be recorded and direct-from-farm meat sales cannot be confirmed, this entry does not meet the meat-direct test. It could be listed separately as a general produce market.",
+      "leadUrl": ""
+    },
+    {
+      "name": "McIvor Farm Foods",
+      "locality": "",
+      "state": "",
+      "why": "Dropped on verification: The page gives the farm gate shop address but its regular opening days are missing from the text. Only 'Other days by appointment, call ahead' appears, and the only number is a personal mobile under a first name. The site's hidden business-hours data says Friday 9am-3pm, which conflicts with the earlier search summary (Thu/Fri 10am-4pm), so opening days cannot be confirmed. The page also only says beef and lamb are sold through the online shop, not at the farm gate, and nothing on it says 'near Heathcote'. The description is therefore unsupported.",
+      "leadUrl": ""
+    },
+    {
+      "name": "Yarra Valley Free Range Pork",
+      "locality": "",
+      "state": "",
+      "why": "Dropped on verification: The farm's own page confirms it raises Large Black pigs and allows farm-gate pickup in Macclesfield with two weeks' notice. But no page on that site carries a date, and the main domain largeblackpigs.com.au did not load. The street address and 'by appointment' hours come only from the Cardinia Farm and Food Directory, a community directory dated 'May 14' with no year, not an official council page. I cannot confirm the farm trades now or confirm the address from an acceptable source.",
+      "leadUrl": ""
+    },
+    {
+      "name": "The Fat Butcher",
+      "locality": "",
+      "state": "",
+      "why": "Dropped on verification: The only evidence is one undated regional tourism listing (heathcote.org.au), which describes it as a 'new' shop. The business has no website of its own, and I could not run a search to check it still trades because the search budget was used up. It is also a town butcher shop, not a shop at the farm: only the pork and lamb are said to come from the owners' farm, and beef and chicken are bought in, so the products and the farm_shop type are both overstated. It cannot be confirmed as operating now.",
+      "leadUrl": ""
+    },
+    {
+      "name": "Shingle Hut Creek Farm",
+      "locality": "",
+      "state": "",
+      "why": "Dropped on verification: The Lockyer Valley council visitor page does describe farm-gate beef sales by appointment at 35 Bonnell Rd, Thornton 4341, plus the Mulgowie market. But the page is undated, the farm's own website (shinglehutcreek.com.au, linked from that page) returned nothing when I tried to open it, and the search budget had run out, so I could not confirm the farm still trades. When uncertain, drop.",
+      "leadUrl": ""
+    },
+    {
+      "name": "Running Creek Beef - Farm Pantry",
+      "locality": "",
+      "state": "",
+      "why": "Dropped on verification: The visit.brisbane.qld.au listing (taken from ATDW) gives the address and farm-gate beef sales from the Farm Pantry by appointment. But the farm's own site, runningcreekbeef.com.au, would not load when I tried it (no response), the listing is undated, and the search budget had run out, so I could not confirm the business still trades. Visits are by appointment only, so there are no set hours to check either. When uncertain, drop.",
+      "leadUrl": ""
+    },
+    {
+      "name": "Kalamunda Farmers Market",
+      "locality": "",
+      "state": "",
+      "why": "Dropped on verification: The site lists only 'organic meat' and names no species, so the entry adds no confirmed beef, lamb, pork or chicken. It also may not be current: the 'Upcoming Market' panel still shows 19/01/2025 and the footer says © 2021. I cannot confirm it is a direct-meat outlet operating now.",
+      "leadUrl": ""
+    },
+    {
+      "name": "Goolwa Produce & Artisans Market (Cittaslow Goolwa)",
+      "locality": "",
+      "state": "",
+      "why": "Dropped on verification: The organiser's own page confirms the dates, times and Jaralde Park location but does not mention meat. The only meat claim is on the Visit Alexandrina listing, which is dated: it is worded in the future tense ('will be sourced') and its hours note refers to 2021. I cannot confirm that beef or lamb is sold there now.",
+      "leadUrl": ""
+    }
+  ]
+}
