@@ -10,7 +10,7 @@
       "state": "NSW",
       "postcode": "2250",
       "products": [],
-      "otherProducts": "Locally grown farm produce alongside artisan food, bakery stalls and coffee/brew, as described on the market's site.",
+      "otherProducts": "Locally grown farm produce alongside artisan food, bakery stalls and coffee/brew.",
       "tags": [],
       "hours": {
         "kind": "weekly",
@@ -62,7 +62,7 @@
             ]
           ]
         },
-        "note": "The NSW Government event page lists individual Saturday dates; a few Saturdays (for example 23 May 2026) are not listed."
+        "note": "Some Saturdays are skipped; check the market's Facebook page."
       },
       "hoursAsStated": "Saturdays, 7:30am to 11:30am (individual dates listed on the NSW Government events page through December 2026).",
       "website": "https://www.facebook.com/Lismore.Farmers.Market/",
@@ -86,7 +86,7 @@
         "fruit",
         "veg"
       ],
-      "otherProducts": "Stallholder categories on the site include vegetables, fruit and herbs, honey, artisan condiments and native bushfoods; the site describes fresh organic produce from local farmers.",
+      "otherProducts": "Vegetables, fruit and herbs, honey, artisan condiments and native bushfoods.",
       "tags": [],
       "hours": {
         "kind": "weekly",
@@ -98,7 +98,7 @@
             ]
           ]
         },
-        "note": "Site notes a change to Wednesday 23 December 2026 (Christmas Day falls on a Friday) and open on Friday 1 January 2027."
+        "note": "Moves to Wednesday 23 December 2026 (Christmas Day is a Friday) and opens on Friday 1 January 2027."
       },
       "hoursAsStated": "Every Friday from 7am to 11am.",
       "website": "https://mullumfarmersmarket.org.au/",
@@ -139,7 +139,7 @@
         "note": null
       },
       "hoursAsStated": "Open 8.30am to 1.00pm every Saturday.",
-      "website": "https://visitgreatoceanroad.org.au/great-ocean-road-adventures/torquay-farmers-market",
+      "website": null,
       "phone": null,
       "description": "A weekly Saturday market selling local fresh produce and artisan foods.",
       "sources": [
@@ -165,11 +165,18 @@
       "tags": [],
       "hours": {
         "kind": "weekly",
-        "days": {},
-        "note": "Second Saturday of each month, 9am to 12.30pm (not expressible as weekly days)."
+        "days": {
+          "sat": [
+            [
+              "09:00",
+              "12:30"
+            ]
+          ]
+        },
+        "note": "Second Saturday of each month only."
       },
       "hoursAsStated": "The second Saturday of each month from 9am - 12.30pm.",
-      "website": "https://www.bendigoregion.com.au/explore-bendigo/local-farmers-market",
+      "website": null,
       "phone": null,
       "description": "A monthly market where regional farmers sell seasonal produce directly.",
       "sources": [
@@ -229,7 +236,7 @@
       "hoursAsStated": "Open Thursday-Monday, 10am-4.30pm (kitchen last orders 3pm); Fridays open until 6pm; closed Tuesday and Wednesday; seasonal October-May.",
       "website": "https://theberrydairy.com.au/",
       "phone": "03 4148 9821",
-      "description": "A family-run pick-your-own strawberry farm and farm cafe in Gippsland, open for the 2026 season.",
+      "description": "A family-run pick-your-own strawberry farm and farm cafe in Gippsland, open October to May.",
       "sources": [
         "https://theberrydairy.com.au/",
         "https://theberrydairy.com.au/plan-your-visit/"
@@ -311,7 +318,7 @@
       "caveats": "Page does not carry a dated 2026 notice; picking start is described as mid-November and depends on the fruit. Site copyright runs to 2027."
     },
     {
-      "name": "Hillwood Berries (Pick Your Own farm and farmgate cafe)",
+      "name": "Hillwood Berries",
       "type": "farm",
       "address": "105 Hillwood Road",
       "locality": "Hillwood",
@@ -368,7 +375,7 @@
             ]
           ]
         },
-        "note": "Hours quoted are for the farmgate cafe; the site says to follow Facebook for seasonal opening hours."
+        "note": "Hours are for the farmgate cafe. Seasonal opening hours are posted on the farm's Facebook page."
       },
       "hoursAsStated": "Cafe is open everyday from 10am - 4pm. Follow us on Facebook for frequent updates on our offering and seasonal opening hours.",
       "website": "https://www.hillwoodberries.com.au",
@@ -389,7 +396,7 @@
       "state": "TAS",
       "postcode": "7109",
       "products": [],
-      "otherProducts": "Goat milk soap and lotions, goat cheese and seasonal farm produce, per the Huon Valley Council directory.",
+      "otherProducts": "Goat milk soap and lotions, goat cheese and seasonal farm produce.",
       "tags": [],
       "hours": {
         "kind": "weekly",
@@ -401,7 +408,7 @@
             ]
           ]
         },
-        "note": "The council directory lists Thursday to Sunday 10am-4pm instead."
+        "note": "Some listings give Thursday to Sunday 10am to 4pm, so check before you go."
       },
       "hoursAsStated": "Own site: from 11am to 4pm Sundays. Council directory: Thursdays to Sundays 10am to 4pm.",
       "website": "https://touchwoodfarm.com",
@@ -422,7 +429,7 @@
       "state": "NSW",
       "postcode": "",
       "products": [],
-      "otherProducts": "Working apiary with hands-on tours and honey tastings; the listing does not itemise what is sold.",
+      "otherProducts": "Working apiary with hands-on tours and honey tastings.",
       "tags": [],
       "hours": {
         "kind": "weekly",
@@ -512,7 +519,7 @@
       "caveats": "A 2024 local news article gave 9am start; the current tourism listing's 8:30am used. Phone is on tourism page only."
     },
     {
-      "name": "Myrtlebank Roaming Farms Farmgate (The Chook House)",
+      "name": "Myrtlebank Roaming Farms",
       "type": "farm_gate_stall",
       "address": "1030 Maffra-Sale Road",
       "locality": "Myrtlebank",
@@ -525,14 +532,57 @@
       "otherProducts": "Online shop lists ready-to-eat meals, baked goods, fresh produce, pantry items and vegetables as well.",
       "tags": [],
       "hours": {
-        "kind": "always",
-        "days": {},
-        "note": "Own site: open daily, 7.30am to 7.30pm. Wellington Shire tourism page lists 7am-8pm."
+        "kind": "weekly",
+        "days": {
+          "sun": [
+            [
+              "07:30",
+              "19:30"
+            ]
+          ],
+          "mon": [
+            [
+              "07:30",
+              "19:30"
+            ]
+          ],
+          "tue": [
+            [
+              "07:30",
+              "19:30"
+            ]
+          ],
+          "wed": [
+            [
+              "07:30",
+              "19:30"
+            ]
+          ],
+          "thu": [
+            [
+              "07:30",
+              "19:30"
+            ]
+          ],
+          "fri": [
+            [
+              "07:30",
+              "19:30"
+            ]
+          ],
+          "sat": [
+            [
+              "07:30",
+              "19:30"
+            ]
+          ]
+        },
+        "note": "Some listings give 7am to 8pm."
       },
       "hoursAsStated": "Open 365 days a year, from 7.30am to 7.30pm.",
       "website": "https://www.myrtlebankfarm.com",
       "phone": null,
-      "description": "A farm shop selling eggs from the farm's free-range hens and grass-fed Black Angus beef.",
+      "description": "The Chook House farm shop, selling eggs from the farm's free-range hens and grass-fed Black Angus beef.",
       "sources": [
         "https://www.myrtlebankfarm.com",
         "https://themiddleofeverywhere.com.au/en/profiles/myrtlebank-roaming-farms-farmgate"
@@ -599,7 +649,7 @@
             ]
           ]
         },
-        "note": "Farm picking 10am-3pm when fruit is available; the site says to call ahead."
+        "note": "Farm picking 10am to 3pm when fruit is available; call ahead."
       },
       "hoursAsStated": "Cafe and shop open 7 days, 8:00am-5:00pm. Farm 10:00am-3:00pm when fruit is available for picking.",
       "website": "https://bilpinfruitbowl.com.au/",

@@ -37,8 +37,8 @@
       [
         "expo-location",
         {
-          "locationWhenInUsePermission": "Farm Direct uses your location to show farms, stalls and markets near you. It is only used while the app is open.",
-          "locationAlwaysAndWhenInUsePermission": "Farm Direct uses your location to show farms, stalls and markets near you.",
+          "locationWhenInUsePermission": "Farm Direct uses your location only while you are using the app, to show how far farms, stalls and markets are from you.",
+          "locationAlwaysAndWhenInUsePermission": "Farm Direct uses your location only while you are using the app, to show how far farms, stalls and markets are from you. It never tracks you in the background.",
           "motionUsagePermission": false
         }
       ],
@@ -53,6 +53,9 @@
     ],
     "experiments": {
       "typedRoutes": false
+    },
+    "updates": {
+      "enabled": false
     },
     "runtimeVersion": {
       "policy": "appVersion"

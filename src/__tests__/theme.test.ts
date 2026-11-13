@@ -1,4 +1,4 @@
-import { darkPalette, lightPalette, MIN_TAP, type, type Palette } from '../theme';
+import { darkPalette, highContrastPalette, lightPalette, MIN_TAP, type, type Palette } from '../theme';
 
 type RGB = [number, number, number];
 
@@ -78,6 +78,38 @@ describe.each([
 
   it('every palette key is a hex colour', () => {
     for (const v of Object.values(palette)) expect(v).toMatch(/^#[0-9A-Fa-f]{6}([0-9A-Fa-f]{2})?$/);
+  });
+});
+
+describe.each([
+  ['light', lightPalette],
+  ['dark', darkPalette],
+] as const)('footnote text (%s)', (_mode, palette) => {
+  // Section headers and footers are footnote-size secondaryLabel on groupedBackground.
+  it('secondaryLabel footnotes on groupedBackground meet AA (4.5:1)', () => {
+    expect(contrast(palette.secondaryLabel, palette.groupedBackground, palette.groupedBackground)).toBeGreaterThanOrEqual(4.5);
+  });
+});
+
+describe.each([
+  ['light', lightPalette, highContrastPalette.light],
+  ['dark', darkPalette, highContrastPalette.dark],
+] as const)('Increase Contrast (%s)', (_mode, palette, hc) => {
+  it('only overrides existing keys with hex colours', () => {
+    for (const [k, v] of Object.entries(hc)) {
+      expect(Object.keys(palette)).toContain(k);
+      expect(v).toMatch(/^#[0-9A-Fa-f]{6}$/);
+    }
+  });
+
+  it('secondaryLabel is at least as strong as the normal value and meets AAA (7:1) on cell and groupedBackground', () => {
+    const hcSecondary = hc.secondaryLabel!;
+    for (const bg of ['cell', 'groupedBackground', 'background'] as const) {
+      const normal = contrast(palette.secondaryLabel, palette[bg], palette[bg]);
+      const high = contrast(hcSecondary, palette[bg], palette[bg]);
+      expect(high).toBeGreaterThan(normal);
+      expect(high).toBeGreaterThanOrEqual(7);
+    }
   });
 });
 

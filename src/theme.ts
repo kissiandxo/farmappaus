@@ -4,7 +4,8 @@
  * Rules: never write a hex value in a screen; use `colors`, `type`, `space`, `radius`.
  *
  * `colors` adapt to dark mode by themselves on iOS (system `PlatformColor`s and
- * `DynamicColorIOS` for brand colours), so they work inside static `StyleSheet.create`.
+ * `DynamicColorIOS` for brand colours and `secondaryLabel`), so they work inside static
+ * `StyleSheet.create`. `secondaryLabel` also follows Increase Contrast (`highContrastPalette`).
  * On web, Android and Jest they fall back to the light hex values.
  * `lightPalette` / `darkPalette` are the plain hex versions (tests, React Navigation theme).
  */
@@ -14,7 +15,12 @@ import { DynamicColorIOS, PlatformColor, Platform, StyleSheet, type ColorValue, 
 export interface Palette {
   /** Primary text. */
   label: string;
-  /** Secondary text (meta, captions, values). Meets AA on background, groupedBackground and cell. */
+  /**
+   * Secondary text (meta, captions, footnotes, values). Meets AA (4.5:1) on background,
+   * groupedBackground and cell in both modes. On iOS this is an opaque `DynamicColorIOS`
+   * (not the system `secondaryLabel`, whose 60% alpha is only ~3.3:1 on groupedBackground),
+   * with darker / lighter values when Increase Contrast is on (`highContrastPalette`).
+   */
   secondaryLabel: string;
   /** Decorative / disabled text and large empty-state symbols. Not for essential text. */
   tertiaryLabel: string;
@@ -32,7 +38,7 @@ export interface Palette {
   fill: string;
   /** Brand green; buttons, links, selected state. AA as text on background/cell. */
   tint: string;
-  /** Tint at ~15% for tinted buttons and soft badges. */
+  /** Tint at ~10% (light) / ~22% (dark) for tinted buttons and soft badges. */
   tintFill: string;
   /** Content on a solid `tint` surface. */
   onTint: string;
@@ -46,7 +52,7 @@ export interface Palette {
   greenFill: string;
   /** Orange at ~15% (badge / notice background). */
   orangeFill: string;
-  /** Red at ~15% (badge / notice background). */
+  /** Red at ~10% (light) / ~15% (dark) (badge / notice background, destructive tinted button). */
   redFill: string;
   /** Map pin: shop. AA as a fill under `onPin` glyphs and as text on cell. */
   blue: string;
@@ -69,14 +75,14 @@ export const lightPalette: Palette = {
   separator: '#C6C6C8',
   fill: '#7676801F',
   tint: '#1B7335',
-  tintFill: '#1B733526',
+  tintFill: '#1B73351A',
   onTint: '#FFFFFF',
   green: '#1B7335',
   orange: '#9C4A00',
   red: '#C40012',
   greenFill: '#1B733526',
   orangeFill: '#9C4A0026',
-  redFill: '#C4001226',
+  redFill: '#C400121A',
   blue: '#0A5AC8',
   purple: '#8944AB',
   onPin: '#FFFFFF',
@@ -110,18 +116,37 @@ export const darkPalette: Palette = {
   shadow: '#000000',
 };
 
+/**
+ * Values used on iOS when the user turns on Settings > Accessibility > Increase Contrast.
+ * Only the keys listed here change; everything else keeps its normal value.
+ */
+export const highContrastPalette: { light: Partial<Palette>; dark: Partial<Palette> } = {
+  light: { secondaryLabel: '#48484A' },
+  dark: { secondaryLabel: '#C7C7CC' },
+};
+
 /** True when native iOS dynamic colours can be used (not web, Android or Jest). */
 const useNativeColors = Platform.OS === 'ios' && typeof process !== 'undefined' && !process.env?.JEST_WORKER_ID;
 
-const dyn = (key: keyof Palette): ColorValue =>
-  useNativeColors ? DynamicColorIOS({ light: lightPalette[key], dark: darkPalette[key] }) : lightPalette[key];
+const dyn = (key: keyof Palette): ColorValue => {
+  if (!useNativeColors) return lightPalette[key];
+  const hcLight = highContrastPalette.light[key];
+  const hcDark = highContrastPalette.dark[key];
+  return DynamicColorIOS({
+    light: lightPalette[key],
+    dark: darkPalette[key],
+    ...(hcLight ? { highContrastLight: hcLight } : null),
+    ...(hcDark ? { highContrastDark: hcDark } : null),
+  });
+};
 
 const sys = (key: keyof Palette, systemName: string): ColorValue =>
   useNativeColors ? PlatformColor(systemName) : lightPalette[key];
 
 const base = {
   label: sys('label', 'label'),
-  secondaryLabel: sys('secondaryLabel', 'secondaryLabel'),
+  // Opaque brand value, not PlatformColor('secondaryLabel') (translucent, ~3.3:1 on groupedBackground).
+  secondaryLabel: dyn('secondaryLabel'),
   tertiaryLabel: sys('tertiaryLabel', 'tertiaryLabel'),
   placeholder: sys('placeholder', 'placeholderText'),
   background: sys('background', 'systemBackground'),

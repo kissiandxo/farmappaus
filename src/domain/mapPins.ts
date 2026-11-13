@@ -22,3 +22,15 @@ export const PIN_STYLES: Record<VenueType, PinStyle> = {
 export function pinStyle(type: VenueType): PinStyle {
   return PIN_STYLES[type];
 }
+
+/**
+ * VoiceOver label for a place's pin: name, kind of place, opening status, and whether the pin is only the
+ * suburb centre. E.g. "Bilpin Fruit Bowl, Farm shop, Opens today 8:00 am, approximate location".
+ */
+export function pinAccessibilityLabel(
+  farm: { name: string; type: VenueType; locationApprox?: boolean },
+  statusLabel: string,
+): string {
+  const parts = [farm.name, PIN_STYLES[farm.type].label, statusLabel];
+  return parts.join(', ') + (farm.locationApprox ? ', approximate location' : '');
+}

@@ -128,7 +128,7 @@
       "state": "WA",
       "postcode": "6010",
       "products": [],
-      "otherProducts": "Fresh produce sold by farm stalls, plus food, drink and bread stalls (the site has separate pages for farm stalls, drinks and food, brunch and bread, and other stalls).",
+      "otherProducts": "Fresh produce from farm stalls, plus food, drink and bread stalls.",
       "tags": [],
       "hours": {
         "kind": "weekly",
@@ -160,7 +160,7 @@
       "state": "WA",
       "postcode": "",
       "products": [],
-      "otherProducts": "Garden and farmers market run by the Mundaring Chamber of Commerce; stall mix not itemised on the page.",
+      "otherProducts": null,
       "tags": [],
       "hours": {
         "kind": "weekly",
@@ -172,12 +172,13 @@
             ]
           ]
         },
-        "note": "Shire listing shows every Saturday from 14 Nov to 19 Dec 2026."
+        "irregular": true,
+        "note": "Saturdays 8am to noon. Dates are confirmed only to 19 December 2026, so check before you go."
       },
       "hoursAsStated": "Open every Saturday from 8-12.",
       "website": "https://www.mundaringchamberofcommerce.com.au",
       "phone": null,
-      "description": "Weekly Saturday garden and farmers market near the Sculpture Park in Mundaring, listed by the Shire of Mundaring.",
+      "description": "Weekly Saturday garden and farmers market near the Sculpture Park in Mundaring.",
       "sources": [
         "https://www.mundaring.wa.gov.au/events/mundaring-garden-and-farmers-market/1135"
       ],
@@ -192,7 +193,7 @@
       "state": "WA",
       "postcode": "6021",
       "products": [],
-      "otherProducts": "Site says it sells only produce direct from the grower or maker, plus community stalls.",
+      "otherProducts": "Only produce direct from the grower or maker, plus community stalls.",
       "tags": [],
       "hours": {
         "kind": "weekly",
@@ -224,7 +225,7 @@
       "state": "SA",
       "postcode": "",
       "products": [],
-      "otherProducts": "Stallholders include fresh seasonal produce, baked goods, coffee and live music; site has a What's In Season page.",
+      "otherProducts": "Fresh seasonal produce, baked goods, coffee and live music.",
       "tags": [],
       "hours": {
         "kind": "weekly",
@@ -332,9 +333,17 @@
       "otherProducts": "Farmhouse cheeses, tasting room, picnic supplies and local produce such as chutneys, relishes, vinegars, juices and cheese pastes; Jersey Girl cafe.",
       "tags": [],
       "hours": {
-        "kind": "always",
-        "days": {},
-        "note": "Site says the cafe and cheese tastings are open daily; no times given on the pages opened."
+        "kind": "weekly",
+        "days": {
+          "sun": [],
+          "mon": [],
+          "tue": [],
+          "wed": [],
+          "thu": [],
+          "fri": [],
+          "sat": []
+        },
+        "note": "Cafe and cheese tastings open daily; times not published. Call before visiting."
       },
       "hoursAsStated": "Jersey Girl Cafe open daily for cheese tastings (no times stated).",
       "website": "https://www.stanthorpecheese.com.au",
@@ -357,7 +366,7 @@
       "products": [
         "fruit"
       ],
-      "otherProducts": "Farm grows strawberries; shop range not itemised on the page opened.",
+      "otherProducts": "The farm grows strawberries.",
       "tags": [],
       "hours": {
         "kind": "weekly",
@@ -426,7 +435,7 @@
       "state": "SA",
       "postcode": "",
       "products": [],
-      "otherProducts": "Per Visit Adelaide Hills: fresh seasonal produce, baked goods, honey, olive oil, eggs, meat and seafood, plants, flowers, fruit products, cheese and milk, coffee.",
+      "otherProducts": "Fresh seasonal produce, baked goods, honey, olive oil, eggs, meat and seafood, plants, flowers, fruit products, cheese and milk, coffee.",
       "tags": [],
       "hours": {
         "kind": "weekly",
@@ -459,7 +468,7 @@
       "state": "QLD",
       "postcode": "",
       "products": [],
-      "otherProducts": "Per the regional guide: local fruit, vegetables and other produce.",
+      "otherProducts": "Fruit, vegetables, deli products and local meat.",
       "tags": [],
       "hours": {
         "kind": "weekly",
@@ -474,9 +483,9 @@
         "note": ""
       },
       "hoursAsStated": "Open 6am-12pm every Saturday. Described as one of the largest produce markets on the coast with fruit, veg, deli products and local meat.",
-      "website": "https://www.visitsunshinecoast.com/guide/harvest-sunshine-at-these-sunshine-coast-farmers-markets",
+      "website": null,
       "phone": null,
-      "description": "Sunshine Coast produce market listed by Visit Sunshine Coast.",
+      "description": "Saturday morning produce market described by Visit Sunshine Coast as one of the largest on the coast.",
       "sources": [
         "https://www.visitsunshinecoast.com/guide/harvest-sunshine-at-these-sunshine-coast-farmers-markets"
       ],
@@ -491,7 +500,7 @@
       "state": "QLD",
       "postcode": "",
       "products": [],
-      "otherProducts": "Per the regional guide: local fruit, vegetables and other produce.",
+      "otherProducts": "Local fruit, vegetables and other produce.",
       "tags": [],
       "hours": {
         "kind": "weekly",
@@ -506,9 +515,9 @@
         "note": ""
       },
       "hoursAsStated": "Every Saturday from 7am-12pm.",
-      "website": "https://www.visitsunshinecoast.com/guide/harvest-sunshine-at-these-sunshine-coast-farmers-markets",
+      "website": null,
       "phone": null,
-      "description": "Sunshine Coast produce market listed by Visit Sunshine Coast.",
+      "description": "Saturday morning farmers market in Kawana Waters.",
       "sources": [
         "https://www.visitsunshinecoast.com/guide/harvest-sunshine-at-these-sunshine-coast-farmers-markets"
       ],
@@ -518,12 +527,12 @@
     {
       "name": "Marcoola Farmers Market",
       "type": "farmers_market",
-      "address": null,
+      "address": "Berry Keeper",
       "locality": "Marcoola",
       "state": "QLD",
       "postcode": "",
       "products": [],
-      "otherProducts": "Per the regional guide: local fruit, vegetables and other produce.",
+      "otherProducts": "Organic fruit and vegetables, meats and cheese.",
       "tags": [],
       "hours": {
         "kind": "weekly",
@@ -538,9 +547,9 @@
         "note": ""
       },
       "hoursAsStated": "Saturday mornings from 8am-12pm; guide mentions organic fruit and veg, meats and cheese.",
-      "website": "https://www.visitsunshinecoast.com/guide/harvest-sunshine-at-these-sunshine-coast-farmers-markets",
+      "website": null,
       "phone": null,
-      "description": "Sunshine Coast produce market listed by Visit Sunshine Coast.",
+      "description": "Saturday morning farmers market at Berry Keeper in Marcoola.",
       "sources": [
         "https://www.visitsunshinecoast.com/guide/harvest-sunshine-at-these-sunshine-coast-farmers-markets"
       ],
@@ -608,7 +617,7 @@
       "hoursAsStated": "Our shop is open Monday to Sunday from 10 am - 3 pm.",
       "website": "https://www.malenycheese.com.au",
       "phone": "(07) 5494 2207",
-      "description": "Hinterland dairy processor with a retail shop and cafe beside its cheese factory; site says it also has its own dairy farm.",
+      "description": "Hinterland dairy processor with a retail shop and cafe beside its cheese factory and its own dairy farm.",
       "sources": [
         "https://www.malenycheese.com.au",
         "https://www.malenycheese.com.au/where-to-buy"
@@ -624,7 +633,7 @@
       "state": "QLD",
       "postcode": "",
       "products": [],
-      "otherProducts": "Per Experience Gold Coast: produce from local growers, olives, sourdough and bakery items, spice mixes, flowers, local honey, hot smoked salmon.",
+      "otherProducts": "Produce from local growers, olives, sourdough and bakery items, spice mixes, flowers, local honey, hot smoked salmon.",
       "tags": [],
       "hours": {
         "kind": "weekly",
@@ -639,7 +648,7 @@
         "note": "Plastic-bag-free market."
       },
       "hoursAsStated": "Saturday, 6am - 11.30am.",
-      "website": "https://www.destinationgoldcoast.com/blog/gold-coast-markets-scene/",
+      "website": null,
       "phone": null,
       "description": "Saturday school-grounds farmers market on the southern Gold Coast.",
       "sources": [
@@ -656,7 +665,7 @@
       "state": "QLD",
       "postcode": "",
       "products": [],
-      "otherProducts": "Per Experience Gold Coast: fresh fruit and in-season vegetables, preserves, local honey, flowers, plus food trucks and a barista.",
+      "otherProducts": "Fresh fruit and in-season vegetables, preserves, local honey, flowers, plus food trucks and a barista.",
       "tags": [],
       "hours": {
         "kind": "weekly",
@@ -671,7 +680,7 @@
         "note": "Rain, hail or shine."
       },
       "hoursAsStated": "Every Saturday from 7am, rain, hail or shine (tourism blog); 7am to 12pm (Scout Magazine guide).",
-      "website": "https://www.destinationgoldcoast.com/blog/gold-coast-markets-scene/",
+      "website": null,
       "phone": null,
       "description": "Saturday beachside farmers market in the grounds of Burleigh Heads State School.",
       "sources": [
@@ -689,7 +698,7 @@
       "state": "QLD",
       "postcode": "",
       "products": [],
-      "otherProducts": "Per Experience Gold Coast: fresh fruit, vegetables, flowers, health food, plus breakfast and coffee.",
+      "otherProducts": "Fresh fruit, vegetables, flowers, health food, plus breakfast and coffee.",
       "tags": [],
       "hours": {
         "kind": "weekly",
@@ -704,7 +713,7 @@
         "note": ""
       },
       "hoursAsStated": "Saturday, 6am-11am.",
-      "website": "https://www.destinationgoldcoast.com/blog/gold-coast-markets-scene/",
+      "website": null,
       "phone": null,
       "description": "Saturday farmers market at Helensvale State High School on the northern Gold Coast.",
       "sources": [
@@ -721,7 +730,7 @@
       "state": "QLD",
       "postcode": "",
       "products": [],
-      "otherProducts": "Per Experience Gold Coast: meats, honey, preserves, artisan ingredients and natural health products.",
+      "otherProducts": "Meats, honey, preserves, artisan ingredients and natural health products.",
       "tags": [
         "organic"
       ],
@@ -738,7 +747,7 @@
         "note": ""
       },
       "hoursAsStated": "Sundays, 6am - 11am.",
-      "website": "https://www.destinationgoldcoast.com/blog/gold-coast-markets-scene/",
+      "website": null,
       "phone": null,
       "description": "Sunday market described as selling certified organically grown produce, held at Merrimac State High School.",
       "sources": [
@@ -788,7 +797,7 @@
       "state": "NT",
       "postcode": "",
       "products": [],
-      "otherProducts": "Local products and produce; stall mix not itemised.",
+      "otherProducts": "Local products and produce.",
       "tags": [],
       "hours": {
         "kind": "weekly",
@@ -800,10 +809,11 @@
             ]
           ]
         },
-        "note": "Runs April to December."
+        "note": "Runs April to December.",
+        "irregular": true
       },
       "hoursAsStated": "Every Sunday between April to December from 8am to 1pm.",
-      "website": "https://northernterritory.com/articles/markets-in-the-nt",
+      "website": null,
       "phone": null,
       "description": "Sunday community market under rain trees in Batchelor, near Litchfield National Park.",
       "sources": [

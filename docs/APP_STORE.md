@@ -1,6 +1,8 @@
 # App Store listing: Farm Direct 1.0 (directory launch)
 
-Text for App Store Connect, in Australian English. Version 1.0.0 is a **free directory with no accounts**: 87 real places from public sources, with list, filters, map, farm pages, saved places and directions. It has no backend. Everything below promises only what this build does. Limits are Apple's; each count is the number of characters in the text as written here.
+Text for App Store Connect, in Australian English. Version 1.0.0 is a **free directory with no accounts and no backend**: 106 real places from public sources, with search, filters (type of place, produce including a Meat shortcut, distance, and when you can go), a map, place pages with Share and Nearby, saved places and directions. Everything below promises only what this build does. Limits are Apple's; each count is the number of characters in the text as written here (curly apostrophes count as one).
+
+**The place counts used below** (from `src/data/realListings.json`, built 13 Nov 2026): 106 places in all eight states and territories (67 farmers' markets, 26 farm shops, 8 farms, 5 farm-gate stalls). 41 list beef, lamb, pork or chicken; 25 of those are farmers' markets and 16 are farm shops (12), farms (3) or farm-gate stalls (1). If the listings are rebuilt, recount and update every number here (`docs/REAL_LISTINGS.md` shows how).
 
 ## Basics
 
@@ -15,28 +17,31 @@ Text for App Store Connect, in Australian English. Version 1.0.0 is a **free dir
 | Marketing URL | Optional, leave blank | |
 | Privacy policy URL | *Owner to supply* (host `docs/PRIVACY.md`) | |
 
-## Promotional text (145 / 170)
+## Promotional text (161 / 170)
 
-Find farmers’ markets, farm shops and farm-gate stalls near you. See them on a map, check opening hours, save your favourites and get directions.
+Find farmers’ markets, farm shops and farm-gate stalls near you, including 41 places that list beef, lamb, pork or chicken. Check the hours, then get directions.
 
-## Keywords (97 / 100)
+## Keywords (93 / 100)
 
-`farmers market,farm shop,farm gate,local food,fresh produce,eggs,honey,fruit,vegetables,meat,milk`
+`farmers market,farm shop,farm gate,local food,meat,beef,lamb,pork,eggs,honey,fruit,vegetables`
 
-Comma-separated, no spaces after commas. Words already in the name, subtitle or category are not repeated. There is no "organic" or "free range" here because the places in 1.0 do not carry those labels.
+Comma-separated, no spaces after commas. There is no "organic", "free range" or "grass fed" here because the places in 1.0 carry no such labels in the app (some descriptions mention them, but the app has no tag data for unclaimed places), and no "butcher" because no listing is a butcher's shop.
 
-## Description (1612 / 4000)
+## Description (2140 / 4000)
 
-Farm Direct is a free directory of farmers’ markets, farm shops and farm-gate stalls across Australia. Find good local food near you, check when a place is open, and get there.
+Farm Direct is a free directory of farmers’ markets, farm shops, farms and farm-gate stalls across Australia. Find good local food, check when a place is open, and get there.
 
-The app starts with 87 places in every state and territory, taken from public sources such as each place’s own website and council or tourism pages. Their owners haven’t confirmed the details yet, so the app says so, and shows where each place’s details came from.
+The app starts with 106 real places in every state and territory: 67 farmers’ markets, 26 farm shops, 8 farms and 5 farm-gate stalls. 41 of them list beef, lamb, pork or chicken, and 16 of those are farm shops, farms or farm-gate stalls rather than markets. The details come from public sources such as each place’s own website and council or tourism pages. The owners haven’t confirmed them yet, so the app says so and shows where each place’s details came from.
 
-• See places on a list, sorted by distance, or on a map with pins
+• Search by name, town, postcode or produce
+• Filter by type of place: farmers’ markets, farm shops, farm-gate stalls or farms
+• Filter by what’s sold: milk, eggs, chicken, beef, lamb, pork, honey, fruit or vegetables, with one Meat button for beef, lamb, pork and chicken
+• Choose when you can go: any time, open now, or this weekend, with this weekend’s published times on each place
+• Choose how far you’ll travel, and see places on a list sorted by distance or on a map
 • Use your location, or search any suburb or postcode
-• Filter by what you’re after: milk, eggs, chicken, beef, lamb, pork, honey, fruit and vegetables
-• Choose how far you’ll travel, or show only places open now
 • See opening hours, address, phone and website where a place has published them
-• Get driving directions in Apple Maps
+• Get directions in Apple Maps, and share a place with a friend
+• See up to three other places nearby on each place page
 • Save the places you like. They stay on your iPhone
 • Works without reception: the places are built into the app, so the list and your saved places are always there (maps need a connection)
 • Large text that follows your iPhone’s text size setting, with light and dark appearance
@@ -49,9 +54,11 @@ Run a farm, stall or market? Get in touch from the About tab and we’ll help yo
 
 Farm Direct is a directory only. It doesn’t sell or deliver anything, and there are no payments in the app.
 
-## What's New (1.0)
+The "Report a problem" and "Get in touch" sentences are only true when the build has a support email (`SUPPORT_EMAIL`, see the checklist). Never submit a build without one.
 
-Welcome to Farm Direct. Find farmers' markets, farm shops and farm-gate stalls near you.
+## What's New (1.0) (140 / 4000)
+
+Welcome to Farm Direct. Find farmers’ markets, farm shops and farm-gate stalls near you, including 41 that list beef, lamb, pork or chicken.
 
 ## Age rating
 
@@ -60,10 +67,10 @@ Answer Apple's questionnaire honestly. Expect **4+**.
 | Question | Answer |
 |---|---|
 | Cartoon or fantasy violence, realistic violence, sexual content or nudity, profanity, horror, mature themes | None |
-| Alcohol, tobacco or drug references | None |
+| Alcohol, tobacco or drug references | None. Some places' descriptions or "also sold" text mention wine or cider made there; this is a factual product mention, not promotion. If you want to be careful, answer "Infrequent/Mild" for alcohol references |
 | Medical or treatment information | None |
 | Simulated gambling, contests | None |
-| Unrestricted web access | **No.** Place pages link to the place's own website, which opens in the system browser (Safari), not inside the app. |
+| Unrestricted web access | **No.** Place pages link to the place's own website and its sources, which open in the system browser (Safari), not inside the app. |
 | User-generated content | **No.** There are no accounts and nobody can post inside the app. |
 
 ## App Privacy (the "nutrition label")
@@ -75,61 +82,72 @@ Answer Apple's questionnaire honestly. Expect **4+**.
 | Do you or third parties collect data from this app? | **No** (Data Not Collected) |
 | Tracking | **No.** No ads, no analytics, no tracking SDKs |
 | Location | Used on the iPhone only, to measure distances, and never sent to us. Not collected |
-| Saved places and last location | Stored on the iPhone only. Not collected |
+| Saved places, last location and whether the location prompt was dismissed | Stored on the iPhone only. Not collected |
+| Search text and filters | Kept in memory on the iPhone only, never stored or sent. Not collected |
 | Contact info | Not collected. Emails people choose to send us are written in their own mail app and are ordinary email, not data collected by the app |
+| Sharing a place | Uses the iOS share sheet; the person chooses where it goes. Nothing is sent to us |
 | Apple Maps | Apple's own service, covered by Apple's privacy policy |
 
-Before you submit, check that no build variable turns on a backend: leave `EXPO_PUBLIC_SUPABASE_URL` and `EXPO_PUBLIC_SUPABASE_ANON_KEY` empty for 1.0. If a build ever has them set, the accounts version collects data and these answers (and the policy) must change; `docs/PRIVACY.md` already describes that case.
+Before you submit, check that no build variable turns on a backend: leave `EXPO_PUBLIC_SUPABASE_URL` and `EXPO_PUBLIC_SUPABASE_ANON_KEY` empty for 1.0 (the TestFlight workflow refuses them unless run by hand with **with_backend**). If a build ever has them set, the accounts version collects data and these answers (and the policy) must change; `docs/PRIVACY.md` already describes that case.
 
 ## Notes for App Review
 
 > **No sign-in is needed.** Farm Direct 1.0 is a free directory with no accounts, no payments and no purchases. Everything works from the first launch.
 >
-> **Where the data comes from:** the 87 places are real farmers' markets, farm shops and farm-gate stalls, researched from public sources (each place's own website, council and tourism pages). They are shown as "Unclaimed" because their owners have not confirmed them, and each place page lists its sources. Nothing is invented. Nobody can post content in the app.
+> **Reviewers outside Australia:** the app starts at Sydney NSW 2000. Tap the location at the top and search e.g. "Brisbane 4000", "Perth 6000" or "Hobart 7000".
+>
+> **Where the data comes from:** the 106 places are real farmers' markets, farm shops, farms and farm-gate stalls, researched from public sources (each place's own website, council and tourism pages). They are shown as "Unclaimed" because their owners have not confirmed them, and each place page lists its sources. Nothing is invented. Nobody can post content in the app.
 >
 > **How to try each feature:**
-> 1. First launch shows a short welcome. Tap **Get started**.
-> 2. **Explore** tab: list of places sorted by distance. Tap **Filters** to choose produce, distance or "Open now". The location button at the top sets your suburb or postcode.
-> 3. **Map** tab: pins for each place. Tap a pin for a card with **Directions**. The location button on the map asks for location permission (optional).
-> 4. Tap any place: hours, address, produce, sources, **Directions** (opens Apple Maps), **Call** and **Website** where the place published them, and **Save**.
-> 5. **Saved** tab: places you saved. They are stored on the device only.
-> 6. **About** tab: what the app is, **Suggest a place**, **Own a farm, stall or market?**, **Contact us** (each opens a pre-filled email), **Privacy policy**, the OpenStreetMap credit and the app version.
+> 1. First launch shows a short welcome. Tap **Use my location** (optional; asks for location permission), **Choose a suburb**, or **Not now**. No sign-in.
+> 2. **Explore** tab: places sorted by distance. Type in the search bar (name, town, postcode or produce, e.g. "lamb" or "Tasmania"). Tap **Filters** for the type of place, produce (the **Meat** button selects beef, lamb, pork and chicken), distance, and **When**: Any time, Open now or This weekend (each place then shows this weekend's times). The location at the top sets your suburb or postcode.
+> 3. **Map** tab: pins for each place, grouped when zoomed out (tap a group to zoom in). Tap a pin for a card with **Directions**, **Share** and **Save**. The locate button asks for location permission (optional).
+> 4. Tap any place: hours, address, produce, sources, **Directions** (opens Apple Maps), **Call** and **Website** where the place published them, **Save**, **Share** (top right), and up to three **Nearby** places within 60 km.
+> 5. **Saved** tab: places you saved, stored on the device only. Touch and hold a place to remove it, get directions or share it.
+> 6. **About** tab: what the app is, **Suggest a place**, **Contact us**, **List or claim your place** (each opens a pre-filled email), **Privacy policy**, the OpenStreetMap credit and the app version.
 >
-> **Location:** used only when you tap "Use my current location" or the locate button, to show nearby places. The app works fully without it: you can search any suburb or postcode instead. Location is never sent anywhere.
+> **Location:** used only when you tap "Use my location" on the welcome screen, "Use my current location" in the location sheet, or the locate button on the map, and only while the app is in use, to show nearby places. The app works fully without it: you can search any suburb or postcode instead. Location is never sent anywhere.
+>
+> **Email rows** open the Mail app (or another mail app). If none is set up, the app shows the address with a Share button instead.
 >
 > **Contact:** *[review contact name]*, *[phone]*, *[email]*.
 
-## Screenshots to take
+## Screenshots
 
-Use the largest iPhone you have (6.9 inch); App Store Connect scales them. Take them from the real 1.0 build, in light mode, with a location set to a suburb that has several places nearby (for example a capital city).
+`.github/workflows/screenshots.yml` takes these on a 6.9-inch iPhone simulator from a screenshot-mode build (location set to Sydney NSW 2000, welcome skipped, three places pre-saved). App Store Connect scales them for smaller iPhones. The scene list lives in `SCREENSHOT_SCENES` in `src/config.ts`; a test keeps it and the workflow in step.
 
-1. Explore: list of nearby places with the suburb at the top
-2. Filters open (a produce type selected, distance chosen)
-3. Map with pins
-4. A place page with its hours, produce and **Directions**
-5. A place page showing sources and the "Is this your place?" row
-6. Saved places (save two or three first)
-7. About tab
+| File | Scene |
+|---|---|
+| `01-explore` | Explore, location set, no filters |
+| `02-explore-meat` | Explore with the Meat filter on (beef, lamb, pork and chicken) |
+| `03-map` | Map with pins |
+| `04-place-meat` | Torello Farm (Dromana VIC): a farm shop selling its own grass-fed beef and lamb, open 7 days |
+| `05-place-market` | Barossa Farmers Market (Angaston SA): a weekly Saturday market listing chicken and lamb |
+| `06-saved` | Saved, with Torello Farm, Barossa Farmers Market and Beerenberg Farm |
+| `07-explore-dark` | Explore again, no filters, in dark appearance |
 
-Do not show the empty Saved state or any screen with a test location. Every place has no photos, so no screenshot should expect one.
+Look at every image before you upload it. Every place has no photos, so no screenshot should expect one. Do not upload a screenshot that shows a contact row unless the build had the real support email.
 
 ## What you must supply before you submit
 
-- [ ] **Support email.** Set the GitHub repository variable `SUPPORT_EMAIL` (Settings, Secrets and variables, Actions, Variables). The workflow passes it to the app as `EXPO_PUBLIC_SUPPORT_EMAIL`. Without it the app hides "Suggest a place", "Own a farm...", "Contact us", "Report a problem" and "Is this your place?", and the description promises of reporting and claiming would be wrong. Use an address you read daily.
-- [ ] **Support URL.** A simple public page with the support email, or a `mailto:` link page. Required by App Store Connect.
-- [ ] **Privacy policy URL.** Host `docs/PRIVACY.md` (generated by `npm run build:privacy`) at a public address. Have it reviewed by an Australian privacy lawyer.
+- [ ] **Support email.** Set the GitHub repository variable `SUPPORT_EMAIL` (Settings, Secrets and variables, Actions, Variables). The workflow passes it to the app as `EXPO_PUBLIC_SUPPORT_EMAIL`. Without it the build still runs (with a warning), but the app hides "Suggest a place", "Contact us", "List or claim your place", "Report a problem" and "Is this your place?", and the description above would be wrong. Use an address you read daily. **Do not submit a build made without it.**
+- [ ] **Operator name.** Set the repository variable `OPERATOR_NAME` (your legal name or business name; add the ABN if you have one) so the privacy policy says who runs the app.
+- [ ] **Support URL.** A simple public page with the support email. Required by App Store Connect.
+- [ ] **Privacy policy URL.** Host `docs/PRIVACY.md` (regenerate it with `npm run build:privacy` and the two variables set) at a public address. Have it reviewed by an Australian privacy lawyer.
 - [ ] **App Review contact:** first and last name, phone number (with country code) and email.
 - [ ] **Copyright line**, for example "2026 Your Name".
-- [ ] App name "Farm Direct" is free in App Store Connect (otherwise choose another and change `name` in `app.json`).
+- [ ] **Postcode data licence.** Check the licence of the bundled suburb and postcode list (`docs/DATA.md`) allows use in a published app, and add any credit it requires.
+- [ ] **App ID.** `au.farmdirect.app` is registered with the Sign in with Apple capability (see `docs/RELEASE.md`), and the app name "Farm Direct" is free in App Store Connect (otherwise choose another and change `name` in `app.json`).
 - [ ] Screenshots uploaded, age rating questionnaire answered, App Privacy set to **Data Not Collected**, price set to Free.
 - [ ] Export compliance: the app only uses Apple's standard encryption, already declared with `ITSAppUsesNonExemptEncryption: false`.
-- [ ] Bundle ID in `app.json` (`au.farmdirect.app`) matches App Store Connect. Version is 1.0.0.
+- [ ] Version is 1.0.0 in `app.json` and `package.json`.
 - [ ] Supabase variables are **not** set for this build.
-- [ ] Phone check on the TestFlight build: the welcome screen shows "Get started" (no sign-in), the About tab has the three email rows, "Report a problem" opens a pre-filled email, a place with no phone number has no Call button, location denied still lets you search by suburb.
+- [ ] Phone check on the TestFlight build (see "Not checked on a device" in `docs/POLISH_PLAN.md`): the welcome shows Use my location / Choose a suburb / Not now (no sign-in); search, the Meat button and This weekend filter the list; the map pins, groups and place card work; Share opens the share sheet; the About tab has the three email rows; "Report a problem" opens a pre-filled email; a place with no phone number has no Call button; with location denied you can still search by suburb.
 
 ## Review risks to be aware of
 
-- **Guideline 4.2 (minimum functionality).** A directory is acceptable when it is useful and polished. The map, filters, hours-aware "open now", saved places and directions are the answer; lead with them in the review notes and screenshots.
-- **Guideline 5.2 / data accuracy.** Listings come from public sources and are labelled "Unclaimed", with sources shown. Be ready to remove a place quickly if its owner asks (email, then rebuild).
-- **Email rows rely on the Mail app or another mail client** being set up on the reviewer's device. If none is, tapping shows an alert ("Couldn't open that") rather than doing nothing. Say so in the review notes if you want to be safe.
+- **Guideline 4.2 (minimum functionality).** A directory is acceptable when it is useful and polished. Search, the filters (including This weekend and Meat), the map, hours-aware "Open now", Nearby, Share, saved places and directions are the answer; lead with them in the review notes and screenshots.
+- **Guideline 5.2 / data accuracy.** Listings come from public sources and are labelled "Unclaimed", with sources shown. Be ready to remove a place quickly if its owner asks (fix the research, rebuild, submit a new build: there are no over-the-air updates in 1.0).
+- **Email rows rely on a mail app** being set up on the reviewer's device. If none is set up, tapping an email row shows an alert with the address and a Share address button, rather than doing nothing.
 - **Sign in with Apple** is still declared in `app.json` (`usesAppleSignIn`) but the 1.0 build offers no sign-in. If App Review asks, the answer is that accounts are not part of 1.0.
+- **Meat, eggs and milk are listed as advertised by each place.** The place page says licences have not been checked for unclaimed places. The app sells nothing.

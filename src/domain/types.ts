@@ -20,6 +20,16 @@ export const VENUE_LABELS: Record<VenueType, string> = {
   farmers_market: "Farmers' market",
 };
 
+/** Venue types in the order the type filter offers them. */
+export const VENUE_TYPES: VenueType[] = ['farmers_market', 'farm_shop', 'farm_gate_stall', 'farm'];
+
+export const VENUE_PLURAL_LABELS: Record<VenueType, string> = {
+  farmers_market: "Farmers' markets",
+  farm_shop: 'Farm shops',
+  farm_gate_stall: 'Farm-gate stalls',
+  farm: 'Farms',
+};
+
 export type ProductCategory =
   | 'milk'
   | 'eggs'
@@ -54,6 +64,18 @@ export const PRODUCT_LABELS: Record<ProductCategory, string> = {
   fruit: 'Fruit',
   veg: 'Vegetables',
 };
+
+/**
+ * Order the produce filter shows categories in (most-looked-for first). PRODUCT_CATEGORIES keeps its
+ * order because the farmer editors use it.
+ */
+export const PRODUCT_DISPLAY_ORDER: ProductCategory[] = (() => {
+  const first: ProductCategory[] = ['fruit', 'veg', 'eggs', 'honey', 'milk', 'beef', 'lamb', 'chicken', 'pork'];
+  return [...first, ...PRODUCT_CATEGORIES.filter((c) => !first.includes(c))];
+})();
+
+/** The categories the "Meat" filter chip stands for. */
+export const MEAT_CATEGORIES: readonly ProductCategory[] = ['beef', 'lamb', 'pork', 'chicken'];
 
 export type FarmTag = 'free_range' | 'grass_fed' | 'organic' | 'pasture_raised' | 'spray_free';
 

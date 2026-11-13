@@ -1,6 +1,6 @@
 import { ActivityIndicator, Pressable, StyleSheet, View } from 'react-native';
 
-import { colors, MIN_TAP, radius, space } from '../../theme';
+import { colors, hairline, MIN_TAP, radius, space } from '../../theme';
 import { Icon, type SFSymbol } from '../ui';
 
 interface RoundButtonProps {
@@ -64,6 +64,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: colors.cell,
+    // A hairline keeps the edge visible on a dark map, where the shadow disappears.
+    borderWidth: hairline,
+    borderColor: colors.separator,
     shadowColor: colors.shadow,
     shadowOpacity: 0.18,
     shadowRadius: 8,

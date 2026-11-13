@@ -31,8 +31,10 @@ export function timezoneForState(state: StateCode): string {
 export interface OpenStatus {
   isOpen: boolean;
   kind: 'open' | 'closed' | 'always' | 'appointment' | 'irregular';
-  /** Plain-English summary, e.g. "Open now · closes 4:00 pm". */
+  /** Plain-English summary, e.g. "Open now · closes 4:00 pm" or "Opens today 8:00 am". */
   label: string;
+  /** True when the place is closed now but opens later today (the Explore card colours this). */
+  opensToday?: boolean;
 }
 
 /** Current weekday and minutes since midnight in the given IANA time zone. */
@@ -122,8 +124,63 @@ export function copyToWeekdays(days: WeeklyDays): WeeklyDays {
 export interface HoursLine {
   label: string;
   text: string;
-  /** Set for weekly rows so the current day can be highlighted. */
+  /** Set for single-day weekly rows so the current day can be highlighted. */
   day?: DayKey;
+  /** The days a (possibly merged) summary row covers, so today can be highlighted on "Mon – Fri". */
+  days?: DayKey[];
+}
+
+const SHORT_DAY = (day: DayKey) => DAY_LABELS[day].slice(0, 3);
+
+function formatRanges(ranges: readonly TimeRange[]): string {
+  return ranges
+    .map(([open, close]) => `${formatMinutes(parseMinutes(open))} – ${formatMinutes(parseMinutes(close))}`)
+    .join(', ');
+}
+
+function runLabel(run: DayKey[]): string {
+  if (run.length === 7) return 'Every day';
+  if (run.length === 1) return DAY_LABELS[run[0]];
+  return `${SHORT_DAY(run[0])} – ${SHORT_DAY(run[run.length - 1])}`;
+}
+
+/**
+ * Compact opening-hours rows for the place page: consecutive days (Monday first) with the same times are
+ * merged ("Mon – Fri", "Sat – Sun", "Every day"). With only one or two open days, those days are listed and
+ * the rest become one "Other days · Closed" row. Use `hoursLines` for the full seven-day table.
+ */
+export function hoursSummary(hours: OpeningHours): HoursLine[] {
+  if (hours.kind !== 'weekly') return hoursLines(hours);
+  const textFor = (day: DayKey) => {
+    const ranges = hours.days[day] ?? [];
+    return ranges.length === 0 ? 'Closed' : formatRanges(ranges);
+  };
+  const openDays = WEEK_ORDER.filter((day) => (hours.days[day] ?? []).length > 0);
+  if (openDays.length === 0) return hoursLines(hours);
+
+  // Runs of consecutive days with identical text.
+  const runs: { days: DayKey[]; text: string }[] = [];
+  for (const day of WEEK_ORDER) {
+    const text = textFor(day);
+    const last = runs[runs.length - 1];
+    if (last && last.text === text) last.days.push(day);
+    else runs.push({ days: [day], text });
+  }
+
+  const toLine = (run: { days: DayKey[]; text: string }): HoursLine => ({
+    label: runLabel(run.days),
+    text: run.text,
+    days: run.days,
+    ...(run.days.length === 1 ? { day: run.days[0] } : {}),
+  });
+
+  if (openDays.length <= 2) {
+    const closedDays = WEEK_ORDER.filter((day) => !openDays.includes(day));
+    const lines = runs.filter((run) => run.text !== 'Closed').map(toLine);
+    if (closedDays.length > 0) lines.push({ label: 'Other days', text: 'Closed', days: closedDays });
+    return lines;
+  }
+  return runs.map(toLine);
 }
 
 /** Display rows for an opening-hours table, Monday first. */
@@ -138,12 +195,7 @@ export function hoursLines(hours: OpeningHours): HoursLine[] {
     return {
       label: DAY_LABELS[day],
       day,
-      text:
-        ranges.length === 0
-          ? 'Closed'
-          : ranges
-              .map(([open, close]) => `${formatMinutes(parseMinutes(open))} – ${formatMinutes(parseMinutes(close))}`)
-              .join(', '),
+      text: ranges.length === 0 ? 'Closed' : formatRanges(ranges),
     };
   });
 }
@@ -183,11 +235,37 @@ export function openStatus(hours: OpeningHours, timeZone: string, now: Date): Op
       .sort((a, b) => a - b);
     if (starts.length > 0) {
       const when = formatMinutes(starts[0]);
-      const prefix =
-        offset === 0 ? '' : offset === 1 ? 'tomorrow ' : `${DAY_LABELS[dayKey].slice(0, 3)} `;
-      return { isOpen: false, kind: 'closed', label: `Closed · opens ${prefix}${when}` };
+      const dayWord = offset === 0 ? 'today' : offset === 1 ? 'tomorrow' : SHORT_DAY(dayKey);
+      return {
+        isOpen: false,
+        kind: 'closed',
+        label: `Opens ${dayWord} ${when}`,
+        ...(offset === 0 ? { opensToday: true } : {}),
+      };
     }
   }
 
   return { isOpen: false, kind: 'closed', label: 'Closed' };
+}
+
+/**
+ * This weekend's opening times in the place's own time zone, e.g.
+ * "Sat 7:00 am – 11:30 am · Sun 8:00 am – 12:00 pm". Monday to Friday: the coming Saturday and Sunday.
+ * Saturday: today's times that have not ended yet, plus Sunday. Sunday: today's times that have not ended.
+ * "Open any time" for always-open places; null for by-appointment, irregular (monthly, seasonal or
+ * unpublished) times, or when nothing is left this weekend.
+ */
+export function weekendSummary(hours: OpeningHours, timeZone: string, now: Date): string | null {
+  if (hours.kind === 'always') return 'Open any time';
+  if (hours.kind === 'appointment' || hours.irregular) return null;
+
+  const { day, minutes } = localDayAndMinutes(now, timeZone);
+  const wanted: DayKey[] = day === 'sun' ? ['sun'] : ['sat', 'sun'];
+  const parts: string[] = [];
+  for (const d of wanted) {
+    let ranges = hours.days[d] ?? [];
+    if (d === day) ranges = ranges.filter(([, end]) => parseMinutes(end) > minutes);
+    if (ranges.length > 0) parts.push(`${SHORT_DAY(d)} ${formatRanges(ranges)}`);
+  }
+  return parts.length > 0 ? parts.join(' · ') : null;
 }

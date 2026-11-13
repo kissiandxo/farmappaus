@@ -10,7 +10,8 @@ import {
 } from 'react';
 import { AppState } from 'react-native';
 
-import { DEFAULT_FILTERS, searchFarms, type FarmFilters, type FarmResult } from '../domain/filters';
+import { SCREENSHOT_MODE } from '../config';
+import { DEFAULT_FILTERS, matchesQuery, searchFarms, type FarmFilters, type FarmResult } from '../domain/filters';
 import { parseFarmCache, serialiseFarmCache } from '../data/mappers';
 import { bundledFarms, fetchLiveFarms } from '../data/repository';
 import type { Farm } from '../domain/types';
@@ -57,10 +58,19 @@ interface SearchState {
   setLocation: (location: UserLocation) => void;
   filters: FarmFilters;
   setFilters: (filters: FarmFilters) => void;
-  results: FarmResult[];
+  /** Free-text search on Explore. Kept in memory only (not saved between launches). */
+  query: string;
+  setQuery: (query: string) => void;
   /**
-   * Every listing that passes the product, tag and open-now filters, nearest first, ignoring the
-   * distance filter. The map pins these.
+   * The Explore list, nearest first. While a search query is typed, the distance filter is ignored so a
+   * traveller can find a town far away, and only places matching the query are included.
+   */
+  results: FarmResult[];
+  /** True until the user picks a location (by GPS or search). */
+  isDefaultLocation: boolean;
+  /**
+   * Every listing that passes the type, product, tag and time filters, nearest first, ignoring the
+   * distance filter and the search query. The map pins these.
    */
   mapResults: FarmResult[];
   /** The clock used for "open now". Ticks every minute and when the app returns to the foreground. */
@@ -81,8 +91,12 @@ function isLocation(value: unknown): value is UserLocation {
 }
 
 export function SearchProvider({ children }: { children: ReactNode }) {
-  const [location, setLocationState] = useState<UserLocation>(DEFAULT_LOCATION);
+  // The screenshot build starts from a chosen location so screenshots don't show the "set location" prompt.
+  const [location, setLocationState] = useState<UserLocation>(
+    SCREENSHOT_MODE ? { ...DEFAULT_LOCATION, source: 'search' } : DEFAULT_LOCATION,
+  );
   const [filters, setFilters] = useState<FarmFilters>(DEFAULT_FILTERS);
+  const [query, setQuery] = useState('');
 
   // Restore the last location so the app works straight away, even offline.
   useEffect(() => {
@@ -164,10 +178,12 @@ export function SearchProvider({ children }: { children: ReactNode }) {
     };
   }, []);
 
-  const results = useMemo(
-    () => searchFarms(farms, filters, location, now),
-    [farms, filters, location, now],
-  );
+  const results = useMemo(() => {
+    if (query.trim() === '') return searchFarms(farms, filters, location, now);
+    return searchFarms(farms, { ...filters, maxKm: null }, location, now).filter((r) => matchesQuery(r.farm, query));
+  }, [farms, filters, location, now, query]);
+
+  const isDefaultLocation = location.source === 'default';
 
   const mapResults = useMemo(
     () => searchFarms(farms, { ...filters, maxKm: null }, location, now),
@@ -175,8 +191,23 @@ export function SearchProvider({ children }: { children: ReactNode }) {
   );
 
   const value = useMemo(
-    () => ({ farms, dataStatus, refresh, refreshing, location, setLocation, filters, setFilters, results, mapResults, now }),
-    [farms, dataStatus, refresh, refreshing, location, setLocation, filters, results, mapResults, now],
+    () => ({
+      farms,
+      dataStatus,
+      refresh,
+      refreshing,
+      location,
+      setLocation,
+      filters,
+      setFilters,
+      query,
+      setQuery,
+      results,
+      isDefaultLocation,
+      mapResults,
+      now,
+    }),
+    [farms, dataStatus, refresh, refreshing, location, setLocation, filters, query, results, isDefaultLocation, mapResults, now],
   );
 
   return <SearchContext.Provider value={value}>{children}</SearchContext.Provider>;

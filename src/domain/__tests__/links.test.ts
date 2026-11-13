@@ -1,4 +1,4 @@
-import { directionsUrl, hostLabel, mailtoUrl, telUrl, websiteUrl } from '../links';
+import { directionsUrl, hostLabel, mailtoUrl, mapsPlaceUrl, sourceRows, telUrl, websiteUrl } from '../links';
 
 describe('directionsUrl', () => {
   it('builds an Apple Maps driving link with an encoded name', () => {
@@ -105,5 +105,84 @@ describe('mailtoUrl', () => {
     expect(mailtoUrl('a@b.co,c@d.co')).toBeNull();
     expect(mailtoUrl('a@b.co?cc=x@y.com')).toBeNull();
     expect(mailtoUrl('a@b')).toBeNull();
+  });
+});
+
+describe('approximate locations', () => {
+  it('sends the name and suburb to Maps when the pin is only the suburb centre', () => {
+    expect(
+      directionsUrl({ name: 'Bilpin Market', lat: -33.5, lng: 150.5, locality: 'Bilpin', state: 'NSW', locationApprox: true }),
+    ).toBe(`http://maps.apple.com/?daddr=${encodeURIComponent('Bilpin Market, Bilpin NSW')}&dirflg=d`);
+  });
+
+  it('still prefers a street address, and uses coordinates for exact pins', () => {
+    expect(
+      directionsUrl({ name: 'X', lat: -33.5, lng: 150.5, address: '1 Bells Line of Road', locality: 'Bilpin', state: 'NSW', locationApprox: true }),
+    ).toContain(encodeURIComponent('1 Bells Line of Road'));
+    expect(directionsUrl({ name: 'X', lat: -33.5, lng: 150.5, locality: 'Bilpin' })).toContain('daddr=-33.5,150.5');
+  });
+});
+
+describe('mapsPlaceUrl', () => {
+  it('drops a named pin', () => {
+    expect(mapsPlaceUrl({ name: 'Pork & Eggs', lat: -27.5, lng: 151.9 })).toBe(
+      'http://maps.apple.com/?q=Pork%20%26%20Eggs&ll=-27.5,151.9',
+    );
+  });
+
+  it('searches the address for an approximate place, with no pin at the suburb centre', () => {
+    const url = mapsPlaceUrl({
+      name: 'X Market',
+      lat: -35.2,
+      lng: 149.1,
+      address: 'Exhibition Park (EPIC), Flemington Road',
+      locality: 'Mitchell',
+      state: 'ACT',
+      postcode: '2911',
+      locationApprox: true,
+    });
+    expect(url).toBe(`http://maps.apple.com/?q=${encodeURIComponent('Exhibition Park, Flemington Road, Mitchell ACT 2911')}`);
+    expect(url).not.toContain('ll=');
+  });
+
+  it('searches the name and suburb for an approximate place with no address', () => {
+    const url = mapsPlaceUrl({ name: 'Bilpin Market', lat: -33.5, lng: 150.5, locality: 'Bilpin', state: 'NSW', locationApprox: true });
+    expect(url).toBe(`http://maps.apple.com/?q=${encodeURIComponent('Bilpin Market, Bilpin NSW')}`);
+  });
+
+  it('keeps the named pin for an exact place even when it has an address', () => {
+    expect(mapsPlaceUrl({ name: 'A', lat: -27.5, lng: 151.9, address: '1 Main St', locality: 'Town' })).toBe(
+      'http://maps.apple.com/?q=A&ll=-27.5,151.9',
+    );
+  });
+});
+
+describe('sourceRows', () => {
+  it('uses the site name, adding a readable page name only when a site repeats', () => {
+    const rows = sourceRows([
+      'https://www.example.com.au/markets/bilpin-growers-market',
+      'https://example.com.au/whats-on/autumn_harvest.html',
+      'https://other.org/about',
+    ]);
+    expect(rows).toEqual([
+      { url: 'https://www.example.com.au/markets/bilpin-growers-market', title: 'example.com.au', subtitle: 'bilpin growers market' },
+      { url: 'https://example.com.au/whats-on/autumn_harvest.html', title: 'example.com.au', subtitle: 'autumn harvest' },
+      { url: 'https://other.org/about', title: 'other.org' },
+    ]);
+  });
+
+  it('never repeats the same title and subtitle, and drops non-web links', () => {
+    const rows = sourceRows(['https://a.com/', 'https://www.a.com', 'javascript:alert(1)', 'https://a.com/x', 'https://a.com/x/']);
+    const keys = rows.map((r) => `${r.title}|${r.subtitle ?? ''}`);
+    expect(new Set(keys).size).toBe(keys.length);
+    expect(rows.every((r) => r.url.startsWith('https://'))).toBe(true);
+  });
+
+  it('keeps page names to 40 characters', () => {
+    const rows = sourceRows([
+      'https://a.com/one',
+      'https://a.com/a-very-long-page-name-that-goes-on-and-on-for-ever-and-ever',
+    ]);
+    expect(rows[1].subtitle!.length).toBeLessThanOrEqual(40);
   });
 });

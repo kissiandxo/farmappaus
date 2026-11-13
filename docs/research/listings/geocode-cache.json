@@ -546,5 +546,148 @@
   "Merrimac State High School, Dunlop Court, Mermaid Waters QLD 4218, Australia": {
     "lat": -28.040621,
     "lng": 153.4173475
-  }
+  },
+  "Launceston TAS 7250, Australia": {
+    "lat": -41.4651539,
+    "lng": 147.1593915
+  },
+  "Thulimbah QLD 4376, Australia": {
+    "lat": -28.5495871,
+    "lng": 151.9286158
+  },
+  "Berry Keeper, Marcoola QLD 4564, Australia": null,
+  "Conjola NSW 2539, Australia": {
+    "lat": -35.268202,
+    "lng": 150.492756
+  },
+  "Martins Ridge Road, Conjola NSW 2539, Australia": {
+    "lat": -35.2192285,
+    "lng": 150.3868384
+  },
+  "Cootamundra NSW 2590, Australia": {
+    "lat": -34.6390264,
+    "lng": 148.0253845
+  },
+  "18 Adams Street, Cootamundra NSW 2590, Australia": {
+    "lat": -34.6366532,
+    "lng": 148.0294617
+  },
+  "Goulburn NSW 2580, Australia": {
+    "lat": -34.7604248,
+    "lng": 149.7119665
+  },
+  "48 Union Street, Goulburn NSW 2580, Australia": {
+    "lat": -34.743973,
+    "lng": 149.733569
+  },
+  "New Brighton NSW 2483, Australia": {
+    "lat": -28.5089695,
+    "lng": 153.5493335
+  },
+  "Tom Kendall Oval, River Street, New Brighton NSW 2483, Australia": null,
+  "Braidwood NSW 2622, Australia": {
+    "lat": -35.4421643,
+    "lng": 149.7995354
+  },
+  "National Theatre, Wallace Street, Braidwood NSW 2622, Australia": null,
+  "Dromana VIC 3936, Australia": {
+    "lat": -38.3334877,
+    "lng": 144.9651383
+  },
+  "410 White Hill Rd, Dromana VIC 3936, Australia": {
+    "lat": -38.3327785,
+    "lng": 145.0079951
+  },
+  "Talbot VIC 3371, Australia": {
+    "lat": -37.1713652,
+    "lng": 143.7009703
+  },
+  "Scandinavian Crescent and Camp Street, Talbot VIC 3371, Australia": null,
+  "Kyneton VIC 3444, Australia": {
+    "lat": -37.2478381,
+    "lng": 144.4532758
+  },
+  "St Paul's Park, 35 Piper St, Kyneton VIC 3444, Australia": null,
+  "Yarragon South VIC 3823, Australia": {
+    "lat": -38.2568005,
+    "lng": 146.0586921
+  },
+  "251 Yarragon South Rd, Yarragon South VIC 3823, Australia": {
+    "lat": -38.2269899,
+    "lng": 146.0777157
+  },
+  "Hiawatha VIC 3971, Australia": {
+    "lat": -38.5196144,
+    "lng": 146.4636387
+  },
+  "28 Dessents Rd, Hiawatha VIC 3971, Australia": {
+    "lat": -38.5438007,
+    "lng": 146.4800342
+  },
+  "Maryvale QLD 4370, Australia": {
+    "lat": -28.0716799,
+    "lng": 152.2390547
+  },
+  "375 North Branch Rd, Maryvale QLD 4370, Australia": {
+    "lat": -28.0420811,
+    "lng": 152.2501373
+  },
+  "Goomburra QLD 4362, Australia": {
+    "lat": -28.0429888,
+    "lng": 152.1197321
+  },
+  "591 North Branch Rd, Goomburra QLD 4362, Australia": {
+    "lat": -27.983374,
+    "lng": 152.1545305
+  },
+  "Kybong QLD 4570, Australia": {
+    "lat": -26.2868345,
+    "lng": 152.7079602
+  },
+  "87 Mullaly Road, Kybong QLD 4570, Australia": {
+    "lat": -26.2630927,
+    "lng": 152.7013753
+  },
+  "Kandanga QLD 4570, Australia": {
+    "lat": -26.3873996,
+    "lng": 152.6765301
+  },
+  "93 Main St, Kandanga QLD 4570, Australia": {
+    "lat": -26.3868127,
+    "lng": 152.6800728
+  },
+  "West Pinjarra WA 6208, Australia": {
+    "lat": -32.6279862,
+    "lng": 115.873725
+  },
+  "550 Paull Rd, West Pinjarra WA 6208, Australia": {
+    "lat": -32.6696118,
+    "lng": 115.774096
+  },
+  "Cowaramup WA 6284, Australia": {
+    "lat": -33.850909,
+    "lng": 115.1026779
+  },
+  "5103 Caves Rd, Cowaramup WA 6284, Australia": {
+    "lat": -33.8965202,
+    "lng": 115.0278495
+  },
+  "Milpara WA 6330, Australia": {
+    "lat": -34.98601,
+    "lng": 117.8607
+  },
+  "Unit 4/191 Chester Pass Road, Milpara WA 6330, Australia": null,
+  "Bridgetown WA 6255, Australia": {
+    "lat": -33.9575629,
+    "lng": 116.1373939
+  },
+  "25270 South Western Highway, Bridgetown WA 6255, Australia": {
+    "lat": -34.0358454,
+    "lng": 116.1592784
+  },
+  "Boyanup WA 6237, Australia": {
+    "lat": -33.4826646,
+    "lng": 115.7285025
+  },
+  "Boyanup Memorial Park, South Western Highway, Boyanup WA 6237, Australia": null
 }

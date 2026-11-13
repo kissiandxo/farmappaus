@@ -1,4 +1,4 @@
-import { PIN_STYLES, pinStyle } from '../mapPins';
+import { PIN_STYLES, pinAccessibilityLabel, pinStyle } from '../mapPins';
 import { VENUE_LABELS, type VenueType } from '../types';
 
 const TYPES = Object.keys(VENUE_LABELS) as VenueType[];
@@ -17,5 +17,14 @@ describe('map pins', () => {
   it('gives each type its own glyph and colour', () => {
     expect(new Set(TYPES.map((t) => PIN_STYLES[t].symbol)).size).toBe(TYPES.length);
     expect(new Set(TYPES.map((t) => PIN_STYLES[t].color)).size).toBe(TYPES.length);
+  });
+
+  it('labels a pin with name, kind and status, and flags approximate locations', () => {
+    expect(pinAccessibilityLabel({ name: 'Bilpin Fruit Bowl', type: 'farm_shop' }, 'Open now · closes 5:00 pm')).toBe(
+      'Bilpin Fruit Bowl, Farm shop, Open now · closes 5:00 pm',
+    );
+    expect(pinAccessibilityLabel({ name: 'Hill Farm', type: 'farm', locationApprox: true }, 'Closed')).toBe(
+      `Hill Farm, ${VENUE_LABELS.farm}, Closed, approximate location`,
+    );
   });
 });

@@ -1,3 +1,4 @@
+import { DEFAULT_FILTERS, type FarmFilters } from '../filters';
 import type { Farm } from '../types';
 
 /** Minimal valid farm for tests. Override only what a test cares about. */
@@ -22,4 +23,9 @@ export function makeFarm(overrides: Partial<Farm> = {}): Farm {
     updatedOn: '2026-11-01',
     ...overrides,
   };
+}
+
+/** Filters with every field set (the current FarmFilters shape). Override only what a test cares about. */
+export function makeFilters(overrides: Partial<FarmFilters> = {}): FarmFilters {
+  return { ...DEFAULT_FILTERS, ...overrides };
 }

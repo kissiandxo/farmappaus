@@ -29,6 +29,8 @@ export interface RealListingRecord {
     kind: 'weekly' | 'always' | 'appointment';
     days?: Partial<Record<DayKey, string[][]>>;
     note?: string | null;
+    /** Set in the research when the pattern is not every week but the wording does not say so plainly. */
+    irregular?: boolean;
   };
   hoursAsStated?: string | null;
   website?: string | null;
@@ -68,6 +70,8 @@ function validRanges(raw: string[][] | undefined): TimeRange[] {
  * - A day with no times means "open that day, times not published": the day is dropped and the
  *   wording stays in `note`, and the listing is `irregular` so it never shows a false "Open now".
  * - Monthly, seasonal and fortnightly patterns are `irregular` and always carry their wording in `note`.
+ * - `hours.irregular: true` in the research marks any other not-every-week pattern (for example a
+ *   market that only runs part of the year, or whose times change with the season).
  */
 export function toOpeningHours(hours: RealListingRecord['hours'], hoursAsStated?: string | null): OpeningHours {
   const note = text(hours.note);
@@ -84,7 +88,11 @@ export function toOpeningHours(hours: RealListingRecord['hours'], hoursAsStated?
     else timesMissing = true;
   }
   const noTimes = Object.keys(days).length === 0;
-  const irregular = timesMissing || noTimes || IRREGULAR_PATTERN.test(`${hoursAsStated ?? ''} ${note ?? ''}`);
+  const irregular =
+    hours.irregular === true ||
+    timesMissing ||
+    noTimes ||
+    IRREGULAR_PATTERN.test(`${hoursAsStated ?? ''} ${note ?? ''}`);
 
   return {
     kind: 'weekly',
@@ -161,4 +169,14 @@ export function toRealFarms(records: RealListingRecord[]): Farm[] {
   });
 }
 
-export const REAL_FARMS: Farm[] = toRealFarms(listings as unknown as RealListingRecord[]);
+const RECORDS = listings as unknown as RealListingRecord[];
+
+export const REAL_FARMS: Farm[] = toRealFarms(RECORDS);
+
+/** The latest date any bundled place was checked against its sources, as an ISO date (YYYY-MM-DD). */
+export function latestResearchedOn(records: Pick<RealListingRecord, 'researchedOn'>[]): string {
+  return records.reduce((latest, r) => (r.researchedOn > latest ? r.researchedOn : latest), '');
+}
+
+/** When the bundled listings were last checked: the latest researchedOn across them (ISO date). */
+export const LISTINGS_CHECKED_ON: string = latestResearchedOn(RECORDS);

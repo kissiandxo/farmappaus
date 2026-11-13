@@ -6,12 +6,14 @@ import {
   stepTime,
   formatMinutes,
   hoursLines,
+  hoursSummary,
+  weekendSummary,
   localDayAndMinutes,
   openStatus,
   parseMinutes,
   timezoneForState,
 } from '../hours';
-import type { OpeningHours } from '../types';
+import type { OpeningHours, TimeRange } from '../types';
 
 describe('hours editing helpers', () => {
   it('steps times by 30 minutes and stays inside the day', () => {
@@ -115,6 +117,7 @@ describe('openStatus', () => {
   it('is open inside a range and says when it closes', () => {
     const status = openStatus(hours, SYDNEY, satAtSydney('10:00'));
     expect(status).toEqual({ isOpen: true, kind: 'open', label: 'Open now · closes 1:00 pm' });
+    expect(status.opensToday).toBeUndefined();
   });
 
   it('treats the closing minute as closed', () => {
@@ -122,16 +125,21 @@ describe('openStatus', () => {
   });
 
   it('says when it opens later today', () => {
-    expect(openStatus(hours, SYDNEY, satAtSydney('06:00')).label).toBe('Closed · opens 8:00 am');
+    const status = openStatus(hours, SYDNEY, satAtSydney('06:00'));
+    expect(status).toEqual({ isOpen: false, kind: 'closed', label: 'Opens today 8:00 am', opensToday: true });
   });
 
   it('names the next open day', () => {
-    expect(openStatus(hours, SYDNEY, satAtSydney('14:00')).label).toBe('Closed · opens Wed 9:00 am');
+    const status = openStatus(hours, SYDNEY, satAtSydney('14:00'));
+    expect(status.label).toBe('Opens Wed 9:00 am');
+    expect(status.opensToday).toBeUndefined();
   });
 
   it('says "tomorrow" when the next opening is the next day', () => {
     const friday4pm = new Date('2026-11-13T05:00:00Z'); // Fri 16:00 Sydney
-    expect(openStatus(hours, SYDNEY, friday4pm).label).toBe('Closed · opens tomorrow 8:00 am');
+    const status = openStatus(hours, SYDNEY, friday4pm);
+    expect(status.label).toBe('Opens tomorrow 8:00 am');
+    expect(status.opensToday).toBeUndefined();
   });
 
   it('uses the farm time zone, not the phone time zone', () => {
@@ -183,5 +191,141 @@ describe('irregular weekly hours (monthly, seasonal or unpublished times)', () =
 
   it('keeps the day rows when an irregular listing has some times', () => {
     expect(hoursLines(monthlySaturday)).toHaveLength(7);
+  });
+});
+
+describe('weekendSummary', () => {
+  const market: OpeningHours = {
+    kind: 'weekly',
+    days: { wed: [['09:00', '17:00']], sat: [['07:00', '11:30']], sun: [['08:00', '12:00']] },
+  };
+
+  it('gives the coming weekend from a weekday (Friday 11 pm in Sydney)', () => {
+    const friday11pm = new Date('2026-11-13T12:00:00Z'); // Fri 23:00 AEDT
+    expect(weekendSummary(market, 'Australia/Sydney', friday11pm)).toBe(
+      'Sat 7:00 am – 11:30 am · Sun 8:00 am – 12:00 pm',
+    );
+  });
+
+  it('uses the place time zone: Saturday 0:30 in Sydney is Friday 9:30 pm in Perth', () => {
+    const instant = new Date('2026-11-13T13:30:00Z');
+    const lateFriday: OpeningHours = { kind: 'weekly', days: { sat: [['00:00', '00:15']], sun: [['08:00', '12:00']] } };
+    // In Sydney the 12:00–12:15 am Saturday slot has ended; in Perth it is still to come.
+    expect(weekendSummary(lateFriday, 'Australia/Sydney', instant)).toBe('Sun 8:00 am – 12:00 pm');
+    expect(weekendSummary(lateFriday, 'Australia/Perth', instant)).toBe(
+      'Sat 12:00 am – 12:15 am · Sun 8:00 am – 12:00 pm',
+    );
+  });
+
+  it('on Saturday keeps today’s remaining times and Sunday', () => {
+    expect(weekendSummary(market, 'Australia/Sydney', satAtSydney('09:00'))).toBe(
+      'Sat 7:00 am – 11:30 am · Sun 8:00 am – 12:00 pm',
+    );
+    expect(weekendSummary(market, 'Australia/Sydney', satAtSydney('12:00'))).toBe('Sun 8:00 am – 12:00 pm');
+  });
+
+  it('returns null on Saturday after the last close when Sunday is closed', () => {
+    const saturdayOnly: OpeningHours = { kind: 'weekly', days: { sat: [['07:00', '11:30']] } };
+    expect(weekendSummary(saturdayOnly, 'Australia/Sydney', satAtSydney('12:00'))).toBeNull();
+  });
+
+  it('returns null on Sunday evening', () => {
+    const sundayEvening = new Date('2026-11-15T07:00:00Z'); // Sun 18:00 AEDT
+    expect(weekendSummary(market, 'Australia/Sydney', sundayEvening)).toBeNull();
+  });
+
+  it('handles the October daylight-saving change in NSW against QLD', () => {
+    // Sunday 4 Oct 2026: clocks go forward in NSW. 00:30 UTC is 11:30 am in Sydney, 10:30 am in Brisbane.
+    const instant = new Date('2026-10-04T00:30:00Z');
+    const sundayMorning: OpeningHours = { kind: 'weekly', days: { sun: [['08:00', '11:00']] } };
+    expect(weekendSummary(sundayMorning, 'Australia/Sydney', instant)).toBeNull();
+    expect(weekendSummary(sundayMorning, 'Australia/Brisbane', instant)).toBe('Sun 8:00 am – 11:00 am');
+  });
+
+  it('handles the April daylight-saving change in NSW against QLD', () => {
+    // 13:30 UTC on Sat 4 Apr 2026 is 12:30 am Sunday in Sydney (still AEDT) but 11:30 pm Saturday in Brisbane.
+    const instant = new Date('2026-04-04T13:30:00Z');
+    const nightMarket: OpeningHours = {
+      kind: 'weekly',
+      days: { sat: [['17:00', '23:45']], sun: [['08:00', '12:00']] },
+    };
+    expect(weekendSummary(nightMarket, 'Australia/Sydney', instant)).toBe('Sun 8:00 am – 12:00 pm');
+    expect(weekendSummary(nightMarket, 'Australia/Brisbane', instant)).toBe(
+      'Sat 5:00 pm – 11:45 pm · Sun 8:00 am – 12:00 pm',
+    );
+  });
+
+  it('is null for irregular, by-appointment and weekday-only hours, and "Open any time" when always open', () => {
+    const friday = new Date('2026-11-13T05:00:00Z');
+    expect(weekendSummary({ ...market, irregular: true } as OpeningHours, SYDNEY, friday)).toBeNull();
+    expect(weekendSummary({ kind: 'appointment' }, SYDNEY, friday)).toBeNull();
+    expect(weekendSummary({ kind: 'weekly', days: { wed: [['09:00', '17:00']] } }, SYDNEY, friday)).toBeNull();
+    expect(weekendSummary({ kind: 'always' }, SYDNEY, friday)).toBe('Open any time');
+  });
+});
+
+describe('hoursSummary', () => {
+  it('lists a single Saturday market with one "Other days" row', () => {
+    expect(hoursSummary({ kind: 'weekly', days: { sat: [['07:00', '11:30']] } })).toEqual([
+      { label: 'Saturday', text: '7:00 am – 11:30 am', day: 'sat', days: ['sat'] },
+      { label: 'Other days', text: 'Closed', days: ['mon', 'tue', 'wed', 'thu', 'fri', 'sun'] },
+    ]);
+  });
+
+  it('merges Monday to Friday and keeps Saturday and Sunday separate', () => {
+    const w: TimeRange[] = [['09:00', '17:00']];
+    const lines = hoursSummary({ kind: 'weekly', days: { mon: w, tue: w, wed: w, thu: w, fri: w, sat: [['08:00', '12:00']] } });
+    expect(lines).toEqual([
+      { label: 'Mon – Fri', text: '9:00 am – 5:00 pm', days: ['mon', 'tue', 'wed', 'thu', 'fri'] },
+      { label: 'Saturday', text: '8:00 am – 12:00 pm', day: 'sat', days: ['sat'] },
+      { label: 'Sunday', text: 'Closed', day: 'sun', days: ['sun'] },
+    ]);
+  });
+
+  it('says "Every day" when all seven days are the same', () => {
+    const r: TimeRange[] = [['08:00', '18:00']];
+    expect(hoursSummary({ kind: 'weekly', days: { mon: r, tue: r, wed: r, thu: r, fri: r, sat: r, sun: r } })).toEqual([
+      { label: 'Every day', text: '8:00 am – 6:00 pm', days: ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'] },
+    ]);
+  });
+
+  it('keeps two non-consecutive days as separate rows (Castlemaine shape)', () => {
+    const lines = hoursSummary({ kind: 'weekly', days: { wed: [['14:30', '17:30']], sun: [['09:00', '13:00']] } });
+    expect(lines.map((l) => [l.label, l.text])).toEqual([
+      ['Wednesday', '2:30 pm – 5:30 pm'],
+      ['Sunday', '9:00 am – 1:00 pm'],
+      ['Other days', 'Closed'],
+    ]);
+  });
+
+  it('merges two consecutive identical days', () => {
+    const r: TimeRange[] = [['08:00', '12:00']];
+    expect(hoursSummary({ kind: 'weekly', days: { sat: r, sun: r } })[0]).toMatchObject({
+      label: 'Sat – Sun',
+      days: ['sat', 'sun'],
+    });
+  });
+
+  it('merges closed runs when more than two days are open', () => {
+    const r: TimeRange[] = [['09:00', '15:00']];
+    const lines = hoursSummary({ kind: 'weekly', days: { mon: r, fri: r, sat: [['08:00', '12:00']] } });
+    expect(lines.map((l) => [l.label, l.text])).toEqual([
+      ['Monday', '9:00 am – 3:00 pm'],
+      ['Tue – Thu', 'Closed'],
+      ['Friday', '9:00 am – 3:00 pm'],
+      ['Saturday', '8:00 am – 12:00 pm'],
+      ['Sunday', 'Closed'],
+    ]);
+  });
+
+  it('shows "Times: Not published" for an irregular listing with no times (Bendigo shape)', () => {
+    expect(
+      hoursSummary({ kind: 'weekly', days: {}, irregular: true, note: 'Second Saturday of each month.' }),
+    ).toEqual([{ label: 'Times', text: 'Not published' }]);
+  });
+
+  it('matches hoursLines for always-open and by-appointment places', () => {
+    expect(hoursSummary({ kind: 'always' })).toEqual(hoursLines({ kind: 'always' }));
+    expect(hoursSummary({ kind: 'appointment' })).toEqual(hoursLines({ kind: 'appointment' }));
   });
 });

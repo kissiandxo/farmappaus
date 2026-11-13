@@ -1,4 +1,4 @@
-import type { LatLng } from './geo';
+import { haversineKm, type LatLng } from './geo';
 import type { StateCode } from './types';
 
 export interface Place extends LatLng {
@@ -109,19 +109,23 @@ export function searchPlaces(
     .map((s) => s.place);
 }
 
-/** Nearest listed suburb to a point, used to name a GPS fix without any network call. */
-export function nearestPlace(point: LatLng, places: Place[] = bundledPlaces()): Place | null {
+/**
+ * Nearest listed suburb to a point, used to name a GPS fix without any network call. Returns null when the
+ * nearest suburb is more than `maxKm` away (for example, a phone outside Australia).
+ */
+export function nearestPlace(
+  point: LatLng,
+  places: Place[] = bundledPlaces(),
+  maxKm = Infinity,
+): Place | null {
   let best: Place | null = null;
-  let bestScore = Infinity;
-  const cosLat = Math.cos((point.lat * Math.PI) / 180);
+  let bestKm = Infinity;
   for (const place of places) {
-    const dLat = place.lat - point.lat;
-    const dLng = (place.lng - point.lng) * cosLat;
-    const score = dLat * dLat + dLng * dLng;
-    if (score < bestScore) {
-      bestScore = score;
+    const km = haversineKm(point, place);
+    if (km < bestKm) {
+      bestKm = km;
       best = place;
     }
   }
-  return best;
+  return best && bestKm <= maxKm ? best : null;
 }

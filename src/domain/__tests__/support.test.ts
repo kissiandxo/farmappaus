@@ -1,4 +1,4 @@
-import { claimMailto, contactMailto, listMailto, reportMailto, suggestMailto, type PlaceRef } from '../support';
+import { claimMailto, contactMailto, listMailto, reportMailto, suggestMailto, versionLabel, type PlaceRef } from '../support';
 
 const place: PlaceRef = { id: 'real-12', name: 'Coburg Farmers Market', locality: 'Coburg', state: 'VIC', postcode: '3058' };
 const TO = 'hello@example.com';
@@ -46,6 +46,10 @@ describe('support emails', () => {
     expect(parse(contactMailto(TO)).body).not.toContain('App version');
   });
 
+  it('contact carries the version with its build number, as shown on the About tab', () => {
+    expect(parse(contactMailto(TO, versionLabel('1.0.0', '12'))).body).toContain('App version: 1.0.0 (12)');
+  });
+
   it('every builder returns null without a support address', () => {
     for (const to of ['', '  ']) {
       expect(reportMailto(to, place)).toBeNull();
@@ -59,5 +63,23 @@ describe('support emails', () => {
   it('a place name with symbols stays intact after encoding', () => {
     const mail = parse(reportMailto(TO, { ...place, name: 'Fred & Sons’ “Honey” 100%' }));
     expect(mail.body).toContain('Place: Fred & Sons’ “Honey” 100%');
+  });
+});
+
+describe('versionLabel', () => {
+  it('adds the build number in brackets when there is one', () => {
+    expect(versionLabel('1.0.0', '12')).toBe('1.0.0 (12)');
+  });
+
+  it('shows the version alone without a build number', () => {
+    expect(versionLabel('1.0.0')).toBe('1.0.0');
+    expect(versionLabel('1.0.0', null)).toBe('1.0.0');
+    expect(versionLabel('1.0.0', '  ')).toBe('1.0.0');
+  });
+
+  it('is empty without a version', () => {
+    expect(versionLabel(undefined, '12')).toBe('');
+    expect(versionLabel('', '12')).toBe('');
+    expect(versionLabel(null)).toBe('');
   });
 });

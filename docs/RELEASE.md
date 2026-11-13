@@ -1,85 +1,72 @@
-# Release guide (no Mac needed)
+# Release guide
 
-Everything below can be done from an iPhone browser plus the Expo and Apple websites. The builds happen on Expo's servers.
+Farm Direct 1.0 is a free directory with no accounts and no backend. It is built, signed and sent to TestFlight by **GitHub's Mac runners and fastlane**. That is the only release pipeline: there are no Expo (EAS) workflows and no over-the-air updates. You don't need a Mac or an Expo account.
 
-## What's already done in the code
+- `.github/workflows/testflight.yml` builds the app, signs it and uploads it to TestFlight (`fastlane/Fastfile`, lane `ios beta`).
+- `.github/workflows/screenshots.yml` builds the app for the iPhone simulator and takes the App Store screenshots.
+- `app.json` holds the icon, splash, permission wording, `ITSAppUsesNonExemptEncryption: false` and `"updates": { "enabled": false }`.
 
-- `eas.json` has `preview` and `production` profiles, each tied to an Expo **environment** of the same name.
-- `.eas/workflows/preview-update.yml` publishes a preview of the app every time code is pushed to `main` or a `claude/` branch.
-- `.eas/workflows/testflight.yml` builds the production iOS app and sends it to TestFlight when you run it.
-- `app.json` has the icon, splash, location and photo permission wording, `ITSAppUsesNonExemptEncryption: false`, and `runtimeVersion` set so over-the-air updates only reach compatible builds.
-- The app icon and splash are simple placeholders (a seedling). Replace `assets/images/icon.png` (1024×1024, no transparency) and `splash-icon.png` when you have a real logo.
+## Every change is a new build
 
-> The workflow files have **not** been checked by Expo's validator yet, because that needs your Expo project to exist. Step 2 fixes that.
+Over-the-air updates are **off** in 1.0 (`updates.enabled` is `false` in `app.json`; the `expo-updates` package stays installed but does nothing). A text fix, a listing correction or a code change all reach people the same way: a new TestFlight build, then a new App Store submission. There is no way to change an installed build remotely.
 
-## 1. Register the app with Apple (about 10 minutes, in Safari on your iPhone)
+The build number is the GitHub run number (`BUILD_NUMBER: ${{ github.run_number }}` in the workflow), so each run uploads a higher number. When you release a new version to the App Store, raise `version` in `app.json` and `package.json` as well.
 
-The bundle ID is **`au.farmdirect.app`** (already set in `app.json`). Apple doesn't check that you own the domain, but IDs are unique worldwide. If Apple says it is taken, use `au.farmdirect.localfood` instead, tell Claude, and it will change `app.json` to match. **The ID can never be changed once the app exists in App Store Connect.**
+## 1. Register the app with Apple (once)
 
-App Store Connect's website can't take a build upload (builds only arrive from Xcode, Apple's Transporter app, or an API, which is what Expo uses), so there is nothing to upload by hand. This step creates the two things Apple needs *before* a build can arrive:
+The bundle ID is **`au.farmdirect.app`** (set in `app.json`). It can never be changed once the app exists in App Store Connect.
 
-1. **Register the ID.** Go to [developer.apple.com/account](https://developer.apple.com/account) → Certificates, Identifiers & Profiles → Identifiers → **+** → App IDs → App. Description: `Farm Direct`. Bundle ID: choose *Explicit* and enter `au.farmdirect.app`. Leave the capabilities as they are, then Register.
-2. **Create the app record.** Go to [appstoreconnect.apple.com](https://appstoreconnect.apple.com) → Apps → **+** → New App. Platform iOS. Name `Farm Direct` (if taken, add a few words, for example `Farm Direct Australia`; the name on the home screen comes from the app itself). Primary language English (Australia). Bundle ID: pick `au.farmdirect.app` from the list (it only appears after step 1). SKU: `farmdirect-ios`. Full access.
-3. **Create the signing key** (this is step 3 below; do it now while you're signed in): App Store Connect → Users and Access → Integrations → App Store Connect API → **+** → name `Expo`, access **App Manager**. Note the *Key ID* and the *Issuer ID* at the top of the page, and **download the `.p8` file right away** (Apple only lets you download it once; it goes to the Files app).
+1. **Register the ID.** [developer.apple.com/account](https://developer.apple.com/account) → Certificates, Identifiers & Profiles → Identifiers → **+** → App IDs → App. Description `Farm Direct`, Bundle ID *Explicit* `au.farmdirect.app`. Turn on the **Sign in with Apple** capability: `app.json` declares it (`usesAppleSignIn`) in every build, and signing fails if the App ID doesn't have it. The 1.0 app never shows sign-in.
+2. **Create the app record.** [appstoreconnect.apple.com](https://appstoreconnect.apple.com) → Apps → **+** → New App. Platform iOS, name `Farm Direct`, primary language English (Australia), bundle ID `au.farmdirect.app`, SKU `farmdirect-ios`.
+3. **Create the API key.** App Store Connect → Users and Access → Integrations → App Store Connect API → **+**, access **App Manager**. Download the `.p8` file straight away (Apple allows one download). The key ID and issuer ID used by the workflow are written in `testflight.yml`; if you make a new key, update them there.
 
-## 2. Link the project to Expo
+## 2. Repository secrets and variables
 
-1. On [expo.dev](https://expo.dev) create a project named `farm-direct`, and connect the GitHub repository (Project settings → GitHub).
-2. Copy the **Project ID**. Then either:
-   - ask Claude to add it (it needs `extra.eas.projectId` and `updates.url` = `https://u.expo.dev/<project id>` in `app.json`), or
-   - from any computer: `npx eas-cli init` then `npx eas-cli update:configure`.
-3. Validate the workflows (ask Claude to run `workflow_validate`, or from a computer `npx eas-cli workflow:validate .eas/workflows/testflight.yml`).
+GitHub → the repository → Settings → Secrets and variables → Actions.
 
-## 3. Let Expo sign the app for you
+| Name | Kind | Needed | What it is |
+| --- | --- | --- | --- |
+| `ASC_KEY_P8` | Secret | **Required.** The build stops without it. | The full text of the `.p8` key from step 1.3, or base64 of it. Never paste it into a chat or an email. |
+| `SUPPORT_EMAIL` | Variable | **Required before App Store submission.** | The contact address shown on the About tab and in the privacy policy. |
+| `OPERATOR_NAME` | Variable | **Required before App Store submission.** | The person or business that runs Farm Direct, shown in the privacy policy's "Who we are". |
+| `EXPO_PUBLIC_SUPABASE_URL`, `EXPO_PUBLIC_SUPABASE_ANON_KEY` | Secrets | **Never set these for 1.0.** | They switch on the accounts version (see below). |
 
-Apple needs a distribution certificate and provisioning profile. Without a Mac, the easiest way is an **App Store Connect API key**:
+If `SUPPORT_EMAIL` or `OPERATOR_NAME` is missing, the workflow still builds but shows a warning on the run. **A build made without `SUPPORT_EMAIL` must not be submitted to the App Store**: it has no contact address, which App Review and the privacy policy both need. Set the variables and run a new build first. Builds made without `OPERATOR_NAME` shouldn't be submitted either, because the privacy policy then doesn't say who runs the app.
 
-1. You created the key in step 1.3 (App Manager role). If you didn't, do it now and download the `.p8` file (you can only download it once).
-2. On expo.dev → your project → Credentials → iOS → App Store Connect API key, add it: key ID, issuer ID, and upload the `.p8` from your Files app. Never paste the contents of the `.p8` into a chat or an email.
-3. Expo then creates and renews the certificate and profile automatically on the first build.
+## 3. Build for TestFlight
 
-## 4. Give the app its Supabase keys
+Run GitHub → Actions → *TestFlight (GitHub Mac build)* → **Run workflow**, or push a commit to `main` or a `claude/` branch whose message contains `[testflight]`.
 
-Follow `docs/BACKEND.md`, then on expo.dev → Environment variables add `EXPO_PUBLIC_SUPABASE_URL` and `EXPO_PUBLIC_SUPABASE_ANON_KEY` to the **preview** and **production** environments (visibility: plain text is fine, the anon key is public by design). Without them the app shows sample data only.
+Before building, the workflow checks that:
 
-## 5. Preview on your phone while building (Expo Go)
+- `ASC_KEY_P8` is set (the build stops if not);
+- screenshot mode (`EXPO_PUBLIC_SCREENSHOT_MODE`) is off (the build stops if not: that mode is only for the simulator);
+- the Supabase secrets are **not** set, unless you ran it by hand with **with_backend** ticked (the build stops if not, because an accounts build doesn't match the 1.0 App Store listing or privacy answers);
+- `SUPPORT_EMAIL` and `OPERATOR_NAME` are set (warning only).
 
-1. Install **Expo Go** from the App Store and sign in with your Expo account.
-2. Push to `main` or a `claude/` branch. The *Publish preview update* workflow runs (expo.dev → Workflows).
-3. In Expo Go: Projects → Farm Direct → `preview` update.
+It uses the newest released (not beta or release candidate) Xcode on the runner. If no released Xcode 26 or newer is installed, it falls back to the newest one available and shows a warning.
 
-Expo Go can run this app because every library it uses is bundled with Expo Go. If you ever add a library with its own native code, you'll need a development build instead.
+When processing finishes (usually under 30 minutes), open App Store Connect → TestFlight: fill in **Test Information**, add yourself under **Internal Testing**, and for testers outside your team create an **External** group (the first build needs Apple's short Beta App Review). Install **TestFlight** on your iPhone and accept the invite.
 
-## 6. TestFlight
+## 4. Screenshots
 
-1. In App Store Connect create the app record (bundle ID from step 1).
-2. Run the *Build and send to TestFlight* workflow (expo.dev → Workflows → Run).
-3. When processing finishes (usually under 30 minutes), open App Store Connect → TestFlight:
-   - fill in **Test Information** (what to test, a contact email, and your privacy policy URL);
-   - add yourself under **Internal Testing** (up to 100 people on your App Store Connect team);
-   - for friends, family and farmers outside your team, create an **External** group. The first build needs Apple's short Beta App Review.
-4. Install **TestFlight** on your iPhone and accept the invite.
+Run GitHub → Actions → *App Store screenshots (simulator)* → **Run workflow**, or push a commit whose message contains `[screenshots]`. It builds a simulator-only copy of the app in screenshot mode (which skips the welcome and pre-saves a few places), takes seven shots on a 6.9-inch iPhone simulator (`01-explore`, `02-explore-meat`, `03-map`, `04-place-meat`, `05-place-market`, `06-saved`, `07-explore-dark`; see `docs/APP_STORE.md`) and uploads them as the `app-store-screenshots` artifact on the run. The app moves to the next scene each time the workflow switches the simulator's appearance to dark and back to light (no timers, because the CI simulator is slow); the scenes are `SCREENSHOT_SCENES` in `src/config.ts`, and a test keeps them in step with the workflow. Each simulator command has a time limit, and one failed shot doesn't stop the others. If a tick is lost, later shots show the wrong scene: look at every image before uploading. Screenshot mode must never be used for a TestFlight build; the TestFlight workflow refuses it.
 
-## TestFlight without Expo (GitHub's Mac runners)
+## 5. App Store
 
-`.github/workflows/testflight.yml` builds, signs and uploads the app on a GitHub macOS runner using fastlane (`fastlane/Fastfile`). It needs one repository secret, `ASC_KEY_P8`: the full text of an App Store Connect API key (`.p8`, App Manager role). The key ID and issuer ID are in the workflow file. Run it from GitHub → Actions → *TestFlight (GitHub Mac build)* → Run workflow, or push a commit whose message contains `[testflight]`. Optional secrets `EXPO_PUBLIC_SUPABASE_URL` and `EXPO_PUBLIC_SUPABASE_ANON_KEY` connect the build to the live backend; without them it shows sample data.
+Use `docs/APP_STORE.md` for the text, privacy answers, screenshots checklist and review notes. Host the privacy policy at a public URL (the text is `docs/PRIVACY.md`; regenerate it with `npm run build:privacy` and the `SUPPORT_EMAIL` / `OPERATOR_NAME` values set). Then App Store Connect → your app version → choose the build → Add for Review.
 
-## 7. App Store
+## The accounts version (later, not 1.0)
 
-Use `docs/APP_STORE.md` for the text, privacy answers, screenshots checklist and review notes. Take screenshots on your iPhone from the TestFlight build. Host the privacy policy at a public URL (any simple page works; the text is `docs/PRIVACY.md`). Then App Store Connect → your app version → Add for Review.
+The accounts version (sign-in, farmer listings, photos) is a **separate, later binary**. It is built with the Supabase secrets set (`docs/BACKEND.md`) and by running the TestFlight workflow by hand with **with_backend** ticked. It needs its own App Store listing text and privacy answers, because it collects data that 1.0 does not.
 
-## After release
+The camera, photo-library and Sign in with Apple settings are already in `app.json` for every build (the libraries are linked into the binary either way, and App Store Connect rejects an upload whose linked frameworks lack a usage description), so nothing in the config has to change for that build. Sign in with Apple must be enabled on the App ID (step 1.1) before any build is signed.
 
-- **Small fixes** (text, layout, logic): publish an over-the-air update to the `production` channel. Users get it next time they open the app, no review needed. Only JavaScript changes can go this way.
-- **Anything native** (new library, permission wording, icon) needs a new build and a new App Store submission. Bump `version` in `app.json` when you do, so old builds don't receive updates they can't run.
+## Before you submit 1.0
 
-## Before you tell the public (launch blockers)
-
-- [ ] Real bundle ID chosen and the App Store Connect record created.
-- [ ] Supabase project created in the Sydney region, both migrations run, yourself made administrator (`docs/BACKEND.md`).
-- [ ] Photo upload tried once on a real phone (it needs the Supabase storage bucket).
+- [ ] `SUPPORT_EMAIL` and `OPERATOR_NAME` set, and the build you submit was made after they were set (check the run shows no warnings).
+- [ ] The Supabase secrets are **not** set.
+- [ ] Privacy policy reviewed and hosted at a public URL (`docs/PRIVACY.md`), and its address entered in App Store Connect.
 - [ ] Postcode data licence confirmed or replaced (`docs/DATA.md`).
-- [ ] Privacy policy reviewed by an Australian privacy lawyer and hosted at a public URL (`docs/PRIVACY.md`).
-- [ ] Food-safety rules checked with each state regulator, especially eggs thresholds (`docs/COMPLIANCE.md`).
-- [ ] At least a pilot region of real, reviewed listings (`docs/REAL_LISTINGS.md`), so the map isn't empty on day one.
-- [ ] A support email or page for the App Store "Support URL".
+- [ ] Listings checked against `docs/REAL_LISTINGS.md`.
+- [ ] The support address or page entered as the App Store "Support URL".

@@ -17,11 +17,15 @@ export interface FarmMapProps {
   location: UserLocation;
   selectedId: string | null;
   onSelect: (id: string | null) => void;
-  /** The user tapped "Search this area" with the map centred here. */
+  /** The user tapped "Set location here" with the map centred here. */
   onSearchArea: (center: { lat: number; lng: number }) => void;
-  /** Space the map should keep clear: under the floating capsules, above the tab bar and place card. */
+  /**
+   * Screen space covered by floating controls, in points from the map's top and bottom edges: under the
+   * capsules at the top; the tab bar plus the place card (when open) at the bottom. Places are framed
+   * clear of these.
+   */
   insets: { top: number; bottom: number };
-  /** Distance from the top of the screen for the "Search this area" capsule. */
+  /** Distance from the top of the screen for the "Set location here" capsule. */
   searchAreaTop: number;
   ref?: Ref<FarmMapHandle>;
 }

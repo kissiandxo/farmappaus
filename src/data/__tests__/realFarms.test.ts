@@ -1,8 +1,11 @@
 import { LICENCE_CONTROLLED_CATEGORIES } from '../../domain/compliance';
 import { openStatus, timezoneForState } from '../../domain/hours';
 import { PRODUCT_LABELS, STATE_NAMES } from '../../domain/types';
+import listings from '../realListings.json';
 import {
+  LISTINGS_CHECKED_ON,
   REAL_FARMS,
+  latestResearchedOn,
   slugify,
   toOpeningHours,
   toProducts,
@@ -12,6 +15,12 @@ import {
 } from '../realFarms';
 
 const STATES = Object.keys(STATE_NAMES);
+const RECORDS = listings as unknown as RealListingRecord[];
+const byName = (name: string) => {
+  const farm = REAL_FARMS.find((f) => f.name === name);
+  if (!farm) throw new Error(`No bundled place named ${name}`);
+  return farm;
+};
 
 function record(overrides: Partial<RealListingRecord> = {}): RealListingRecord {
   return {
@@ -108,6 +117,100 @@ describe('REAL_FARMS (the researched data)', () => {
         expect(openStatus(farm!.hours, timezoneForState(farm!.state), now).label).toBe('Check dates');
       }
     }
+  });
+});
+
+describe('REAL_FARMS listing rules', () => {
+  it('only lets honesty-box farm-gate stalls be "open any time"', () => {
+    for (const farm of REAL_FARMS) {
+      if (farm.hours.kind === 'always') expect(`${farm.name}: ${farm.type}`).toBe(`${farm.name}: farm_gate_stall`);
+    }
+  });
+
+  it('shows no research-process wording in shopper copy, and no alias in a name', () => {
+    const META = /page opened|see caveats|per the site|^per |not itemised|not recorded|regional guide|no product list|\bthe (site|page)( footer)? (says|flags|notes|gives)\b|recorded here|\blisting (shows|says)\b|another listing|tourism page|council directory|^stated as|^site notes/i;
+    for (const farm of REAL_FARMS) {
+      const texts = [farm.story, farm.otherProducts, farm.hours.note].filter((t): t is string => !!t);
+      for (const t of texts) expect(`${farm.name}: ${t}`).not.toMatch(META);
+      expect(farm.name).not.toMatch(/\(| - /);
+    }
+  });
+
+  it('never uses a tourism, blog or council page as the Website, but keeps it in sources', () => {
+    const NOT_OWN_SITE = /(^|\.)(visit[a-z]*|destination[a-z]*|experience[a-z]*)\.|northernterritory\.com|bendigoregion\.com\.au|swanvalley\.com\.au|\.gov\.au$/;
+    for (const farm of REAL_FARMS) {
+      if (!farm.website || farm.name === "Golden Plains Farmers' Market") continue;
+      expect(`${farm.name}: ${new URL(farm.website).hostname}`).not.toMatch(NOT_OWN_SITE);
+    }
+    const moved: [string, string][] = [
+      ['Nightcliff Markets', 'northernterritory.com/us/en/articles/markets-in-the-nt'],
+      ['Batchelor Markets', 'northernterritory.com/articles/markets-in-the-nt'],
+      ['Palm Beach Farmers Market', 'destinationgoldcoast.com/blog'],
+      ['Burleigh Farmers Market', 'destinationgoldcoast.com/blog'],
+      ['Helensvale Farmers Market', 'destinationgoldcoast.com/blog'],
+      ['Organic Gold Coast Farmers Market', 'destinationgoldcoast.com/blog'],
+      ['Yandina Country Markets', 'visitsunshinecoast.com'],
+      ['Kawana Waters Farmers Market', 'visitsunshinecoast.com'],
+      ['Marcoola Farmers Market', 'visitsunshinecoast.com'],
+      ['Green Shed Market', 'visitscenicrim.com.au'],
+      ['Torquay Farmers Market', 'visitgreatoceanroad.org.au'],
+      ['Bendigo Community Farmers Market', 'bendigoregion.com.au'],
+      ['Tolga Markets', 'trc.qld.gov.au'],
+      ['Atherton Artisan & Farmers Night Markets', 'trc.qld.gov.au'],
+      ['Freds Pass Rural Markets', 'litchfield.nt.gov.au'],
+      ['Berry Springs Markets', 'litchfield.nt.gov.au'],
+    ];
+    for (const [name, url] of moved) {
+      const farm = byName(name);
+      expect(farm.website).toBeUndefined();
+      expect(farm.sources?.some((s) => s.includes(url))).toBe(true);
+    }
+    // Council-run market and Facebook-only places keep their Website.
+    expect(byName("Golden Plains Farmers' Market").website).toMatch(/goldenplains\.vic\.gov\.au/);
+    expect(byName("Kiama Farmers' Market").website).toMatch(/facebook\.com/);
+    expect(byName('Lismore Farmers Market').website).toMatch(/facebook\.com/);
+  });
+
+  it('keeps every alias findable in the description', () => {
+    expect(byName('Bermagui Growers and Makers Market').story).toMatch(/Bermi Market/);
+    expect(byName('Farm Gate Market').story).toMatch(/Farmy/);
+    expect(byName('Farm Club Australia').story).toMatch(/Snake Creek Cattle Company/);
+    expect(byName('Myrtlebank Roaming Farms').story).toMatch(/The Chook House/);
+  });
+
+  it('never shows "Open now" for daily-but-untimed, monthly or part-year places', () => {
+    for (const name of ['Stanthorpe Cheese', 'Bendigo Community Farmers Market', 'Batchelor Markets', 'Perth City Farm Farmers Market']) {
+      const farm = byName(name);
+      expect(farm.hours.kind === 'weekly' && farm.hours.irregular).toBe(true);
+      expect(farm.hours.note).toBeTruthy();
+    }
+    const stanthorpe = byName('Stanthorpe Cheese');
+    expect(openStatus(stanthorpe.hours, timezoneForState(stanthorpe.state), new Date(Date.UTC(2026, 10, 12, 2))).label).toBe(
+      'Check dates',
+    );
+    expect(byName('Bendigo Community Farmers Market').hours).toMatchObject({ days: { sat: [['09:00', '12:30']] } });
+  });
+
+  it('gives Myrtlebank its published daily hours instead of "open any time"', () => {
+    expect(byName('Myrtlebank Roaming Farms').hours).toMatchObject({
+      kind: 'weekly',
+      days: { sun: [['07:30', '19:30']], wed: [['07:30', '19:30']], sat: [['07:30', '19:30']] },
+    });
+  });
+});
+
+describe('LISTINGS_CHECKED_ON', () => {
+  it('is the latest researchedOn across the bundled records, as an ISO date', () => {
+    const max = RECORDS.map((r) => r.researchedOn).sort().at(-1);
+    expect(LISTINGS_CHECKED_ON).toBe(max);
+    expect(LISTINGS_CHECKED_ON).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+  });
+
+  it('picks the latest date', () => {
+    expect(latestResearchedOn([{ researchedOn: '2026-11-13' }, { researchedOn: '2026-12-01' }, { researchedOn: '2026-01-31' }])).toBe(
+      '2026-12-01',
+    );
+    expect(latestResearchedOn([])).toBe('');
   });
 });
 
@@ -244,6 +347,13 @@ describe('toOpeningHours', () => {
   it('ignores malformed time ranges instead of inventing them', () => {
     const hours = toOpeningHours({ kind: 'weekly', days: { sat: [['25:00', '12:00'], ['09:00', '08:00']] }, note: null });
     expect(hours).toMatchObject({ days: {}, irregular: true });
+  });
+
+  it('honours an explicit irregular flag from the research', () => {
+    const hours = toOpeningHours({ kind: 'weekly', days: { sun: [['08:00', '13:00']] }, note: 'Runs April to December.', irregular: true });
+    expect(hours).toMatchObject({ kind: 'weekly', irregular: true, note: 'Runs April to December.' });
+    const plain = toOpeningHours({ kind: 'weekly', days: { sun: [['08:00', '13:00']] }, note: 'Runs April to December.', irregular: false });
+    expect(plain.kind === 'weekly' && plain.irregular).toBeUndefined();
   });
 
   it('maps "always" and "appointment" with their wording', () => {

@@ -1,5 +1,7 @@
 # Farm Direct – code review and next build plan
 
+> **Historical (pre-1.0).** This review was written for an earlier build that had sample farms, EAS workflows and a sign-in welcome. Since then: the welcome and Sign in with Apple screens (3a) and the map with every place (3b) were built; the follow-up builds and the 1.0 polish build (`docs/POLISH_PLAN.md`) worked through sections 1 and 2 (check an item against the current code before relying on it), removed sample data from the app (106 real places are bundled), turned off accounts and over-the-air updates for 1.0, and replaced the EAS workflows with one GitHub Actions and fastlane pipeline. The line numbers below refer to that older code. For the current state read `docs/POLISH_PLAN.md` (Results) and the README.
+
 Reviewed 13 Nov 2026 after the first TestFlight upload. `npx tsc --noEmit`: clean. `npx jest`: 14 suites, 174 tests pass. Lint not run. Nothing here was checked on a phone; items marked *(verify)* are read from library source, not observed.
 
 Checked and fine: `PlatformColor`/`DynamicColorIOS` are accepted by expo-symbols `tintColor`, NativeTabs `tintColor`, Switch `trackColor`, `placeholderTextColor` and `ActivityIndicator`. Map `pinColor` correctly uses hex strings.

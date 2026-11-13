@@ -1,6 +1,6 @@
 import { ActivityIndicator, Pressable, StyleSheet, Text, View, type StyleProp, type ViewStyle } from 'react-native';
 
-import { colors, radius, type } from '../../theme';
+import { colors, radius, space, type } from '../../theme';
 import { Icon, type SFSymbol } from './Icon';
 
 export interface ButtonProps {
@@ -66,7 +66,10 @@ export function Button({
       ) : (
         <View style={styles.content}>
           {icon ? <Icon name={icon} size={small ? 15 : 18} color={fg} weight="semibold" /> : null}
-          <Text style={[small ? type.subheadline : type.headline, small && { fontWeight: '600' }, { color: fg }]} numberOfLines={1}>
+          <Text
+            style={[small ? type.subheadline : type.headline, small && styles.smallLabel, styles.label, { color: fg }]}
+            numberOfLines={2}
+          >
             {label}
           </Text>
         </View>
@@ -79,7 +82,10 @@ const styles = StyleSheet.create({
   base: { alignItems: 'center', justifyContent: 'center', borderCurve: 'continuous' },
   large: { minHeight: 50, borderRadius: 14, paddingHorizontal: 16, alignSelf: 'stretch' },
   small: { minHeight: 32, borderRadius: radius.capsule, paddingHorizontal: 14, alignSelf: 'flex-start' },
-  content: { flexDirection: 'row', alignItems: 'center', gap: 6 },
+  // flexShrink lets a long label (or a large Dynamic Type size) wrap to a second line instead of being cut.
+  content: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 6, maxWidth: '100%', paddingVertical: space.xs },
+  label: { textAlign: 'center', flexShrink: 1 },
+  smallLabel: { fontWeight: '600' },
   pressed: { opacity: 0.6 },
   disabled: { opacity: 0.4 },
 });

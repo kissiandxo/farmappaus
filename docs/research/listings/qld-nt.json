@@ -3,7 +3,7 @@
   "region": "QLD/NT",
   "listings": [
     {
-      "name": "Jan Powers Farmers Markets - Powerhouse",
+      "name": "Jan Powers Farmers Markets – Powerhouse",
       "type": "farmers_market",
       "address": "Lamington Street (Brisbane Powerhouse)",
       "locality": "New Farm",
@@ -25,7 +25,7 @@
             ]
           ]
         },
-        "note": "Christmas break; see caveats."
+        "note": "Christmas break: last market 19 Dec 2026, back 16 Jan 2027."
       },
       "hoursAsStated": "Every Saturday, 6am to 12 noon.",
       "website": "https://www.janpowersfarmersmarkets.com.au",
@@ -39,7 +39,7 @@
       "caveats": "Site announces a Christmas break (Powerhouse and Manly final market 19 Dec 2026, returning 16 Jan 2027; Eagle Farm final market 20 Dec, returning 24 Jan 2027). Source gives 'Lamington St, Newfarm' only; street number and postcode 4005 not stated on the page."
     },
     {
-      "name": "Jan Powers Farmers Markets - Manly",
+      "name": "Jan Powers Farmers Markets – Manly",
       "type": "farmers_market",
       "address": "Manly Harbour, Royal Esplanade (between Cambridge and Cardigan Parades), Little Bayside Park",
       "locality": "Manly",
@@ -61,7 +61,7 @@
             ]
           ]
         },
-        "note": "First and third Saturday of each month only."
+        "note": "First and third Saturday of each month only. Christmas break: last market 19 Dec 2026, back 16 Jan 2027."
       },
       "hoursAsStated": "1st and 3rd Saturday of the month, 6am to 12 noon.",
       "website": "https://www.janpowersfarmersmarkets.com.au",
@@ -75,7 +75,7 @@
       "caveats": "Site announces a Christmas break (Powerhouse and Manly final market 19 Dec 2026, returning 16 Jan 2027; Eagle Farm final market 20 Dec, returning 24 Jan 2027). Postcode 4179 not stated on the page."
     },
     {
-      "name": "Jan Powers Farmers Markets - Eagle Farm",
+      "name": "Jan Powers Farmers Markets – Eagle Farm",
       "type": "farmers_market",
       "address": "Eagle Farm Racecourse, Racecourse Road (Gate 4 for disabled parking; public parking via Gate 7, Nudgee Road)",
       "locality": "Ascot",
@@ -94,7 +94,7 @@
             ]
           ]
         },
-        "note": "New market; started 2026 per the site."
+        "note": "New market; started 2026. Christmas break: last market 20 Dec 2026, back 24 Jan 2027."
       },
       "hoursAsStated": "Every Sunday, 6am to 12 noon.",
       "website": "https://www.janpowersfarmersmarkets.com.au",
@@ -272,7 +272,7 @@
       "state": "QLD",
       "postcode": "4309",
       "products": [],
-      "otherProducts": "Local produce, cheeses and gourmet pantry items (per Scenic Rim tourism); cut flowers from Elderflower Farm on site; Fifth Acre produce stall.",
+      "otherProducts": "Local produce, cheeses and gourmet pantry items; cut flowers from Elderflower Farm on site; Fifth Acre produce stall.",
       "tags": [],
       "hours": {
         "kind": "weekly",
@@ -316,7 +316,7 @@
       "caveats": "The 8:30-4 hours are the site's cafe/shop opening hours; produce stall days are separate. Product list taken partly from tourism page. Phone is a mobile listed on the site."
     },
     {
-      "name": "Green Shed Market (Tamborine Mountain)",
+      "name": "Green Shed Market",
       "type": "farmers_market",
       "address": "Tamborine Mountain State High School (street address not stated)",
       "locality": "Tamborine Mountain",
@@ -340,7 +340,7 @@
         "note": null
       },
       "hoursAsStated": "Every Sunday, 8am to 12pm.",
-      "website": "https://www.visitscenicrim.com.au/scenic-rim-weekend-country-markets/",
+      "website": null,
       "phone": null,
       "description": "Weekly Sunday market run by the Tamborine Mountain Local Producers Association, described as bringing together organic growers.",
       "sources": [
@@ -442,7 +442,7 @@
       "hoursAsStated": "Sunday: 7:00am - midday.",
       "website": "https://noosafarmersmarket.com.au",
       "phone": null,
-      "description": "Sunday farmers market on the Noosa hinterland side of Noosaville.",
+      "description": "Sunday farmers market at 155 Weyba Road, Noosaville.",
       "sources": [
         "https://noosafarmersmarket.com.au"
       ],
@@ -457,7 +457,7 @@
       "state": "QLD",
       "postcode": "4882",
       "products": [],
-      "otherProducts": "Council describes Tablelands markets as selling fresh produce, preserves, plants, arts and crafts.",
+      "otherProducts": "Fresh produce, preserves, plants, arts and crafts.",
       "tags": [],
       "hours": {
         "kind": "weekly",
@@ -472,7 +472,7 @@
         "note": "First Sunday of the month."
       },
       "hoursAsStated": "First Sunday of the Month, 7am-12noon, Morrow Park.",
-      "website": "https://trc.qld.gov.au/tablelands-markets",
+      "website": null,
       "phone": null,
       "description": "Monthly community market in Tolga on the Atherton Tablelands.",
       "sources": [
@@ -505,7 +505,7 @@
         "note": "First Friday of the month."
       },
       "hoursAsStated": "First Friday of the Month, 5-8pm.",
-      "website": "https://trc.qld.gov.au/tablelands-markets",
+      "website": null,
       "phone": null,
       "description": "Monthly evening artisan and farmers market in Atherton.",
       "sources": [
@@ -541,7 +541,7 @@
         "note": null
       },
       "hoursAsStated": "Saturdays (all year), 8.00am to 1.00pm.",
-      "website": "https://litchfield.nt.gov.au/community/living-litchfield/markets",
+      "website": null,
       "phone": null,
       "description": "Weekly rural market at the Freds Pass Sport and Recreation Reserve outside Darwin.",
       "sources": [
@@ -620,7 +620,7 @@
         "note": null
       },
       "hoursAsStated": "Every Sunday from 8am to 2pm.",
-      "website": "https://northernterritory.com/us/en/articles/markets-in-the-nt",
+      "website": null,
       "phone": null,
       "description": "Weekly Sunday community market in Nightcliff where local farmers sell fresh fruit.",
       "sources": [
@@ -653,7 +653,7 @@
         "note": "Last Sunday of each month, March to December only."
       },
       "hoursAsStated": "Sunday (last Sunday of each month), 8.00am - 12.00 midday, March to December.",
-      "website": "https://litchfield.nt.gov.au/community/living-litchfield/markets",
+      "website": null,
       "phone": null,
       "description": "Small monthly community market under the Berry Springs hall.",
       "sources": [

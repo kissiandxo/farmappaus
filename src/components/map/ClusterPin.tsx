@@ -11,7 +11,7 @@ interface ClusterMarkerProps {
   onPress: (cluster: PinCluster) => void;
 }
 
-/** Several nearby places as one count bubble. Tapping it zooms to fit them. */
+/** Several nearby places as one count bubble. Tapping it zooms to fit them. `tracksViewChanges` is false on iOS. */
 export function ClusterMarker({ cluster, onPress }: ClusterMarkerProps) {
   const palette = usePalette();
   const size = cluster.count >= 100 ? 52 : cluster.count >= 10 ? 46 : 40;
@@ -25,7 +25,9 @@ export function ClusterMarker({ cluster, onPress }: ClusterMarkerProps) {
       stopPropagation
       tracksViewChanges={tracking}
       zIndex={5}
-      accessibilityLabel={`${cluster.count} places. Double tap to zoom in.`}
+      accessibilityRole="button"
+      accessibilityLabel={`${cluster.count} places`}
+      accessibilityHint="Zooms in to show them"
     >
       <View
         style={[

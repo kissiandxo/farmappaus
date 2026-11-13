@@ -1,3 +1,5 @@
+import type { Farm } from './types';
+
 export interface LatLng {
   lat: number;
   lng: number;
@@ -40,12 +42,39 @@ export function boundingRegion(points: LatLng[], minDelta = 0.2): MapRegion {
   };
 }
 
-/** "850 m" under 1 km, "3.4 km" under 10 km, then whole kilometres. */
-export function formatDistance(km: number): string {
+/**
+ * "850 m" under 1 km, "3.4 km" under 10 km, then whole kilometres. With `approx` (the place's pin is only
+ * the suburb centre), "about 3 km" in whole kilometres, never less than 1.
+ */
+export function formatDistance(km: number, approx = false): string {
+  if (approx) return `about ${Math.max(1, Math.round(km)).toLocaleString('en-AU')} km`;
   if (km < 1) {
     const metres = Math.max(50, Math.round((km * 1000) / 50) * 50);
     if (metres < 1000) return `${metres} m`;
   }
   if (km < 10) return `${km.toFixed(1)} km`;
   return `${Math.round(km).toLocaleString('en-AU')} km`;
+}
+
+/**
+ * Other places near a place (measured from that place, not from the user), nearest first then by name.
+ * Excludes the place itself. Defaults: up to 3 places within 60 km.
+ */
+export function nearbyPlaces(
+  farm: Farm,
+  farms: Farm[],
+  opts: { limit?: number; maxKm?: number } = {},
+): { farm: Farm; distanceKm: number }[] {
+  const { limit = 3, maxKm = 60 } = opts;
+  return farms
+    .filter((other) => other.id !== farm.id)
+    .map((other) => ({ farm: other, distanceKm: haversineKm(farm, other) }))
+    .filter((r) => r.distanceKm <= maxKm)
+    .sort((a, b) => a.distanceKm - b.distanceKm || a.farm.name.localeCompare(b.farm.name))
+    .slice(0, limit);
+}
+
+/** Rough box around mainland Australia and Tasmania (latitude −44.5 to −9, longitude 112 to 154.5). */
+export function isInAustralia(p: LatLng): boolean {
+  return p.lat >= -44.5 && p.lat <= -9 && p.lng >= 112 && p.lng <= 154.5;
 }

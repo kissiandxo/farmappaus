@@ -6,17 +6,23 @@ import { colors, space } from '../theme';
 import { FilterPanel } from './FilterPanel';
 import { SheetHeader } from './SheetHeader';
 import { Button } from './ui';
+import { useAnnounceCount } from './useAnnounceCount';
 
 interface FiltersModalProps {
   visible: boolean;
   onClose: () => void;
+  /** 'map' counts what the map pins (no distance limit, no search query); 'list' counts Explore's list. */
+  source?: 'list' | 'map';
 }
 
 /** Filters as a pageSheet: grouped sections, "Done" in the bar, a "Show N places" button at the foot. */
-export function FiltersModal({ visible, onClose }: FiltersModalProps) {
-  const { filters, setFilters, results } = useSearch();
+export function FiltersModal({ visible, onClose, source = 'list' }: FiltersModalProps) {
+  const { filters, setFilters, results: listResults, mapResults } = useSearch();
+  const results = source === 'map' ? mapResults : listResults;
   const count = results.length === 1 ? 'Show 1 place' : `Show ${results.length} places`;
   const insets = useSafeAreaInsets();
+  // VoiceOver hears the new count as chips change (the list behind the sheet stays quiet meanwhile).
+  useAnnounceCount(results.length, visible);
 
   return (
     <Modal visible={visible} animationType="slide" presentationStyle="pageSheet" onRequestClose={onClose}>

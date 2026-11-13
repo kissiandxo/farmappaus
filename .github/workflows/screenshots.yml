@@ -12,16 +12,36 @@ jobs:
   screenshots:
     if: github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '[screenshots]')
     runs-on: macos-26
-    timeout-minutes: 60
+    timeout-minutes: 90
     env:
       EXPO_PUBLIC_SUPPORT_EMAIL: ${{ vars.SUPPORT_EMAIL }}
+      EXPO_PUBLIC_OPERATOR_NAME: ${{ vars.OPERATOR_NAME }}
       # Skips the first-launch welcome and pre-saves three places. Simulator build only.
       EXPO_PUBLIC_SCREENSHOT_MODE: "1"
     steps:
       - uses: actions/checkout@v4
-      - name: Use the newest Xcode on the machine
+      - name: Check the contact and operator variables
         run: |
-          XCODE=$(ls -d /Applications/Xcode_*.app | sort -V | tail -1)
+          # Warn, don't fail: the screenshots still work, but About shows no contact address.
+          if [ -z "$EXPO_PUBLIC_SUPPORT_EMAIL" ]; then
+            echo "::warning::Set the SUPPORT_EMAIL repository variable. These screenshots show no contact address."
+          fi
+          if [ -z "$EXPO_PUBLIC_OPERATOR_NAME" ]; then
+            echo "::warning::Set the OPERATOR_NAME repository variable."
+          fi
+      - name: Use the newest released Xcode on the machine
+        run: |
+          XCODE=$(ls -d /Applications/Xcode_*.app | grep -viE 'beta|rc|candidate' | sort -V | tail -1 || true)
+          MAJOR=0
+          if [ -n "$XCODE" ]; then
+            VERSION=$(basename "$XCODE" .app | sed -E 's/^Xcode_//')
+            MAJOR=$(echo "$VERSION" | grep -oE '^[0-9]+' || echo 0)
+          fi
+          if [ -z "$XCODE" ] || [ "$MAJOR" -lt 26 ]; then
+            FALLBACK=$(ls -d /Applications/Xcode_*.app | sort -V | tail -1)
+            echo "::warning::No released Xcode 26 or newer found (best released: ${XCODE:-none}). Falling back to $FALLBACK."
+            XCODE=$FALLBACK
+          fi
           sudo xcode-select -s "$XCODE"
           xcodebuild -version
       - uses: actions/setup-node@v4
@@ -48,20 +68,37 @@ jobs:
           xcrun simctl status_bar "$UDID" override --time "9:41" --batteryState charged --batteryLevel 100 --cellularBars 4 --wifiBars 3
           xcrun simctl install "$UDID" build/Build/Products/Release-iphonesimulator/FarmDirect.app
       - name: Take screenshots
+        timeout-minutes: 40
         run: |
+          set +e
           mkdir -p shots
-          # The app (screenshot mode) moves to the next screen every 20 s after launch:
-          # Explore, Map, a market, a farm shop, Saved, then Explore again (taken in dark mode).
-          xcrun simctl launch "$UDID" au.farmdirect.app
-          sleep 14
-          for name in 01-explore 02-map 03-market 04-farm-shop 05-saved; do
-            xcrun simctl io "$UDID" screenshot "shots/$name.png"
-            sleep 20
-          done
-          xcrun simctl ui "$UDID" appearance dark
-          sleep 6
-          xcrun simctl io "$UDID" screenshot "shots/06-explore-dark.png"
-          sips -g pixelWidth -g pixelHeight shots/*.png
+          # macOS has no `timeout`: run a command, killing it after N seconds.
+          limit() { local secs=$1; shift; perl -e 'alarm shift; exec @ARGV' "$secs" "$@"; }
+          sim() { limit 60 xcrun simctl "$@" || echo "::warning::simctl $* failed or timed out"; }
+          shot() { limit 60 xcrun simctl io "$UDID" screenshot "shots/$1.png" || echo "::warning::Screenshot $1 failed or timed out"; }
+          # The app (screenshot mode) moves on ONE scene each time the appearance goes from dark back to light
+          # (SCREENSHOT_SCENES in src/config.ts; no timers). `next N` ticks once, then waits N seconds to settle.
+          next() { sim ui "$UDID" appearance dark; sleep 4; sim ui "$UDID" appearance light; sleep "$1"; }
+          sim launch "$UDID" au.farmdirect.app
+          sleep 45
+          shot 01-explore
+          next 15
+          shot 02-explore-meat
+          next 30
+          shot 03-map
+          next 15
+          shot 04-place-meat
+          next 15
+          shot 05-place-market
+          next 15
+          shot 06-saved
+          # Last scene: Explore with no filters, taken in dark appearance.
+          next 10
+          sim ui "$UDID" appearance dark
+          sleep 10
+          shot 07-explore-dark
+          ls shots/*.png >/dev/null 2>&1 && limit 60 sips -g pixelWidth -g pixelHeight shots/*.png
+          exit 0
       - uses: actions/upload-artifact@v4
         if: always()
         with:

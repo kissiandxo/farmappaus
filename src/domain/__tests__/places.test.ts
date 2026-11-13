@@ -102,3 +102,16 @@ describe('bundled Australian postcode data', () => {
     expect(near?.state).toBe('QLD');
   });
 });
+
+describe('nearestPlace limits', () => {
+  it('returns null for a point outside Australia instead of a far-away suburb', () => {
+    const applePark = { lat: 37.33, lng: -122.01 };
+    expect(nearestPlace(applePark, undefined, 15)).toBeNull();
+    expect(nearestPlace(applePark)?.locality).not.toBe('Home Island');
+  });
+
+  it('uses true distance, and still finds a suburb within the limit', () => {
+    expect(nearestPlace({ lat: -27.5598, lng: 151.9507 }, small, 15)?.locality).toBe('Toowoomba');
+    expect(nearestPlace({ lat: -20, lng: 151.95 }, small, 15)).toBeNull();
+  });
+});

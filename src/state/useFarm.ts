@@ -12,7 +12,7 @@ const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
  * or a pending listing an admin is reviewing) is fetched, which only works when allowed.
  */
 export function useFarm(id: string | undefined) {
-  const { farms } = useSearch();
+  const { farms, dataStatus } = useSearch();
   const known = farms.find((f) => f.id === id) ?? null;
   const [fetched, setFetched] = useState<Farm | null>(null);
   const [loading, setLoading] = useState(false);
@@ -33,5 +33,6 @@ export function useFarm(id: string | undefined) {
     if (!known) load();
   }, [known, load]);
 
-  return { farm: known ?? fetched, loading, reload: load };
+  // While the list itself is still loading, a missing place is not yet "not found".
+  return { farm: known ?? fetched, loading: loading || (!known && dataStatus.kind === 'loading'), reload: load };
 }

@@ -1,4 +1,13 @@
-import { ageInDays, describeAge, formatAud, formatDateAu, formatPrice, isStale } from '../format';
+import {
+  addressLines,
+  ageInDays,
+  describeAge,
+  formatAud,
+  formatDateAu,
+  formatPrice,
+  isStale,
+  UNCLAIMED_STALE_AFTER_DAYS,
+} from '../format';
 
 describe('listing age', () => {
   const now = new Date('2026-11-13T05:00:00Z');
@@ -60,5 +69,32 @@ describe('formatPrice', () => {
 
   it('omits the unit when absent', () => {
     expect(formatPrice(800)).toBe('$8.00');
+  });
+});
+
+describe('addressLines', () => {
+  it('splits a street address and the suburb line', () => {
+    expect(addressLines({ address: '12 Main Rd', locality: 'Bilpin', state: 'NSW', postcode: '2758' })).toEqual({
+      line1: '12 Main Rd',
+      line2: 'Bilpin NSW 2758',
+    });
+  });
+
+  it('returns null without a street address', () => {
+    expect(addressLines({ locality: 'Bilpin', state: 'NSW', postcode: '2758' })).toBeNull();
+    expect(addressLines({ address: '  ', locality: 'Bilpin', state: 'NSW', postcode: '2758' })).toBeNull();
+  });
+
+  it('trims a missing postcode', () => {
+    expect(addressLines({ address: 'Showground', locality: 'Bilpin', state: 'NSW', postcode: '' })?.line2).toBe('Bilpin NSW');
+  });
+});
+
+describe('stale threshold', () => {
+  const now = new Date('2026-11-13T05:00:00Z');
+  it('takes an optional threshold for unclaimed places', () => {
+    expect(isStale('2026-06-01', now)).toBe(true);
+    expect(isStale('2026-06-01', now, UNCLAIMED_STALE_AFTER_DAYS)).toBe(false);
+    expect(isStale('2025-11-01', now, UNCLAIMED_STALE_AFTER_DAYS)).toBe(true);
   });
 });

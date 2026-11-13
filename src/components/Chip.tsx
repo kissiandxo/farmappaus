@@ -8,10 +8,12 @@ interface ChipProps {
   label: string;
   selected: boolean;
   onPress: () => void;
+  /** Overrides the spoken label (defaults to `label`). */
+  accessibilityLabel?: string;
 }
 
 /** Capsule toggle. Selected = tint fill, onTint text and a checkmark; unselected = quiet `fill`. */
-export function Chip({ label, selected, onPress }: ChipProps) {
+export function Chip({ label, selected, onPress, accessibilityLabel }: ChipProps) {
   return (
     <Pressable
       onPress={() => {
@@ -19,7 +21,7 @@ export function Chip({ label, selected, onPress }: ChipProps) {
         onPress();
       }}
       accessibilityRole="button"
-      accessibilityLabel={label}
+      accessibilityLabel={accessibilityLabel ?? label}
       accessibilityState={{ selected }}
       hitSlop={4}
       style={({ pressed }) => [styles.chip, selected && styles.selected, pressed && styles.pressed]}

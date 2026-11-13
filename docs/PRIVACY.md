@@ -2,17 +2,19 @@
 
 Last updated: 13 November 2026
 
-> Draft text. It is generated from `src/content/privacy.ts` (run `npm run build:privacy`). Have it reviewed by an Australian privacy lawyer before the public launch.
-
 ## The short version
 
 Farm Direct helps you find farmers’ markets, farm shops and farm-gate stalls near you. We collect as little as we can. We do not sell your information, show ads, or track you across other apps or websites.
+
+## Who we are
+
+Farm Direct is run by (to be added before publishing). “We” and “us” in this policy means them.
 
 ## Farm Direct 1.0: no accounts
 
 Farm Direct 1.0 has no accounts and no sign-in. Nothing you do in the app is sent to Farm Direct: not your location, your searches and filters, or the places you save.
 
-The places you save and the last location you chose are kept on your phone only, so the app still works without reception. Deleting the app deletes them.
+The places you save, the last location you chose and a few app settings are kept on your phone only, so the app still works without reception. Deleting the app deletes them.
 
 The places in the app are built into it. They come from public sources, such as each place’s own website and council or tourism pages, and their owners have not confirmed them.
 
@@ -22,9 +24,11 @@ The sections below headed “only when accounts are available” do not apply to
 
 ## Your location
 
-If you tap “Use my current location”, the app uses your phone’s location to work out which places are near you and how far away they are. This happens on your phone. Your location is not sent to our servers.
+If you tap “Use my location”, the app uses your phone’s location, only while the app is open, to sort places by distance and show how far away they are. This happens on your phone. Your location is not sent to our servers.
 
-The last place you chose is saved on your phone only, so the app still works when you have no reception.
+To name the area you are in, the app first looks for a nearby town among the places built into it. If it can’t find one, it asks Apple’s geocoding service to turn the coordinates into a town name. Apple handles that request under its own privacy policy.
+
+The last location you chose is saved on your phone only, so the app still works when you have no reception.
 
 ## Maps and directions
 
@@ -44,7 +48,9 @@ Signing in is optional. If you use Sign in with Apple, Apple gives the app a pri
 
 With an online account, Apple’s sign-in token is checked by our sign-in provider, Supabase, and your name and email are kept with your account like any other account details.
 
-If you signed in with Apple in an earlier version of the app, your name, email address and that user ID are kept on your phone only. They are not sent to our servers. We do not keep Apple’s sign-in token. “Remove from this iPhone” on the About tab deletes them. If you revoke Farm Direct in your Apple ID settings, the app removes them the next time it opens.
+## If you tried a test version with Sign in with Apple
+
+If you tried a test version that let you sign in with Apple, your name, email address and Apple user ID are kept on your phone only. They are not sent to our servers. We do not keep Apple’s sign-in token. “Remove from this iPhone” on the About tab deletes them. If you revoke Farm Direct in your Apple ID settings, the app removes them the next time it opens.
 
 ## If you list your farm (only when accounts are available)
 
@@ -64,15 +70,23 @@ Account details, listings and photos are stored with our database provider, Supa
 
 ## Who we share it with
 
-We do not sell your information. Farm Direct 1.0 uses Apple (the App Store, TestFlight and Apple Maps) and Expo, which delivers app updates, not your personal information. When accounts are available we also use Supabase for storage and sign-in.
+We do not sell your information. Farm Direct 1.0 uses Apple (the App Store, TestFlight and Apple Maps).
+
+## Storage and sign-in provider (only when accounts are available)
+
+When accounts are available we also use Supabase for storage and sign-in.
 
 ## Your choices
 
 In Farm Direct 1.0 you can delete everything the app keeps by deleting the app. Emails you send us are held in our email, and you can ask us to delete them.
 
-When accounts are available you can delete your account at any time in the app: Account tab, then “Delete my account”. This removes your account, your saved places and any draft listings. Listings that have already been published stay on the map without an owner. To have one removed, contact us.
+For anything else, such as a copy of your information, contact us. You also have rights under the Privacy Act 1988 (Cth). If you are unhappy with how we handle a request, you can contact the Office of the Australian Information Commissioner (oaic.gov.au).
 
-You can see and change your own listing at any time. For anything else, such as a copy of your information, contact us. You also have rights under the Privacy Act 1988 (Cth). If you are unhappy with how we handle a request, you can contact the Office of the Australian Information Commissioner (oaic.gov.au).
+## Deleting your account or listing (only when accounts are available)
+
+You can delete your account at any time in the app: Account tab, then “Delete my account”. This removes your account, your saved places and any draft listings. Listings that have already been published stay on the map without an owner. To have one removed, contact us.
+
+You can see and change your own listing at any time.
 
 ## Children
 
@@ -80,7 +94,7 @@ Farm Direct is not aimed at children.
 
 ## Contact us
 
-Use “Contact us” on the About tab, or the support link on the Farm Direct page in the App Store.
+Email us at (to be added before publishing), or use “Contact us” on the About tab.
 
 ## Changes
 

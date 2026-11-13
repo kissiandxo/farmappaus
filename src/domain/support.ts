@@ -96,7 +96,18 @@ export function listMailto(to: string): string | null {
   );
 }
 
-/** "Contact us" email. The app version helps us look into problems. */
+/**
+ * The version shown on the About tab and put in the "Contact us" email: "1.0.0 (12)" when the build number
+ * is known, "1.0.0" when it isn't, and "" with no version.
+ */
+export function versionLabel(version?: string | null, buildNumber?: string | null): string {
+  const v = version?.trim() ?? '';
+  if (!v) return '';
+  const build = buildNumber?.trim();
+  return build ? `${v} (${build})` : v;
+}
+
+/** "Contact us" email. The app version (see `versionLabel`) helps us look into problems. */
 export function contactMailto(to: string, appVersion?: string): string | null {
   return mailtoUrl(
     to,

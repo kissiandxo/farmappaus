@@ -1,13 +1,13 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { ActivityIndicator, Linking, Modal, ScrollView, StyleSheet, Text, View } from 'react-native';
 
 import { formatPlace, searchPlaces, type Place } from '../domain/places';
 import { locateMe } from '../lib/locate';
 import { useSearch } from '../state/SearchContext';
-import { colors, space, type } from '../theme';
+import { colors, radius, space, type } from '../theme';
 import { SearchField } from './SearchField';
 import { SheetHeader } from './SheetHeader';
-import { Button, Row, Section } from './ui';
+import { Button, Row, Section, success } from './ui';
 
 interface LocationModalProps {
   visible: boolean;
@@ -18,18 +18,31 @@ type Problem = { text: string; canOpenSettings: boolean } | null;
 
 /** Where are you? A pageSheet with a "Use my current location" row and a suburb/postcode search. */
 export function LocationModal({ visible, onClose }: LocationModalProps) {
-  const { setLocation } = useSearch();
+  const { location, isDefaultLocation, setLocation } = useSearch();
   const [query, setQuery] = useState('');
   const [busy, setBusy] = useState(false);
   const [problem, setProblem] = useState<Problem>(null);
 
   const matches = useMemo(() => (visible ? searchPlaces(query) : []), [query, visible]);
 
-  const choosePlace = (place: Place) => {
-    setLocation({ label: formatPlace(place), lat: place.lat, lng: place.lng, source: 'search' });
+  // Start fresh every time the sheet opens, however it was closed (Done, a choice, or a swipe down).
+  useEffect(() => {
+    if (!visible) {
+      setQuery('');
+      setProblem(null);
+    }
+  }, [visible]);
+
+  const close = () => {
     setQuery('');
     setProblem(null);
     onClose();
+  };
+
+  const choosePlace = (place: Place) => {
+    setLocation({ label: formatPlace(place), lat: place.lat, lng: place.lng, source: 'search' });
+    success();
+    close();
   };
 
   const useMyLocation = async () => {
@@ -43,15 +56,16 @@ export function LocationModal({ visible, onClose }: LocationModalProps) {
       return;
     }
     setLocation(result.location);
-    onClose();
+    success();
+    close();
   };
 
   const noMatch = query.trim().length >= 2 && matches.length === 0;
 
   return (
-    <Modal visible={visible} animationType="slide" presentationStyle="pageSheet" onRequestClose={onClose}>
+    <Modal visible={visible} animationType="slide" presentationStyle="pageSheet" onRequestClose={close}>
       <View style={styles.sheet}>
-        <SheetHeader title="Where are you?" onDone={onClose} />
+        <SheetHeader title="Where are you?" onDone={close} />
 
         <ScrollView
           keyboardShouldPersistTaps="handled"
@@ -60,6 +74,12 @@ export function LocationModal({ visible, onClose }: LocationModalProps) {
           contentContainerStyle={styles.content}
         >
           <Section>
+            <Row
+              title={`Current: ${isDefaultLocation ? 'Not set — showing Sydney' : location.label}`}
+              accessibilityLabel={
+                isDefaultLocation ? 'Current location not set, showing Sydney' : `Current location, ${location.label}`
+              }
+            />
             <Row
               icon="location.fill"
               title={busy ? 'Finding your location…' : 'Use my current location'}
@@ -113,7 +133,7 @@ const styles = StyleSheet.create({
     marginBottom: space.xl,
     padding: space.lg,
     gap: space.sm,
-    borderRadius: 12,
+    borderRadius: radius.group,
     borderCurve: 'continuous',
     backgroundColor: colors.orangeFill,
   },

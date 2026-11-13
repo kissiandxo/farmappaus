@@ -10,7 +10,7 @@
       "state": "SA",
       "postcode": "5034",
       "products": [],
-      "otherProducts": "Fresh produce and food from stallholders; specific product lines not recorded",
+      "otherProducts": "Fresh produce and food from stallholders.",
       "tags": [],
       "hours": {
         "kind": "weekly",
@@ -78,7 +78,7 @@
       "state": "SA",
       "postcode": "5172",
       "products": [],
-      "otherProducts": "Producer stalls; product lines not recorded from the page opened",
+      "otherProducts": null,
       "tags": [],
       "hours": {
         "kind": "weekly",
@@ -110,7 +110,7 @@
       "state": "SA",
       "postcode": "5251",
       "products": [],
-      "otherProducts": "Fresh Adelaide Hills produce and hot food; specific lines not recorded",
+      "otherProducts": "Fresh Adelaide Hills produce and hot food.",
       "tags": [],
       "hours": {
         "kind": "weekly",
@@ -127,7 +127,7 @@
       "hoursAsStated": "Open every Saturday 8:30am to 12:30pm.",
       "website": "https://ahfm.org.au/",
       "phone": null,
-      "description": "Weekly Saturday farmers market under elm trees in Mount Barker; dogs are welcome per the site.",
+      "description": "Weekly Saturday farmers market under elm trees in Mount Barker; dogs welcome.",
       "sources": [
         "https://ahfm.org.au/"
       ],
@@ -144,7 +144,7 @@
       "products": [
         "fruit"
       ],
-      "otherProducts": "Own jams, chutneys, relishes and sauces; strawberry picking (November to April per Visit Adelaide Hills); farm cafe",
+      "otherProducts": "Own jams, chutneys, relishes and sauces; strawberry picking (November to April); farm cafe",
       "tags": [],
       "hours": {
         "kind": "weekly",
@@ -192,7 +192,7 @@
             ]
           ]
         },
-        "note": "Closed Christmas Day. Strawberry patch hours/availability vary and the site says to check on the day."
+        "note": "Closed Christmas Day. Strawberry patch hours and availability vary, so check on the day."
       },
       "hoursAsStated": "Farm shop open 9am to 5pm every day except Christmas Day.",
       "website": "https://www.beerenberg.com.au/",
@@ -213,7 +213,7 @@
       "state": "WA",
       "postcode": "6285",
       "products": [],
-      "otherProducts": "Local producer stalls; specific lines not recorded",
+      "otherProducts": null,
       "tags": [],
       "hours": {
         "kind": "weekly",
@@ -250,7 +250,7 @@
         "eggs",
         "milk"
       ],
-      "otherProducts": "Meat, seafood, flowers, coffee and prepared food (site title lists these)",
+      "otherProducts": "Meat, seafood, flowers, coffee and prepared food.",
       "tags": [],
       "hours": {
         "kind": "weekly",
@@ -297,7 +297,8 @@
             ]
           ]
         },
-        "note": "Summer hours Dec-Mar 7:30-11:30am; April-November 8am-12 noon (this entry uses the Apr-Nov hours, which apply now)."
+        "note": "Summer hours December to March 7:30–11:30am; April to November 8am–12 noon.",
+        "irregular": true
       },
       "hoursAsStated": "Every Saturday: 7.30-11.30am (Dec-Mar), 8am-12 noon (Apr-Nov).",
       "website": "https://www.perthcityfarm.org.au/",
@@ -697,7 +698,7 @@
           "sat": [],
           "sun": []
         },
-        "note": "Open Friday to Sunday; closed public holidays. Opening times of day not published on page opened."
+        "note": "Open Friday to Sunday; closed public holidays. Times not published."
       },
       "hoursAsStated": "Open Friday to Sunday (closed on public holidays).",
       "website": null,

@@ -39,7 +39,7 @@
       "caveats": "The site gives no street number or postcode. Its directions say to take the Martins Ridge Road turnoff, drive 500 m, turn right at the Martins Ridge Farm sign, and it is the first property on the left. The map pin needs checking. Corrected on verification: I opened the home and contact pages. The site is a JS-rendered page, so I read the text from the raw HTML. The home page says the farm raises pork and beef sustainably and sells direct from the farm each Friday 10am-4pm or by appointment, and that its farm gate is open to the public. The contact page gives the Martins Ridge Road directions in Conjola. The hours and products check out. The description was wrong in two places: it says 'near Milton' and 'family farm', and the site says neither. I rewrote it to stick to what the site says."
     },
     {
-      "name": "Stockinpiggle Farm Produce (Cootamundra store)",
+      "name": "Stockinpiggle Farm Produce",
       "type": "farm_shop",
       "address": "18 Adams Street",
       "locality": "Cootamundra",
@@ -95,7 +95,7 @@
       "caveats": "This store is in Cootamundra town, not on the farm. The postcode 2590 comes from the Visit Cootamundra page (council tourism), not the business site. The council page gives a phone number, but the business site does not, so phone is left null. The farm store at Stockinbingle is left out of the hours because its hours vary. Corrected on verification: I opened the business's own site (copyright 2026). It confirms the store at 18 Adams Street, Cootamundra, open Wed-Fri 2pm-6pm and Sat 9am-1pm, closed Sun-Tue. It names pastured pork, grass-fed beef, lamb, hogget and pastured chicken from its family farm. The Visit Cootamundra (council) page confirms the pig stud, direct-to-consumer sales and the Cootamundra store, and 2590 is the Cootamundra postcode shown on that council page. One fix to the description: 'near Cootamundra' is the researcher's inference. The council page places the farm at Stockinbingle, so the description now says that."
     },
     {
-      "name": "Integrity Meats (Tathra Place Free Range)",
+      "name": "Integrity Meats",
       "type": "farm_shop",
       "address": "48 Union Street",
       "locality": "Goulburn",
@@ -135,7 +135,7 @@
             ]
           ]
         },
-        "note": "The site flags these as new opening hours. Online orders are closed for now."
+        "note": "Opening hours changed recently, so call to check. Online orders are closed for now."
       },
       "hoursAsStated": "Open Monday to Thursday, 7am to 2pm (the site notes these are new opening hours).",
       "website": "https://integritymeats.com.au/",
@@ -204,7 +204,7 @@
       "hours": {
         "kind": "weekly",
         "days": {},
-        "note": "Held on the first and third Saturday of each month, mornings only. The page gives no start or finish times."
+        "note": "First and third Saturday mornings of each month. Times are not published."
       },
       "hoursAsStated": "Held in the National Theatre on Braidwood's main street on the first and third Saturday mornings of each month.",
       "website": null,
@@ -382,7 +382,7 @@
       "hours": {
         "kind": "appointment",
         "days": {},
-        "note": "The site says bookings are essential. Beef is sold as pre-ordered share packs, with the current round ready after Christmas."
+        "note": "Bookings are essential. Beef is sold as pre-ordered share packs, with the current round ready after Christmas."
       },
       "hoursAsStated": "Sells grass-fed Angus beef from its farm gate shop; bookings are essential, book your visit online.",
       "website": "https://serenityfarmvic.com.au/",
@@ -435,7 +435,7 @@
       "caveats": "The listing calls the beef 'local' and does not plainly say the farm raises it. The farm's own website (gardenfarm.biz) did not load, so the hours come only from the council tourism listing. Corrected on verification: The Wellington Shire listing confirms 28 Dessents Rd Hiawatha VIC 3971, Sunday 11:00-14:00 (closed other days), and grass-fed Gippsland beef, steaks, pies, sausages, free-range eggs, fruit, vegetables, herbs, jams, jellies and cordials. It also says no chemicals are used on the land or the animals. The caveat was wrong, though: gardenfarm.biz does load now, but it only advertises accommodation (cottages, camping, tiny house) and does not mention the farm shop. Caveats corrected. All other fields are supported."
     },
     {
-      "name": "Gleneden Farm - Farm Shop & Farmyard",
+      "name": "Gleneden Farm",
       "type": "farm_shop",
       "address": "375 North Branch Rd",
       "locality": "Maryvale",
@@ -471,7 +471,7 @@
             ]
           ]
         },
-        "note": "Open only on the first and last weekends of each month (Fri to Sun). Other times by phoning ahead. The site footer says the farm shop is open by appointment only, 7 days 9am to 4pm."
+        "note": "Open 10am to 4pm Friday to Sunday on the first and last weekends of each month. At other times, by appointment: call ahead."
       },
       "hoursAsStated": "Homepage: the farm shop and farmyard open 10am to 4pm Friday to Sunday on the first and last weekends of each month; call ahead to visit at other times. Footer: farm shop, tours and displays open by appointment only, please call or book ahead, 7 days 9am to 4pm.",
       "website": "https://www.glenedenfarm.com.au/",
@@ -532,7 +532,7 @@
       "hours": {
         "kind": "appointment",
         "days": {},
-        "note": "Order and collect. Order online, choose farm pickup, and collect at the farm when emailed that the order is ready. Pickup times are arranged with the farm; the site says weekend pickups can often be arranged."
+        "note": "Order and collect. Order online, choose farm pickup, and collect at the farm when emailed that the order is ready. Pickup times are arranged with the farm; weekend pickups can often be arranged."
       },
       "hoursAsStated": "Farm pickup: place an order online and select farm pickup. The order is prepared on the farm, you are emailed when it is ready, and you collect when it suits, at a time arranged with the farm (they are on the farm most days, and weekends can often work). Pickup is at Forage Farms, 87 Mullaly Road, Kybong QLD 4570.",
       "website": "https://foragefarms.com.au/",
@@ -583,7 +583,7 @@
       "caveats": "The address comes from the Visit Sunshine Coast listing, not the store's own site. Only the K2 beef is stated to be the owners' own; the chicken and pork are stocked from other farms. The store is mainly a farm supplies shop. Corrected on verification: The store's own site confirms it is open to the public on Fridays 9am to 4pm (other times by arrangement), with the kitchen serving Fridays 9am to 1:30pm. It confirms the founders' own certified organic K2 Beef is in the freezer. The Visit Sunshine Coast listing gives 93 Main St, Kandanga QLD 4570. The site names the chicken and pork only as stock ('organic beef and chicken and regeneratively farmed pork') and never says they come from the founders' farms. In a farm-direct meat listing I moved them to otherProducts and kept only beef. The description's 'other organic meats' was also wrong, because the pork is described as regeneratively farmed, not organic."
     },
     {
-      "name": "Midway Farm Stall (Maasdorp Meats)",
+      "name": "Midway Farm Stall",
       "type": "farm_shop",
       "address": "550 Paull Rd",
       "locality": "West Pinjarra",
@@ -599,53 +599,53 @@
         "days": {
           "sun": [
             [
-              "07:00",
+              "08:00",
               "17:00"
             ]
           ],
           "mon": [
             [
-              "07:00",
+              "08:00",
               "17:00"
             ]
           ],
           "tue": [
             [
-              "07:00",
+              "08:00",
               "17:00"
             ]
           ],
           "wed": [
             [
-              "07:00",
+              "08:00",
               "17:00"
             ]
           ],
           "thu": [
             [
-              "07:00",
+              "08:00",
               "17:00"
             ]
           ],
           "fri": [
             [
-              "07:00",
+              "08:00",
               "17:00"
             ]
           ],
           "sat": [
             [
-              "07:00",
+              "08:00",
               "17:00"
             ]
           ]
         },
-        "note": "Spring and summer hours shown. In autumn and winter it opens at 8am and still closes at 5pm. Open 7 days, including school and public holidays."
+        "note": "Opens at 7am in spring and summer. Open 7 days, including school and public holidays."
       },
       "hoursAsStated": "Spring & Summer 7AM-5PM; Autumn & Winter 8AM-5PM; 7 days a week including school holidays and public holidays.",
       "website": "https://midwayfarmstall.com.au/",
       "phone": "08 9539 9092",
-      "description": "Family-run roadside farm stall off the Forrest Highway that sells grass-fed lamb and beef raised on the owners' own farm, alongside pies, coffee and local goods.",
+      "description": "Family-run roadside farm stall off the Forrest Highway that sells grass-fed lamb and beef raised on the owners' own farm under their Maasdorp Meats label, alongside pies, coffee and local goods.",
       "sources": [
         "https://midwayfarmstall.com.au/",
         "https://www.maasdorpmeats.com/",
@@ -657,7 +657,7 @@
       "caveats": "The postcode was not shown on the business's own pages; a directory gave 6208, so check it. The stall says cuts run out between restocks and it does not do custom butchery orders."
     },
     {
-      "name": "Caves Farm (formerly Margaret River Venison)",
+      "name": "Caves Farm",
       "type": "farm_shop",
       "address": "5103 Caves Rd",
       "locality": "Cowaramup",
@@ -720,7 +720,7 @@
       "hoursAsStated": "Open 7 days 9am – 4pm.",
       "website": "https://cavesfarm.com.au/",
       "phone": "0434 990 736",
-      "description": "Working venison and Angus cattle farm on Caves Road whose farm shop sells meat from its own farm and the wider South West, including venison, beef, lamb and pork.",
+      "description": "The original home of Margaret River Venison: a working venison and Angus cattle farm on Caves Road whose farm shop sells meat from its own farm and the wider South West, including venison, beef, lamb and pork.",
       "sources": [
         "https://cavesfarm.com.au/"
       ],
@@ -729,7 +729,7 @@
       "caveats": "The page says the lamb and pork come from the South West, not from this farm. It does not say outright that all beef in the shop is from its own herd. Older directories gave a 4:30pm close; the current own site says 4pm. Corrected on verification: The site confirms the address (5103 Caves Rd, Cowaramup WA 6284), hours (open 7 days 9am-4pm, coffee 9:00am-3:30pm), its own Angus beef and venison, and lamb and pork 'from the South West'. The phone is wrong. The visible 'Where to find us' contact gives 0434990736. (08) 9755 5028 appears only in the page's hidden metadata, not as a published contact."
     },
     {
-      "name": "Albany Farm Fresh Foods (Frankland River Pork farm shop)",
+      "name": "Albany Farm Fresh Foods",
       "type": "farm_shop",
       "address": "Unit 4/191 Chester Pass Road",
       "locality": "Milpara",
@@ -811,7 +811,7 @@
       "hours": {
         "kind": "weekly",
         "days": {},
-        "note": "Shop open Wednesday to Saturday during daylight hours only. No clock times are published, so none are recorded here. Online orders can also be collected."
+        "note": "Open Wednesday to Saturday in daylight hours. Online orders can also be collected."
       },
       "hoursAsStated": "Shop hours: Wed - Sat, daylight hours only.",
       "website": "https://gallowaysprings.com.au/",

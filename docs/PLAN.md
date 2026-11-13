@@ -8,7 +8,7 @@ No in-app payments in v1: the app connects people, the sale happens at the farm 
 | Area | Choice |
 |---|---|
 | App | Expo (React Native + TypeScript), Expo Router |
-| Build/ship | EAS Build + EAS Submit to TestFlight; EAS Update for phone previews in Expo Go |
+| Build/ship | Originally EAS Build/Submit/Update. **Changed for 1.0:** GitHub Actions Mac runners and fastlane build and upload to TestFlight (`.github/workflows/testflight.yml`), a second workflow takes simulator screenshots, there are no EAS workflows and over-the-air updates are off (`updates.enabled: false`) |
 | Backend | Supabase (Postgres, Auth, Storage), Sydney region. Plain lat/lng instead of PostGIS for v1: distances are computed on the phone, which the offline cache needs anyway. PostGIS can be added later (see `docs/BACKEND.md`). |
 | Maps | Apple Maps via `react-native-maps` (no API key) |
 | Offline | TanStack Query persisted cache + last-viewed farms stored on device |
@@ -17,7 +17,16 @@ No in-app payments in v1: the app connects people, the sale happens at the farm 
 | Claim checks | Manual review: ABN + phone + note, compared by an admin |
 | Apple account | Paid Developer account available |
 
-> **Status:** all eight milestones are built. See the README for what is built and what still needs your accounts or a real phone to check, and `docs/RELEASE.md` for the steps to launch.
+> **Status:** all eight milestones are built, and the 1.0 polish build is done (`docs/POLISH_PLAN.md`). See the README for what is built and what still needs your accounts or a real phone to check, and `docs/RELEASE.md` for the steps to launch.
+
+## What 1.0 ships (App Store release)
+
+Version 1.0.0 is a **free directory with no backend and no accounts**, a cut-down of the milestones below:
+
+- **No sample data.** 106 real places from public sources (67 farmers' markets, 26 farm shops, 8 farms, 5 farm-gate stalls) in every state and territory, all marked "Unclaimed", each with its sources. 41 list beef, lamb, pork or chicken; 16 of those are farm shops, farms or farm-gate stalls. Built by `scripts/build-real-listings.mjs` (see `docs/REAL_LISTINGS.md`). Sample farms remain for tests only.
+- **Features:** search (name, town, postcode, produce); filters for type of place, produce with a Meat shortcut, distance, and when you can go (any time, open now, this weekend); a clustered map with a place card; place pages with hours, directions, Share and Nearby; Saved on the phone; an honest location prompt instead of silent Sydney distances; suggestions, reports and claims as pre-filled emails to the support address.
+- **Off in 1.0:** accounts, farmer tools, the review queue (M4 to M6) and over-the-air updates. They appear only with Supabase keys, which the TestFlight workflow refuses unless run by hand with `with_backend`.
+- **One release pipeline:** GitHub Actions and fastlane (see the table above). The two EAS workflows were deleted.
 
 ## Milestones
 
@@ -35,7 +44,7 @@ Each milestone ends with a commit, passing tests, and a "how to test on your pho
 ## Rules we follow
 
 - Australian English, AUD, kilometres, all eight states and territories.
-- No real farms are invented. All seed data is labelled `SAMPLE` in the data and in the UI.
+- No real farms are invented. Sample data is for tests only and never appears in the app; the real places come only from the research files in `docs/research/listings/`.
 - Direct-sale food-safety rules vary by state. See `COMPLIANCE.md` for what listings must show.
 - No payments, no cart. Contact and directions only.
 

@@ -10,7 +10,10 @@
       "eggs",
       "honey",
       "fruit",
-      "veg"
+      "veg",
+      "lamb",
+      "beef",
+      "pork"
     ],
     "otherProducts": "Also dairy, nuts, meat and seafood, baked goods, small goods, plants and flowers, and ready-to-eat food from stallholders.",
     "tags": [],
@@ -32,7 +35,8 @@
     "description": "A large weekly undercover market run by the Rotary Club of Hall where more than 100 stallholders sell produce and food made in the Canberra region.",
     "sources": [
       "https://capitalregionfarmersmarket.com.au/",
-      "https://capitalregionfarmersmarket.com.au/getting-to-the-market/"
+      "https://capitalregionfarmersmarket.com.au/getting-to-the-market/",
+      "https://capitalregionfarmersmarket.com.au/category/meat-seafood/"
     ],
     "confidence": "high",
     "caveats": "The site's FAQ page still says 7.30am start while the home and 'Getting to the market' pages say 7:00am; 7:00 used. Some stallholders list certified organic but that is per-stallholder, so no tags applied.",
@@ -74,7 +78,7 @@
           ]
         ]
       },
-      "note": "Stated as open every Sunday right through the year."
+      "note": null
     },
     "hoursAsStated": "Every Sunday, 7:00am to 11:30am, right through the year.",
     "website": "https://www.southsidefarmersmarket.com.au/",
@@ -101,7 +105,12 @@
     "postcode": "2800",
     "products": [
       "fruit",
-      "veg"
+      "veg",
+      "lamb",
+      "beef",
+      "pork",
+      "chicken",
+      "eggs"
     ],
     "otherProducts": "Also meats, breads and preserves, and breakfast food and coffee.",
     "tags": [],
@@ -123,7 +132,8 @@
     "description": "A monthly market for producers from the Central West of NSW, held at the Orange Showground.",
     "sources": [
       "https://orangefarmersmarket.org.au/",
-      "https://www.visitnsw.com/destinations/country-nsw/orange-area/orange/events/orange-farmers-market"
+      "https://www.visitnsw.com/destinations/country-nsw/orange-area/orange/events/orange-farmers-market",
+      "https://orangefarmersmarket.org.au/stallholders/"
     ],
     "confidence": "high",
     "caveats": "Monthly, so apps should show the next date from the pattern (next one is 14 Nov 2026 per Visit NSW). May location differs (Robertson Park). Phone is only on the Visit NSW listing, not seen on the market's own page, so omitted.",
@@ -144,7 +154,11 @@
       "eggs",
       "honey",
       "fruit",
-      "veg"
+      "veg",
+      "beef",
+      "pork",
+      "lamb",
+      "chicken"
     ],
     "otherProducts": "Also pasture-raised meat, artisan cheese and bread, seafood, pasta, rice, nuts and flowers.",
     "tags": [
@@ -167,7 +181,8 @@
     "phone": null,
     "description": "A long-running weekly growers' market in Byron Bay with local farmers and food producers.",
     "sources": [
-      "https://byronfarmersmarket.com.au/"
+      "https://byronfarmersmarket.com.au/",
+      "https://byronfarmersmarket.com.au/farmers/"
     ],
     "confidence": "medium",
     "caveats": "Postcode 2481 is not shown on the page I opened (added from general knowledge of Byron Bay); the site gives no street number for the reserve. Byron Shire Council page was blocked from this session. Pasture-raised claim is the market's wording for meat and eggs.",
@@ -188,9 +203,13 @@
       "eggs",
       "honey",
       "fruit",
-      "veg"
+      "veg",
+      "beef",
+      "pork",
+      "lamb",
+      "chicken"
     ],
-    "otherProducts": "Sister market of Byron Farmers Market; the shared site lists artisan cheese and bread, seafood, nuts and flowers among stallholder products.",
+    "otherProducts": "Sister market of Byron Farmers Market, which lists artisan cheese and bread, seafood, nuts and flowers among stallholder products.",
     "tags": [],
     "hours": {
       "kind": "weekly",
@@ -209,7 +228,8 @@
     "phone": null,
     "description": "The Saturday sister market to the Byron Farmers Market, held in a park in Bangalow.",
     "sources": [
-      "https://byronfarmersmarket.com.au/"
+      "https://byronfarmersmarket.com.au/",
+      "https://byronfarmersmarket.com.au/farmers/"
     ],
     "confidence": "medium",
     "caveats": "Postcode 2479 added from general knowledge, not shown on the page. Product list is the shared Byron/Bangalow description.",
@@ -227,7 +247,10 @@
     "state": "NSW",
     "postcode": "2015",
     "products": [
-      "veg"
+      "veg",
+      "beef",
+      "eggs",
+      "milk"
     ],
     "otherProducts": "Seasonal produce, cut flowers and artisanal foods from growers and producers across NSW.",
     "tags": [],
@@ -249,7 +272,8 @@
     "description": "A weekly Saturday market at the Carriageworks arts precinct selling produce from NSW growers under a stated market charter.",
     "sources": [
       "https://carriageworks.com.au/events/carriageworks-farmers-market/",
-      "https://www.carriageworks.com.au/"
+      "https://www.carriageworks.com.au/",
+      "https://carriageworks.com.au/journal/carriageworks-farmers-market-stallholder-list/"
     ],
     "confidence": "medium",
     "caveats": "Official page gives street address but no postcode; 2015 is from general knowledge (other sites show 2015/2016). Public-holiday changes not checked.",
@@ -267,7 +291,7 @@
     "state": "NSW",
     "postcode": "2292",
     "products": [],
-    "otherProducts": "Farmers, producers and artisans selling groceries and prepared food; no specific product list captured.",
+    "otherProducts": "Groceries and prepared food from farmers, producers and artisans.",
     "tags": [],
     "hours": {
       "kind": "weekly",
@@ -323,7 +347,7 @@
           ]
         ]
       },
-      "note": "NSW Government listing shows 2pm-5pm each Wednesday through 30 June 2027. Another listing says 3-6pm in summer and 2-5pm in winter."
+      "note": "Some listings give 3pm to 6pm in summer, so check before you go."
     },
     "hoursAsStated": "Every Wednesday, 2:00pm to 5:00pm (NSW Government events listing, 8 July 2026 to 30 June 2027).",
     "website": "https://www.facebook.com/KiamaFarmersMarket",
@@ -342,13 +366,15 @@
     "locationPrecision": "address"
   },
   {
-    "name": "Bermagui Growers and Makers Market (Bermi Market)",
+    "name": "Bermagui Growers and Makers Market",
     "type": "farmers_market",
     "address": "Bermagui Country Club, cnr Lamont and Tuross Streets",
     "locality": "Bermagui",
     "state": "NSW",
     "postcode": "2546",
-    "products": [],
+    "products": [
+      "eggs"
+    ],
     "otherProducts": "Farm-fresh produce, ready-to-eat food and take-home meals, drinks, crafts and handmade goods.",
     "tags": [],
     "hours": {
@@ -366,10 +392,11 @@
     "hoursAsStated": "Weekly Thursdays 3:30pm to 5:30pm, October to May; monthly June to September.",
     "website": "https://bermimarket.au/",
     "phone": null,
-    "description": "A relaxed Thursday-afternoon market on the old bowling green at the Bermagui Country Club.",
+    "description": "Known as Bermi Market, a relaxed Thursday-afternoon market on the old bowling green at the Bermagui Country Club.",
     "sources": [
       "https://bermimarket.au/",
-      "https://www.sapphirecoast.com.au/event/bermagui-growers-and-makers-market"
+      "https://www.sapphirecoast.com.au/event/bermagui-growers-and-makers-market",
+      "https://www.bermimarket.au/our-stallholders"
     ],
     "confidence": "high",
     "caveats": "Sapphire Coast tourism page says the season is October to April while the market's own site says October to May; own site used. Address comes from the tourism page.",
@@ -433,7 +460,8 @@
     "products": [
       "honey",
       "fruit",
-      "veg"
+      "veg",
+      "chicken"
     ],
     "otherProducts": "Also gourmet mushrooms, herbs, bread, meats, condiments and jams, seedlings, plants, coffee and hot meals.",
     "tags": [],
@@ -455,7 +483,8 @@
     "description": "A volunteer-run village market at the Bellingen Showgrounds selling local fruit, vegetables and other fresh food.",
     "sources": [
       "https://www.bellingengrowersmarket.com.au/",
-      "https://www.nsw.gov.au/visiting-and-exploring-nsw/nsw-events/bellingen-growers-market"
+      "https://www.nsw.gov.au/visiting-and-exploring-nsw/nsw-events/bellingen-growers-market",
+      "https://www.bellingengrowersmarket.com.au/our-stallholders"
     ],
     "confidence": "high",
     "caveats": "The market describes stock as organic and non-organic mixed, so no organic tag applied. Postcode confirmed on NSW Government listing.",
@@ -503,14 +532,14 @@
     "locationPrecision": "address"
   },
   {
-    "name": "Farm Club Australia (Snake Creek Cattle Company farm gate)",
+    "name": "Farm Club Australia",
     "type": "farm_shop",
     "address": "1 Werai Road",
     "locality": "Werai",
     "state": "NSW",
     "postcode": "2577",
     "products": [],
-    "otherProducts": "On-site bakery, gourmet pies and coffee made with pasture-raised meats and garden produce; cafe and edible garden. Sale of raw beef, lamb, pork or eggs was not confirmed on its own site.",
+    "otherProducts": "On-site bakery, gourmet pies and coffee made with pasture-raised meats and garden produce; cafe and edible garden.",
     "tags": [
       "pasture_raised"
     ],
@@ -553,7 +582,7 @@
     "hoursAsStated": "Wednesday to Sunday, 7am to 3pm.",
     "website": "https://farmclubaustralia.com/",
     "phone": "0473 441 058",
-    "description": "A family-run Southern Highlands farm near Moss Vale whose farm gate runs a cafe and bakery using its own pasture-raised meat.",
+    "description": "A family-run Southern Highlands farm near Moss Vale whose farm gate (Snake Creek Cattle Company) runs a cafe and bakery using its own pasture-raised meat.",
     "sources": [
       "https://farmclubaustralia.com/"
     ],
@@ -573,7 +602,7 @@
     "state": "VIC",
     "postcode": "3058",
     "products": [],
-    "otherProducts": "Seasonal produce from Victorian producers (the organiser describes supporting Victorian food and producers; no product list on the page opened)",
+    "otherProducts": "Seasonal produce from Victorian producers.",
     "tags": [],
     "hours": {
       "kind": "weekly",
@@ -610,7 +639,7 @@
     "state": "VIC",
     "postcode": "3054",
     "products": [],
-    "otherProducts": "Seasonal produce from Victorian producers (no product list on the page opened)",
+    "otherProducts": "Seasonal produce from Victorian producers.",
     "tags": [],
     "hours": {
       "kind": "weekly",
@@ -647,7 +676,7 @@
     "state": "VIC",
     "postcode": "3078",
     "products": [],
-    "otherProducts": "Seasonal produce from Victorian producers (no product list on the page opened)",
+    "otherProducts": "Seasonal produce from Victorian producers.",
     "tags": [],
     "hours": {
       "kind": "weekly",
@@ -684,7 +713,7 @@
     "state": "VIC",
     "postcode": "3450",
     "products": [],
-    "otherProducts": "Fresh, seasonal produce from the Castlemaine and central Victorian region; food trucks and coffee mentioned for the Sunday market",
+    "otherProducts": "Fresh, seasonal produce from the Castlemaine and central Victorian region; food trucks and coffee at the Sunday market",
     "tags": [],
     "hours": {
       "kind": "weekly",
@@ -707,7 +736,7 @@
     "hoursAsStated": "Weekly market every Wednesday afternoon 2.30pm to 5.30pm; monthly market first Sunday of the month 9am to 1pm",
     "website": "https://castlemainefarmersmarket.org.au/",
     "phone": null,
-    "description": "Two-part farmers' market in Castlemaine: a weekly Wednesday afternoon market and a larger monthly Sunday market; the site links to Victorian Farmers' Markets Association accreditation.",
+    "description": "Two-part farmers' market in Castlemaine: a weekly Wednesday afternoon market and a larger monthly Sunday market.",
     "sources": [
       "https://www.castlemainefarmersmarket.org.au/",
       "https://castlemainefarmersmarket.org.au/monthly-sunday-market/"
@@ -818,7 +847,7 @@
           ]
         ]
       },
-      "note": "Seasonal: site says open 7 days during the current season. Closed Christmas Day, New Year's Day and Good Friday. U-pick may close temporarily for weather or when fields are picked out."
+      "note": "Seasonal: open 7 days during the season. Closed Christmas Day, New Year's Day and Good Friday. U-pick may close temporarily for weather or when fields are picked out."
     },
     "hoursAsStated": "Open 7 days, 10am to 5pm, excluding Christmas Day, New Year's Day and Good Friday",
     "website": "https://www.rockycreek.com.au/",
@@ -855,7 +884,7 @@
           ]
         ]
       },
-      "note": "First Saturday of each month, September to May. 2026/27 dates listed: 5 Sep, 3 Oct, 7 Nov, 5 Dec, 2 Jan, 6 Feb, 27 Mar (Twilight, Easter Saturday), 3 Apr, 1 May."
+      "note": "First Saturday of each month, September to May. 2026/27 dates listed: 5 Sep, 3 Oct, 7 Nov, 5 Dec, 2 Jan, 6 Feb, 27 Mar (Twilight, Easter Saturday), 3 Apr, 1 May. Times (9am–2pm) are from a council listing; check before you go."
     },
     "hoursAsStated": "Opens first Saturday of each month September to May; the page opened did not state times (a council listing seen only in search results said 9am to 2pm)",
     "website": "https://hillandridgemarket.com.au/",
@@ -882,7 +911,7 @@
     "products": [
       "lamb"
     ],
-    "otherProducts": "Tasmanian growers and makers; stallholders shown include pasture-raised lamb, biltong, olives, dairy-free milks and drinks",
+    "otherProducts": "Tasmanian growers and makers; stallholders include pasture-raised lamb, biltong, olives, dairy-free milks and drinks",
     "tags": [],
     "hours": {
       "kind": "weekly",
@@ -912,7 +941,7 @@
     "locationPrecision": "address"
   },
   {
-    "name": "Farm Gate Market (Farmy)",
+    "name": "Farm Gate Market",
     "type": "farmers_market",
     "address": "Bathurst Street, between Murray and Elizabeth Streets",
     "locality": "Hobart",
@@ -936,7 +965,7 @@
     "hoursAsStated": "Every Sunday, 8.30am to 1.00pm",
     "website": "https://www.farmgatemarket.com.au/",
     "phone": null,
-    "description": "Weekly Sunday farmers' market that takes over a block of Bathurst Street in central Hobart.",
+    "description": "Weekly Sunday farmers' market that takes over a block of Bathurst Street in central Hobart, known locally as Farmy.",
     "sources": [
       "https://www.farmgatemarket.com.au/",
       "https://www.farmgatemarket.com.au/faqs/"
@@ -969,7 +998,7 @@
           ]
         ]
       },
-      "note": "First Sunday of every month, 9am to 1pm. Winter markets (the page mentioned the last winter market on 2 August) ran 9am to 12 noon. 6 December 2026 is a Christmas Special Market."
+      "note": "First Sunday of every month. Winter markets run 9am to 12 noon. 6 December 2026 is a Christmas Special Market."
     },
     "hoursAsStated": "First Sunday of every month, 9am to 1pm",
     "website": "https://breamcreekfarmersmarket.com.au/",
@@ -989,7 +1018,7 @@
     "locationPrecision": "locality"
   },
   {
-    "name": "Jan Powers Farmers Markets - Powerhouse",
+    "name": "Jan Powers Farmers Markets – Powerhouse",
     "type": "farmers_market",
     "address": "Lamington Street (Brisbane Powerhouse)",
     "locality": "New Farm",
@@ -1011,7 +1040,7 @@
           ]
         ]
       },
-      "note": "Christmas break; see caveats."
+      "note": "Christmas break: last market 19 Dec 2026, back 16 Jan 2027."
     },
     "hoursAsStated": "Every Saturday, 6am to 12 noon.",
     "website": "https://www.janpowersfarmersmarkets.com.au",
@@ -1030,7 +1059,7 @@
     "locationPrecision": "address"
   },
   {
-    "name": "Jan Powers Farmers Markets - Manly",
+    "name": "Jan Powers Farmers Markets – Manly",
     "type": "farmers_market",
     "address": "Manly Harbour, Royal Esplanade (between Cambridge and Cardigan Parades), Little Bayside Park",
     "locality": "Manly",
@@ -1052,7 +1081,7 @@
           ]
         ]
       },
-      "note": "First and third Saturday of each month only."
+      "note": "First and third Saturday of each month only. Christmas break: last market 19 Dec 2026, back 16 Jan 2027."
     },
     "hoursAsStated": "1st and 3rd Saturday of the month, 6am to 12 noon.",
     "website": "https://www.janpowersfarmersmarkets.com.au",
@@ -1071,7 +1100,7 @@
     "locationPrecision": "locality"
   },
   {
-    "name": "Jan Powers Farmers Markets - Eagle Farm",
+    "name": "Jan Powers Farmers Markets – Eagle Farm",
     "type": "farmers_market",
     "address": "Eagle Farm Racecourse, Racecourse Road (Gate 4 for disabled parking; public parking via Gate 7, Nudgee Road)",
     "locality": "Ascot",
@@ -1090,7 +1119,7 @@
           ]
         ]
       },
-      "note": "New market; started 2026 per the site."
+      "note": "New market; started 2026. Christmas break: last market 20 Dec 2026, back 24 Jan 2027."
     },
     "hoursAsStated": "Every Sunday, 6am to 12 noon.",
     "website": "https://www.janpowersfarmersmarkets.com.au",
@@ -1288,7 +1317,7 @@
     "state": "QLD",
     "postcode": "4309",
     "products": [],
-    "otherProducts": "Local produce, cheeses and gourmet pantry items (per Scenic Rim tourism); cut flowers from Elderflower Farm on site; Fifth Acre produce stall.",
+    "otherProducts": "Local produce, cheeses and gourmet pantry items; cut flowers from Elderflower Farm on site; Fifth Acre produce stall.",
     "tags": [],
     "hours": {
       "kind": "weekly",
@@ -1337,7 +1366,7 @@
     "locationPrecision": "address"
   },
   {
-    "name": "Green Shed Market (Tamborine Mountain)",
+    "name": "Green Shed Market",
     "type": "farmers_market",
     "address": "Tamborine Mountain State High School (street address not stated)",
     "locality": "Tamborine Mountain",
@@ -1361,7 +1390,7 @@
       "note": null
     },
     "hoursAsStated": "Every Sunday, 8am to 12pm.",
-    "website": "https://www.visitscenicrim.com.au/scenic-rim-weekend-country-markets/",
+    "website": null,
     "phone": null,
     "description": "Weekly Sunday market run by the Tamborine Mountain Local Producers Association, described as bringing together organic growers.",
     "sources": [
@@ -1423,7 +1452,9 @@
     "locality": "Noosaville",
     "state": "QLD",
     "postcode": "4566",
-    "products": [],
+    "products": [
+      "beef"
+    ],
     "otherProducts": "Organic produce, nuts, olives, herbs, seafood, bread and cheese.",
     "tags": [],
     "hours": {
@@ -1441,9 +1472,10 @@
     "hoursAsStated": "Sunday: 7:00am - midday.",
     "website": "https://noosafarmersmarket.com.au",
     "phone": null,
-    "description": "Sunday farmers market on the Noosa hinterland side of Noosaville.",
+    "description": "Sunday farmers market at 155 Weyba Road, Noosaville.",
     "sources": [
-      "https://noosafarmersmarket.com.au"
+      "https://noosafarmersmarket.com.au",
+      "https://noosafarmersmarket.com.au/pages/stall-holders-1"
     ],
     "confidence": "high",
     "caveats": "Site mentions 'fresh organic produce' as a stall type, not market-wide certification.",
@@ -1461,7 +1493,7 @@
     "state": "QLD",
     "postcode": "4882",
     "products": [],
-    "otherProducts": "Council describes Tablelands markets as selling fresh produce, preserves, plants, arts and crafts.",
+    "otherProducts": "Fresh produce, preserves, plants, arts and crafts.",
     "tags": [],
     "hours": {
       "kind": "weekly",
@@ -1476,7 +1508,7 @@
       "note": "First Sunday of the month."
     },
     "hoursAsStated": "First Sunday of the Month, 7am-12noon, Morrow Park.",
-    "website": "https://trc.qld.gov.au/tablelands-markets",
+    "website": null,
     "phone": null,
     "description": "Monthly community market in Tolga on the Atherton Tablelands.",
     "sources": [
@@ -1514,7 +1546,7 @@
       "note": "First Friday of the month."
     },
     "hoursAsStated": "First Friday of the Month, 5-8pm.",
-    "website": "https://trc.qld.gov.au/tablelands-markets",
+    "website": null,
     "phone": null,
     "description": "Monthly evening artisan and farmers market in Atherton.",
     "sources": [
@@ -1555,7 +1587,7 @@
       "note": null
     },
     "hoursAsStated": "Saturdays (all year), 8.00am to 1.00pm.",
-    "website": "https://litchfield.nt.gov.au/community/living-litchfield/markets",
+    "website": null,
     "phone": null,
     "description": "Weekly rural market at the Freds Pass Sport and Recreation Reserve outside Darwin.",
     "sources": [
@@ -1644,7 +1676,7 @@
       "note": null
     },
     "hoursAsStated": "Every Sunday from 8am to 2pm.",
-    "website": "https://northernterritory.com/us/en/articles/markets-in-the-nt",
+    "website": null,
     "phone": null,
     "description": "Weekly Sunday community market in Nightcliff where local farmers sell fresh fruit.",
     "sources": [
@@ -1682,7 +1714,7 @@
       "note": "Last Sunday of each month, March to December only."
     },
     "hoursAsStated": "Sunday (last Sunday of each month), 8.00am - 12.00 midday, March to December.",
-    "website": "https://litchfield.nt.gov.au/community/living-litchfield/markets",
+    "website": null,
     "phone": null,
     "description": "Small monthly community market under the Berry Springs hall.",
     "sources": [
@@ -1703,8 +1735,13 @@
     "locality": "Wayville",
     "state": "SA",
     "postcode": "5034",
-    "products": [],
-    "otherProducts": "Fresh produce and food from stallholders; specific product lines not recorded",
+    "products": [
+      "beef",
+      "pork",
+      "chicken",
+      "eggs"
+    ],
+    "otherProducts": "Fresh produce and food from stallholders.",
     "tags": [],
     "hours": {
       "kind": "weekly",
@@ -1723,7 +1760,8 @@
     "phone": null,
     "description": "Weekly Sunday farmers market held at the Adelaide Showground.",
     "sources": [
-      "https://www.adelaidefarmersmarket.com.au/"
+      "https://www.adelaidefarmersmarket.com.au/",
+      "https://adelaidefarmersmarket.com.au/stallholders/find-product/"
     ],
     "confidence": "high",
     "caveats": "Product categories not itemised from the page opened; check the site's food and produce pages before tagging products. Official site opened via curl (WebFetch could not resolve it).",
@@ -1742,7 +1780,9 @@
     "postcode": "5353",
     "products": [
       "veg",
-      "fruit"
+      "fruit",
+      "chicken",
+      "lamb"
     ],
     "otherProducts": "Meats, breads, cheeses, oils, preserves, pastries and prepared food from Barossa and regional SA stallholders",
     "tags": [],
@@ -1764,7 +1804,8 @@
     "description": "Saturday morning market of Barossa and regional South Australian growers and makers in a historic winery shed.",
     "sources": [
       "https://barossafarmersmarket.com/",
-      "https://southaustralia.com/products/barossa/food-and-drink/barossa-farmers-market"
+      "https://southaustralia.com/products/barossa/food-and-drink/barossa-farmers-market",
+      "https://www.barossafarmersmarket.com/stallholders/abelsway-farm/"
     ],
     "confidence": "high",
     "caveats": "Phone is the mobile number the market's own site lists under 'Get in touch'.",
@@ -1781,8 +1822,12 @@
     "locality": "Willunga",
     "state": "SA",
     "postcode": "5172",
-    "products": [],
-    "otherProducts": "Producer stalls; product lines not recorded from the page opened",
+    "products": [
+      "chicken",
+      "beef",
+      "lamb"
+    ],
+    "otherProducts": null,
     "tags": [],
     "hours": {
       "kind": "weekly",
@@ -1801,7 +1846,8 @@
     "phone": null,
     "description": "Weekly Saturday farmers market in the McLaren Vale and Fleurieu region.",
     "sources": [
-      "https://willungafarmersmarket.com.au/"
+      "https://willungafarmersmarket.com.au/",
+      "https://willungafarmersmarket.com.au/producers/nomad-farms/"
     ],
     "confidence": "high",
     "caveats": "Street number not given; the venue is the high school grounds on Main Road. Search snippets mention holiday closures (Christmas Day, New Year's Day) not confirmed on the page.",
@@ -1818,8 +1864,11 @@
     "locality": "Mount Barker",
     "state": "SA",
     "postcode": "5251",
-    "products": [],
-    "otherProducts": "Fresh Adelaide Hills produce and hot food; specific lines not recorded",
+    "products": [
+      "pork",
+      "lamb"
+    ],
+    "otherProducts": "Fresh Adelaide Hills produce and hot food.",
     "tags": [],
     "hours": {
       "kind": "weekly",
@@ -1836,9 +1885,10 @@
     "hoursAsStated": "Open every Saturday 8:30am to 12:30pm.",
     "website": "https://ahfm.org.au/",
     "phone": null,
-    "description": "Weekly Saturday farmers market under elm trees in Mount Barker; dogs are welcome per the site.",
+    "description": "Weekly Saturday farmers market under elm trees in Mount Barker; dogs welcome.",
     "sources": [
-      "https://ahfm.org.au/"
+      "https://ahfm.org.au/",
+      "https://ahfm.org.au/stall/illa-langi-pastoral-co-2/"
     ],
     "confidence": "high",
     "caveats": "Postcode 5251 is the standard Mount Barker postcode but was not printed on the page opened. A search snippet mentioned a winter gym venue; not confirmed.",
@@ -1858,7 +1908,7 @@
     "products": [
       "fruit"
     ],
-    "otherProducts": "Own jams, chutneys, relishes and sauces; strawberry picking (November to April per Visit Adelaide Hills); farm cafe",
+    "otherProducts": "Own jams, chutneys, relishes and sauces; strawberry picking (November to April); farm cafe",
     "tags": [],
     "hours": {
       "kind": "weekly",
@@ -1906,7 +1956,7 @@
           ]
         ]
       },
-      "note": "Closed Christmas Day. Strawberry patch hours/availability vary and the site says to check on the day."
+      "note": "Closed Christmas Day. Strawberry patch hours and availability vary, so check on the day."
     },
     "hoursAsStated": "Farm shop open 9am to 5pm every day except Christmas Day.",
     "website": "https://www.beerenberg.com.au/",
@@ -1931,8 +1981,10 @@
     "locality": "Margaret River",
     "state": "WA",
     "postcode": "6285",
-    "products": [],
-    "otherProducts": "Local producer stalls; specific lines not recorded",
+    "products": [
+      "eggs"
+    ],
+    "otherProducts": null,
     "tags": [],
     "hours": {
       "kind": "weekly",
@@ -1951,7 +2003,8 @@
     "phone": null,
     "description": "Year-round Saturday farmers market at the Margaret River Education Campus.",
     "sources": [
-      "https://margaretriverfarmersmarket.com.au/"
+      "https://margaretriverfarmersmarket.com.au/",
+      "https://margaretriverfarmersmarket.com.au/localproducers"
     ],
     "confidence": "high",
     "caveats": "Several third-party sites say 8am-12pm or a seasonal split; the market's own site says 7:30-11:30 all year, which is used here. Postcode 6285 is the standard Margaret River postcode, not printed on the page. Site lists a coordinator mobile; omitted as a personal contact.",
@@ -1974,7 +2027,7 @@
       "eggs",
       "milk"
     ],
-    "otherProducts": "Meat, seafood, flowers, coffee and prepared food (site title lists these)",
+    "otherProducts": "Meat, seafood, flowers, coffee and prepared food.",
     "tags": [],
     "hours": {
       "kind": "weekly",
@@ -2010,7 +2063,9 @@
     "locality": "East Perth",
     "state": "WA",
     "postcode": "6004",
-    "products": [],
+    "products": [
+      "milk"
+    ],
     "otherProducts": "Artisan goods, ethical and sustainable products; Perth City Farm organic stall",
     "tags": [
       "organic",
@@ -2026,7 +2081,8 @@
           ]
         ]
       },
-      "note": "Summer hours Dec-Mar 7:30-11:30am; April-November 8am-12 noon (this entry uses the Apr-Nov hours, which apply now)."
+      "note": "Summer hours December to March 7:30–11:30am; April to November 8am–12 noon.",
+      "irregular": true
     },
     "hoursAsStated": "Every Saturday: 7.30-11.30am (Dec-Mar), 8am-12 noon (Apr-Nov).",
     "website": "https://www.perthcityfarm.org.au/",
@@ -2441,7 +2497,7 @@
         "sat": [],
         "sun": []
       },
-      "note": "Open Friday to Sunday; closed public holidays. Opening times of day not published on page opened."
+      "note": "Open Friday to Sunday; closed public holidays. Times not published."
     },
     "hoursAsStated": "Open Friday to Sunday (closed on public holidays).",
     "website": null,
@@ -2465,8 +2521,10 @@
     "locality": "Gosford",
     "state": "NSW",
     "postcode": "2250",
-    "products": [],
-    "otherProducts": "Locally grown farm produce alongside artisan food, bakery stalls and coffee/brew, as described on the market's site.",
+    "products": [
+      "eggs"
+    ],
+    "otherProducts": "Locally grown farm produce alongside artisan food, bakery stalls and coffee/brew.",
     "tags": [],
     "hours": {
       "kind": "weekly",
@@ -2486,7 +2544,8 @@
     "description": "A weekly Sunday market at Gosford Showground selling locally grown farm produce and artisan food.",
     "sources": [
       "https://www.thecentralcoastfarmersmarket.com",
-      "https://www.visitnsw.com/destinations/central-coast/gosford-area/gosford/events/the-central-coast-farmers-market"
+      "https://www.visitnsw.com/destinations/central-coast/gosford-area/gosford/events/the-central-coast-farmers-market",
+      "https://www.thecentralcoastfarmersmarket.com/about-3"
     ],
     "confidence": "high",
     "caveats": "Own site copyright line says 2025; the Visit NSW listing shows the event running weekly from 15 Nov 2026. Other listings gave older or different domains and a 1pm finish; the market's own 7am-12pm used.",
@@ -2523,7 +2582,7 @@
           ]
         ]
       },
-      "note": "The NSW Government event page lists individual Saturday dates; a few Saturdays (for example 23 May 2026) are not listed."
+      "note": "Some Saturdays are skipped; check the market's Facebook page."
     },
     "hoursAsStated": "Saturdays, 7:30am to 11:30am (individual dates listed on the NSW Government events page through December 2026).",
     "website": "https://www.facebook.com/Lismore.Farmers.Market/",
@@ -2550,9 +2609,11 @@
     "products": [
       "honey",
       "fruit",
-      "veg"
+      "veg",
+      "beef",
+      "pork"
     ],
-    "otherProducts": "Stallholder categories on the site include vegetables, fruit and herbs, honey, artisan condiments and native bushfoods; the site describes fresh organic produce from local farmers.",
+    "otherProducts": "Vegetables, fruit and herbs, honey, artisan condiments and native bushfoods.",
     "tags": [],
     "hours": {
       "kind": "weekly",
@@ -2564,7 +2625,7 @@
           ]
         ]
       },
-      "note": "Site notes a change to Wednesday 23 December 2026 (Christmas Day falls on a Friday) and open on Friday 1 January 2027."
+      "note": "Moves to Wednesday 23 December 2026 (Christmas Day is a Friday) and opens on Friday 1 January 2027."
     },
     "hoursAsStated": "Every Friday from 7am to 11am.",
     "website": "https://mullumfarmersmarket.org.au/",
@@ -2572,7 +2633,8 @@
     "description": "A weekly Friday market at the Mullumbimby Showgrounds where local farmers sell fresh produce directly.",
     "sources": [
       "https://mullumfarmersmarket.org.au/",
-      "https://mullumfarmersmarket.org.au/meet-the-producers/"
+      "https://mullumfarmersmarket.org.au/meet-the-producers/",
+      "https://mullumfarmersmarket.org.au/portfolio-items/hayters-hill-farm/"
     ],
     "confidence": "high",
     "caveats": "Site announcement was dated 9 Nov 2026. 'Organic' is described generally; no certification per stallholder was verified, so no tags.",
@@ -2593,7 +2655,9 @@
       "eggs",
       "honey",
       "fruit",
-      "veg"
+      "veg",
+      "beef",
+      "lamb"
     ],
     "otherProducts": "Also meat, artisan cheeses and breads, smoked fish, salami, olive oil, jams, preserves, nuts and coffee. Described as plastic-bag free.",
     "tags": [],
@@ -2610,7 +2674,7 @@
       "note": null
     },
     "hoursAsStated": "Open 8.30am to 1.00pm every Saturday.",
-    "website": "https://visitgreatoceanroad.org.au/great-ocean-road-adventures/torquay-farmers-market",
+    "website": null,
     "phone": null,
     "description": "A weekly Saturday market selling local fresh produce and artisan foods.",
     "sources": [
@@ -2641,11 +2705,18 @@
     "tags": [],
     "hours": {
       "kind": "weekly",
-      "days": {},
-      "note": "Second Saturday of each month, 9am to 12.30pm (not expressible as weekly days)."
+      "days": {
+        "sat": [
+          [
+            "09:00",
+            "12:30"
+          ]
+        ]
+      },
+      "note": "Second Saturday of each month only."
     },
     "hoursAsStated": "The second Saturday of each month from 9am - 12.30pm.",
-    "website": "https://www.bendigoregion.com.au/explore-bendigo/local-farmers-market",
+    "website": null,
     "phone": null,
     "description": "A monthly market where regional farmers sell seasonal produce directly.",
     "sources": [
@@ -2710,7 +2781,7 @@
     "hoursAsStated": "Open Thursday-Monday, 10am-4.30pm (kitchen last orders 3pm); Fridays open until 6pm; closed Tuesday and Wednesday; seasonal October-May.",
     "website": "https://theberrydairy.com.au/",
     "phone": "03 4148 9821",
-    "description": "A family-run pick-your-own strawberry farm and farm cafe in Gippsland, open for the 2026 season.",
+    "description": "A family-run pick-your-own strawberry farm and farm cafe in Gippsland, open October to May.",
     "sources": [
       "https://theberrydairy.com.au/",
       "https://theberrydairy.com.au/plan-your-visit/"
@@ -2802,7 +2873,7 @@
     "locationPrecision": "address"
   },
   {
-    "name": "Hillwood Berries (Pick Your Own farm and farmgate cafe)",
+    "name": "Hillwood Berries",
     "type": "farm",
     "address": "105 Hillwood Road",
     "locality": "Hillwood",
@@ -2859,7 +2930,7 @@
           ]
         ]
       },
-      "note": "Hours quoted are for the farmgate cafe; the site says to follow Facebook for seasonal opening hours."
+      "note": "Hours are for the farmgate cafe. Seasonal opening hours are posted on the farm's Facebook page."
     },
     "hoursAsStated": "Cafe is open everyday from 10am - 4pm. Follow us on Facebook for frequent updates on our offering and seasonal opening hours.",
     "website": "https://www.hillwoodberries.com.au",
@@ -2885,7 +2956,7 @@
     "state": "TAS",
     "postcode": "7109",
     "products": [],
-    "otherProducts": "Goat milk soap and lotions, goat cheese and seasonal farm produce, per the Huon Valley Council directory.",
+    "otherProducts": "Goat milk soap and lotions, goat cheese and seasonal farm produce.",
     "tags": [],
     "hours": {
       "kind": "weekly",
@@ -2897,7 +2968,7 @@
           ]
         ]
       },
-      "note": "The council directory lists Thursday to Sunday 10am-4pm instead."
+      "note": "Some listings give Thursday to Sunday 10am to 4pm, so check before you go."
     },
     "hoursAsStated": "Own site: from 11am to 4pm Sundays. Council directory: Thursdays to Sundays 10am to 4pm.",
     "website": "https://touchwoodfarm.com",
@@ -2923,7 +2994,7 @@
     "state": "NSW",
     "postcode": "2576",
     "products": [],
-    "otherProducts": "Working apiary with hands-on tours and honey tastings; the listing does not itemise what is sold.",
+    "otherProducts": "Working apiary with hands-on tours and honey tastings.",
     "tags": [],
     "hours": {
       "kind": "weekly",
@@ -3023,7 +3094,7 @@
     "locationPrecision": "address"
   },
   {
-    "name": "Myrtlebank Roaming Farms Farmgate (The Chook House)",
+    "name": "Myrtlebank Roaming Farms",
     "type": "farm_gate_stall",
     "address": "1030 Maffra-Sale Road",
     "locality": "Myrtlebank",
@@ -3036,14 +3107,57 @@
     "otherProducts": "Online shop lists ready-to-eat meals, baked goods, fresh produce, pantry items and vegetables as well.",
     "tags": [],
     "hours": {
-      "kind": "always",
-      "days": {},
-      "note": "Own site: open daily, 7.30am to 7.30pm. Wellington Shire tourism page lists 7am-8pm."
+      "kind": "weekly",
+      "days": {
+        "sun": [
+          [
+            "07:30",
+            "19:30"
+          ]
+        ],
+        "mon": [
+          [
+            "07:30",
+            "19:30"
+          ]
+        ],
+        "tue": [
+          [
+            "07:30",
+            "19:30"
+          ]
+        ],
+        "wed": [
+          [
+            "07:30",
+            "19:30"
+          ]
+        ],
+        "thu": [
+          [
+            "07:30",
+            "19:30"
+          ]
+        ],
+        "fri": [
+          [
+            "07:30",
+            "19:30"
+          ]
+        ],
+        "sat": [
+          [
+            "07:30",
+            "19:30"
+          ]
+        ]
+      },
+      "note": "Some listings give 7am to 8pm."
     },
     "hoursAsStated": "Open 365 days a year, from 7.30am to 7.30pm.",
     "website": "https://www.myrtlebankfarm.com",
     "phone": null,
-    "description": "A farm shop selling eggs from the farm's free-range hens and grass-fed Black Angus beef.",
+    "description": "The Chook House farm shop, selling eggs from the farm's free-range hens and grass-fed Black Angus beef.",
     "sources": [
       "https://www.myrtlebankfarm.com",
       "https://themiddleofeverywhere.com.au/en/profiles/myrtlebank-roaming-farms-farmgate"
@@ -3115,7 +3229,7 @@
           ]
         ]
       },
-      "note": "Farm picking 10am-3pm when fruit is available; the site says to call ahead."
+      "note": "Farm picking 10am to 3pm when fruit is available; call ahead."
     },
     "hoursAsStated": "Cafe and shop open 7 days, 8:00am-5:00pm. Farm 10:00am-3:00pm when fruit is available for picking.",
     "website": "https://bilpinfruitbowl.com.au/",
@@ -3268,8 +3382,12 @@
     "locality": "Mount Claremont",
     "state": "WA",
     "postcode": "6010",
-    "products": [],
-    "otherProducts": "Fresh produce sold by farm stalls, plus food, drink and bread stalls (the site has separate pages for farm stalls, drinks and food, brunch and bread, and other stalls).",
+    "products": [
+      "chicken",
+      "pork",
+      "lamb"
+    ],
+    "otherProducts": "Fresh produce from farm stalls, plus food, drink and bread stalls.",
     "tags": [],
     "hours": {
       "kind": "weekly",
@@ -3288,7 +3406,8 @@
     "phone": "0411 895 101",
     "description": "Saturday farmers' market run by the Mount Claremont Primary School P&C Association, billed as fresh produce from paddock to plate.",
     "sources": [
-      "https://mtclaremontfarmersmarket.com.au/"
+      "https://mtclaremontfarmersmarket.com.au/",
+      "https://mtclaremontfarmersmarket.com.au/farmstalls"
     ],
     "confidence": "high",
     "caveats": "Home page banner says 7.30-11 am in one place and 7:30am-11:30am in another; 11:30 used. Specific products not itemised on the page opened.",
@@ -3306,7 +3425,7 @@
     "state": "WA",
     "postcode": "6073",
     "products": [],
-    "otherProducts": "Garden and farmers market run by the Mundaring Chamber of Commerce; stall mix not itemised on the page.",
+    "otherProducts": null,
     "tags": [],
     "hours": {
       "kind": "weekly",
@@ -3318,12 +3437,13 @@
           ]
         ]
       },
-      "note": "Shire listing shows every Saturday from 14 Nov to 19 Dec 2026."
+      "irregular": true,
+      "note": "Saturdays 8am to noon. Dates are confirmed only to 19 December 2026, so check before you go."
     },
     "hoursAsStated": "Open every Saturday from 8-12.",
     "website": "https://www.mundaringchamberofcommerce.com.au",
     "phone": null,
-    "description": "Weekly Saturday garden and farmers market near the Sculpture Park in Mundaring, listed by the Shire of Mundaring.",
+    "description": "Weekly Saturday garden and farmers market near the Sculpture Park in Mundaring.",
     "sources": [
       "https://www.mundaring.wa.gov.au/events/mundaring-garden-and-farmers-market/1135"
     ],
@@ -3342,8 +3462,10 @@
     "locality": "Stirling",
     "state": "WA",
     "postcode": "6021",
-    "products": [],
-    "otherProducts": "Site says it sells only produce direct from the grower or maker, plus community stalls.",
+    "products": [
+      "chicken"
+    ],
+    "otherProducts": "Only produce direct from the grower or maker, plus community stalls.",
     "tags": [],
     "hours": {
       "kind": "weekly",
@@ -3362,7 +3484,8 @@
     "phone": null,
     "description": "Sunday farmers market at the City of Stirling administration building run as a project of the Rotary Club of Karrinyup.",
     "sources": [
-      "https://www.stirlingfarmersmarket.com.au"
+      "https://www.stirlingfarmersmarket.com.au",
+      "https://www.stirlingfarmersmarket.com.au/stalls"
     ],
     "confidence": "medium",
     "caveats": "Site footer is dated 2017 and no current dates or closures are shown, so hours are as stated but not independently confirmed as current.",
@@ -3379,8 +3502,11 @@
     "locality": "Victor Harbor",
     "state": "SA",
     "postcode": "5211",
-    "products": [],
-    "otherProducts": "Stallholders include fresh seasonal produce, baked goods, coffee and live music; site has a What's In Season page.",
+    "products": [
+      "beef",
+      "milk"
+    ],
+    "otherProducts": "Fresh seasonal produce, baked goods, coffee and live music.",
     "tags": [],
     "hours": {
       "kind": "weekly",
@@ -3399,7 +3525,8 @@
     "phone": null,
     "description": "Weekly Saturday farmers market in the park across from the main shopping centre in central Victor Harbor.",
     "sources": [
-      "https://victorharborfarmersmarket.com.au"
+      "https://victorharborfarmersmarket.com.au",
+      "https://victorharborfarmersmarket.com.au/22-stalls-one-saturday-morning-think-you-can-fit-it-all-in/"
     ],
     "confidence": "high",
     "caveats": "Page footer is dated 2015 but the home page carries current-week news (stall count and a 14 Nov 2026 AGM). Postcode not on page.",
@@ -3498,9 +3625,17 @@
     "otherProducts": "Farmhouse cheeses, tasting room, picnic supplies and local produce such as chutneys, relishes, vinegars, juices and cheese pastes; Jersey Girl cafe.",
     "tags": [],
     "hours": {
-      "kind": "always",
-      "days": {},
-      "note": "Site says the cafe and cheese tastings are open daily; no times given on the pages opened."
+      "kind": "weekly",
+      "days": {
+        "sun": [],
+        "mon": [],
+        "tue": [],
+        "wed": [],
+        "thu": [],
+        "fri": [],
+        "sat": []
+      },
+      "note": "Cafe and cheese tastings open daily; times not published. Call before visiting."
     },
     "hoursAsStated": "Jersey Girl Cafe open daily for cheese tastings (no times stated).",
     "website": "https://www.stanthorpecheese.com.au",
@@ -3528,7 +3663,7 @@
     "products": [
       "fruit"
     ],
-    "otherProducts": "Farm grows strawberries; shop range not itemised on the page opened.",
+    "otherProducts": "The farm grows strawberries.",
     "tags": [],
     "hours": {
       "kind": "weekly",
@@ -3602,7 +3737,7 @@
     "state": "SA",
     "postcode": "5235",
     "products": [],
-    "otherProducts": "Per Visit Adelaide Hills: fresh seasonal produce, baked goods, honey, olive oil, eggs, meat and seafood, plants, flowers, fruit products, cheese and milk, coffee.",
+    "otherProducts": "Fresh seasonal produce, baked goods, honey, olive oil, eggs, meat and seafood, plants, flowers, fruit products, cheese and milk, coffee.",
     "tags": [],
     "hours": {
       "kind": "weekly",
@@ -3640,7 +3775,7 @@
     "state": "QLD",
     "postcode": "4561",
     "products": [],
-    "otherProducts": "Per the regional guide: local fruit, vegetables and other produce.",
+    "otherProducts": "Fruit, vegetables, deli products and local meat.",
     "tags": [],
     "hours": {
       "kind": "weekly",
@@ -3655,9 +3790,9 @@
       "note": ""
     },
     "hoursAsStated": "Open 6am-12pm every Saturday. Described as one of the largest produce markets on the coast with fruit, veg, deli products and local meat.",
-    "website": "https://www.visitsunshinecoast.com/guide/harvest-sunshine-at-these-sunshine-coast-farmers-markets",
+    "website": null,
     "phone": null,
-    "description": "Sunshine Coast produce market listed by Visit Sunshine Coast.",
+    "description": "Saturday morning produce market described by Visit Sunshine Coast as one of the largest on the coast.",
     "sources": [
       "https://www.visitsunshinecoast.com/guide/harvest-sunshine-at-these-sunshine-coast-farmers-markets"
     ],
@@ -3677,7 +3812,7 @@
     "state": "QLD",
     "postcode": "4575",
     "products": [],
-    "otherProducts": "Per the regional guide: local fruit, vegetables and other produce.",
+    "otherProducts": "Local fruit, vegetables and other produce.",
     "tags": [],
     "hours": {
       "kind": "weekly",
@@ -3692,9 +3827,9 @@
       "note": ""
     },
     "hoursAsStated": "Every Saturday from 7am-12pm.",
-    "website": "https://www.visitsunshinecoast.com/guide/harvest-sunshine-at-these-sunshine-coast-farmers-markets",
+    "website": null,
     "phone": null,
-    "description": "Sunshine Coast produce market listed by Visit Sunshine Coast.",
+    "description": "Saturday morning farmers market in Kawana Waters.",
     "sources": [
       "https://www.visitsunshinecoast.com/guide/harvest-sunshine-at-these-sunshine-coast-farmers-markets"
     ],
@@ -3709,12 +3844,12 @@
   {
     "name": "Marcoola Farmers Market",
     "type": "farmers_market",
-    "address": null,
+    "address": "Berry Keeper",
     "locality": "Marcoola",
     "state": "QLD",
     "postcode": "4564",
     "products": [],
-    "otherProducts": "Per the regional guide: local fruit, vegetables and other produce.",
+    "otherProducts": "Organic fruit and vegetables, meats and cheese.",
     "tags": [],
     "hours": {
       "kind": "weekly",
@@ -3729,9 +3864,9 @@
       "note": ""
     },
     "hoursAsStated": "Saturday mornings from 8am-12pm; guide mentions organic fruit and veg, meats and cheese.",
-    "website": "https://www.visitsunshinecoast.com/guide/harvest-sunshine-at-these-sunshine-coast-farmers-markets",
+    "website": null,
     "phone": null,
-    "description": "Sunshine Coast produce market listed by Visit Sunshine Coast.",
+    "description": "Saturday morning farmers market at Berry Keeper in Marcoola.",
     "sources": [
       "https://www.visitsunshinecoast.com/guide/harvest-sunshine-at-these-sunshine-coast-farmers-markets"
     ],
@@ -3804,7 +3939,7 @@
     "hoursAsStated": "Our shop is open Monday to Sunday from 10 am - 3 pm.",
     "website": "https://www.malenycheese.com.au",
     "phone": "(07) 5494 2207",
-    "description": "Hinterland dairy processor with a retail shop and cafe beside its cheese factory; site says it also has its own dairy farm.",
+    "description": "Hinterland dairy processor with a retail shop and cafe beside its cheese factory and its own dairy farm.",
     "sources": [
       "https://www.malenycheese.com.au",
       "https://www.malenycheese.com.au/where-to-buy"
@@ -3825,7 +3960,7 @@
     "state": "QLD",
     "postcode": "4221",
     "products": [],
-    "otherProducts": "Per Experience Gold Coast: produce from local growers, olives, sourdough and bakery items, spice mixes, flowers, local honey, hot smoked salmon.",
+    "otherProducts": "Produce from local growers, olives, sourdough and bakery items, spice mixes, flowers, local honey, hot smoked salmon.",
     "tags": [],
     "hours": {
       "kind": "weekly",
@@ -3840,7 +3975,7 @@
       "note": "Plastic-bag-free market."
     },
     "hoursAsStated": "Saturday, 6am - 11.30am.",
-    "website": "https://www.destinationgoldcoast.com/blog/gold-coast-markets-scene/",
+    "website": null,
     "phone": null,
     "description": "Saturday school-grounds farmers market on the southern Gold Coast.",
     "sources": [
@@ -3862,7 +3997,7 @@
     "state": "QLD",
     "postcode": "4220",
     "products": [],
-    "otherProducts": "Per Experience Gold Coast: fresh fruit and in-season vegetables, preserves, local honey, flowers, plus food trucks and a barista.",
+    "otherProducts": "Fresh fruit and in-season vegetables, preserves, local honey, flowers, plus food trucks and a barista.",
     "tags": [],
     "hours": {
       "kind": "weekly",
@@ -3877,7 +4012,7 @@
       "note": "Rain, hail or shine."
     },
     "hoursAsStated": "Every Saturday from 7am, rain, hail or shine (tourism blog); 7am to 12pm (Scout Magazine guide).",
-    "website": "https://www.destinationgoldcoast.com/blog/gold-coast-markets-scene/",
+    "website": null,
     "phone": null,
     "description": "Saturday beachside farmers market in the grounds of Burleigh Heads State School.",
     "sources": [
@@ -3900,7 +4035,7 @@
     "state": "QLD",
     "postcode": "4212",
     "products": [],
-    "otherProducts": "Per Experience Gold Coast: fresh fruit, vegetables, flowers, health food, plus breakfast and coffee.",
+    "otherProducts": "Fresh fruit, vegetables, flowers, health food, plus breakfast and coffee.",
     "tags": [],
     "hours": {
       "kind": "weekly",
@@ -3915,7 +4050,7 @@
       "note": ""
     },
     "hoursAsStated": "Saturday, 6am-11am.",
-    "website": "https://www.destinationgoldcoast.com/blog/gold-coast-markets-scene/",
+    "website": null,
     "phone": null,
     "description": "Saturday farmers market at Helensvale State High School on the northern Gold Coast.",
     "sources": [
@@ -3937,7 +4072,7 @@
     "state": "QLD",
     "postcode": "4218",
     "products": [],
-    "otherProducts": "Per Experience Gold Coast: meats, honey, preserves, artisan ingredients and natural health products.",
+    "otherProducts": "Meats, honey, preserves, artisan ingredients and natural health products.",
     "tags": [
       "organic"
     ],
@@ -3954,7 +4089,7 @@
       "note": ""
     },
     "hoursAsStated": "Sundays, 6am - 11am.",
-    "website": "https://www.destinationgoldcoast.com/blog/gold-coast-markets-scene/",
+    "website": null,
     "phone": null,
     "description": "Sunday market described as selling certified organically grown produce, held at Merrimac State High School.",
     "sources": [
@@ -3976,7 +4111,7 @@
     "state": "NT",
     "postcode": "0845",
     "products": [],
-    "otherProducts": "Local products and produce; stall mix not itemised.",
+    "otherProducts": "Local products and produce.",
     "tags": [],
     "hours": {
       "kind": "weekly",
@@ -3988,10 +4123,11 @@
           ]
         ]
       },
-      "note": "Runs April to December."
+      "note": "Runs April to December.",
+      "irregular": true
     },
     "hoursAsStated": "Every Sunday between April to December from 8am to 1pm.",
-    "website": "https://northernterritory.com/articles/markets-in-the-nt",
+    "website": null,
     "phone": null,
     "description": "Sunday community market under rain trees in Batchelor, near Litchfield National Park.",
     "sources": [
@@ -4003,6 +4139,965 @@
     "region": "QLD/NT/SA/WA (second pass)",
     "lat": -13.0572,
     "lng": 131.02467,
+    "locationPrecision": "locality"
+  },
+  {
+    "name": "Martins Ridge Farm",
+    "type": "farm_shop",
+    "address": "Martins Ridge Road (off the Princes Highway)",
+    "locality": "Conjola",
+    "state": "NSW",
+    "postcode": "2539",
+    "products": [
+      "pork",
+      "beef"
+    ],
+    "otherProducts": "Goods made in the on-farm production kitchen and butchery",
+    "hours": {
+      "kind": "weekly",
+      "days": {
+        "fri": [
+          [
+            "10:00",
+            "16:00"
+          ]
+        ]
+      },
+      "note": "Also open by appointment."
+    },
+    "hoursAsStated": "Produce can be bought direct from the farm every Friday, 10am to 4pm, or by appointment; the farm gate is open to the public.",
+    "website": "https://www.martinsridgefarm.com.au/",
+    "phone": null,
+    "description": "A farm at Conjola on the NSW South Coast that raises pork and beef and sells its produce direct from the farm gate.",
+    "sources": [
+      "https://www.martinsridgefarm.com.au/",
+      "https://www.martinsridgefarm.com.au/contact-us"
+    ],
+    "meatEvidence": "The farm's home page says it farms pork and beef sustainably, makes products in its own on-farm kitchen and butchery, and sells direct from the farm each Friday or by appointment (https://www.martinsridgefarm.com.au/).",
+    "confidence": "high",
+    "caveats": "The site gives no street number or postcode. Its directions say to take the Martins Ridge Road turnoff, drive 500 m, turn right at the Martins Ridge Farm sign, and it is the first property on the left. The map pin needs checking. Corrected on verification: I opened the home and contact pages. The site is a JS-rendered page, so I read the text from the raw HTML. The home page says the farm raises pork and beef sustainably and sells direct from the farm each Friday 10am-4pm or by appointment, and that its farm gate is open to the public. The contact page gives the Martins Ridge Road directions in Conjola. The hours and products check out. The description was wrong in two places: it says 'near Milton' and 'family farm', and the site says neither. I rewrote it to stick to what the site says.",
+    "researchedOn": "2026-11-13",
+    "region": "Australia (meat direct from the farm, third pass)",
+    "lat": -35.21923,
+    "lng": 150.38684,
+    "locationPrecision": "address"
+  },
+  {
+    "name": "Stockinpiggle Farm Produce",
+    "type": "farm_shop",
+    "address": "18 Adams Street",
+    "locality": "Cootamundra",
+    "state": "NSW",
+    "postcode": "2590",
+    "products": [
+      "pork",
+      "beef",
+      "chicken",
+      "lamb"
+    ],
+    "otherProducts": "Hogget, smallgoods, sausages and lard",
+    "hours": {
+      "kind": "weekly",
+      "days": {
+        "wed": [
+          [
+            "14:00",
+            "18:00"
+          ]
+        ],
+        "thu": [
+          [
+            "14:00",
+            "18:00"
+          ]
+        ],
+        "fri": [
+          [
+            "14:00",
+            "18:00"
+          ]
+        ],
+        "sat": [
+          [
+            "09:00",
+            "13:00"
+          ]
+        ]
+      },
+      "note": "Closed Sunday to Tuesday. A separate farm store at 2124 Stockinbingle Road has varying days and hours (see Facebook)."
+    },
+    "hoursAsStated": "Cootamundra store: closed Monday and Tuesday; Wednesday to Friday 2pm to 6pm; Saturday 9am to 1pm; closed Sunday.",
+    "website": "https://stockinpiggle.com.au/",
+    "phone": null,
+    "description": "A family farm and free-range pig stud based at Stockinbingle that sells its own pork, beef, lamb and chicken from a store in Cootamundra.",
+    "sources": [
+      "https://stockinpiggle.com.au/",
+      "https://visitcootamundra.com.au/food-and-wine/stockinpiggle/"
+    ],
+    "meatEvidence": "The business's own site says its pastured pork, grass-fed beef, lamb, hogget and pastured chicken come from its family farm, and gives the store's address and hours. Visit Cootamundra (council tourism) says it sells direct to consumers and has a store in Cootamundra (https://stockinpiggle.com.au/, https://visitcootamundra.com.au/food-and-wine/stockinpiggle/).",
+    "confidence": "high",
+    "caveats": "This store is in Cootamundra town, not on the farm. The postcode 2590 comes from the Visit Cootamundra page (council tourism), not the business site. The council page gives a phone number, but the business site does not, so phone is left null. The farm store at Stockinbingle is left out of the hours because its hours vary. Corrected on verification: I opened the business's own site (copyright 2026). It confirms the store at 18 Adams Street, Cootamundra, open Wed-Fri 2pm-6pm and Sat 9am-1pm, closed Sun-Tue. It names pastured pork, grass-fed beef, lamb, hogget and pastured chicken from its family farm. The Visit Cootamundra (council) page confirms the pig stud, direct-to-consumer sales and the Cootamundra store, and 2590 is the Cootamundra postcode shown on that council page. One fix to the description: 'near Cootamundra' is the researcher's inference. The council page places the farm at Stockinbingle, so the description now says that.",
+    "researchedOn": "2026-11-13",
+    "region": "Australia (meat direct from the farm, third pass)",
+    "lat": -34.63665,
+    "lng": 148.02946,
+    "locationPrecision": "address"
+  },
+  {
+    "name": "Integrity Meats",
+    "type": "farm_shop",
+    "address": "48 Union Street",
+    "locality": "Goulburn",
+    "state": "NSW",
+    "postcode": "2580",
+    "products": [
+      "beef",
+      "pork",
+      "chicken"
+    ],
+    "otherProducts": "Duck",
+    "hours": {
+      "kind": "weekly",
+      "days": {
+        "mon": [
+          [
+            "07:00",
+            "14:00"
+          ]
+        ],
+        "tue": [
+          [
+            "07:00",
+            "14:00"
+          ]
+        ],
+        "wed": [
+          [
+            "07:00",
+            "14:00"
+          ]
+        ],
+        "thu": [
+          [
+            "07:00",
+            "14:00"
+          ]
+        ]
+      },
+      "note": "Opening hours changed recently, so call to check. Online orders are closed for now."
+    },
+    "hoursAsStated": "Open Monday to Thursday, 7am to 2pm (the site notes these are new opening hours).",
+    "website": "https://integritymeats.com.au/",
+    "phone": "0494 099 835",
+    "description": "A Goulburn butcher shop owned by the farmers of Tathra Place Free Range, selling meat from their own regenerative farm.",
+    "sources": [
+      "https://integritymeats.com.au/",
+      "https://www.tathraplacefreerange.com/"
+    ],
+    "meatEvidence": "Integrity Meats says the Tathra Place owners opened the shop and run every step in-house from paddock to plate with no middlemen (https://integritymeats.com.au/). The farm's own site says it raises pastured beef, pork and chicken plus free-range ducks, and sells through Integrity Meats (https://www.tathraplacefreerange.com/).",
+    "confidence": "medium",
+    "caveats": "The shop's page does not name meat types. Those come from the farm's site. The shop is in Goulburn town, not on the farm (the farm is at Wombeyan Caves). Goulburn sits between the Southern Highlands and the Canberra region. The hours were changed recently, so they are worth re-checking.",
+    "researchedOn": "2026-11-13",
+    "region": "Australia (meat direct from the farm, third pass)",
+    "lat": -34.74397,
+    "lng": 149.73357,
+    "locationPrecision": "address"
+  },
+  {
+    "name": "New Brighton Farmers Market",
+    "type": "farmers_market",
+    "address": "Tom Kendall Oval, River Street",
+    "locality": "New Brighton",
+    "state": "NSW",
+    "postcode": "2483",
+    "products": [
+      "lamb",
+      "honey",
+      "fruit",
+      "veg"
+    ],
+    "otherProducts": "Bread, coffee, olives, fermented foods and condiments",
+    "hours": {
+      "kind": "weekly",
+      "days": {
+        "tue": [
+          [
+            "07:00",
+            "11:00"
+          ]
+        ]
+      },
+      "note": null
+    },
+    "hoursAsStated": "Open every Tuesday, 7am to 11am, at Tom Kendall Oval, River Street, New Brighton.",
+    "website": "https://newbrightonfarmersmarket.org.au/",
+    "phone": null,
+    "description": "A weekly riverside growers' market in the Northern Rivers that links local producers with shoppers.",
+    "sources": [
+      "https://www.newbrightonfarmersmarket.org.au/",
+      "https://newbrightonfarmersmarket.org.au/meet-the-producers/"
+    ],
+    "meatEvidence": "The market's own producer directory has a Meat category with a 'Local Dorper Lamb' stall (https://newbrightonfarmersmarket.org.au/meet-the-producers/).",
+    "confidence": "high",
+    "caveats": "Only one meat stall (lamb) is listed. The directory does not say whether beef, pork or chicken are sold.",
+    "researchedOn": "2026-11-13",
+    "region": "Australia (meat direct from the farm, third pass)",
+    "lat": -28.50897,
+    "lng": 153.54933,
+    "locationPrecision": "locality"
+  },
+  {
+    "name": "Braidwood Farmers Market",
+    "type": "farmers_market",
+    "address": "National Theatre, Wallace Street",
+    "locality": "Braidwood",
+    "state": "NSW",
+    "postcode": "2622",
+    "products": [
+      "beef",
+      "fruit",
+      "veg",
+      "honey"
+    ],
+    "otherProducts": "Wine, cider, non-alcoholic drinks, preserves, jam and black garlic",
+    "hours": {
+      "kind": "weekly",
+      "days": {},
+      "note": "First and third Saturday mornings of each month. Times are not published."
+    },
+    "hoursAsStated": "Held in the National Theatre on Braidwood's main street on the first and third Saturday mornings of each month.",
+    "website": null,
+    "phone": null,
+    "description": "A farmers' market held twice a month in the National Theatre on Braidwood's main street, where shoppers can buy from local farmers.",
+    "sources": [
+      "https://visitcanberra.com.au/attractions/5db8e9a6904c07d94aff5247/braidwood-farmers-market"
+    ],
+    "meatEvidence": "VisitCanberra (ACT Government tourism) lists beef among the stalls and describes the market as a place to talk with your farmers about how your food is produced (https://visitcanberra.com.au/attractions/5db8e9a6904c07d94aff5247/braidwood-farmers-market).",
+    "confidence": "medium",
+    "caveats": "No exact times are given, so the hours days object is empty and the schedule is in the note. The postcode is not shown. The source is a tourism listing, not the market's own site, and it does not name the beef producer. Corrected on verification: I opened the VisitCanberra (ACT Government) page. It confirms the market is held in the National Theatre on Braidwood's main street (Wallace Street), opposite the bakery, on the first and third Saturday mornings of each month. It names beef among the stalls, along with fruit and veg, wine, cider, non-alcoholic drinks, preserves, jam, black garlic and honey, and calls it a place to chat with your farmers. I could not find an own site (the likely domains did not resolve), and the web search budget for this run was used up, so I could not check further. One fix: the description added 'inland from the South Coast in the Canberra region', which the page does not say, so I removed it.",
+    "researchedOn": "2026-11-13",
+    "region": "Australia (meat direct from the farm, third pass)",
+    "lat": -35.44216,
+    "lng": 149.79954,
+    "locationPrecision": "locality"
+  },
+  {
+    "name": "Torello Farm",
+    "type": "farm_shop",
+    "address": "410 White Hill Rd",
+    "locality": "Dromana",
+    "state": "VIC",
+    "postcode": "3936",
+    "products": [
+      "beef",
+      "lamb",
+      "fruit",
+      "veg"
+    ],
+    "otherProducts": "Sourdough, goats' cheese, olive oil, preserves, flowers, seedlings and take-home meals",
+    "hours": {
+      "kind": "weekly",
+      "days": {
+        "sun": [
+          [
+            "08:00",
+            "18:00"
+          ]
+        ],
+        "mon": [
+          [
+            "08:00",
+            "18:00"
+          ]
+        ],
+        "tue": [
+          [
+            "08:00",
+            "18:00"
+          ]
+        ],
+        "wed": [
+          [
+            "08:00",
+            "18:00"
+          ]
+        ],
+        "thu": [
+          [
+            "08:00",
+            "18:00"
+          ]
+        ],
+        "fri": [
+          [
+            "08:00",
+            "18:00"
+          ]
+        ],
+        "sat": [
+          [
+            "08:00",
+            "18:00"
+          ]
+        ]
+      },
+      "note": null
+    },
+    "hoursAsStated": "Farm gate open 7 days a week, 8am to 6pm.",
+    "website": "https://www.torellofarm.com.au/",
+    "phone": "03 5981 0335",
+    "description": "Mornington Peninsula farm gate store selling grass-fed beef and lamb from the family's own cattle and sheep, along with seasonal fruit and vegetables.",
+    "sources": [
+      "https://www.torellofarm.com.au/",
+      "https://www.torellofarm.com.au/contact",
+      "https://www.torellofarm.com.au/about",
+      "https://www.torellofarm.com.au/meat"
+    ],
+    "meatEvidence": "The farm's own meat page says it grazes Belted Galloway cattle and Dorset Down sheep on the family's second property at nearby Tuerong, and sells the whole animal nose-to-tail at the farm gate. The homepage says the beef and lamb are processed each week (https://www.torellofarm.com.au/meat).",
+    "confidence": "high",
+    "caveats": "The animals are raised on a separate family property at Tuerong. The shop is at the Dromana farm.",
+    "researchedOn": "2026-11-13",
+    "region": "Australia (meat direct from the farm, third pass)",
+    "lat": -38.33278,
+    "lng": 145.008,
+    "locationPrecision": "address"
+  },
+  {
+    "name": "Talbot Farmers' Market",
+    "type": "farmers_market",
+    "address": "Scandinavian Crescent and Camp Street",
+    "locality": "Talbot",
+    "state": "VIC",
+    "postcode": "3371",
+    "products": [
+      "lamb",
+      "veg"
+    ],
+    "otherProducts": "Pies, breads and other artisan foods",
+    "hours": {
+      "kind": "weekly",
+      "days": {
+        "sun": [
+          [
+            "09:00",
+            "13:00"
+          ]
+        ]
+      },
+      "note": "Third Sunday of each month only."
+    },
+    "hoursAsStated": "Third Sunday every month, 9.00am to 1.00pm.",
+    "website": "https://www.talbotfarmersmarket.org.au",
+    "phone": "0459 327 637",
+    "description": "Long-running Goldfields farmers' market held monthly in the heritage streets of Talbot, with local growers and small-scale producers.",
+    "sources": [
+      "https://talbotfarmersmarket.org.au/"
+    ],
+    "meatEvidence": "The market's own stallholder list includes a stall selling grass-fed lamb, vacuum-sealed in meal-size portions, which can be pre-ordered before market day (https://talbotfarmersmarket.org.au/).",
+    "confidence": "high",
+    "caveats": "Only one fresh-meat stall (lamb) is named on the site. A separate stall offers poultry, which may be live birds rather than meat, so chicken is not listed. The site's postcode comes from the market's PO Box in Talbot.",
+    "researchedOn": "2026-11-13",
+    "region": "Australia (meat direct from the farm, third pass)",
+    "lat": -37.17137,
+    "lng": 143.70097,
+    "locationPrecision": "locality"
+  },
+  {
+    "name": "Kyneton Farmers' Market",
+    "type": "farmers_market",
+    "address": "St Paul's Park, 35 Piper St",
+    "locality": "Kyneton",
+    "state": "VIC",
+    "postcode": "3444",
+    "products": [
+      "lamb",
+      "pork",
+      "eggs",
+      "honey",
+      "fruit",
+      "veg"
+    ],
+    "otherProducts": "Fish, sourdough, cakes, jams, olives and local wine",
+    "hours": {
+      "kind": "weekly",
+      "days": {
+        "sat": [
+          [
+            "08:30",
+            "13:00"
+          ]
+        ]
+      },
+      "note": "Second Saturday of each month only."
+    },
+    "hoursAsStated": "Held on the 2nd Saturday of each month at St Paul's Park, Piper Street. The listing for 14 Nov 2026 shows 8:30am to 1:00pm.",
+    "website": null,
+    "phone": null,
+    "description": "Monthly Macedon Ranges farmers' market with more than 50 stalls of local farmers, food producers and makers.",
+    "sources": [
+      "https://www.visitmacedonranges.com/tourism-listing/kyneton-farmers-market/",
+      "https://www.visitmacedonranges.com/events/kyneton-farmers-market-macedon-ranges/"
+    ],
+    "meatEvidence": "The official Visit Macedon Ranges listing names local lamb and pork among the stalls (https://www.visitmacedonranges.com/tourism-listing/kyneton-farmers-market/).",
+    "confidence": "medium",
+    "caveats": "Confirmed from the shire tourism site only. The market has no website of its own, just Facebook. The meat stalls are described in general terms and no stallholders are named.",
+    "researchedOn": "2026-11-13",
+    "region": "Australia (meat direct from the farm, third pass)",
+    "lat": -37.24784,
+    "lng": 144.45328,
+    "locationPrecision": "locality"
+  },
+  {
+    "name": "Serenity Farm",
+    "type": "farm",
+    "address": "251 Yarragon South Rd",
+    "locality": "Yarragon South",
+    "state": "VIC",
+    "postcode": "3823",
+    "products": [
+      "beef"
+    ],
+    "otherProducts": null,
+    "hours": {
+      "kind": "appointment",
+      "days": {},
+      "note": "Bookings are essential. Beef is sold as pre-ordered share packs, with the current round ready after Christmas."
+    },
+    "hoursAsStated": "Sells grass-fed Angus beef from its farm gate shop; bookings are essential, book your visit online.",
+    "website": "https://serenityfarmvic.com.au/",
+    "phone": "0418 137 468",
+    "description": "Family-run West Gippsland Highland cattle farm that also sells its own grass-fed Angus beef from a farm gate shop.",
+    "sources": [
+      "https://serenityfarmvic.com.au/",
+      "https://serenityfarmvic.com.au/contact-us",
+      "https://serenityfarmvic.com.au/grass-fed-beef-sales"
+    ],
+    "meatEvidence": "The homepage says the family breeds Highland cattle and sells grass-fed Angus beef from its farm gate shop. The beef page describes packs 'from our paddocks to your table' (https://serenityfarmvic.com.au/).",
+    "confidence": "medium",
+    "caveats": "Visits are by booking only, and the beef is sold in pre-ordered share packs. The site did not say how packs are collected. The farm's main business is farm tours and experiences.",
+    "researchedOn": "2026-11-13",
+    "region": "Australia (meat direct from the farm, third pass)",
+    "lat": -38.22699,
+    "lng": 146.07772,
+    "locationPrecision": "address"
+  },
+  {
+    "name": "Bob's Gardenfarm Shop and Farmgate",
+    "type": "farm_shop",
+    "address": "28 Dessents Rd",
+    "locality": "Hiawatha",
+    "state": "VIC",
+    "postcode": "3971",
+    "products": [
+      "beef",
+      "eggs",
+      "fruit",
+      "veg"
+    ],
+    "otherProducts": "Pies, sausages, jams, jellies and cordials",
+    "hours": {
+      "kind": "weekly",
+      "days": {
+        "sun": [
+          [
+            "11:00",
+            "14:00"
+          ]
+        ]
+      },
+      "note": null
+    },
+    "hoursAsStated": "Open Sunday 11:00 to 14:00; closed Monday to Saturday.",
+    "website": "https://www.gardenfarm.biz",
+    "phone": null,
+    "description": "Chemical-free permaculture farm near Yarram with a farm gate shop selling grass-fed beef, eggs, fruit, vegetables and homemade preserves.",
+    "sources": [
+      "https://themiddleofeverywhere.com.au/en/profiles/bobs-gardenfarm-shop-farmgate"
+    ],
+    "meatEvidence": "The Wellington Shire tourism listing describes a working paddock-to-plate permaculture farm, says no chemicals are used on the land or the animals, and says the farm gate is known for grass-fed Gippsland beef, steaks, pies and sausages (https://themiddleofeverywhere.com.au/en/profiles/bobs-gardenfarm-shop-farmgate).",
+    "confidence": "medium",
+    "caveats": "The listing calls the beef 'local' and does not plainly say the farm raises it. The farm's own website (gardenfarm.biz) did not load, so the hours come only from the council tourism listing. Corrected on verification: The Wellington Shire listing confirms 28 Dessents Rd Hiawatha VIC 3971, Sunday 11:00-14:00 (closed other days), and grass-fed Gippsland beef, steaks, pies, sausages, free-range eggs, fruit, vegetables, herbs, jams, jellies and cordials. It also says no chemicals are used on the land or the animals. The caveat was wrong, though: gardenfarm.biz does load now, but it only advertises accommodation (cottages, camping, tiny house) and does not mention the farm shop. Caveats corrected. All other fields are supported.",
+    "researchedOn": "2026-11-13",
+    "region": "Australia (meat direct from the farm, third pass)",
+    "lat": -38.5438,
+    "lng": 146.48003,
+    "locationPrecision": "address"
+  },
+  {
+    "name": "Gleneden Farm",
+    "type": "farm_shop",
+    "address": "375 North Branch Rd",
+    "locality": "Maryvale",
+    "state": "QLD",
+    "postcode": "4370",
+    "products": [
+      "beef",
+      "lamb",
+      "pork",
+      "eggs",
+      "veg"
+    ],
+    "otherProducts": "Bacon, ham, salami and sausages; preserves and soaps",
+    "hours": {
+      "kind": "weekly",
+      "days": {
+        "fri": [
+          [
+            "10:00",
+            "16:00"
+          ]
+        ],
+        "sat": [
+          [
+            "10:00",
+            "16:00"
+          ]
+        ],
+        "sun": [
+          [
+            "10:00",
+            "16:00"
+          ]
+        ]
+      },
+      "note": "Open 10am to 4pm Friday to Sunday on the first and last weekends of each month. At other times, by appointment: call ahead."
+    },
+    "hoursAsStated": "Homepage: the farm shop and farmyard open 10am to 4pm Friday to Sunday on the first and last weekends of each month; call ahead to visit at other times. Footer: farm shop, tours and displays open by appointment only, please call or book ahead, 7 days 9am to 4pm.",
+    "website": "https://www.glenedenfarm.com.au/",
+    "phone": "(07) 4666 1273",
+    "description": "Organic family farm near Cunningham's Gap with an on-farm shop selling pastured pork, grass-fed beef and lamb, eggs and seasonal vegetables, plus farm tours and camping.",
+    "sources": [
+      "https://www.glenedenfarm.com.au/",
+      "https://www.glenedenfarm.com.au/contact/"
+    ],
+    "meatEvidence": "The homepage says the farm shop stocks pastured pork and 100% grass-fed beef and lamb, sold direct from the farm. The CSA offers the farm's pork, bacon, ham, salami, sausages, beef and lamb (https://www.glenedenfarm.com.au/).",
+    "confidence": "medium",
+    "caveats": "The homepage hours (first and last weekends, Fri to Sun, 10 to 4) differ from the footer, which says by appointment only. Check which is current before publishing. The council produce map lists an older domain (glenedenfamilyfarm.com.au). Corrected on verification: Checked the farm's own homepage and contact page. Address (375 North Branch Rd, Maryvale QLD 4370), phone (07) 4666 1273, shop hours (10am to 4pm Fri to Sun on the first and last weekends; other times call ahead) and the by-appointment footer (7 days, 9am to 4pm) all match. Pork, beef, lamb, eggs and seasonal vegetables are named as farm shop stock. The only problem is the description: it says 'Goomburra/Maryvale area', but the site never mentions Goomburra. It describes the farm as being in a valley near Cunningham's Gap. Description reworded.",
+    "researchedOn": "2026-11-13",
+    "region": "Australia (meat direct from the farm, third pass)",
+    "lat": -28.04208,
+    "lng": 152.25014,
+    "locationPrecision": "address"
+  },
+  {
+    "name": "Lazy Cow Farm",
+    "type": "farm",
+    "address": "591 North Branch Rd",
+    "locality": "Goomburra",
+    "state": "QLD",
+    "postcode": "4362",
+    "products": [
+      "beef",
+      "lamb",
+      "pork",
+      "eggs"
+    ],
+    "otherProducts": "Sausages and kabana; farm-gate stall with gifts, cheese and honey sourced from other local producers",
+    "hours": {
+      "kind": "appointment",
+      "days": {},
+      "note": "Farm shop by appointment only (phone). Farm tours on weekends by appointment. Online orders delivered across South East Queensland."
+    },
+    "hoursAsStated": "Farm Shop: by appointment only (0407 103 998). Farm Tours: weekends, by appointment only.",
+    "website": "https://www.lazycowfarm.com.au/",
+    "phone": "0407 103 998",
+    "description": "Family grazing property in the Goomburra Valley producing grass-fed beef and lamb and pasture-raised pork and eggs, sold from an on-farm shop by appointment and online.",
+    "sources": [
+      "https://www.lazycowfarm.com.au/"
+    ],
+    "meatEvidence": "The farm's site says it produces 100% grass-fed beef and lamb, and pasture-raised free-range pork and eggs, on its Goomburra Valley farm, from its family farm to your table (https://www.lazycowfarm.com.au/).",
+    "confidence": "high",
+    "caveats": "Visits are by appointment only, so the app should say so clearly. Honey and cheese at the stall are bought in from other producers, not made on the farm.",
+    "researchedOn": "2026-11-13",
+    "region": "Australia (meat direct from the farm, third pass)",
+    "lat": -27.98337,
+    "lng": 152.15453,
+    "locationPrecision": "address"
+  },
+  {
+    "name": "Forage Farms",
+    "type": "farm",
+    "address": "87 Mullaly Road",
+    "locality": "Kybong",
+    "state": "QLD",
+    "postcode": "4570",
+    "products": [
+      "beef",
+      "pork",
+      "chicken",
+      "eggs"
+    ],
+    "otherProducts": null,
+    "hours": {
+      "kind": "appointment",
+      "days": {},
+      "note": "Order and collect. Order online, choose farm pickup, and collect at the farm when emailed that the order is ready. Pickup times are arranged with the farm; weekend pickups can often be arranged."
+    },
+    "hoursAsStated": "Farm pickup: place an order online and select farm pickup. The order is prepared on the farm, you are emailed when it is ready, and you collect when it suits, at a time arranged with the farm (they are on the farm most days, and weekends can often work). Pickup is at Forage Farms, 87 Mullaly Road, Kybong QLD 4570.",
+    "website": "https://foragefarms.com.au/",
+    "phone": null,
+    "description": "Regenerative family farm at Kybong in the Mary Valley that raises grass-fed beef and pasture-raised pork, chicken and eggs, with on-farm order collection.",
+    "sources": [
+      "https://foragefarms.com.au/",
+      "https://foragefarms.com.au/pages/how-to-buy",
+      "https://foragefarms.com.au/pages/get-in-touch"
+    ],
+    "meatEvidence": "The farm's site describes 100% pasture-raised eggs, pork and chicken and grass-fed and finished beef raised on its own farm at Kybong. Orders are packed on the farm and can be collected there (https://foragefarms.com.au/pages/how-to-buy).",
+    "confidence": "high",
+    "caveats": "There is no walk-in shop; you must order first. Kybong is just south of Gympie (Mary Valley), on the northern edge of the Sunshine Coast hinterland.",
+    "researchedOn": "2026-11-13",
+    "region": "Australia (meat direct from the farm, third pass)",
+    "lat": -26.26309,
+    "lng": 152.70138,
+    "locationPrecision": "address"
+  },
+  {
+    "name": "Kandanga Farm Store",
+    "type": "farm_shop",
+    "address": "93 Main St",
+    "locality": "Kandanga",
+    "state": "QLD",
+    "postcode": "4570",
+    "products": [
+      "beef"
+    ],
+    "otherProducts": "Organic chicken and regeneratively farmed pork from other producers; organic dairy products; farm and garden supplies; Friday cafe",
+    "hours": {
+      "kind": "weekly",
+      "days": {
+        "fri": [
+          [
+            "09:00",
+            "16:00"
+          ]
+        ]
+      },
+      "note": "Other times by arrangement. The kitchen/cafe serves Fridays 9am to 1:30pm."
+    },
+    "hoursAsStated": "Store open to the public on Fridays from 9am to 4pm; other times by arrangement, with the office attended through the week for phone sales and support. Kitchen serves Fridays 9am to 1.30pm.",
+    "website": "https://www.kandangafarmstore.com.au/",
+    "phone": null,
+    "description": "Mary Valley farm supplies store and Friday cafe run by certified organic cattle farmers, selling their own K2 grass-fed beef from the freezer.",
+    "sources": [
+      "https://www.kandangafarmstore.com.au/",
+      "https://www.visitsunshinecoast.com/restaurant/60a731b3815f00436520c61b/kandanga-farm-store"
+    ],
+    "meatEvidence": "The store's site says its kitchen processes certified organic, grass-fed and finished K2 Beef produced in the Mary Valley by the store's founders on their certified organic cattle properties, and tells customers to look for K2 Beef in the freezer (https://www.kandangafarmstore.com.au/).",
+    "confidence": "medium",
+    "caveats": "The address comes from the Visit Sunshine Coast listing, not the store's own site. Only the K2 beef is stated to be the owners' own; the chicken and pork are stocked from other farms. The store is mainly a farm supplies shop. Corrected on verification: The store's own site confirms it is open to the public on Fridays 9am to 4pm (other times by arrangement), with the kitchen serving Fridays 9am to 1:30pm. It confirms the founders' own certified organic K2 Beef is in the freezer. The Visit Sunshine Coast listing gives 93 Main St, Kandanga QLD 4570. The site names the chicken and pork only as stock ('organic beef and chicken and regeneratively farmed pork') and never says they come from the founders' farms. In a farm-direct meat listing I moved them to otherProducts and kept only beef. The description's 'other organic meats' was also wrong, because the pork is described as regeneratively farmed, not organic.",
+    "researchedOn": "2026-11-13",
+    "region": "Australia (meat direct from the farm, third pass)",
+    "lat": -26.38681,
+    "lng": 152.68007,
+    "locationPrecision": "address"
+  },
+  {
+    "name": "Midway Farm Stall",
+    "type": "farm_shop",
+    "address": "550 Paull Rd",
+    "locality": "West Pinjarra",
+    "state": "WA",
+    "postcode": "6208",
+    "products": [
+      "beef",
+      "lamb"
+    ],
+    "otherProducts": "Bakery pies, barista coffee, ice cream and local condiments",
+    "hours": {
+      "kind": "weekly",
+      "days": {
+        "sun": [
+          [
+            "08:00",
+            "17:00"
+          ]
+        ],
+        "mon": [
+          [
+            "08:00",
+            "17:00"
+          ]
+        ],
+        "tue": [
+          [
+            "08:00",
+            "17:00"
+          ]
+        ],
+        "wed": [
+          [
+            "08:00",
+            "17:00"
+          ]
+        ],
+        "thu": [
+          [
+            "08:00",
+            "17:00"
+          ]
+        ],
+        "fri": [
+          [
+            "08:00",
+            "17:00"
+          ]
+        ],
+        "sat": [
+          [
+            "08:00",
+            "17:00"
+          ]
+        ]
+      },
+      "note": "Opens at 7am in spring and summer. Open 7 days, including school and public holidays."
+    },
+    "hoursAsStated": "Spring & Summer 7AM-5PM; Autumn & Winter 8AM-5PM; 7 days a week including school holidays and public holidays.",
+    "website": "https://midwayfarmstall.com.au/",
+    "phone": "08 9539 9092",
+    "description": "Family-run roadside farm stall off the Forrest Highway that sells grass-fed lamb and beef raised on the owners' own farm under their Maasdorp Meats label, alongside pies, coffee and local goods.",
+    "sources": [
+      "https://midwayfarmstall.com.au/",
+      "https://www.maasdorpmeats.com/",
+      "https://www.maasdorpmeats.com/pages/faqs",
+      "https://www.maasdorpmeats.com/pages/contact"
+    ],
+    "meatEvidence": "The stall's own site says the lamb and beef are produced at Midway Farm Stall and sold under the farm's own Maasdorp Meats label, grass-fed and finished with regenerative practices (https://midwayfarmstall.com.au/). The Maasdorp Meats site says the meat is raised on the family's farms at West Pinjarra and West Coolup, and orders can be collected free at the stall (https://www.maasdorpmeats.com/pages/faqs).",
+    "confidence": "high",
+    "caveats": "The postcode was not shown on the business's own pages; a directory gave 6208, so check it. The stall says cuts run out between restocks and it does not do custom butchery orders.",
+    "researchedOn": "2026-11-13",
+    "region": "Australia (meat direct from the farm, third pass)",
+    "lat": -32.66961,
+    "lng": 115.7741,
+    "locationPrecision": "address"
+  },
+  {
+    "name": "Caves Farm",
+    "type": "farm_shop",
+    "address": "5103 Caves Rd",
+    "locality": "Cowaramup",
+    "state": "WA",
+    "postcode": "6284",
+    "products": [
+      "beef",
+      "lamb",
+      "pork"
+    ],
+    "otherProducts": "Venison, venison smallgoods, WA seafood, bakery goods, cheese and condiments",
+    "hours": {
+      "kind": "weekly",
+      "days": {
+        "sun": [
+          [
+            "09:00",
+            "16:00"
+          ]
+        ],
+        "mon": [
+          [
+            "09:00",
+            "16:00"
+          ]
+        ],
+        "tue": [
+          [
+            "09:00",
+            "16:00"
+          ]
+        ],
+        "wed": [
+          [
+            "09:00",
+            "16:00"
+          ]
+        ],
+        "thu": [
+          [
+            "09:00",
+            "16:00"
+          ]
+        ],
+        "fri": [
+          [
+            "09:00",
+            "16:00"
+          ]
+        ],
+        "sat": [
+          [
+            "09:00",
+            "16:00"
+          ]
+        ]
+      },
+      "note": "Barista coffee is served 9am to 3:30pm daily."
+    },
+    "hoursAsStated": "Open 7 days 9am – 4pm.",
+    "website": "https://cavesfarm.com.au/",
+    "phone": "0434 990 736",
+    "description": "The original home of Margaret River Venison: a working venison and Angus cattle farm on Caves Road whose farm shop sells meat from its own farm and the wider South West, including venison, beef, lamb and pork.",
+    "sources": [
+      "https://cavesfarm.com.au/"
+    ],
+    "meatEvidence": "The farm's own site says it is the original home of Margaret River Venison, farms red deer and Angus cattle on over 300 acres, and its Farm Shop offers premium meats from its own farm and the South West. The shop stocks venison, beef, and lamb and pork from the South West (https://cavesfarm.com.au/).",
+    "confidence": "high",
+    "caveats": "The page says the lamb and pork come from the South West, not from this farm. It does not say outright that all beef in the shop is from its own herd. Older directories gave a 4:30pm close; the current own site says 4pm. Corrected on verification: The site confirms the address (5103 Caves Rd, Cowaramup WA 6284), hours (open 7 days 9am-4pm, coffee 9:00am-3:30pm), its own Angus beef and venison, and lamb and pork 'from the South West'. The phone is wrong. The visible 'Where to find us' contact gives 0434990736. (08) 9755 5028 appears only in the page's hidden metadata, not as a published contact.",
+    "researchedOn": "2026-11-13",
+    "region": "Australia (meat direct from the farm, third pass)",
+    "lat": -33.89652,
+    "lng": 115.02785,
+    "locationPrecision": "address"
+  },
+  {
+    "name": "Albany Farm Fresh Foods",
+    "type": "farm_shop",
+    "address": "Unit 4/191 Chester Pass Road",
+    "locality": "Milpara",
+    "state": "WA",
+    "postcode": "6330",
+    "products": [
+      "pork",
+      "eggs",
+      "beef",
+      "chicken"
+    ],
+    "otherProducts": "Goat meat, gourmet groceries and hampers",
+    "hours": {
+      "kind": "weekly",
+      "days": {
+        "mon": [
+          [
+            "09:00",
+            "17:00"
+          ]
+        ],
+        "tue": [
+          [
+            "09:00",
+            "17:00"
+          ]
+        ],
+        "wed": [
+          [
+            "09:00",
+            "17:00"
+          ]
+        ],
+        "thu": [
+          [
+            "09:00",
+            "17:00"
+          ]
+        ],
+        "fri": [
+          [
+            "09:00",
+            "17:00"
+          ]
+        ],
+        "sat": [
+          [
+            "08:30",
+            "13:00"
+          ]
+        ]
+      },
+      "note": null
+    },
+    "hoursAsStated": "Farm Shop opening times: Monday to Friday 9am to 5pm; Saturday 8.30am to 1pm.",
+    "website": "https://www.albanyfarmfreshfoods.com.au/",
+    "phone": "0492 861 999",
+    "description": "Family-run farm shop in Albany selling the family's own free-range eggs and certified free-range Frankland River pork, along with other local meats and groceries.",
+    "sources": [
+      "https://www.albanyfarmfreshfoods.com.au/"
+    ],
+    "meatEvidence": "The business's own site says the family runs Albany Farm Fresh Eggs and launched Frankland River Pork, a free-range pork operation, and sells both through its farm shop. It also stocks local beef, chicken and goat (https://www.albanyfarmfreshfoods.com.au/).",
+    "confidence": "high",
+    "caveats": "The shop is on Chester Pass Road in Milpara (Albany), not at the farm; the site gives directions as 'turn in between McIntosh & Elders'. Only the pork and eggs are the family's own; the beef and chicken are bought from other local suppliers. The postcode is not shown on the site.",
+    "researchedOn": "2026-11-13",
+    "region": "Australia (meat direct from the farm, third pass)",
+    "lat": -34.98601,
+    "lng": 117.8607,
+    "locationPrecision": "locality"
+  },
+  {
+    "name": "Galloway Springs Farm",
+    "type": "farm_shop",
+    "address": "25270 South Western Highway",
+    "locality": "Bridgetown",
+    "state": "WA",
+    "postcode": "6255",
+    "products": [
+      "chicken",
+      "fruit",
+      "veg"
+    ],
+    "otherProducts": "Spray-free garlic",
+    "hours": {
+      "kind": "weekly",
+      "days": {},
+      "note": "Open Wednesday to Saturday in daylight hours. Online orders can also be collected."
+    },
+    "hoursAsStated": "Shop hours: Wed - Sat, daylight hours only.",
+    "website": "https://gallowaysprings.com.au/",
+    "phone": "0411 468 480",
+    "description": "Regenerative farm just outside Bridgetown that raises pasture-raised chicken and grows seasonal produce, sold from its on-farm shop and through online orders for collection.",
+    "sources": [
+      "https://gallowaysprings.com.au/",
+      "https://www.gallowaysprings.com.au/copy-of-about-the-farm",
+      "https://www.gallowaysprings.com.au/visit-us"
+    ],
+    "meatEvidence": "The farm's own produce page says it offers produce at its farm store just outside Bridgetown, including pastured fresh chicken it raises and hand-processes (https://www.gallowaysprings.com.au/copy-of-about-the-farm).",
+    "confidence": "medium",
+    "caveats": "The hours give days only ('daylight hours'), with no clock times, so the days object is left empty and the details are in the note. The site also links a 'Shop Denmark' page, which was not checked. The published phone is labelled with a person's first name; the name was left out here. Corrected on verification: The home, produce and contact pages confirm 25270 South Western Highway, Bridgetown WA 6255, and the farm shop opening Wed-Sat in daylight hours only. The produce page says pastured fresh chicken is sold at the farm store. That page also lists seasonal fruit and veg the farm grows and spray-free garlic, so I added those as supported products. All other fields check out.",
+    "researchedOn": "2026-11-13",
+    "region": "Australia (meat direct from the farm, third pass)",
+    "lat": -34.03585,
+    "lng": 116.15928,
+    "locationPrecision": "address"
+  },
+  {
+    "name": "Boyanup & Districts Farmers Market",
+    "type": "farmers_market",
+    "address": "Boyanup Memorial Park, South Western Highway",
+    "locality": "Boyanup",
+    "state": "WA",
+    "postcode": "6237",
+    "products": [
+      "lamb",
+      "eggs",
+      "honey",
+      "fruit",
+      "veg"
+    ],
+    "otherProducts": "Goat meat, seafood, goat and sheep cheese, olive oil, nuts and plants",
+    "hours": {
+      "kind": "weekly",
+      "days": {
+        "sun": [
+          [
+            "08:00",
+            "12:00"
+          ]
+        ]
+      },
+      "note": "Held on the 4th Sunday of every month only, not every Sunday."
+    },
+    "hoursAsStated": "Held at Boyanup Memorial Park on the South Western Highway in Boyanup between 8am & 12 noon on the 4th Sunday of every month.",
+    "website": "https://boyanupfarmersmarket.com.au/",
+    "phone": null,
+    "description": "Monthly farmers market in Boyanup selling locally grown produce, pasture-fed lamb and goat meat, seafood, cheeses and more.",
+    "sources": [
+      "https://boyanupfarmersmarket.com.au/",
+      "https://boyanupfarmersmarket.com.au/contact.htm",
+      "https://boyanupfarmersmarket.com.au/about.htm"
+    ],
+    "meatEvidence": "The market's own home page says goat meat and lamb vans sell high quality pasture-fed meat products at the market (https://boyanupfarmersmarket.com.au/).",
+    "confidence": "medium",
+    "caveats": "The market runs monthly, so the app should show '4th Sunday' rather than every Sunday. The council page lists dates on 22 November and 27 December 2026. Neither page says whether the meat stalls are run by the farms that raise the animals. Corrected on verification: The cited Shire of Capel page now returns a 404, so I removed it from the sources. The market's own contact page confirms Boyanup Memorial Park, South Western Highway, 8am-12 noon on the 4th Sunday of every month. The home page names goat meat and lamb vans selling pasture-fed meat. The site has a 2026 calendar and a 2025/26 committee, which suggests it is still running. The site's business details give Boyanup WA 6237, so I added the postcode.",
+    "researchedOn": "2026-11-13",
+    "region": "Australia (meat direct from the farm, third pass)",
+    "lat": -33.48266,
+    "lng": 115.7285,
     "locationPrecision": "locality"
   }
 ]

@@ -4,21 +4,43 @@ import { activeFilterCount } from '../domain/filters';
 import { useSearch } from '../state/SearchContext';
 import { colors, MIN_TAP, radius, space, type } from '../theme';
 import { Icon } from './ui';
+import { countAnnouncement, useAnnounceCount } from './useAnnounceCount';
 
 interface LocationBarProps {
   onChangeLocation: () => void;
   onOpenFilters: () => void;
+  /** Speak count changes on iOS. Explore turns this off while the Filters sheet (which announces itself) is open. */
+  announce?: boolean;
+}
+
+/** Second line while the location has not been chosen: explains the sort order and why no distances show. */
+export const DEFAULT_LOCATION_LINE = 'Nearest to Sydney first · set your location for distances';
+
+/**
+ * The count line under the location row. With a search query: `3 places match “honey” · any distance` (search
+ * ignores the distance filter). Otherwise `12 places · nearest first`, or just `12 places` while the location is
+ * the default (the line below explains the Sydney default instead).
+ */
+export function countLine(count: number, query: string, isDefaultLocation: boolean): string {
+  const places = countAnnouncement(count);
+  const q = query.trim();
+  if (q !== '') return `${places} ${count === 1 ? 'matches' : 'match'} “${q}” · any distance`;
+  return isDefaultLocation ? places : `${places} · nearest first`;
+}
+
+/** VoiceOver label for the Filters capsule: "Filters", or "Filters, 2 on". */
+export function filtersLabel(count: number): string {
+  return count > 0 ? `Filters, ${count} on` : 'Filters';
 }
 
 /**
  * Compact row above the Explore list: pin + suburb (tint, opens the location sheet) on the left,
  * a small Filters capsule with the active count on the right, then the result count underneath.
  */
-export function LocationBar({ onChangeLocation, onOpenFilters }: LocationBarProps) {
-  const { location, filters, results } = useSearch();
+export function LocationBar({ onChangeLocation, onOpenFilters, announce = true }: LocationBarProps) {
+  const { location, filters, results, query, isDefaultLocation } = useSearch();
   const filterCount = activeFilterCount(filters);
-  const count = results.length === 1 ? '1 place' : `${results.length} places`;
-  const isDefault = location.source === 'default';
+  useAnnounceCount(results.length, announce);
 
   return (
     <View style={styles.bar}>
@@ -26,13 +48,14 @@ export function LocationBar({ onChangeLocation, onOpenFilters }: LocationBarProp
         <Pressable
           onPress={onChangeLocation}
           accessibilityRole="button"
-          accessibilityLabel="Change location"
+          accessibilityLabel={isDefaultLocation ? 'Location not set, showing Sydney' : `Location, ${location.label}`}
+          accessibilityHint="Changes where distances are measured from"
           hitSlop={6}
           style={({ pressed }) => [styles.where, pressed && styles.pressed]}
         >
-          <Icon name="location.fill" size={15} color={colors.tint} />
+          <Icon name={isDefaultLocation ? 'location' : 'location.fill'} size={15} color={colors.tint} />
           <Text style={styles.whereText} numberOfLines={1}>
-            {location.label}
+            {isDefaultLocation ? 'Set your location' : location.label}
           </Text>
           <Icon name="chevron.down" size={12} weight="semibold" color={colors.tint} />
         </Pressable>
@@ -40,7 +63,7 @@ export function LocationBar({ onChangeLocation, onOpenFilters }: LocationBarProp
         <Pressable
           onPress={onOpenFilters}
           accessibilityRole="button"
-          accessibilityLabel={`Filters, ${filterCount} on`}
+          accessibilityLabel={filtersLabel(filterCount)}
           hitSlop={6}
           style={({ pressed }) => [styles.filters, pressed && styles.pressed]}
         >
@@ -55,9 +78,9 @@ export function LocationBar({ onChangeLocation, onOpenFilters }: LocationBarProp
       </View>
 
       <Text style={styles.count} accessibilityLiveRegion="polite">
-        {count}
+        {countLine(results.length, query, isDefaultLocation)}
       </Text>
-      {isDefault && <Text style={styles.hint}>Set your location to see how far each place is.</Text>}
+      {isDefaultLocation && <Text style={styles.hint}>{DEFAULT_LOCATION_LINE}</Text>}
     </View>
   );
 }
@@ -80,9 +103,10 @@ const styles = StyleSheet.create({
   filtersText: { ...type.subheadline, fontWeight: '600', color: colors.label },
   countBadge: {
     minWidth: 18,
-    height: 18,
+    minHeight: 18,
     paddingHorizontal: 5,
-    borderRadius: 9,
+    paddingVertical: 1,
+    borderRadius: radius.capsule,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: colors.tint,

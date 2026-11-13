@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { Pressable, StyleSheet, Text, View, type ColorValue, type StyleProp, type ViewStyle } from 'react-native';
+import { Pressable, StyleSheet, Text, View, useWindowDimensions, type ColorValue, type StyleProp, type ViewStyle } from 'react-native';
 
 import { colors, MIN_TAP, space, type } from '../../theme';
 import { Icon, type SFSymbol } from './Icon';
@@ -10,12 +10,17 @@ export const ROW_ICON_SIZE = 30;
 export const ROW_PADDING = space.lg;
 /** Gap between the leading icon and the text. */
 export const ROW_ICON_GAP = space.md;
+/** Above this Dynamic Type scale the `value` moves under the title instead of sitting beside it. */
+export const ROW_STACK_FONT_SCALE = 1.5;
 
 export interface RowProps {
   title: string;
   /** Second line under the title (secondaryLabel, subheadline). */
   subtitle?: string;
-  /** Right-aligned secondary text, e.g. a setting's current value. */
+  /**
+   * Right-aligned secondary text, e.g. a setting's current value. Wraps rather than truncating,
+   * and moves under the title at large Dynamic Type sizes (fontScale > `ROW_STACK_FONT_SCALE`).
+   */
   value?: string;
   /** Leading SF Symbol. */
   icon?: SFSymbol;
@@ -55,6 +60,8 @@ export function Row({
   accessibilityLabel,
   style,
 }: RowProps) {
+  const { fontScale } = useWindowDimensions();
+  const stackValue = !!value && fontScale > ROW_STACK_FONT_SCALE;
   const body = (
     <>
       <View style={styles.line}>
@@ -72,12 +79,9 @@ export function Row({
         <View style={styles.text}>
           <Text style={[type.body, { color: destructive ? colors.red : colors.label }]}>{title}</Text>
           {subtitle ? <Text style={[type.subheadline, { color: colors.secondaryLabel }]}>{subtitle}</Text> : null}
+          {stackValue ? <Text style={[type.body, styles.valueStacked]}>{value}</Text> : null}
         </View>
-        {value ? (
-          <Text style={[type.body, styles.value]} numberOfLines={1}>
-            {value}
-          </Text>
-        ) : null}
+        {value && !stackValue ? <Text style={[type.body, styles.value]}>{value}</Text> : null}
         <Accessory accessory={accessory} />
       </View>
       {children ? <View style={styles.children}>{children}</View> : null}
@@ -112,6 +116,8 @@ const styles = StyleSheet.create({
   line: { flexDirection: 'row', alignItems: 'center', gap: ROW_ICON_GAP },
   tile: { width: ROW_ICON_SIZE, height: ROW_ICON_SIZE, borderRadius: 7, borderCurve: 'continuous', alignItems: 'center', justifyContent: 'center' },
   text: { flex: 1, gap: 1 },
-  value: { color: colors.secondaryLabel, flexShrink: 1, textAlign: 'right' },
+  // Shares the line with the title; wraps instead of truncating. maxWidth keeps the title readable.
+  value: { color: colors.secondaryLabel, flexShrink: 1, maxWidth: '60%', textAlign: 'right' },
+  valueStacked: { color: colors.secondaryLabel },
   children: { marginTop: space.sm },
 });

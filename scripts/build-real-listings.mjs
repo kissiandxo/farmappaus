@@ -7,6 +7,12 @@
 // - Tries the full street address first, then "<locality> <STATE> <postcode>", then the locality
 //   centre from src/data/auPostcodes.json. A place nothing can locate is skipped, with the reason printed.
 // - Facts come only from the research files. Nothing is invented or improved here.
+// - Optional later passes: meat-3.json (new places; a name+state already listed is skipped) and
+//   product-updates.json (confirmed products added to existing places, with the evidence URL added to
+//   sources). Both may be absent.
+// - Guards: the build stops, writing nothing, if a record breaks a listing rule (see check()):
+//   "always" hours on anything but an honesty-box stall, research wording in shopper copy, an alias in
+//   a name, or a tourism/council page as the Website.
 // Map data: (c) OpenStreetMap contributors, ODbL. See docs/DATA.md.
 import { execFileSync } from 'node:child_process';
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
@@ -19,6 +25,10 @@ const CACHE_FILE = join(RESEARCH_DIR, 'geocode-cache.json');
 const OUT_FILE = join(ROOT, 'src/data/realListings.json');
 const POSTCODES_FILE = join(ROOT, 'src/data/auPostcodes.json');
 const FILES = ['nsw-act', 'vic-tas', 'qld-nt', 'sa-wa', 'east-2', 'north-west-2'];
+/** Later research passes. Each is optional; the build works without them. */
+const OPTIONAL_FILES = ['meat-3'];
+/** Optional {"updates":[{name, state, addProducts, evidenceUrl, evidence}]}: confirmed products for existing places. */
+const PRODUCT_UPDATES_FILE = join(RESEARCH_DIR, 'product-updates.json');
 
 const USER_AGENT = 'farm-direct-build/1.0';
 const MIN_INTERVAL_MS = 1100; // Nominatim policy: at most 1 request per second
@@ -169,43 +179,171 @@ async function locate(listing) {
   return null;
 }
 
+// ------------------------------------------------------------------ guards
+const PRODUCT_CATEGORIES = ['milk', 'eggs', 'chicken', 'beef', 'lamb', 'pork', 'honey', 'fruit', 'veg'];
+
+/**
+ * Research-process wording that must never reach a shopper. Kept in step with
+ * src/data/__tests__/realFarms.test.ts.
+ */
+const META_WORDING = /page opened|see caveats|per the site|^per |not itemised|not recorded|regional guide|no product list|\bthe (site|page)( footer)? (says|flags|notes|gives)\b|recorded here|\blisting (shows|says)\b|another listing|tourism page|council directory|^stated as|^site notes/i;
+
+/**
+ * "Website" is the place's own site. Tourism, blog and council listings stay in sources[] only.
+ * A council-run market whose own page is on the council site is allowed by exact name.
+ */
+const NOT_OWN_SITE = [
+  /(^|\.)visit[a-z]*\./,
+  /(^|\.)destination[a-z]*\./,
+  /(^|\.)experience[a-z]*\./,
+  /(^|\.)northernterritory\.com$/,
+  /(^|\.)bendigoregion\.com\.au$/,
+  /(^|\.)swanvalley\.com\.au$/,
+  /(^|\.)athertontablelands\.com\.au$/,
+  /(^|\.)themiddleofeverywhere\.com\.au$/,
+  /\.gov\.au$/,
+];
+const COUNCIL_RUN = new Set(["Golden Plains Farmers' Market"]);
+
+/** Problems that would put a wrong or unpolished fact in front of a shopper. Returns messages. */
+function check(listing) {
+  const problems = [];
+  const { name } = listing;
+  if (/\(| - /.test(name)) problems.push('name contains "(" or " - "; move the alias into the description');
+  if (listing.hours?.kind === 'always' && listing.type !== 'farm_gate_stall') {
+    problems.push(`hours.kind "always" is only for honesty-box farm-gate stalls, not "${listing.type}"`);
+  }
+  for (const category of listing.products ?? []) {
+    if (!PRODUCT_CATEGORIES.includes(category)) problems.push(`unknown product category "${category}"`);
+  }
+  const fields = { description: listing.description, otherProducts: listing.otherProducts, 'hours.note': listing.hours?.note };
+  for (const [field, value] of Object.entries(fields)) {
+    if (value && META_WORDING.test(value)) problems.push(`${field} has research-process wording: "${value}"`);
+  }
+  if (listing.website && !COUNCIL_RUN.has(name)) {
+    let host = '';
+    try {
+      host = new URL(listing.website).hostname.toLowerCase();
+    } catch {
+      problems.push(`website is not a URL: ${listing.website}`);
+    }
+    if (host && NOT_OWN_SITE.some((re) => re.test(host))) {
+      problems.push(`website ${listing.website} is a tourism, blog or council page, not the place's own site; keep it in sources only`);
+    }
+  }
+  return problems;
+}
+
+// ------------------------------------------------------------------ input
+const placeKey = (name, state) => `${norm(name)}|${state}`;
+
+/** Every research record to consider, in file order, tagged with its file's date and region. */
+const candidates = [];
+const duplicates = [];
+for (const file of FILES) {
+  const data = JSON.parse(readFileSync(join(RESEARCH_DIR, `${file}.json`), 'utf8'));
+  for (const listing of data.listings) candidates.push({ listing, researchedOn: data.researchedOn, region: data.region, file });
+}
+
+// Optional extra research: new places. A place already listed (same name and state) is skipped.
+for (const file of OPTIONAL_FILES) {
+  const path = join(RESEARCH_DIR, `${file}.json`);
+  if (!existsSync(path)) continue;
+  const data = JSON.parse(readFileSync(path, 'utf8'));
+  const known = new Set(candidates.map((c) => placeKey(c.listing.name, c.listing.state)));
+  let added = 0;
+  for (const listing of data.listings ?? []) {
+    if (known.has(placeKey(listing.name, listing.state))) {
+      duplicates.push(`${listing.name} (${listing.state}) in ${file}.json is already listed; skipped.`);
+      continue;
+    }
+    known.add(placeKey(listing.name, listing.state));
+    candidates.push({ listing, researchedOn: data.researchedOn, region: data.region, file });
+    added++;
+  }
+  console.log(`Read ${file}.json: ${added} new places.`);
+}
+
+// Optional confirmed product additions for existing places.
+const productUpdates = [];
+if (existsSync(PRODUCT_UPDATES_FILE)) {
+  const { updates = [] } = JSON.parse(readFileSync(PRODUCT_UPDATES_FILE, 'utf8'));
+  const failures = [];
+  for (const update of updates) {
+    const matches = candidates.filter(
+      (c) => placeKey(c.listing.name, c.listing.state) === placeKey(update.name ?? '', update.state ?? ''),
+    );
+    if (matches.length !== 1) {
+      failures.push(`${update.name} (${update.state}): matches ${matches.length} listings, expected exactly 1`);
+      continue;
+    }
+    const bad = (update.addProducts ?? []).filter((p) => !PRODUCT_CATEGORIES.includes(p));
+    if (bad.length || !(update.addProducts ?? []).length) {
+      failures.push(`${update.name} (${update.state}): addProducts must be a non-empty list of known categories (got ${JSON.stringify(update.addProducts)})`);
+      continue;
+    }
+    if (!/^https?:\/\//.test(update.evidenceUrl ?? '')) {
+      failures.push(`${update.name} (${update.state}): evidenceUrl must be an http(s) URL`);
+      continue;
+    }
+    const target = matches[0];
+    const listing = { ...target.listing };
+    listing.products = [...new Set([...(listing.products ?? []), ...update.addProducts])];
+    listing.sources = [...new Set([...(listing.sources ?? []), update.evidenceUrl])];
+    target.listing = listing;
+    productUpdates.push(`${listing.name} (${listing.state}): + ${update.addProducts.join(', ')}`);
+  }
+  if (failures.length) {
+    for (const f of failures) console.error(`PRODUCT UPDATE FAILED  ${f}`);
+    process.exit(1);
+  }
+}
+
 // ------------------------------------------------------------------ main
 const accepted = [];
 const excluded = [];
 const skipped = [];
 const warnings = [];
 
-for (const file of FILES) {
-  const data = JSON.parse(readFileSync(join(RESEARCH_DIR, `${file}.json`), 'utf8'));
-  for (const listing of data.listings) {
-    const rule = EXCLUDE.find((e) => e.name === listing.name);
-    if (rule) {
-      excluded.push({ name: listing.name, reason: rule.reason });
-      continue;
-    }
-    if (/closed for|temporarily closed|suspended|no longer/i.test(listing.caveats ?? '')) {
-      warnings.push(`${listing.name}: caveats mention a closure; check it is not meant to be excluded.`);
-    }
+const invalid = [];
+for (const { listing } of candidates) {
+  if (EXCLUDE.some((e) => e.name === listing.name)) continue;
+  for (const problem of check(listing)) invalid.push(`${listing.name} (${listing.state}): ${problem}`);
+}
+if (invalid.length) {
+  for (const line of invalid) console.error(`INVALID  ${line}`);
+  console.error(`\n${invalid.length} problem(s) in the research files. Fix them there; nothing was written.`);
+  process.exit(1);
+}
 
-    const postcode = listing.postcode || unambiguousPostcode(listing.locality, listing.state);
-    const record = { ...listing, postcode };
-    process.stdout.write(`Locating ${listing.name} ... `);
-    const where = await locate(record);
-    if (!where) {
-      console.log('FAILED');
-      skipped.push({ name: listing.name, reason: 'no plausible coordinates from the address, the locality or the postcode list' });
-      continue;
-    }
-    console.log(`${where.precision}${where.viaCentroid ? ' (postcode list)' : ''}`);
-    accepted.push({
-      ...record,
-      researchedOn: data.researchedOn,
-      region: data.region,
-      lat: Math.round(where.lat * 1e5) / 1e5,
-      lng: Math.round(where.lng * 1e5) / 1e5,
-      locationPrecision: where.precision,
-    });
+for (const { listing, researchedOn, region } of candidates) {
+  const rule = EXCLUDE.find((e) => e.name === listing.name);
+  if (rule) {
+    excluded.push({ name: listing.name, reason: rule.reason });
+    continue;
   }
+  if (/closed for|temporarily closed|suspended|no longer/i.test(listing.caveats ?? '')) {
+    warnings.push(`${listing.name}: caveats mention a closure; check it is not meant to be excluded.`);
+  }
+
+  const postcode = listing.postcode || unambiguousPostcode(listing.locality, listing.state);
+  const record = { ...listing, postcode };
+  process.stdout.write(`Locating ${listing.name} ... `);
+  const where = await locate(record);
+  if (!where) {
+    console.log('FAILED');
+    skipped.push({ name: listing.name, reason: 'no plausible coordinates from the address, the locality or the postcode list' });
+    continue;
+  }
+  console.log(`${where.precision}${where.viaCentroid ? ' (postcode list)' : ''}`);
+  accepted.push({
+    ...record,
+    researchedOn,
+    region,
+    lat: Math.round(where.lat * 1e5) / 1e5,
+    lng: Math.round(where.lng * 1e5) / 1e5,
+    locationPrecision: where.precision,
+  });
 }
 
 writeFileSync(OUT_FILE, JSON.stringify(accepted, null, 2) + '\n');
@@ -220,4 +358,6 @@ console.log(`\nWrote ${accepted.length} listings to ${OUT_FILE}`);
 console.log(`Precision: ${byPrecision('address')} address, ${byPrecision('locality')} locality. Network requests: ${requestCount}.`);
 for (const e of excluded) console.log(`EXCLUDED  ${e.name}: ${e.reason}`);
 for (const s of skipped) console.log(`SKIPPED   ${s.name}: ${s.reason}`);
+for (const d of duplicates) console.log(`DUPLICATE ${d}`);
+for (const u of productUpdates) console.log(`PRODUCTS  ${u}`);
 for (const w of warnings) console.log(`WARNING   ${w}`);

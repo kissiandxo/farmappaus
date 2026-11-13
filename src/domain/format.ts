@@ -1,3 +1,5 @@
+import type { Farm } from './types';
+
 /** Formats integer cents as Australian dollars, e.g. 550 -> "$5.50". */
 export function formatAud(cents: number): string {
   const sign = cents < 0 ? '-' : '';
@@ -22,6 +24,9 @@ export function formatDateAu(iso: string): string {
 /** A listing not updated for this many days gets a "call ahead" warning. */
 export const STALE_AFTER_DAYS = 90;
 
+/** Places from public sources that no owner has confirmed get the warning only after a year. */
+export const UNCLAIMED_STALE_AFTER_DAYS = 365;
+
 /** Whole days between an ISO date and now (never negative). */
 export function ageInDays(iso: string, now: Date): number {
   const m = iso.match(/^(\d{4})-(\d{2})-(\d{2})/);
@@ -31,8 +36,20 @@ export function ageInDays(iso: string, now: Date): number {
   return Math.max(0, Math.floor((today - then) / 86_400_000));
 }
 
-export function isStale(iso: string, now: Date): boolean {
-  return ageInDays(iso, now) >= STALE_AFTER_DAYS;
+export function isStale(iso: string, now: Date, days: number = STALE_AFTER_DAYS): boolean {
+  return ageInDays(iso, now) >= days;
+}
+
+/**
+ * Two-line postal address: "12 Main Rd" / "Bilpin NSW 2758". Null when there is no street address
+ * (the page then shows the suburb only).
+ */
+export function addressLines(
+  farm: Pick<Farm, 'address' | 'locality' | 'state' | 'postcode'>,
+): { line1: string; line2: string } | null {
+  const line1 = farm.address?.trim();
+  if (!line1) return null;
+  return { line1, line2: `${farm.locality} ${farm.state} ${farm.postcode}`.replace(/\s+/g, ' ').trim() };
 }
 
 /** "today", "yesterday", "12 days ago", "3 months ago", "2 years ago". */

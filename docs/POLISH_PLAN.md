@@ -218,4 +218,44 @@ Tonight's 1.0 build has eight shopper features and fixes every high and medium a
 
 ## Results
 
-_To be filled in by the final integration engineer._
+Recorded 13 Nov 2026 by the final integration engineer. The orchestrator's overrides took precedence over the plan where they differed; those differences are listed under "Changed from the plan".
+
+### What shipped
+
+- **Listings:** 106 real places (67 farmers' markets, 26 farm shops, 8 farms, 5 farm-gate stalls) in every state and territory; 57 pinned on a street address or venue, 49 on the suburb centre. The meat pass (`meat-3.json`) and `product-updates.json` (21 listings) are applied; `node scripts/build-real-listings.mjs` rebuilds the same file with no network requests. 41 places list beef, lamb, pork or chicken; 16 of those are farm shops (12), farms (3) or farm-gate stalls (1), the other 25 are farmers' markets. No sample farms appear in the app.
+- **The eight features:** search on Explore; the type-of-place filter; the When filter (Any time, Open now, This weekend, with this weekend's times on cards); Share from the place page and the map card; Nearby (up to three within 60 km); the honest location prompt on Explore and Map and "Use my location" on the welcome; compact hours with "Opens today/tomorrow" and "Check dates" for irregular places; Saved that merges early saves and offers Remove from Saved by long press and as a VoiceOver action.
+- **Meat focus:** `MEAT_CATEGORIES` and `sellsMeat`; the "Meat" chip in the produce filter (selects every offered meat category; the Beef, Lamb, Pork and Chicken chips stay); search matches "meat" and "butcher" for places that list meat.
+- **Shell and release:** splash fallback (hidden within 3 s), welcome without sign-in when there is no backend, About with email rows only when `SUPPORT_EMAIL` is set, in-app privacy policy kept in step with `docs/PRIVACY.md` by a test, error boundaries, version row; `updates.enabled: false`; the two EAS workflows deleted, so GitHub Actions and fastlane are the one release pipeline; TestFlight refuses screenshot mode and (unless `with_backend`) the Supabase secrets; missing `SUPPORT_EMAIL`/`OPERATOR_NAME` only warns.
+- **Screenshot tour (step-driven, overrides E):** `SCREENSHOT_SCENES` in `src/config.ts`, pure logic in `src/domain/screenshotTour.ts`, driven from `src/app/_layout.tsx` by dark-to-light appearance changes (no timers). Scenes: 01-explore (location Sydney NSW 2000 set, no filters), 02-explore-meat (all offered meat categories), 03-map, 04-place-meat (`real-vic-torello-farm`: farm shop, own beef and lamb, 410 White Hill Rd Dromana, open 7 days 8 am to 6 pm), 05-place-market (`real-sa-barossa-farmers-market`: weekly Saturday market, chicken and lamb, 740 Stockwell Road Angaston), 06-saved (pre-saved: Torello Farm, Barossa Farmers Market, Beerenberg Farm), 07-explore-dark. `.github/workflows/screenshots.yml` launches, waits 45 s, then ticks (dark, 4 s, light) before each later shot, waiting 15 s (30 s before the map); every simctl call has a 60 s limit, a failed shot doesn't stop the rest, the step limit is 40 min (worst case about 23 min) inside the 90 min job, and the upload stays `if: always()`. A test checks that the scene list and the workflow's shot names agree, and that the chosen places meet the brief. Screenshot mode stays impossible in a release build: it needs `EXPO_PUBLIC_SCREENSHOT_MODE=1` at bundle time and the TestFlight workflow fails when that variable is non-empty.
+- **Docs:** `docs/APP_STORE.md` rewritten (every count stated, the owner checklist), README, `docs/PLAN.md`, `docs/REVIEW.md` (marked historical), `docs/REAL_LISTINGS.md`, `docs/RELEASE.md` (screenshots).
+
+### Changed from the plan
+
+- `app.config.ts` was not created (shell task 7 cancelled): every permission string, plugin and `usesAppleSignIn` stay in `app.json`, so the App ID still needs the Sign in with Apple capability.
+- CI does **not** fail without `SUPPORT_EMAIL` or `OPERATOR_NAME`; it warns, and `docs/RELEASE.md` says such a build must not be submitted. (The Deferred table above says CI fails; that is superseded.)
+- Uploads are not restricted to `main`: pushes to `main` and `claude/**` with `[testflight]` still build. (The Deferred table's fastlane line is superseded.)
+- The screenshot tour is step-driven, not timed, and its shot list is the meat-focused one above rather than final task 4's list (Filters sheet and About are no longer shots).
+
+### Deferred
+
+Everything in the Deferred table above, plus: a screenshot of the Filters sheet open (the tour sets filters but cannot open a sheet); search on the Map tab.
+
+### Gates
+
+- `npx tsc --noEmit`: clean.
+- `npx jest`: 28 suites, **471 tests**, all pass.
+- `npx expo config --type public`: succeeds.
+- Both workflows parse as YAML (js-yaml).
+- `npx expo export --platform web`: succeeds (plain and with `EXPO_PUBLIC_SCREENSHOT_MODE=1`).
+- `npx expo lint` was **not** run (overrides: it writes an ESLint config and edits package.json).
+- Rendered the web export at iPhone width (Explore, Map, Saved, About, privacy, welcome, and place pages for Carriageworks, Beerenberg, Hillwood Berries, Orange (monthly), Torello Farm and Barossa): nothing broken beyond the known web limits (SF Symbols blank, web tab bar over the large title, map is a placeholder on the web).
+
+### Not checked on a device
+
+- Anything native: the iOS tab bar, large titles, search bar, SF Symbols, sheets with grabbers, long-press menus, haptics, dark mode on device, Dynamic Type at the largest sizes, VoiceOver.
+- Apple Maps: pins, clustering and zoom-to-cluster, the place card, `mapPadding` under the tab bar, the locate button and permission prompt.
+- GPS on a real phone (allow, deny, and "Open Settings" after denial), and the welcome's location flow.
+- The share sheet, Mail compose and the "No email app set up" alert; Call and Website buttons.
+- The splash fallback and welcome gating on a cold start; deep links to a place.
+- The screenshot workflow: whether `simctl ui appearance` fires React Native's appearance listener reliably in the Release simulator build, and whether `router.navigate` from a place page to `/saved` and back to `/` behaves as on the web. If a tick is lost, later shots show the wrong scene, so every image must be looked at.
+- The TestFlight workflow and fastlane signing on GitHub's runners (only a real run proves them).

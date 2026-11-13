@@ -1,10 +1,30 @@
 import { useCallback, useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react';
-import { Platform, Pressable, StyleSheet, Text, useColorScheme, View } from 'react-native';
+import {
+  AccessibilityInfo,
+  Platform,
+  Pressable,
+  StyleSheet,
+  Text,
+  useColorScheme,
+  View,
+  type LayoutChangeEvent,
+} from 'react-native';
 import MapView, { Marker, type Region } from 'react-native-maps';
 
 import { boundingRegion, type LatLng, type MapRegion } from '../domain/geo';
-import { clusterPins, clusterRegion, hasMovedFar, type PinCluster } from '../domain/mapCluster';
-import { colors, MIN_TAP, radius, space, type } from '../theme';
+import {
+  centreLatitudeFor,
+  clusterPins,
+  clusterRegion,
+  DEFAULT_MAP_SIZE,
+  hasMovedFar,
+  MIN_CLUSTER_ZOOM_DELTA,
+  regionCorners,
+  zoomForRegion,
+  type MapSize,
+  type PinCluster,
+} from '../domain/mapCluster';
+import { colors, hairline, MIN_TAP, radius, space, type } from '../theme';
 import { ClusterMarker } from './map/ClusterPin';
 import { PlaceMarker } from './map/PlacePin';
 import type { FarmMapProps } from './map/types';
@@ -15,7 +35,10 @@ import { Icon } from './ui';
 const NEAREST_TO_FIT = 8;
 /** Programmatic camera moves finish within this long; region changes after that came from the user. */
 const ANIMATION_MS = 450;
+const SELECT_ANIMATION_MS = 350;
 const ANIMATION_SETTLE_MS = 900;
+/** Side margins kept clear when framing places. */
+const SIDE_PADDING = 24;
 
 /** The points to frame: every pin when no location is chosen, otherwise the user plus the nearest few. */
 function framePoints(location: FarmMapProps['location'], results: FarmMapProps['results']): LatLng[] {
@@ -33,11 +56,31 @@ function sameRegion(a: MapRegion, b: MapRegion): boolean {
   );
 }
 
+/** Live value of the iOS "Reduce Motion" setting. */
+function useReduceMotion(): boolean {
+  const [reduce, setReduce] = useState(false);
+  useEffect(() => {
+    let mounted = true;
+    AccessibilityInfo.isReduceMotionEnabled()
+      .then((on) => {
+        if (mounted) setReduce(on);
+      })
+      .catch(() => {});
+    const sub = AccessibilityInfo.addEventListener('reduceMotionChanged', setReduce);
+    return () => {
+      mounted = false;
+      sub.remove();
+    };
+  }, []);
+  return reduce;
+}
+
 /**
- * Apple Maps on iPhone (no API key needed) with a custom pin for every listing, grid clustering
- * that follows the zoom, and a "Search this area" prompt after the user pans far. The camera is
- * only moved by the app when a location is chosen, on the first load of listings, or on request;
- * it never jumps back after the user has moved the map.
+ * Apple Maps on iPhone (no API key needed) with a custom pin for every listing, clustering on a fixed
+ * lattice that only changes with the zoom level, and a "Set location here" prompt after the user moves
+ * far. The camera is only moved by the app when a location is chosen, on the first load of listings, or
+ * on request; it never jumps back after the user has moved the map. Places are always framed clear of the
+ * floating capsules, the place card and the tab bar. Honours Reduce Motion.
  */
 export default function FarmMap({
   results,
@@ -52,12 +95,19 @@ export default function FarmMap({
   const mapRef = useRef<MapView>(null);
   const scheme = useColorScheme();
   const palette = usePalette();
+  const reduceMotion = useReduceMotion();
+  const reduceMotionRef = useRef(reduceMotion);
+  reduceMotionRef.current = reduceMotion;
+  const insetsRef = useRef(insets);
+  insetsRef.current = insets;
 
   const initialRegion = useMemo(() => boundingRegion(framePoints(location, results), 0.3), []); // eslint-disable-line react-hooks/exhaustive-deps
   const [region, setRegion] = useState<MapRegion>(initialRegion);
   const regionRef = useRef<MapRegion>(initialRegion);
   const anchorRef = useRef<MapRegion>(initialRegion);
   const [showSearchArea, setShowSearchArea] = useState(false);
+  const [mapSize, setMapSize] = useState<MapSize>(DEFAULT_MAP_SIZE);
+  const mapSizeRef = useRef<MapSize | null>(null);
 
   const movingUntil = useRef(0);
   const userMoved = useRef(false);
@@ -65,16 +115,35 @@ export default function FarmMap({
   const lastFitKey = useRef(`${location.lat},${location.lng}`);
   const skipNextFit = useRef(false);
 
-  const animateTo = useCallback((target: MapRegion, duration = ANIMATION_MS) => {
-    movingUntil.current = Date.now() + duration + ANIMATION_SETTLE_MS;
-    mapRef.current?.animateToRegion(target, duration);
+  const onLayout = useCallback((e: LayoutChangeEvent) => {
+    const { width, height } = e.nativeEvent.layout;
+    if (width <= 0 || height <= 0) return;
+    mapSizeRef.current = { width, height };
+    setMapSize((prev) => (prev.width === width && prev.height === height ? prev : { width, height }));
+  }, []);
+
+  /**
+   * Frames points clear of the controls, with `fitToCoordinates` (which, unlike animateToRegion, honours padding).
+   * `minDelta` pads a lone point (or a tight group) out to a minimum span; a cluster tap passes a much smaller one
+   * so the zoom goes far enough to split the cluster.
+   */
+  const fitPoints = useCallback((points: LatLng[], minDelta = 0.3) => {
+    if (points.length === 0) return;
+    const corners = regionCorners(boundingRegion(points, minDelta));
+    const { top, bottom } = insetsRef.current;
+    movingUntil.current = Date.now() + ANIMATION_MS + ANIMATION_SETTLE_MS;
+    mapRef.current?.fitToCoordinates(
+      corners.map((p) => ({ latitude: p.lat, longitude: p.lng })),
+      {
+        edgePadding: { top: top + space.sm, bottom: bottom + space.lg, left: SIDE_PADDING, right: SIDE_PADDING },
+        animated: !reduceMotionRef.current,
+      },
+    );
   }, []);
 
   const fitTo = useCallback(
-    (loc: FarmMapProps['location'], list: FarmMapProps['results']) => {
-      animateTo(boundingRegion(framePoints(loc, list), 0.3));
-    },
-    [animateTo],
+    (loc: FarmMapProps['location'], list: FarmMapProps['results']) => fitPoints(framePoints(loc, list)),
+    [fitPoints],
   );
 
   useImperativeHandle(
@@ -82,7 +151,7 @@ export default function FarmMap({
     () => ({
       fitAll: () => {
         userMoved.current = false;
-        animateTo(boundingRegion(results.length > 0 ? results.map((r) => r.farm) : [location], 0.3));
+        fitPoints(results.length > 0 ? results.map((r) => r.farm) : [location]);
       },
       fitNear: (loc) => {
         userMoved.current = false;
@@ -90,7 +159,7 @@ export default function FarmMap({
         fitTo(loc, results);
       },
     }),
-    [animateTo, fitTo, results, location],
+    [fitPoints, fitTo, results, location],
   );
 
   // First listings to arrive (live data loads after the map mounts): frame them, unless the user already moved.
@@ -116,12 +185,16 @@ export default function FarmMap({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [locationKey]);
 
-  // Selecting a pin centres it in the part of the map not covered by the place card.
+  // Selecting a pin centres it in the part of the map not covered by the controls and the place card.
   const selected = selectedId ? results.find((r) => r.farm.id === selectedId) : undefined;
   useEffect(() => {
     if (!selected) return;
     const { latitudeDelta, longitudeDelta } = regionRef.current;
-    animateTo({ latitude: selected.farm.lat, longitude: selected.farm.lng, latitudeDelta, longitudeDelta }, 350);
+    const height = mapSizeRef.current?.height ?? 0;
+    const latitude = centreLatitudeFor(selected.farm.lat, latitudeDelta, insetsRef.current, height);
+    const duration = reduceMotionRef.current ? 0 : SELECT_ANIMATION_MS;
+    movingUntil.current = Date.now() + duration + ANIMATION_SETTLE_MS;
+    mapRef.current?.animateToRegion({ latitude, longitude: selected.farm.lng, latitudeDelta, longitudeDelta }, duration);
   }, [selected?.farm.id, insets.bottom]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // The first layout and padding changes move the camera too; don't mistake that for the user panning.
@@ -147,15 +220,18 @@ export default function FarmMap({
     [results, selectedId],
   );
   const byId = useMemo(() => new Map(results.map((r) => [r.farm.id, r])), [results]);
-  const clusters = useMemo(() => clusterPins(pins, region), [pins, region]);
+  // Clusters depend only on the integer zoom level and the map size, never the exact region, so they stay
+  // put while the user pans or pinches within a zoom level.
+  const zoom = zoomForRegion(region);
+  const clusters = useMemo(() => clusterPins(pins, zoom, mapSize), [pins, zoom, mapSize]);
 
   const handleSelect = useCallback((id: string) => onSelect(id), [onSelect]);
   const handleCluster = useCallback(
     (cluster: PinCluster) => {
       onSelect(null);
-      animateTo(clusterRegion(cluster));
+      fitPoints(regionCorners(clusterRegion(cluster)), MIN_CLUSTER_ZOOM_DELTA);
     },
-    [animateTo, onSelect],
+    [fitPoints, onSelect],
   );
 
   const searchHere = () => {
@@ -167,11 +243,12 @@ export default function FarmMap({
   };
 
   return (
-    <View style={styles.root}>
+    <View style={styles.root} onLayout={onLayout}>
       <MapView
         ref={mapRef}
         style={styles.map}
         initialRegion={initialRegion}
+        // Keeps Apple's legal label and the compass clear of the controls. It does not move the camera.
         mapPadding={{ top: insets.top, right: 0, bottom: insets.bottom, left: 0 }}
         mapType={Platform.OS === 'ios' ? 'mutedStandard' : 'standard'}
         userInterfaceStyle={scheme === 'dark' ? 'dark' : 'light'}
@@ -181,8 +258,14 @@ export default function FarmMap({
         onPress={() => onSelect(null)}
         accessibilityLabel="Map of nearby farms, stalls and markets"
       >
-        {location.source !== 'gps' && (
-          <Marker coordinate={{ latitude: location.lat, longitude: location.lng }} tracksViewChanges={false} zIndex={0}>
+        {/* A searched suburb gets a pin. GPS uses the system's blue dot; the unset default gets nothing. */}
+        {location.source === 'search' && (
+          <Marker
+            coordinate={{ latitude: location.lat, longitude: location.lng }}
+            tracksViewChanges={false}
+            zIndex={0}
+            accessibilityLabel={`Search location, ${location.label}`}
+          >
             <Icon name="mappin.circle.fill" size={30} color={palette.red} />
           </Marker>
         )}
@@ -191,11 +274,25 @@ export default function FarmMap({
           const result = byId.get(cluster.id);
           if (!result) return null;
           return (
-            <PlaceMarker key={cluster.id} farm={result.farm} isOpen={result.status.isOpen} selected={false} onPress={handleSelect} />
+            <PlaceMarker
+              key={cluster.id}
+              farm={result.farm}
+              statusKind={result.status.kind}
+              statusLabel={result.status.label}
+              selected={false}
+              onPress={handleSelect}
+            />
           );
         })}
         {selected && (
-          <PlaceMarker key={selected.farm.id} farm={selected.farm} isOpen={selected.status.isOpen} selected onPress={handleSelect} />
+          <PlaceMarker
+            key={selected.farm.id}
+            farm={selected.farm}
+            statusKind={selected.status.kind}
+            statusLabel={selected.status.label}
+            selected
+            onPress={handleSelect}
+          />
         )}
       </MapView>
 
@@ -204,12 +301,12 @@ export default function FarmMap({
           <Pressable
             onPress={searchHere}
             accessibilityRole="button"
-            accessibilityLabel="Search this area"
-            accessibilityHint="Uses the middle of the map as your location"
+            accessibilityLabel="Set location here"
+            accessibilityHint="Sorts places by distance from the middle of the map"
             style={({ pressed }) => [styles.searchArea, pressed && styles.pressed]}
           >
-            <Icon name="magnifyingglass" size={15} weight="medium" color={colors.tint} />
-            <Text style={styles.searchAreaText}>Search this area</Text>
+            <Icon name="mappin.and.ellipse" size={15} weight="medium" color={colors.tint} />
+            <Text style={styles.searchAreaText}>Set location here</Text>
           </Pressable>
         </View>
       )}
@@ -220,22 +317,25 @@ export default function FarmMap({
 const styles = StyleSheet.create({
   root: { flex: 1 },
   map: { flex: 1 },
-  searchWrap: { position: 'absolute', left: 0, right: 0, alignItems: 'center' },
+  searchWrap: { position: 'absolute', left: space.lg, right: space.lg, alignItems: 'center' },
   searchArea: {
     minHeight: MIN_TAP,
     flexDirection: 'row',
     alignItems: 'center',
     gap: 6,
     paddingHorizontal: space.lg,
+    paddingVertical: space.sm,
     borderRadius: radius.capsule,
     borderCurve: 'continuous',
     backgroundColor: colors.cell,
+    borderWidth: hairline,
+    borderColor: colors.separator,
     shadowColor: colors.shadow,
     shadowOpacity: 0.18,
     shadowRadius: 8,
     shadowOffset: { width: 0, height: 2 },
     elevation: 3,
   },
-  searchAreaText: { ...type.subheadline, fontWeight: '600', color: colors.label },
+  searchAreaText: { ...type.subheadline, fontWeight: '600', color: colors.label, flexShrink: 1 },
   pressed: { opacity: 0.6 },
 });
