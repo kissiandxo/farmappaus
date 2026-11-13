@@ -13,6 +13,24 @@ export const REQUIRED_LICENCE: Partial<Record<ProductCategory, LicenceCategory>>
   pork: 'meat',
 };
 
+/** True for products that need licence details before they can be listed (milk, eggs, chicken, beef, lamb, pork). */
+export function isLicenceControlled(category: ProductCategory): boolean {
+  return REQUIRED_LICENCE[category] !== undefined;
+}
+
+/**
+ * Categories that are left off places loaded from public sources: nothing that needs a licence goes
+ * live without licence details (docs/COMPLIANCE.md), and an unclaimed place has none.
+ */
+export const LICENCE_CONTROLLED_CATEGORIES: readonly ProductCategory[] = [
+  'milk',
+  'eggs',
+  'chicken',
+  'beef',
+  'lamb',
+  'pork',
+];
+
 export type ComplianceIssueCode = 'raw_milk_not_allowed' | 'licence_missing' | 'licence_expired';
 
 export interface ComplianceIssue {

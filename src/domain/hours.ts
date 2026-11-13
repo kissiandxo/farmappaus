@@ -30,7 +30,7 @@ export function timezoneForState(state: StateCode): string {
 
 export interface OpenStatus {
   isOpen: boolean;
-  kind: 'open' | 'closed' | 'always' | 'appointment';
+  kind: 'open' | 'closed' | 'always' | 'appointment' | 'irregular';
   /** Plain-English summary, e.g. "Open now · closes 4:00 pm". */
   label: string;
 }
@@ -130,6 +130,9 @@ export interface HoursLine {
 export function hoursLines(hours: OpeningHours): HoursLine[] {
   if (hours.kind === 'always') return [{ label: 'Every day', text: 'Open any time' }];
   if (hours.kind === 'appointment') return [{ label: 'Visits', text: 'By appointment' }];
+  if (hours.irregular && WEEK_ORDER.every((day) => (hours.days[day] ?? []).length === 0)) {
+    return [{ label: 'Times', text: 'Not published' }];
+  }
   return WEEK_ORDER.map((day) => {
     const ranges = hours.days[day] ?? [];
     return {
@@ -151,6 +154,11 @@ export function openStatus(hours: OpeningHours, timeZone: string, now: Date): Op
   }
   if (hours.kind === 'appointment') {
     return { isOpen: false, kind: 'appointment', label: 'By appointment' };
+  }
+
+  // Monthly, seasonal or unpublished times: never claim "Open now" or "opens Saturday".
+  if (hours.irregular) {
+    return { isOpen: false, kind: 'irregular', label: 'Check dates' };
   }
 
   const { day, minutes } = localDayAndMinutes(now, timeZone);

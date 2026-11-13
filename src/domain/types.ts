@@ -79,7 +79,16 @@ export type DayKey = 'sun' | 'mon' | 'tue' | 'wed' | 'thu' | 'fri' | 'sat';
 export type TimeRange = readonly [string, string];
 
 export type OpeningHours =
-  | { kind: 'weekly'; days: Partial<Record<DayKey, TimeRange[]>>; note?: string }
+  | {
+      kind: 'weekly';
+      days: Partial<Record<DayKey, TimeRange[]>>;
+      note?: string;
+      /**
+       * True when the pattern is not plainly "every week" (monthly, seasonal, fortnightly), or the
+       * times are not published. The status label then reads "Check dates" instead of "Open now".
+       */
+      irregular?: boolean;
+    }
   | { kind: 'always'; note?: string }
   | { kind: 'appointment'; note?: string };
 
@@ -164,4 +173,14 @@ export interface Farm {
   ownerId?: string | null;
   /** Message from the reviewer when changes were requested or the listing was rejected. */
   reviewNote?: string | null;
+  /** Street address or venue as published by the source. Optional; not stored in the database. */
+  address?: string;
+  /** True for places taken from public sources that no owner has claimed or confirmed yet. */
+  unclaimed?: boolean;
+  /** True when lat/lng is the locality centre rather than the exact spot. */
+  locationApprox?: boolean;
+  /** Public web pages the details came from. */
+  sources?: string[];
+  /** Other things sold there, in the source's words (not itemised as products). */
+  otherProducts?: string;
 }

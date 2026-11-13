@@ -16,6 +16,17 @@ Used for suburb/postcode search and to name a GPS fix, with no network needed (w
 
 The upstream list is derived from Australia Post postcode information and Australian Bureau of Statistics data. The npm package is ISC-licensed, but I could not confirm that the underlying postcode data may be redistributed inside a commercial app. Before the App Store launch, either confirm the terms on the source page, or swap in a dataset with a clear open licence (for example ABS postal areas/localities under CC BY 4.0). The app only reads this file through `src/domain/places.ts`, so replacing it is a one-file change.
 
+## Real places (`src/data/realListings.json`, `src/data/realFarms.ts`)
+
+Shown when no backend is configured. 55 real farmers' markets, farm shops and farm-gate stalls, researched by hand on **13 Nov 2026** from public pages (each place's own site, councils, tourism bodies). Public facts only: name, type, address, hours, the sentence describing the place, a website and phone only where the source published them, and the source links. No photos, reviews, prices or text copied from the sources. Everything stays "unclaimed" until the owner claims it. See `docs/REAL_LISTINGS.md`.
+
+- **Research:** `docs/research/listings/*.json`, with `sources`, `confidence` and `caveats` per entry.
+- **Build:** `node scripts/build-real-listings.mjs` adds coordinates and rewrites `realListings.json`.
+
+### Geocoding and attribution (OpenStreetMap, ODbL)
+
+Coordinates come from [Nominatim](https://nominatim.openstreetmap.org/), which searches OpenStreetMap data. The map data is **© OpenStreetMap contributors** and is available under the [Open Database Licence (ODbL)](https://www.openstreetmap.org/copyright). The app shows "Map locations © OpenStreetMap contributors" at the foot of the Account tab. The script follows the Nominatim usage policy: a descriptive User-Agent (`farm-direct-build/1.0`), at most one request per second, and every result cached in `docs/research/listings/geocode-cache.json` so a rerun does not query the service again. Pins found from a street address are marked `address`; pins that fell back to the suburb centre are `locality` and shown as "Approximate location".
+
 ## Sample farms (`src/data/sampleFarms.ts`)
 
-Invented placeholders, clearly labelled `SAMPLE`. Locations are real locality centres so the map and distance logic can be tested in every state and territory. Replaced by reviewed listings in M4.
+Invented placeholders, clearly labelled `SAMPLE`, kept **for tests only**. The running app never shows them. Locations are real locality centres so the map and distance logic can be tested in every state and territory.

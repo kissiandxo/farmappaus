@@ -1,0 +1,248 @@
+{
+  "Exhibition Park in Canberra , access via Old Well Station Road, Mitchell ACT 2911, Australia": null,
+  "Mitchell ACT 2911, Australia": {
+    "lat": -35.2101469,
+    "lng": 149.1443161
+  },
+  "Canberra College, cnr Launceston Street and Yamba Drive, Phillip ACT 2606, Australia": null,
+  "Phillip ACT 2606, Australia": {
+    "lat": -35.3448343,
+    "lng": 149.0862448
+  },
+  "Naylor Pavilion, Orange Showground, Leeds Parade, Orange NSW 2800, Australia": null,
+  "Orange NSW 2800, Australia": {
+    "lat": -33.2838823,
+    "lng": 149.1001117
+  },
+  "Butler Street Reserve, Byron Bay NSW 2481, Australia": null,
+  "Byron Bay NSW 2481, Australia": {
+    "lat": -28.6443119,
+    "lng": 153.6127362
+  },
+  "Piccabeen Park, off Deacon Street, Bangalow NSW 2479, Australia": null,
+  "Bangalow NSW 2479, Australia": {
+    "lat": -28.6866566,
+    "lng": 153.5243112
+  },
+  "245 Wilson Street, Eveleigh NSW 2015, Australia": {
+    "lat": -33.8941553,
+    "lng": 151.1916021
+  },
+  "Newcastle Showground, Griffiths Road entry, Broadmeadow NSW 2292, Australia": null,
+  "Broadmeadow NSW 2292, Australia": {
+    "lat": -32.9242796,
+    "lng": 151.7297602
+  },
+  "Manning Street, Kiama NSW 2533, Australia": {
+    "lat": -34.6812694,
+    "lng": 150.8490385
+  },
+  "Bermagui Country Club, cnr Lamont and Tuross Streets, Bermagui NSW 2546, Australia": null,
+  "Bermagui NSW 2546, Australia": {
+    "lat": -36.4272347,
+    "lng": 150.0774536
+  },
+  "Units 4-5/180 Forsyth Street, Wagga Wagga NSW 2650, Australia": null,
+  "Wagga Wagga NSW 2650, Australia": {
+    "lat": -35.141311,
+    "lng": 147.3754742
+  },
+  "Bellingen Showgrounds, cnr Black Street and Hammond Street, Bellingen NSW 2454, Australia": null,
+  "Bellingen NSW 2454, Australia": {
+    "lat": -30.4521469,
+    "lng": 152.897967
+  },
+  "Curtis Park, Armidale NSW 2350, Australia": {
+    "lat": -30.5116322,
+    "lng": 151.6684477
+  },
+  "1 Werai Road, Werai NSW 2577, Australia": null,
+  "Werai NSW 2577, Australia": {
+    "lat": -34.6074,
+    "lng": 150.3657
+  },
+  "Coburg Primary School, 92 Bell St, Coburg VIC 3058, Australia": {
+    "lat": -37.7410151,
+    "lng": 144.9682159
+  },
+  "Carlton North Primary School, O'Grady Street entrance, Carlton North VIC 3054, Australia": null,
+  "Carlton North VIC 3054, Australia": {
+    "lat": -37.7836831,
+    "lng": 144.9773219
+  },
+  "2 Wingrove St, Alphington VIC 3078, Australia": {
+    "lat": -37.777571,
+    "lng": 145.0326686
+  },
+  "Castlemaine VIC 3450, Australia": {
+    "lat": -37.0642321,
+    "lng": 144.217337
+  },
+  "Corner Milton Street and High Street, Bannockburn VIC 3331, Australia": null,
+  "Bannockburn VIC 3331, Australia": {
+    "lat": -38.0454275,
+    "lng": 144.1728685
+  },
+  "244 Shands Rd, Main Ridge VIC 3928, Australia": {
+    "lat": -38.4011134,
+    "lng": 144.9926575
+  },
+  "Red Hill Recreation Reserve & Showgrounds, 184 Arthurs Seat Road, Red Hill VIC 3937, Australia": null,
+  "Red Hill VIC 3937, Australia": {
+    "lat": -38.3823347,
+    "lng": 145.0236165
+  },
+  "71 Cimitiere Street, Launceston TAS 7250, Australia": {
+    "lat": -41.4335051,
+    "lng": 147.140366
+  },
+  "Bathurst Street, between Murray and Elizabeth Streets, Hobart TAS 7000, Australia": null,
+  "Hobart TAS 7000, Australia": {
+    "lat": -42.8722558,
+    "lng": 147.3142391
+  },
+  "Bream Creek Showgrounds, Marion Bay Road, Bream Creek TAS 7175, Australia": null,
+  "Bream Creek TAS 7175, Australia": {
+    "lat": -42.80871,
+    "lng": 147.83184
+  },
+  "Lamington Street, New Farm QLD 4005, Australia": {
+    "lat": -27.4650699,
+    "lng": 153.0505422
+  },
+  "Manly Harbour, Royal Esplanade , Little Bayside Park, Manly QLD 4179, Australia": null,
+  "Manly QLD 4179, Australia": {
+    "lat": -27.4546277,
+    "lng": 153.18576
+  },
+  "Eagle Farm Racecourse, Racecourse Road, Ascot QLD 4007, Australia": null,
+  "Ascot QLD 4007, Australia": {
+    "lat": -27.4297074,
+    "lng": 153.0638924
+  },
+  "Northey Street City Farm, 16 Victoria Street, Windsor QLD 4030, Australia": null,
+  "Windsor QLD 4030, Australia": {
+    "lat": -27.421968,
+    "lng": 153.0341285
+  },
+  "45 Charles Street, Kenilworth QLD 4574, Australia": {
+    "lat": -26.5967488,
+    "lng": 152.7286532
+  },
+  "70 McCarthy Road, Maleny QLD 4552, Australia": {
+    "lat": -26.7750442,
+    "lng": 152.8588141
+  },
+  "541 Kents Lagoon Road, Kalbar QLD 4309, Australia": {
+    "lat": -27.9050186,
+    "lng": 152.6219798
+  },
+  "Tamborine Mountain QLD 4272, Australia": {
+    "lat": -27.9245021,
+    "lng": 153.1853307
+  },
+  "Corner of Campbell and Lindsay Streets, Toowoomba QLD 4350, Australia": null,
+  "Toowoomba QLD 4350, Australia": {
+    "lat": -27.5950997,
+    "lng": 151.9504979
+  },
+  "155 Weyba Road, Noosaville QLD 4566, Australia": {
+    "lat": -26.4024094,
+    "lng": 153.0702803
+  },
+  "Morrow Park, Tolga QLD 4882, Australia": null,
+  "Tolga QLD 4882, Australia": {
+    "lat": -17.2234071,
+    "lng": 145.4792796
+  },
+  "Priors Creek Parklands, Mabi Way, Atherton QLD 4883, Australia": null,
+  "Atherton QLD 4883, Australia": {
+    "lat": -17.2685132,
+    "lng": 145.4747341
+  },
+  "Freds Pass NT 0822, Australia": {
+    "lat": -12.5364,
+    "lng": 131.0537
+  },
+  "48 Trower Road, Rapid Creek NT 0810, Australia": {
+    "lat": -12.3852318,
+    "lng": 130.8651621
+  },
+  "Nightcliff Shopping Centre, Dick Ward Drive, Nightcliff NT 0810, Australia": null,
+  "Nightcliff NT 0810, Australia": {
+    "lat": -12.387618,
+    "lng": 130.8504874
+  },
+  "Berry Springs NT 0838, Australia": {
+    "lat": -12.7345655,
+    "lng": 131.0466622
+  },
+  "Adelaide Showground, Rose Terrace, Wayville SA 5034, Australia": null,
+  "Wayville SA 5034, Australia": {
+    "lat": -34.9448147,
+    "lng": 138.5914429
+  },
+  "740 Stockwell Road, Angaston SA 5353, Australia": {
+    "lat": -34.4983378,
+    "lng": 139.0250976
+  },
+  "Willunga High School, Main Road, Willunga SA 5172, Australia": null,
+  "Willunga SA 5172, Australia": {
+    "lat": -35.2711681,
+    "lng": 138.5554231
+  },
+  "23 Mann Street, Mount Barker SA 5251, Australia": {
+    "lat": -35.0684922,
+    "lng": 138.8590055
+  },
+  "Mount Barker Road, Hahndorf SA 5245, Australia": {
+    "lat": -35.0203459,
+    "lng": 138.7932829
+  },
+  "Margaret River Education Campus, Lot 272 Bussell Highway, Margaret River WA 6285, Australia": null,
+  "Margaret River WA 6285, Australia": {
+    "lat": -33.951672,
+    "lng": 115.0760965
+  },
+  "Subiaco Primary School, 271 Bagot Road, Subiaco WA 6008, Australia": {
+    "lat": -31.9514252,
+    "lng": 115.8222481
+  },
+  "1 City Farm Place, East Perth WA 6004, Australia": {
+    "lat": -31.9506338,
+    "lng": 115.8707258
+  },
+  "Collie Street, Albany WA 6330, Australia": {
+    "lat": -35.0240812,
+    "lng": 117.8819891
+  },
+  "Bruce Lee Reserve, Beaconsfield WA 6162, Australia": null,
+  "Beaconsfield WA 6162, Australia": {
+    "lat": -32.0693877,
+    "lng": 115.768587
+  },
+  "867 Great Northern Highway, Herne Hill WA 6056, Australia": {
+    "lat": -31.8175902,
+    "lng": 116.0174675
+  },
+  "2540 West Swan Road, Caversham WA 6055, Australia": {
+    "lat": -31.8655604,
+    "lng": 115.9856019
+  },
+  "104 Victoria Road, Dayton WA 6055, Australia": {
+    "lat": -31.8615518,
+    "lng": 115.98026
+  },
+  "5 George Street, West Swan WA 6055, Australia": {
+    "lat": -31.8422242,
+    "lng": 115.9914876
+  },
+  "8931 West Swan Road, Henley Brook WA 6055, Australia": {
+    "lat": -31.800875,
+    "lng": 115.9991757
+  },
+  "95 Glenisla Road, Bickley WA 6076, Australia": {
+    "lat": -32.0081454,
+    "lng": 116.098816
+  }
+}

@@ -33,9 +33,10 @@ function FarmCardView({ result, onPress }: { result: FarmResult; onPress?: () =>
       accessibilityRole="button"
       accessibilityHint="Opens details"
       style={({ pressed }) => [styles.card, pressed && styles.pressed]}
-      accessibilityLabel={`${farm.name}. ${VENUE_LABELS[farm.type]} in ${farm.locality}, ${farm.state}. ${distance} away. ${status.label}.${saved ? ' Saved.' : ''}${farm.isSample ? ' Sample listing.' : ''}`}
+      accessibilityLabel={`${farm.name}. ${VENUE_LABELS[farm.type]} in ${farm.locality}, ${farm.state}. ${distance} away. ${status.label}.${saved ? ' Saved.' : ''}${farm.isSample ? ' Sample listing.' : ''}${farm.unclaimed ? ' Unclaimed listing from public sources.' : ''}`}
     >
       {farm.isSample && <Badge label="Sample" tone="orange" />}
+      {farm.unclaimed && <Badge label="Unclaimed" />}
 
       <View style={styles.titleRow}>
         <Text style={styles.name} numberOfLines={2}>
@@ -55,6 +56,12 @@ function FarmCardView({ result, onPress }: { result: FarmResult; onPress?: () =>
         <View style={[styles.dot, { backgroundColor: statusColor }]} />
         <Text style={[styles.status, { color: statusColor }]}>{status.label}</Text>
       </View>
+
+      {status.kind === 'irregular' && !!farm.hours.note && (
+        <Text style={styles.footnote} numberOfLines={3}>
+          {farm.hours.note}
+        </Text>
+      )}
 
       {(shownProduce.length > 0 || farm.tags.length > 0) && (
         <View style={styles.badges}>

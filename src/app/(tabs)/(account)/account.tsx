@@ -13,6 +13,11 @@ const ROLE_LABELS = { user: 'Customer', farmer: 'Farmer', admin: 'Administrator'
 const openWelcome = () => router.push('/(auth)/welcome');
 const openPrivacy = () => router.push('/privacy');
 
+/** Required credit for the place locations, which were found with OpenStreetMap's Nominatim (ODbL). */
+function Attribution() {
+  return <Text style={[type.footnote, styles.attribution]}>Map locations © OpenStreetMap contributors</Text>;
+}
+
 export default function AccountScreen() {
   const {
     available,
@@ -115,6 +120,7 @@ export default function AccountScreen() {
         <Section>
           <Row title="Delete my account" destructive onPress={confirmDelete} />
         </Section>
+        <Attribution />
       </ScrollView>
     );
   }
@@ -140,6 +146,7 @@ export default function AccountScreen() {
         <Section>
           <Row title="Remove from this iPhone" destructive onPress={confirmRemoveProfile} />
         </Section>
+        <Attribution />
       </ScrollView>
     );
   }
@@ -168,6 +175,7 @@ export default function AccountScreen() {
       <Section>
         <Row title="Privacy policy" accessory="chevron" onPress={openPrivacy} />
       </Section>
+      <Attribution />
     </ScrollView>
   );
 }
@@ -179,4 +187,5 @@ const styles = StyleSheet.create({
   header: { alignItems: 'center', gap: space.sm, paddingHorizontal: space.xl, paddingTop: space.xl, paddingBottom: space.lg },
   title: { color: colors.label, textAlign: 'center' },
   message: { color: colors.secondaryLabel, textAlign: 'center' },
+  attribution: { color: colors.secondaryLabel, textAlign: 'center', paddingHorizontal: space.lg, marginTop: space.sm },
 });

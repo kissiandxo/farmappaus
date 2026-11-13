@@ -1,4 +1,5 @@
-import { licenceBadge, validateListing } from '../compliance';
+import { isLicenceControlled, LICENCE_CONTROLLED_CATEGORIES, licenceBadge, REQUIRED_LICENCE, validateListing } from '../compliance';
+import { PRODUCT_CATEGORIES } from '../types';
 import type { Licence } from '../types';
 import { makeFarm } from './fixtures';
 
@@ -93,5 +94,20 @@ describe('licenceBadge', () => {
   it('is "checked" only when every licence is admin-checked', () => {
     const farm = makeFarm({ licences: [licence({ status: 'admin_checked' })] });
     expect(licenceBadge(farm)).toBe('checked');
+  });
+});
+
+describe('licence-controlled categories', () => {
+  it('lists exactly the products that need a licence', () => {
+    expect([...LICENCE_CONTROLLED_CATEGORIES].sort()).toEqual(Object.keys(REQUIRED_LICENCE).sort());
+    expect([...LICENCE_CONTROLLED_CATEGORIES].sort()).toEqual(['beef', 'chicken', 'eggs', 'lamb', 'milk', 'pork']);
+  });
+
+  it('flags milk, eggs and meat but not honey, fruit or vegetables', () => {
+    for (const c of PRODUCT_CATEGORIES) {
+      expect(isLicenceControlled(c)).toBe(LICENCE_CONTROLLED_CATEGORIES.includes(c));
+    }
+    expect(isLicenceControlled('honey')).toBe(false);
+    expect(isLicenceControlled('lamb')).toBe(true);
   });
 });

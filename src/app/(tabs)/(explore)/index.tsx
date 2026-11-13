@@ -45,7 +45,7 @@ export default function FarmListScreen() {
           />
         }
         refreshing={refreshing}
-        onRefresh={dataStatus.kind === 'sample' ? undefined : refresh}
+        onRefresh={dataStatus.kind === 'public' ? undefined : refresh}
         contentInsetAdjustmentBehavior="automatic"
         contentContainerStyle={styles.list}
         ItemSeparatorComponent={ItemSeparator}

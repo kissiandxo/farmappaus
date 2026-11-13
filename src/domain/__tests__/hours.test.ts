@@ -154,3 +154,34 @@ describe('openStatus', () => {
     expect(openStatus({ kind: 'weekly', days: {} }, SYDNEY, new Date()).label).toBe('Closed');
   });
 });
+
+describe('irregular weekly hours (monthly, seasonal or unpublished times)', () => {
+  const monthlySaturday: OpeningHours = {
+    kind: 'weekly',
+    days: { sat: [['08:30', '12:00']] },
+    note: 'Second Saturday of each month only.',
+    irregular: true,
+  };
+  // Saturday 14 Nov 2026, 10:00 in Sydney (UTC+11): inside the listed range.
+  const saturdayMorning = new Date('2026-11-13T23:00:00Z');
+
+  it('never says "Open now" or "opens ..." for a monthly market', () => {
+    const status = openStatus(monthlySaturday, 'Australia/Sydney', saturdayMorning);
+    expect(status).toEqual({ isOpen: false, kind: 'irregular', label: 'Check dates' });
+    expect(openStatus(monthlySaturday, 'Australia/Sydney', new Date('2026-11-17T01:00:00Z')).label).toBe('Check dates');
+  });
+
+  it('still says "Open now" for the same times when the hours are plainly weekly', () => {
+    const weekly: OpeningHours = { kind: 'weekly', days: monthlySaturday.kind === 'weekly' ? monthlySaturday.days : {} };
+    expect(openStatus(weekly, 'Australia/Sydney', saturdayMorning).kind).toBe('open');
+  });
+
+  it('shows "Times: Not published" when an irregular listing has no times', () => {
+    const lines = hoursLines({ kind: 'weekly', days: {}, irregular: true, note: 'Open Friday to Sunday.' });
+    expect(lines).toEqual([{ label: 'Times', text: 'Not published' }]);
+  });
+
+  it('keeps the day rows when an irregular listing has some times', () => {
+    expect(hoursLines(monthlySaturday)).toHaveLength(7);
+  });
+});

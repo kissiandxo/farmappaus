@@ -35,22 +35,19 @@ function Notice({ background, icon, iconColor, title, titleColor, text, role, ch
   );
 }
 
-/** Tells people what they are looking at: sample data, saved (offline) listings, or a problem. */
+/** Tells people what they are looking at: places from public sources, saved (offline) listings, or a problem. */
 export function DataBanner() {
   const { dataStatus, refresh } = useSearch();
 
   if (dataStatus.kind === 'live') return null;
 
-  if (dataStatus.kind === 'sample') {
+  if (dataStatus.kind === 'public') {
     return (
       <Notice
-        background={colors.orangeFill}
+        background={colors.fill}
         icon="info.circle"
-        iconColor={colors.orange}
-        title="Sample data"
-        titleColor={colors.orange}
-        text="These listings are made up so we can test the app. No real farms are shown yet."
-        role="alert"
+        iconColor={colors.secondaryLabel}
+        text="These places come from public sources and haven't been confirmed by their owners yet. Check details before you travel."
       />
     );
   }

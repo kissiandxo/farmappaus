@@ -1,5 +1,6 @@
 import { supabase } from '../lib/supabase';
 import type { Farm } from '../domain/types';
+import { REAL_FARMS } from './realFarms';
 import { groupFarms, type FarmRow, type LicenceRow, type ProductRow } from './mappers';
 
 const PAGE_SIZE = 1000; // Supabase returns at most 1000 rows per request
@@ -30,4 +31,12 @@ export async function fetchLiveFarms(): Promise<Farm[]> {
     fetchAll<LicenceRow>('licences'),
   ]);
   return groupFarms(farms, products, licences);
+}
+
+/**
+ * Listings shown when no backend is configured: real places from public sources (unclaimed).
+ * Sample farms (`sampleFarms.ts`) are for tests only and never appear in the running app.
+ */
+export function bundledFarms(): Farm[] {
+  return REAL_FARMS;
 }

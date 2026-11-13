@@ -12,15 +12,15 @@ import { AppState } from 'react-native';
 
 import { DEFAULT_FILTERS, searchFarms, type FarmFilters, type FarmResult } from '../domain/filters';
 import { parseFarmCache, serialiseFarmCache } from '../data/mappers';
-import { fetchLiveFarms } from '../data/repository';
-import { SAMPLE_FARMS } from '../data/sampleFarms';
+import { bundledFarms, fetchLiveFarms } from '../data/repository';
 import type { Farm } from '../domain/types';
 import { withTimeout } from '../lib/async';
 import { isBackendConfigured } from '../lib/supabase';
 
 /** Where the listings on screen came from. */
 export type DataStatus =
-  | { kind: 'sample' }
+  /** No backend: real places from public sources, not yet confirmed by their owners. */
+  | { kind: 'public' }
   | { kind: 'loading' }
   | { kind: 'live'; at: string }
   | { kind: 'cached'; at: string; failed: boolean }
@@ -47,7 +47,7 @@ export const DEFAULT_LOCATION: UserLocation = {
 const STORAGE_KEY = 'farmdirect.location.v1';
 
 interface SearchState {
-  /** All listings currently available (sample data until the backend is connected). */
+  /** All listings currently available (places from public sources until the backend is connected). */
   farms: Farm[];
   dataStatus: DataStatus;
   /** Reloads listings from the server (pull-to-refresh). */
@@ -100,9 +100,9 @@ export function SearchProvider({ children }: { children: ReactNode }) {
     AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(next)).catch(() => {});
   }, []);
 
-  const [farms, setFarms] = useState<Farm[]>(isBackendConfigured ? [] : SAMPLE_FARMS);
+  const [farms, setFarms] = useState<Farm[]>(isBackendConfigured ? [] : bundledFarms());
   const [dataStatus, setDataStatus] = useState<DataStatus>(
-    isBackendConfigured ? { kind: 'loading' } : { kind: 'sample' },
+    isBackendConfigured ? { kind: 'loading' } : { kind: 'public' },
   );
   const [refreshing, setRefreshing] = useState(false);
 

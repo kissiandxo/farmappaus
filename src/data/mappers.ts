@@ -67,7 +67,7 @@ const TIME = /^([01]\d|2[0-3]):[0-5]\d$/;
 export function parseHours(value: unknown): OpeningHours {
   const fallback: OpeningHours = { kind: 'appointment' };
   if (!value || typeof value !== 'object') return fallback;
-  const v = value as { kind?: unknown; days?: unknown; note?: unknown };
+  const v = value as { kind?: unknown; days?: unknown; note?: unknown; irregular?: unknown };
   const note = typeof v.note === 'string' && v.note.trim() ? v.note : undefined;
   if (v.kind === 'always') return { kind: 'always', note };
   if (v.kind === 'appointment') return { kind: 'appointment', note };
@@ -83,7 +83,7 @@ export function parseHours(value: unknown): OpeningHours {
     );
     if (ranges.length > 0) days[day] = ranges;
   }
-  return { kind: 'weekly', days, note };
+  return { kind: 'weekly', days, note, ...(v.irregular === true ? { irregular: true } : {}) };
 }
 
 export function toProduct(row: ProductRow): Product {

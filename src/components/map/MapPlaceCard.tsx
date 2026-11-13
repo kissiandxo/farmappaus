@@ -7,7 +7,7 @@ import { pinStyle } from '../../domain/mapPins';
 import type { FarmResult } from '../../domain/filters';
 import { useFavourites } from '../../state/FavouritesContext';
 import { colors, MIN_TAP, radius, space, type } from '../../theme';
-import { Button, Icon, tapLight } from '../ui';
+import { Badge, Button, Icon, tapLight } from '../ui';
 
 interface MapPlaceCardProps {
   result: FarmResult;
@@ -23,13 +23,14 @@ export function MapPlaceCard({ result, onClose, onLayout }: MapPlaceCardProps) {
   const kind = pinStyle(farm.type).label;
 
   const openDirections = () => {
-    Linking.openURL(directionsUrl({ lat: farm.lat, lng: farm.lng, name: farm.name })).catch(() => {});
+    Linking.openURL(directionsUrl(farm)).catch(() => {});
   };
 
   return (
     <View style={styles.card} onLayout={onLayout}>
       <View style={styles.header}>
         <View style={styles.titles}>
+          {farm.unclaimed && <Badge label="Unclaimed" />}
           <Text style={styles.name} numberOfLines={2} accessibilityRole="header">
             {farm.name}
           </Text>

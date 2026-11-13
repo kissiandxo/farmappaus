@@ -10,7 +10,7 @@ import { licenceBadge } from '../../domain/compliance';
 import { formatDistance, haversineKm } from '../../domain/geo';
 import { hoursLines, localDayAndMinutes, openStatus, timezoneForState } from '../../domain/hours';
 import { describeAge, formatDateAu, formatPrice, isStale } from '../../domain/format';
-import { directionsUrl, telUrl, websiteUrl } from '../../domain/links';
+import { directionsUrl, hostLabel, telUrl, websiteUrl } from '../../domain/links';
 import {
   FULFILMENT_LABELS,
   LICENCE_LABELS,
@@ -118,8 +118,10 @@ export default function FarmProfileScreen() {
   }
 
   const isOwner = !!userId && farm.ownerId === userId;
-  const canClaim = isBackendConfigured && !farm.isSample && farm.status === 'live' && !farm.ownerId && !!userId;
-  const canReport = isBackendConfigured && !farm.isSample && farm.status === 'live' && !!userId;
+  const canClaim = farm.unclaimed
+    ? true
+    : isBackendConfigured && !farm.isSample && farm.status === 'live' && !farm.ownerId && !!userId;
+  const canReport = isBackendConfigured && !farm.unclaimed && !farm.isSample && farm.status === 'live' && !!userId;
   const showReview = role === 'admin' && farm.status === 'pending';
 
   const tz = timezoneForState(farm.state);
@@ -136,6 +138,11 @@ export default function FarmProfileScreen() {
   const meta = `${VENUE_LABELS[farm.type]} · ${farm.locality}, ${STATE_NAMES[farm.state]} ${farm.postcode}`;
 
   const hasPhotos = photos.length > 0;
+  const sources = (farm.sources ?? []).flatMap((url) => {
+    const link = websiteUrl(url);
+    const host = hostLabel(url);
+    return link && host ? [{ url: link, host }] : [];
+  });
 
   return (
     <ScrollView
@@ -196,6 +203,12 @@ export default function FarmProfileScreen() {
         </View>
       )}
 
+      {farm.unclaimed && (
+        <View style={styles.pad}>
+          <Notice kind="info">From public sources. Not yet confirmed by the owner.</Notice>
+        </View>
+      )}
+
       <View style={styles.header}>
         <Text style={[type.title1, styles.name, { color: colors.label }]} accessibilityRole="header">
           {farm.name}
@@ -207,9 +220,10 @@ export default function FarmProfileScreen() {
             {status.label}
           </Text>
         </View>
-        {farm.isSample || farm.tags.length > 0 ? (
+        {farm.isSample || farm.unclaimed || farm.tags.length > 0 ? (
           <View style={styles.badges}>
             {farm.isSample && <Badge label="SAMPLE" tone="orange" />}
+            {farm.unclaimed && <Badge label="Unclaimed" />}
             {farm.tags.map((t) => (
               <Badge key={t} label={TAG_LABELS[t]} />
             ))}
@@ -242,14 +256,36 @@ export default function FarmProfileScreen() {
         />
       </View>
 
+      {farm.unclaimed && canClaim && (
+        <Section>
+          <Row
+            title="Claim this listing"
+            subtitle="Is this your place?"
+            icon="person.crop.circle.badge.checkmark"
+            accessory="chevron"
+            onPress={() => router.push(`/claim/${farm.id}`)}
+          />
+        </Section>
+      )}
+
       <Section header="About">
         <View style={styles.paragraph}>
           <Text style={[type.body, { color: colors.label }]}>{farm.story}</Text>
         </View>
       </Section>
 
-      {farm.products.length > 0 && (
-        <Section header="Produce and prices">
+      {(farm.address || farm.locationApprox) && (
+        <Section header="Address">
+          <Row
+            icon="mappin.and.ellipse"
+            title={farm.address ?? [farm.locality, farm.state, farm.postcode].filter(Boolean).join(' ')}
+            subtitle={farm.locationApprox ? 'Approximate location' : undefined}
+          />
+        </Section>
+      )}
+
+      {farm.products.length > 0 ? (
+        <Section header={farm.unclaimed ? 'Produce' : 'Produce and prices'} footer={farm.otherProducts}>
           {farm.products.map((p) => (
             <Row
               key={`${p.category}-${p.name}`}
@@ -257,11 +293,15 @@ export default function FarmProfileScreen() {
               subtitle={[`${PRODUCT_LABELS[p.category]}${p.pasteurised ? ' · pasteurised' : ''}`, p.inStock ? null : 'Out of stock']
                 .filter(Boolean)
                 .join(' · ')}
-              value={p.priceCents !== undefined ? formatPrice(p.priceCents, p.unit) : 'Ask for price'}
+              value={p.priceCents !== undefined ? formatPrice(p.priceCents, p.unit) : farm.unclaimed ? undefined : 'Ask for price'}
             />
           ))}
         </Section>
-      )}
+      ) : farm.otherProducts ? (
+        <Section header="Produce">
+          <Row title={farm.otherProducts} />
+        </Section>
+      ) : null}
 
       <Section
         header="Opening hours"
@@ -272,16 +312,36 @@ export default function FarmProfileScreen() {
         ))}
       </Section>
 
-      <Section header="Pick-up and delivery">
-        <Row title={farm.fulfilment.map((f) => FULFILMENT_LABELS[f]).join(' · ')} />
-      </Section>
+      {!farm.unclaimed && farm.fulfilment.length > 0 && (
+        <Section header="Pick-up and delivery">
+          <Row title={farm.fulfilment.map((f) => FULFILMENT_LABELS[f]).join(' · ')} />
+        </Section>
+      )}
 
-      <Section
-        header="Payment"
-        footer="You pay the farmer directly. Payments are not made in this app."
-      >
-        <Row title={farm.paymentTypes.map((p) => PAYMENT_LABELS[p]).join(' · ')} />
-      </Section>
+      {farm.paymentTypes.length > 0 && (
+        <Section
+          header="Payment"
+          footer="You pay the farmer directly. Payments are not made in this app."
+        >
+          <Row title={farm.paymentTypes.map((p) => PAYMENT_LABELS[p]).join(' · ')} />
+        </Section>
+      )}
+
+      {sources.length > 0 && (
+        <Section header="Sources" footer="Details come from these public pages and may be out of date.">
+          {sources.map((source) => (
+            <Row
+              key={source.url}
+              icon="link"
+              title={source.host}
+              accessory="chevron"
+              accessibilityLabel={`Open ${source.host}`}
+              accessibilityHint="Opens the page in your browser"
+              onPress={() => openLink(source.url)}
+            />
+          ))}
+        </Section>
+      )}
 
       {farm.licences.length > 0 && (
         <Section
@@ -319,7 +379,7 @@ export default function FarmProfileScreen() {
 
       <Section footer={`Listing last updated ${formatDateAu(farm.updatedOn)} (${describeAge(farm.updatedOn, now)})`}>
         {canReport && <Row title="Report a problem" accessory="chevron" onPress={() => router.push(`/report/${farm.id}`)} />}
-        {canClaim && (
+        {canClaim && !farm.unclaimed && (
           <Row
             title="Claim this listing"
             subtitle="Is this your farm?"
