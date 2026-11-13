@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import FarmMap from '../../components/FarmMap';
-import { FiltersModal } from '../../components/FiltersModal';
-import { LocationBar } from '../../components/LocationBar';
-import { LocationModal } from '../../components/LocationModal';
-import { useSearch } from '../../state/SearchContext';
+import FarmMap from '../../../components/FarmMap';
+import { FiltersModal } from '../../../components/FiltersModal';
+import { LocationBar } from '../../../components/LocationBar';
+import { LocationModal } from '../../../components/LocationModal';
+import { useSearch } from '../../../state/SearchContext';
 
 export default function MapScreen() {
   const { results, location } = useSearch();

@@ -6,7 +6,7 @@
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "farmdirect",
-    "userInterfaceStyle": "light",
+    "userInterfaceStyle": "automatic",
     "ios": {
       "bundleIdentifier": "au.farmdirect.app",
       "supportsTablet": false,
@@ -24,9 +24,12 @@
       [
         "expo-splash-screen",
         {
-          "backgroundColor": "#F7F1E5",
+          "backgroundColor": "#FFFFFF",
           "image": "./assets/images/splash-icon.png",
-          "imageWidth": 120
+          "imageWidth": 120,
+          "dark": {
+            "backgroundColor": "#000000"
+          }
         }
       ],
       [

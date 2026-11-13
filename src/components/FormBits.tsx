@@ -2,9 +2,13 @@ import type { ReactNode } from 'react';
 import { Pressable, StyleSheet, Switch, Text, TextInput, View, type KeyboardTypeOptions } from 'react-native';
 
 import { formatMinutes, parseMinutes, stepTime } from '../domain/hours';
-import { colors, font, MIN_TAP, radius, space } from '../theme';
+import { colors, MIN_TAP, radius, space, type } from '../theme';
 import { Chip } from './Chip';
+import { Button } from './ui/Button';
+import { Icon } from './ui/Icon';
+import { selection } from './ui/haptics';
 
+/** Inset grouped group: `cell` surface, radius 12, no border. Optional headline title and footnote hint. */
 export function Card({ title, children, hint }: { title?: string; hint?: string; children: ReactNode }) {
   return (
     <View style={styles.card}>
@@ -32,6 +36,7 @@ interface FieldProps {
   maxLength?: number;
 }
 
+/** Labelled text field: subheadline label over a quiet rounded input. */
 export function Field({ label, value, onChangeText, hint, error, multiline, ...rest }: FieldProps) {
   return (
     <View style={styles.field}>
@@ -40,7 +45,8 @@ export function Field({ label, value, onChangeText, hint, error, multiline, ...r
         value={value}
         onChangeText={onChangeText}
         multiline={multiline}
-        placeholderTextColor={colors.textMuted}
+        placeholderTextColor={colors.placeholder}
+        selectionColor={colors.tint}
         accessibilityLabel={label}
         style={[styles.input, multiline && styles.multiline, !!error && styles.inputError]}
         {...rest}
@@ -50,7 +56,7 @@ export function Field({ label, value, onChangeText, hint, error, multiline, ...r
   );
 }
 
-/** Pick one (single) or several (multi) options as large chips. */
+/** Pick one (single) or several (multi) options as capsule chips. */
 export function ChipGroup<T extends string>({
   options,
   value,
@@ -70,15 +76,19 @@ export function ChipGroup<T extends string>({
   );
 }
 
+/** Label on the left, system switch (tint) on the right, optional footnote hint underneath. */
 export function SwitchRow({ label, value, onChange, hint }: { label: string; value: boolean; onChange: (v: boolean) => void; hint?: string }) {
   return (
     <View>
       <View style={styles.switchRow}>
-        <Text style={[styles.label, { flex: 1 }]}>{label}</Text>
+        <Text style={[styles.rowLabel, { flex: 1 }]}>{label}</Text>
         <Switch
           value={value}
-          onValueChange={onChange}
-          trackColor={{ true: colors.primary, false: colors.border }}
+          onValueChange={(v) => {
+            selection();
+            onChange(v);
+          }}
+          trackColor={{ true: colors.tint, false: colors.fill }}
           accessibilityLabel={label}
         />
       </View>
@@ -87,6 +97,7 @@ export function SwitchRow({ label, value, onChange, hint }: { label: string; val
   );
 }
 
+/** Full-width button. `primary` = filled, `secondary` = tinted, `danger` = tinted red. Prefer `ui/Button` in new code. */
 export function Btn({
   label,
   onPress,
@@ -99,27 +110,17 @@ export function Btn({
   disabled?: boolean;
 }) {
   return (
-    <Pressable
+    <Button
+      label={label}
       onPress={onPress}
       disabled={disabled}
-      accessibilityRole="button"
-      accessibilityState={{ disabled: !!disabled }}
-      style={({ pressed }) => [
-        styles.btn,
-        kind === 'primary' && styles.btnPrimary,
-        kind === 'danger' && styles.btnDanger,
-        disabled && { opacity: 0.5 },
-        pressed && { opacity: 0.8 },
-      ]}
-    >
-      <Text style={[styles.btnText, kind === 'primary' && { color: colors.onPrimary }, kind === 'danger' && { color: colors.closed }]}>
-        {label}
-      </Text>
-    </Pressable>
+      variant={kind === 'primary' ? 'filled' : 'tinted'}
+      role={kind === 'danger' ? 'destructive' : undefined}
+    />
   );
 }
 
-/** Shows a time like "9:00 am" with big − and + buttons that move it by 30 minutes. */
+/** Shows a time like "9:00 am" with minus and plus buttons that move it by 30 minutes. */
 export function TimeStepper({ label, value, onChange }: { label: string; value: string; onChange: (next: string) => void }) {
   return (
     <View style={styles.stepper} accessible accessibilityRole="adjustable" accessibilityLabel={`${label} ${formatMinutes(parseMinutes(value))}`}
@@ -128,20 +129,21 @@ export function TimeStepper({ label, value, onChange }: { label: string; value: 
     >
       <Text style={styles.stepperLabel}>{label}</Text>
       <View style={styles.stepperRow}>
-        <Pressable onPress={() => onChange(stepTime(value, -30))} style={styles.stepBtn} accessibilityLabel={`${label} earlier`} accessibilityRole="button">
-          <Text style={styles.stepBtnText}>−</Text>
+        <Pressable onPress={() => onChange(stepTime(value, -30))} style={({ pressed }) => [styles.stepBtn, pressed && { opacity: 0.6 }]} accessibilityLabel={`${label} earlier`} accessibilityRole="button">
+          <Icon name="minus" size={16} weight="semibold" color={colors.tint} />
         </Pressable>
         <Text style={styles.stepperValue}>{formatMinutes(parseMinutes(value))}</Text>
-        <Pressable onPress={() => onChange(stepTime(value, 30))} style={styles.stepBtn} accessibilityLabel={`${label} later`} accessibilityRole="button">
-          <Text style={styles.stepBtnText}>+</Text>
+        <Pressable onPress={() => onChange(stepTime(value, 30))} style={({ pressed }) => [styles.stepBtn, pressed && { opacity: 0.6 }]} accessibilityLabel={`${label} later`} accessibilityRole="button">
+          <Icon name="plus" size={16} weight="semibold" color={colors.tint} />
         </Pressable>
       </View>
     </View>
   );
 }
 
+/** Inline message block. info = quiet fill, warn = orange, error = red, ok = green. */
 export function Notice({ kind, children }: { kind: 'info' | 'warn' | 'error' | 'ok'; children: ReactNode }) {
-  const bg = { info: colors.chip, warn: colors.sampleBackground, error: '#F6D9CF', ok: '#DDEBD2' }[kind];
+  const bg = { info: colors.fill, warn: colors.orangeFill, error: colors.redFill, ok: colors.greenFill }[kind];
   return (
     <View style={[styles.notice, { backgroundColor: bg }]} accessibilityRole="alert">
       {typeof children === 'string' ? <Text style={styles.noticeText}>{children}</Text> : children}
@@ -150,27 +152,23 @@ export function Notice({ kind, children }: { kind: 'info' | 'warn' | 'error' | '
 }
 
 const styles = StyleSheet.create({
-  card: { backgroundColor: colors.surface, borderRadius: radius.card, borderWidth: 1, borderColor: colors.border, padding: space.lg, gap: space.md },
-  cardTitle: { fontSize: font.title, fontWeight: '700', color: colors.text },
+  card: { backgroundColor: colors.cell, borderRadius: radius.group, borderCurve: 'continuous', padding: space.lg, gap: space.md },
+  cardTitle: { ...type.headline, color: colors.label },
   field: { gap: 6 },
-  label: { fontSize: font.body, fontWeight: '700', color: colors.text },
-  hint: { fontSize: font.small, color: colors.textMuted },
-  error: { fontSize: font.small, color: colors.closed, fontWeight: '700' },
-  input: { minHeight: 56, fontSize: font.large, color: colors.text, backgroundColor: colors.background, borderWidth: 2, borderColor: colors.border, borderRadius: radius.card, paddingHorizontal: space.lg, paddingVertical: space.sm },
-  inputError: { borderColor: colors.closed },
-  multiline: { minHeight: 130, textAlignVertical: 'top', paddingTop: space.md },
+  label: { ...type.subheadline, fontWeight: '600', color: colors.secondaryLabel },
+  rowLabel: { ...type.body, color: colors.label },
+  hint: { ...type.footnote, color: colors.secondaryLabel },
+  error: { ...type.footnote, color: colors.red, fontWeight: '600' },
+  input: { ...type.body, minHeight: MIN_TAP, color: colors.label, backgroundColor: colors.fill, borderRadius: radius.control, borderCurve: 'continuous', paddingHorizontal: space.md, paddingVertical: space.sm },
+  inputError: { borderWidth: 1, borderColor: colors.red },
+  multiline: { minHeight: 110, textAlignVertical: 'top', paddingTop: space.md },
   chips: { flexDirection: 'row', flexWrap: 'wrap', gap: space.sm },
   switchRow: { minHeight: MIN_TAP, flexDirection: 'row', alignItems: 'center', gap: space.md },
-  btn: { minHeight: MIN_TAP + 4, borderRadius: radius.chip, alignItems: 'center', justifyContent: 'center', paddingHorizontal: space.lg, borderWidth: 2, borderColor: colors.border, backgroundColor: colors.surface },
-  btnPrimary: { backgroundColor: colors.primary, borderColor: colors.primary },
-  btnDanger: { borderColor: colors.closed },
-  btnText: { fontSize: font.large, fontWeight: '700', color: colors.text, textAlign: 'center' },
   stepper: { gap: 4, flex: 1 },
-  stepperLabel: { fontSize: font.small, fontWeight: '700', color: colors.textMuted },
+  stepperLabel: { ...type.footnote, fontWeight: '600', color: colors.secondaryLabel },
   stepperRow: { flexDirection: 'row', alignItems: 'center', gap: space.sm },
-  stepperValue: { fontSize: font.body, fontWeight: '700', color: colors.text, minWidth: 82, textAlign: 'center' },
-  stepBtn: { width: MIN_TAP, height: MIN_TAP, borderRadius: MIN_TAP / 2, backgroundColor: colors.chip, borderWidth: 2, borderColor: colors.border, alignItems: 'center', justifyContent: 'center' },
-  stepBtnText: { fontSize: 28, fontWeight: '700', color: colors.text, lineHeight: 32 },
-  notice: { borderRadius: radius.card, padding: space.lg, gap: space.xs },
-  noticeText: { fontSize: font.body, color: colors.text },
+  stepperValue: { ...type.body, fontWeight: '600', color: colors.label, minWidth: 82, textAlign: 'center' },
+  stepBtn: { width: MIN_TAP, height: MIN_TAP, borderRadius: MIN_TAP / 2, backgroundColor: colors.tintFill, alignItems: 'center', justifyContent: 'center' },
+  notice: { borderRadius: radius.group, borderCurve: 'continuous', padding: space.lg, gap: space.xs },
+  noticeText: { ...type.callout, color: colors.label },
 });

@@ -2,9 +2,9 @@ import { router } from 'expo-router';
 import { useState } from 'react';
 import { Alert, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 
-import { validateEmail, validatePassword } from '../../domain/validation';
-import { useAuth } from '../../state/AuthContext';
-import { colors, font, MIN_TAP, radius, space } from '../../theme';
+import { validateEmail, validatePassword } from '../../../domain/validation';
+import { useAuth } from '../../../state/AuthContext';
+import { colors, font, MIN_TAP, radius, space } from '../../../theme';
 
 const ROLE_LABELS = { user: 'Customer', farmer: 'Farmer', admin: 'Administrator' } as const;
 

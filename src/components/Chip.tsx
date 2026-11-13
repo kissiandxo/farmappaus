@@ -1,6 +1,8 @@
-import { Pressable, StyleSheet, Text } from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 
-import { colors, font, MIN_TAP, radius, space } from '../theme';
+import { colors, radius, space, type } from '../theme';
+import { Icon } from './ui/Icon';
+import { selection } from './ui/haptics';
 
 interface ChipProps {
   label: string;
@@ -8,35 +10,40 @@ interface ChipProps {
   onPress: () => void;
 }
 
+/** Capsule toggle. Selected = tint fill, onTint text and a checkmark; unselected = quiet `fill`. */
 export function Chip({ label, selected, onPress }: ChipProps) {
   return (
     <Pressable
-      onPress={onPress}
+      onPress={() => {
+        selection();
+        onPress();
+      }}
       accessibilityRole="button"
       accessibilityLabel={label}
       accessibilityState={{ selected }}
+      hitSlop={4}
       style={({ pressed }) => [styles.chip, selected && styles.selected, pressed && styles.pressed]}
     >
-      <Text style={[styles.label, selected && styles.labelSelected]}>
-        {selected ? '✓ ' : ''}
-        {label}
-      </Text>
+      <View style={styles.content}>
+        {selected ? <Icon name="checkmark" size={13} weight="bold" color={colors.onTint} /> : null}
+        <Text style={[type.subheadline, styles.label, selected && styles.labelSelected]}>{label}</Text>
+      </View>
     </Pressable>
   );
 }
 
 const styles = StyleSheet.create({
   chip: {
-    minHeight: MIN_TAP,
-    paddingHorizontal: space.lg,
+    minHeight: 36,
+    paddingHorizontal: 14,
     justifyContent: 'center',
-    borderRadius: radius.chip,
-    backgroundColor: colors.chip,
-    borderWidth: 2,
-    borderColor: colors.border,
+    borderRadius: radius.capsule,
+    borderCurve: 'continuous',
+    backgroundColor: colors.fill,
   },
-  selected: { backgroundColor: colors.primary, borderColor: colors.primary },
-  pressed: { opacity: 0.7 },
-  label: { fontSize: font.body, color: colors.text, fontWeight: '600' },
-  labelSelected: { color: colors.onPrimary },
+  selected: { backgroundColor: colors.tint },
+  pressed: { opacity: 0.6 },
+  content: { flexDirection: 'row', alignItems: 'center', gap: space.xs + 2 },
+  label: { color: colors.label, fontWeight: '500' },
+  labelSelected: { color: colors.onTint },
 });

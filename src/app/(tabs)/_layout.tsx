@@ -1,41 +1,31 @@
-import { Tabs } from 'expo-router';
-import { Text, type ColorValue } from 'react-native';
+import { NativeTabs } from 'expo-router/native-tabs';
 
 import { colors } from '../../theme';
 
-const icon = (glyph: string) =>
-  function TabIcon({ color }: { color: ColorValue }) {
-    return (
-      <Text style={{ fontSize: 22, color }} accessibilityElementsHidden importantForAccessibility="no">
-        {glyph}
-      </Text>
-    );
-  };
-
+/**
+ * Native iOS tab bar (UITabBarController; Liquid Glass on iOS 26). Each trigger points at a route
+ * group that has its own Stack, so every tab keeps a large-title navigation bar.
+ * On web/Android expo-router renders its own tab UI for these same triggers.
+ */
 export default function TabsLayout() {
   return (
-    <Tabs
-      screenOptions={{
-        headerStyle: { backgroundColor: colors.primary },
-        headerTintColor: colors.onPrimary,
-        headerTitleStyle: { fontSize: 22, fontWeight: '700' },
-        headerTitle: 'Farm Direct',
-        tabBarActiveTintColor: colors.primary,
-        tabBarInactiveTintColor: colors.textMuted,
-        tabBarLabelStyle: { fontSize: 15, fontWeight: '700' },
-        tabBarItemStyle: { paddingVertical: 4 },
-        tabBarStyle: {
-          backgroundColor: colors.surface,
-          borderTopColor: colors.border,
-          minHeight: 72, // room for a large label plus icon
-        },
-        sceneStyle: { backgroundColor: colors.background },
-      }}
-    >
-      <Tabs.Screen name="index" options={{ title: 'List', tabBarIcon: icon('☰') }} />
-      <Tabs.Screen name="map" options={{ title: 'Map', tabBarIcon: icon('⌖') }} />
-      <Tabs.Screen name="saved" options={{ title: 'Saved', tabBarIcon: icon('♥') }} />
-      <Tabs.Screen name="account" options={{ title: 'Account', tabBarIcon: icon('☺') }} />
-    </Tabs>
+    <NativeTabs tintColor={colors.tint}>
+      <NativeTabs.Trigger name="(explore)">
+        <NativeTabs.Trigger.Label>Explore</NativeTabs.Trigger.Label>
+        <NativeTabs.Trigger.Icon sf={{ default: 'leaf', selected: 'leaf.fill' }} />
+      </NativeTabs.Trigger>
+      <NativeTabs.Trigger name="(map)">
+        <NativeTabs.Trigger.Label>Map</NativeTabs.Trigger.Label>
+        <NativeTabs.Trigger.Icon sf={{ default: 'map', selected: 'map.fill' }} />
+      </NativeTabs.Trigger>
+      <NativeTabs.Trigger name="(saved)">
+        <NativeTabs.Trigger.Label>Saved</NativeTabs.Trigger.Label>
+        <NativeTabs.Trigger.Icon sf={{ default: 'heart', selected: 'heart.fill' }} />
+      </NativeTabs.Trigger>
+      <NativeTabs.Trigger name="(account)">
+        <NativeTabs.Trigger.Label>Account</NativeTabs.Trigger.Label>
+        <NativeTabs.Trigger.Icon sf={{ default: 'person.crop.circle', selected: 'person.crop.circle.fill' }} />
+      </NativeTabs.Trigger>
+    </NativeTabs>
   );
 }

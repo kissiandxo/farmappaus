@@ -1,46 +1,94 @@
-import { colors } from '../theme';
+import { darkPalette, lightPalette, MIN_TAP, type, type Palette } from '../theme';
 
-/** WCAG 2.x relative luminance and contrast ratio. */
-function luminance(hex: string): number {
-  const channels = [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16) / 255);
-  const [r, g, b] = channels.map((c) => (c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4));
-  return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+type RGB = [number, number, number];
+
+function parse(hex: string): { rgb: RGB; a: number } {
+  const n = (i: number) => parseInt(hex.slice(i, i + 2), 16);
+  return { rgb: [n(1), n(3), n(5)], a: hex.length === 9 ? n(7) / 255 : 1 };
 }
-function contrast(a: string, b: string): number {
-  const [hi, lo] = [luminance(a), luminance(b)].sort((x, y) => y - x);
+
+/** Flatten a (possibly translucent) colour over an opaque backdrop. */
+function over(fg: string, bg: string): RGB {
+  const f = parse(fg);
+  const b = parse(bg).rgb;
+  return f.rgb.map((c, i) => c * f.a + b[i] * (1 - f.a)) as RGB;
+}
+
+/** WCAG 2.x relative luminance. */
+function luminance([r, g, b]: RGB): number {
+  const [R, G, B] = [r, g, b].map((v) => {
+    const c = v / 255;
+    return c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4;
+  });
+  return 0.2126 * R + 0.7152 * G + 0.0722 * B;
+}
+
+/** Contrast of `fg` drawn on `bg`, where `base` is what `bg` itself sits on (for translucent fills). */
+function contrast(fg: string, bg: string, base: string): number {
+  const bgFlat = over(bg, base);
+  const bgHex = '#' + bgFlat.map((c) => Math.round(c).toString(16).padStart(2, '0')).join('');
+  const fgFlat = over(fg, bgHex);
+  const [hi, lo] = [luminance(fgFlat), luminance(bgFlat)].sort((x, y) => y - x);
   return (hi + 0.05) / (lo + 0.05);
 }
 
-// Text pairs actually used in the app. 4.5:1 is WCAG AA for normal text; we also aim for 7:1 (AAA)
-// on the main reading text, because many of our users are older.
-const AA_PAIRS: [string, string, string][] = [
-  ['text on background', colors.text, colors.background],
-  ['text on surface', colors.text, colors.surface],
-  ['text on chip', colors.text, colors.chip],
-  ['muted text on background', colors.textMuted, colors.background],
-  ['muted text on surface', colors.textMuted, colors.surface],
-  ['muted text on chip', colors.textMuted, colors.chip],
-  ['white on primary green', colors.onPrimary, colors.primary],
-  ['white on accent terracotta', colors.onPrimary, colors.accent],
-  ['accent on surface (tags, links)', colors.accent, colors.surface],
-  ['accent on background', colors.accent, colors.background],
-  ['primary on surface (distance)', colors.primary, colors.surface],
-  ['primary on background', colors.primary, colors.background],
-  ['open status on surface', colors.open, colors.surface],
-  ['closed status on surface', colors.closed, colors.surface],
-  ['closed status on background', colors.closed, colors.background],
-  ['sample banner text', colors.sampleText, colors.sampleBackground],
-  ['text on error notice', colors.text, '#F6D9CF'],
-  ['text on ok notice', colors.text, '#DDEBD2'],
+type Pair = [name: string, fg: keyof Palette, bg: keyof Palette, base: keyof Palette];
+
+// Text/background pairs actually used. 4.5:1 is WCAG AA for normal text.
+const TEXT_PAIRS: Pair[] = [
+  ['label on background', 'label', 'background', 'background'],
+  ['label on groupedBackground', 'label', 'groupedBackground', 'groupedBackground'],
+  ['label on cell', 'label', 'cell', 'cell'],
+  ['secondaryLabel on background', 'secondaryLabel', 'background', 'background'],
+  ['secondaryLabel on groupedBackground', 'secondaryLabel', 'groupedBackground', 'groupedBackground'],
+  ['secondaryLabel on cell', 'secondaryLabel', 'cell', 'cell'],
+  ['secondaryLabel on fill (capsules)', 'secondaryLabel', 'fill', 'cell'],
+  ['label on fill (unselected chip)', 'label', 'fill', 'groupedBackground'],
+  ['tint on background', 'tint', 'background', 'background'],
+  ['tint on groupedBackground', 'tint', 'groupedBackground', 'groupedBackground'],
+  ['tint on cell', 'tint', 'cell', 'cell'],
+  ['tint on tintFill (tinted button)', 'tint', 'tintFill', 'cell'],
+  ['onTint on tint (filled button)', 'onTint', 'tint', 'background'],
+  ['green on cell (open)', 'green', 'cell', 'cell'],
+  ['green on greenFill', 'green', 'greenFill', 'cell'],
+  ['orange on cell', 'orange', 'cell', 'cell'],
+  ['orange on orangeFill (sample data)', 'orange', 'orangeFill', 'cell'],
+  ['red on cell (destructive)', 'red', 'cell', 'cell'],
+  ['red on groupedBackground', 'red', 'groupedBackground', 'groupedBackground'],
+  ['red on redFill', 'red', 'redFill', 'cell'],
 ];
 
-describe('colour contrast', () => {
-  it.each(AA_PAIRS)('%s meets WCAG AA (4.5:1)', (_name, fg, bg) => {
-    expect(contrast(fg, bg)).toBeGreaterThanOrEqual(4.5);
+describe.each([
+  ['light', lightPalette],
+  ['dark', darkPalette],
+] as const)('colour contrast (%s)', (_mode, palette) => {
+  it.each(TEXT_PAIRS)('%s meets WCAG AA (4.5:1)', (_name, fg, bg, base) => {
+    expect(contrast(palette[fg], palette[bg], palette[base])).toBeGreaterThanOrEqual(4.5);
   });
 
   it('main reading text meets AAA (7:1)', () => {
-    expect(contrast(colors.text, colors.background)).toBeGreaterThanOrEqual(7);
-    expect(contrast(colors.text, colors.surface)).toBeGreaterThanOrEqual(7);
+    expect(contrast(palette.label, palette.background, palette.background)).toBeGreaterThanOrEqual(7);
+    expect(contrast(palette.label, palette.cell, palette.cell)).toBeGreaterThanOrEqual(7);
+  });
+
+  it('every palette key is a hex colour', () => {
+    for (const v of Object.values(palette)) expect(v).toMatch(/^#[0-9A-Fa-f]{6}([0-9A-Fa-f]{2})?$/);
+  });
+});
+
+describe('palettes', () => {
+  it('have identical keys', () => {
+    expect(Object.keys(darkPalette).sort()).toEqual(Object.keys(lightPalette).sort());
+  });
+});
+
+describe('scale', () => {
+  it('uses Apple text style sizes', () => {
+    expect(type.largeTitle).toMatchObject({ fontSize: 34, lineHeight: 41 });
+    expect(type.body).toMatchObject({ fontSize: 17, lineHeight: 22 });
+    expect(type.caption).toMatchObject({ fontSize: 12, lineHeight: 16 });
+  });
+  it('keeps the 44 pt minimum tap target', () => {
+    expect(MIN_TAP).toBe(44);
   });
 });

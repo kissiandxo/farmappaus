@@ -2,11 +2,11 @@ import { router } from 'expo-router';
 import { useMemo } from 'react';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
 
-import { FarmCard } from '../../components/FarmCard';
-import { DEFAULT_FILTERS, searchFarms } from '../../domain/filters';
-import { useFavourites } from '../../state/FavouritesContext';
-import { useSearch } from '../../state/SearchContext';
-import { colors, font, space } from '../../theme';
+import { FarmCard } from '../../../components/FarmCard';
+import { DEFAULT_FILTERS, searchFarms } from '../../../domain/filters';
+import { useFavourites } from '../../../state/FavouritesContext';
+import { useSearch } from '../../../state/SearchContext';
+import { colors, font, space } from '../../../theme';
 
 export default function SavedScreen() {
   const { farms, location } = useSearch();

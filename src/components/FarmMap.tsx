@@ -6,7 +6,7 @@ import type { FarmResult } from '../domain/filters';
 import { boundingRegion } from '../domain/geo';
 import { VENUE_LABELS } from '../domain/types';
 import type { UserLocation } from '../state/SearchContext';
-import { colors } from '../theme';
+import { lightPalette } from '../theme';
 
 interface FarmMapProps {
   results: FarmResult[];
@@ -50,7 +50,7 @@ export default function FarmMap({ results, location }: FarmMapProps) {
           coordinate={{ latitude: farm.lat, longitude: farm.lng }}
           title={farm.isSample ? `SAMPLE: ${farm.name}` : farm.name}
           description={`${VENUE_LABELS[farm.type]} · ${status.label}`}
-          pinColor={status.isOpen ? colors.open : colors.accent}
+          pinColor={status.isOpen ? lightPalette.green : lightPalette.orange}
         />
       ))}
     </MapView>
