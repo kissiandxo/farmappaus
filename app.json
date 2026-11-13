@@ -8,7 +8,7 @@
     "scheme": "farmdirect",
     "userInterfaceStyle": "light",
     "ios": {
-      "bundleIdentifier": "au.example.farmdirect",
+      "bundleIdentifier": "au.farmdirect.app",
       "supportsTablet": false,
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false

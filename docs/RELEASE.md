@@ -12,9 +12,15 @@ Everything below can be done from an iPhone browser plus the Expo and Apple webs
 
 > The workflow files have **not** been checked by Expo's validator yet, because that needs your Expo project to exist. Step 2 fixes that.
 
-## 1. Choose the permanent bundle ID (do this first)
+## 1. Register the app with Apple (about 10 minutes, in Safari on your iPhone)
 
-`app.json` currently has the placeholder `ios.bundleIdentifier` = `au.example.farmdirect`. Pick your own reverse-domain ID (for example `au.com.yourname.farmdirect`), change it in `app.json`, and use the **same** ID in App Store Connect. **It can never be changed after the app is created.** Also check "Farm Direct" is available as an app name when you create the record.
+The bundle ID is **`au.farmdirect.app`** (already set in `app.json`). Apple doesn't check that you own the domain, but IDs are unique worldwide. If Apple says it is taken, use `au.farmdirect.localfood` instead, tell Claude, and it will change `app.json` to match. **The ID can never be changed once the app exists in App Store Connect.**
+
+App Store Connect's website can't take a build upload (builds only arrive from Xcode, Apple's Transporter app, or an API, which is what Expo uses), so there is nothing to upload by hand. This step creates the two things Apple needs *before* a build can arrive:
+
+1. **Register the ID.** Go to [developer.apple.com/account](https://developer.apple.com/account) → Certificates, Identifiers & Profiles → Identifiers → **+** → App IDs → App. Description: `Farm Direct`. Bundle ID: choose *Explicit* and enter `au.farmdirect.app`. Leave the capabilities as they are, then Register.
+2. **Create the app record.** Go to [appstoreconnect.apple.com](https://appstoreconnect.apple.com) → Apps → **+** → New App. Platform iOS. Name `Farm Direct` (if taken, add a few words, for example `Farm Direct Australia`; the name on the home screen comes from the app itself). Primary language English (Australia). Bundle ID: pick `au.farmdirect.app` from the list (it only appears after step 1). SKU: `farmdirect-ios`. Full access.
+3. **Create the signing key** (this is step 3 below; do it now while you're signed in): App Store Connect → Users and Access → Integrations → App Store Connect API → **+** → name `Expo`, access **App Manager**. Note the *Key ID* and the *Issuer ID* at the top of the page, and **download the `.p8` file right away** (Apple only lets you download it once; it goes to the Files app).
 
 ## 2. Link the project to Expo
 
@@ -28,8 +34,8 @@ Everything below can be done from an iPhone browser plus the Expo and Apple webs
 
 Apple needs a distribution certificate and provisioning profile. Without a Mac, the easiest way is an **App Store Connect API key**:
 
-1. App Store Connect → Users and Access → Integrations → App Store Connect API → generate a key with the **App Manager** role. Download the `.p8` file (you can only download it once).
-2. On expo.dev → your project → Credentials → iOS, add the key (key ID, issuer ID and the file).
+1. You created the key in step 1.3 (App Manager role). If you didn't, do it now and download the `.p8` file (you can only download it once).
+2. On expo.dev → your project → Credentials → iOS → App Store Connect API key, add it: key ID, issuer ID, and upload the `.p8` from your Files app. Never paste the contents of the `.p8` into a chat or an email.
 3. Expo then creates and renews the certificate and profile automatically on the first build.
 
 ## 4. Give the app its Supabase keys
