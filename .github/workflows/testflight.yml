@@ -7,6 +7,12 @@ on:
   push:
     branches: ["claude/**", "main"]
 
+# One build at a time: each run needs Apple's single spare distribution-certificate slot.
+# Never cancel a running build, or its temporary certificate would be left behind.
+concurrency:
+  group: testflight
+  cancel-in-progress: false
+
 jobs:
   ios:
     if: github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '[testflight]')
