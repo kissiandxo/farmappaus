@@ -10,6 +10,8 @@ The app ships with clearly labelled **sample** farms and no real ones. A map wit
 4. **Be careful with contact details.** Many farmers are sole traders, so phone numbers and names can be personal information under the Privacy Act. Spam Act 2003: no unsolicited marketing emails or SMS without consent. Phone, post, in-person visits and replies to people who contacted us are fine.
 5. **Food-safety first.** No product that needs a licence (milk, eggs, meat) goes live without licence details. See `docs/COMPLIANCE.md`.
 
+> **First research pass done:** eight real farmers’ markets across seven states and territories are ready to load as suggestions. See `docs/research/candidate-markets.md`. Individual farms are still to do.
+
 ## Step 1: pick a pilot region (week 0)
 
 Start in one or two regions so the map feels full, then expand. Choose where the density is highest: lots of farm gates and weekly farmers' markets within an hour of a town of 20,000+ people. Candidate *types* of place: peri-urban food belts near a capital city, and regional tourist food trails (for example the Hawkesbury, Southern Highlands, Yarra Valley, Macedon Ranges, Adelaide Hills, Scenic Rim, Sunshine Coast hinterland, Margaret River, Huon Valley and Tamar Valley areas). Pick the one where you already know people.

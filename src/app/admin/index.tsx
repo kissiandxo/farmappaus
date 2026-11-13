@@ -12,7 +12,7 @@ import {
 } from '../../data/mutations';
 import { formatDateAu } from '../../domain/format';
 import { friendlyDbError } from '../../domain/listing';
-import { PRODUCT_LABELS, STATE_NAMES } from '../../domain/types';
+import { PRODUCT_LABELS, STATE_NAMES, VENUE_LABELS } from '../../domain/types';
 import { useAuth } from '../../state/AuthContext';
 import { colors, font, space } from '../../theme';
 
@@ -104,7 +104,7 @@ export default function AdminQueueScreen() {
             <View key={s.id} style={styles.item}>
               <Text style={styles.itemTitle}>{s.name}</Text>
               <Text style={styles.body}>
-                {s.locality}, {STATE_NAMES[s.state]} {s.postcode}
+                {VENUE_LABELS[s.venue_type] ?? 'Farm'} · {s.locality}, {STATE_NAMES[s.state]} {s.postcode}
               </Text>
               {s.products.length > 0 && <Text style={styles.body}>{s.products.map((p) => PRODUCT_LABELS[p]).join(' · ')}</Text>}
               {s.notes ? <Text style={styles.body}>“{s.notes}”</Text> : null}

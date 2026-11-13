@@ -7,13 +7,20 @@ import { PlaceSearch } from '../components/PlaceSearch';
 import { submitSuggestion } from '../data/mutations';
 import { friendlyDbError } from '../domain/listing';
 import { formatPlace, type Place } from '../domain/places';
-import { PRODUCT_CATEGORIES, PRODUCT_LABELS, type ProductCategory } from '../domain/types';
+import {
+  PRODUCT_CATEGORIES,
+  PRODUCT_LABELS,
+  VENUE_LABELS,
+  type ProductCategory,
+  type VenueType,
+} from '../domain/types';
 import { useAuth } from '../state/AuthContext';
 import { colors, font, space } from '../theme';
 
 export default function SuggestScreen() {
   const { userId } = useAuth();
   const [name, setName] = useState('');
+  const [venueType, setVenueType] = useState<VenueType>('farm');
   const [place, setPlace] = useState<Place | null>(null);
   const [products, setProducts] = useState<ProductCategory[]>([]);
   const [notes, setNotes] = useState('');
@@ -52,6 +59,7 @@ export default function SuggestScreen() {
       await submitSuggestion({
         userId,
         name,
+        venueType,
         state: place.state,
         locality: place.locality,
         postcode: place.postcode,
@@ -76,6 +84,12 @@ export default function SuggestScreen() {
       </Text>
       <Card>
         <Field label="Name of the place" value={name} onChangeText={setName} maxLength={100} />
+        <Text style={styles.label}>What kind of place is it?</Text>
+        <ChipGroup
+          options={(Object.keys(VENUE_LABELS) as VenueType[]).map((value) => ({ value, label: VENUE_LABELS[value] }))}
+          value={venueType}
+          onChange={setVenueType}
+        />
         <PlaceSearch label="Suburb or postcode" chosen={place ? formatPlace(place) : ''} onSelect={setPlace} />
         <Text style={styles.label}>What do they sell? (optional)</Text>
         <ChipGroup

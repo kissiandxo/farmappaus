@@ -95,6 +95,7 @@ create table public.suggestions (
   id uuid primary key default gen_random_uuid(),
   user_id uuid references auth.users (id) on delete set null,
   name text not null check (char_length(name) between 2 and 100),
+  venue_type text not null default 'farm' check (venue_type in ('farm', 'farm_gate_stall', 'farm_shop', 'farmers_market')),
   state text not null check (state in ('NSW', 'VIC', 'QLD', 'SA', 'WA', 'TAS', 'NT', 'ACT')),
   locality text not null,
   postcode text not null check (postcode ~ '^\d{4}$'),
@@ -403,7 +404,7 @@ begin
   select * into s from public.suggestions where id = p_id and status = 'pending';
   if s.id is null then raise exception 'Suggestion not found or already handled'; end if;
   insert into public.farms (owner_id, name, type, state, locality, postcode, lat, lng, story, status)
-  values (null, s.name, 'farm', s.state, s.locality, s.postcode, s.lat, s.lng, s.notes, 'pending')
+  values (null, s.name, s.venue_type, s.state, s.locality, s.postcode, s.lat, s.lng, s.notes, 'pending')
   returning id into fid;
   update public.suggestions set status = 'converted' where id = p_id;
   return fid;

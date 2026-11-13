@@ -1,6 +1,6 @@
 import { ImageManipulator, SaveFormat } from 'expo-image-manipulator';
 
-import type { Farm, ProductCategory, StateCode } from '../domain/types';
+import type { Farm, ProductCategory, StateCode, VenueType } from '../domain/types';
 import { supabase } from '../lib/supabase';
 import {
   farmToRow,
@@ -137,6 +137,7 @@ export async function submitReport(input: { farmId: string; userId: string; reas
 export interface SuggestionInput {
   userId: string;
   name: string;
+  venueType: VenueType;
   state: StateCode;
   locality: string;
   postcode: string;
@@ -151,6 +152,7 @@ export async function submitSuggestion(input: SuggestionInput) {
     await client().from('suggestions').insert({
       user_id: input.userId,
       name: input.name.trim(),
+      venue_type: input.venueType,
       state: input.state,
       locality: input.locality,
       postcode: input.postcode,
@@ -176,6 +178,7 @@ export interface ClaimItem {
 export interface SuggestionItem {
   id: string;
   name: string;
+  venue_type: VenueType;
   state: StateCode;
   locality: string;
   postcode: string;

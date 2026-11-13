@@ -38,6 +38,10 @@ In **Project Settings → API** copy the *Project URL* and the *anon public* key
 
 Only an administrator can approve listings and claims, and only this SQL (run by you in the Supabase dashboard) can make an administrator.
 
+## 5. Load the researched leads (optional)
+
+`supabase/seed/candidate-suggestions.sql` adds 8 real farmers’ markets (one or two per state and territory, except Victoria) as **pending suggestions**, not live listings. Run it in the SQL editor after the migrations. They appear in the Review queue under *Suggested places*; check each with its operator before converting it. How they were found, what is uncertain, and what was left out: `docs/research/candidate-markets.md`. Running it twice does nothing.
+
 ## How reviews work
 
 | Who | What they can do |

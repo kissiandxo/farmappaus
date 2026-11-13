@@ -113,9 +113,9 @@ export default function FarmProfileScreen() {
 
       {showReview && <ReviewPanel farm={farm} onChanged={reload} />}
 
-      {isOwner && (
+      {(isOwner || role === 'admin') && !farm.isSample && !!farm.id && (
         <View style={styles.actions}>
-          <ActionButton label="Edit my listing" onPress={() => router.push(`/farmer/${farm.id}`)} />
+          <ActionButton label={isOwner ? 'Edit my listing' : 'Edit this listing (reviewer)'} onPress={() => router.push(`/farmer/${farm.id}`)} />
           {farm.products.length > 0 && <ActionButton label="Update stock and prices" onPress={() => router.push(`/farmer/stock/${farm.id}`)} />}
         </View>
       )}

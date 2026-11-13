@@ -236,8 +236,8 @@ await test('favourites are private to each user', async () => {
   assert.equal((await as(other, () => rows('select 1 from public.favourites'))).length, 0);
   await rejects(() => as(other, () => db.query('insert into public.favourites (user_id, farm_id) values ($1, $2)', [visitor, liveFarm])));
 });
-const sug = `insert into public.suggestions (user_id, name, state, locality, postcode, lat, lng, notes)
-  values ($1, $2, 'VIC', 'Daylesford', '3460', -37.35, 144.15, 'Great honey') returning id`;
+const sug = `insert into public.suggestions (user_id, name, venue_type, state, locality, postcode, lat, lng, notes)
+  values ($1, $2, 'farmers_market', 'VIC', 'Daylesford', '3460', -37.35, 144.15, 'Great honey') returning id`;
 await test('suggestions need sign-in, are limited to 5 a day, and convert to unowned pending listings', async () => {
   await rejects(() => as(null, () => db.query(sug, [null, 'Anon Farm'])));
   const id = (await as(visitor, () => one(sug, [visitor, 'Honey Place']))).id;
@@ -245,8 +245,20 @@ await test('suggestions need sign-in, are limited to 5 a day, and convert to uno
   for (let i = 0; i < 4; i++) await as(visitor, () => one(sug, [visitor, `Extra ${i}`]));
   await rejects(() => as(visitor, () => one(sug, [visitor, 'One too many'])), /limit of 5/);
   const farmId = (await as(admin, () => one('select public.convert_suggestion($1) id', [id]))).id;
-  assert.deepEqual(await one('select status, owner_id from public.farms where id = $1', [farmId]), { status: 'pending', owner_id: null });
+  assert.deepEqual(await one('select status, owner_id, type from public.farms where id = $1', [farmId]), { status: 'pending', owner_id: null, type: 'farmers_market' });
   assert.equal((await one('select status from public.suggestions where id = $1', [id])).status, 'converted');
+});
+await test('the researched candidate seed loads as pending suggestions, only once, and never as live listings', async () => {
+  const seed = readFileSync(new URL('../supabase/seed/candidate-suggestions.sql', import.meta.url), 'utf8');
+  const before = (await one("select count(*)::int n from public.farms where status = 'live'")).n;
+  await runScript(seed);
+  await runScript(seed); // running it twice must not duplicate anything
+  const loaded = await rows("select state, venue_type, status, user_id, left(notes, 20) n from public.suggestions where notes like 'UNVERIFIED lead%' order by state, name");
+  assert.equal(loaded.length, 8);
+  assert.ok(loaded.every((r) => r.status === 'pending' && r.user_id === null && r.venue_type === 'farmers_market'));
+  assert.deepEqual([...new Set(loaded.map((r) => r.state))].sort(), ['ACT', 'NSW', 'NT', 'QLD', 'SA', 'TAS', 'WA']);
+  assert.equal((await one("select count(*)::int n from public.farms where status = 'live'")).n, before);
+  assert.equal((await as(visitor, () => rows("select 1 from public.suggestions where notes like 'UNVERIFIED lead%'"))).length, 0);
 });
 await test('a claim on an unowned live listing makes the claimant its owner once approved', async () => {
   const unowned = await addFarm(null, 'Unowned Farm', 'live');
