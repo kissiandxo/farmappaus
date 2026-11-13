@@ -16,7 +16,13 @@ platform :ios do
     )
 
     # Distribution certificate + App Store provisioning profile, via the API key.
-    get_certificates(api_key: api_key)
+    # Put the certificate in setup_ci's temporary keychain (empty password). Without this it
+    # goes to the login keychain, whose password CI doesn't know, and signing can't find it.
+    get_certificates(
+      api_key: api_key,
+      keychain_path: File.expand_path("~/Library/Keychains/fastlane_tmp_keychain-db"),
+      keychain_password: ""
+    )
     get_provisioning_profile(api_key: api_key, app_identifier: "au.farmdirect.app", force: true)
     profile = lane_context[SharedValues::SIGH_NAME]
 
