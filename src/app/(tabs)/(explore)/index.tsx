@@ -62,5 +62,5 @@ const styles = StyleSheet.create({
   list: { paddingHorizontal: space.lg, paddingBottom: space.xl * 2 },
   header: { gap: space.md, paddingTop: space.xs, paddingBottom: space.md },
   gap: { height: space.md },
-  empty: { flex: 0, paddingVertical: space.xxl },
+  empty: { flexGrow: 0, flexShrink: 0, flexBasis: 'auto', paddingVertical: space.xxl },
 });

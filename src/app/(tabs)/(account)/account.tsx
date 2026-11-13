@@ -191,7 +191,7 @@ export default function AccountScreen() {
 
 const styles = StyleSheet.create({
   content: { paddingBottom: space.xxl },
-  emptyState: { flex: 0, paddingTop: space.xxl, paddingBottom: space.xl },
+  emptyState: { flexGrow: 0, flexShrink: 0, flexBasis: 'auto', paddingVertical: space.xxl },
   loading: { color: colors.secondaryLabel, padding: space.lg },
   pad: { paddingHorizontal: space.lg, marginBottom: space.lg },
   header: { alignItems: 'center', gap: space.sm, paddingHorizontal: space.xl, paddingTop: space.xl, paddingBottom: space.lg },

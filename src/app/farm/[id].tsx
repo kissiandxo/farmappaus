@@ -116,8 +116,9 @@ export default function FarmProfileScreen() {
   const meta = `${VENUE_LABELS[farm.type]} · ${farm.locality}, ${STATE_NAMES[farm.state]} ${farm.postcode}`;
 
   return (
-    <ScrollView contentInsetAdjustmentBehavior="automatic" contentContainerStyle={styles.content}>
-      <Stack.Screen options={{ title: farm.name }} />
+    <ScrollView contentInsetAdjustmentBehavior="never" contentContainerStyle={styles.content}>
+      {/* Like an Apple Maps place card: the photo runs to the top edge under a clear bar; the name sits below it. */}
+      <Stack.Screen options={{ title: '', headerTransparent: true }} />
 
       {photos.length > 0 ? (
         <ScrollView horizontal pagingEnabled showsHorizontalScrollIndicator={false} style={{ height: HERO_HEIGHT }}>
