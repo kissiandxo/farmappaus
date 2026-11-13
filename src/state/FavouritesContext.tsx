@@ -10,6 +10,7 @@ import {
   type ReactNode,
 } from 'react';
 
+import { SCREENSHOT_MODE, SCREENSHOT_SAVED_IDS } from '../config';
 import { toggle } from '../domain/filters';
 import { supabase } from '../lib/supabase';
 import { useAuth } from './AuthContext';
@@ -34,7 +35,10 @@ export function FavouritesProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     AsyncStorage.getItem(STORAGE_KEY)
       .then((raw) => {
-        if (!raw) return;
+        if (!raw) {
+          if (SCREENSHOT_MODE) setIds([...SCREENSHOT_SAVED_IDS]);
+          return;
+        }
         const saved: unknown = JSON.parse(raw);
         if (Array.isArray(saved) && saved.every((x) => typeof x === 'string')) setIds(saved);
       })

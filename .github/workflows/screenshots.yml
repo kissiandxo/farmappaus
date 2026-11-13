@@ -1,0 +1,74 @@
+name: App Store screenshots (simulator)
+
+# Builds the app for the iPhone simulator and takes the App Store screenshots.
+# Uses only Apple's own tools (simctl). Run by hand, or push a commit whose
+# message contains [screenshots].
+on:
+  workflow_dispatch: {}
+  push:
+    branches: ["claude/**", "main"]
+
+jobs:
+  screenshots:
+    if: github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '[screenshots]')
+    runs-on: macos-26
+    timeout-minutes: 60
+    env:
+      EXPO_PUBLIC_SUPPORT_EMAIL: ${{ vars.SUPPORT_EMAIL }}
+      # Skips the first-launch welcome and pre-saves three places. Simulator build only.
+      EXPO_PUBLIC_SCREENSHOT_MODE: "1"
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use the newest Xcode on the machine
+        run: |
+          XCODE=$(ls -d /Applications/Xcode_*.app | sort -V | tail -1)
+          sudo xcode-select -s "$XCODE"
+          xcodebuild -version
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Generate the native iOS project
+        run: npx expo prebuild --platform ios --clean --no-install
+      - name: Install CocoaPods
+        run: cd ios && pod install
+      - name: Build for the simulator
+        run: |
+          xcodebuild -workspace ios/FarmDirect.xcworkspace -scheme FarmDirect -configuration Release \
+            -sdk iphonesimulator -derivedDataPath build CODE_SIGNING_ALLOWED=NO -quiet
+      - name: Boot a 6.9-inch iPhone simulator
+        run: |
+          xcrun simctl list devices available | grep -i "Pro Max" || true
+          UDID=$(xcrun simctl list devices available | grep -i "Pro Max" | tail -1 | grep -oE '[0-9A-F-]{36}')
+          echo "UDID=$UDID" >> "$GITHUB_ENV"
+          xcrun simctl boot "$UDID"
+          xcrun simctl bootstatus "$UDID" -b
+          xcrun simctl ui "$UDID" appearance light
+          xcrun simctl status_bar "$UDID" override --time "9:41" --batteryState charged --batteryLevel 100 --cellularBars 4 --wifiBars 3
+          xcrun simctl install "$UDID" build/Build/Products/Release-iphonesimulator/FarmDirect.app
+      - name: Take screenshots
+        run: |
+          mkdir -p shots
+          shot() { sleep "$2"; xcrun simctl io "$UDID" screenshot "shots/$1.png"; }
+          open_link() { xcrun simctl openurl "$UDID" "$1"; }
+          xcrun simctl launch "$UDID" au.farmdirect.app
+          shot 01-explore 25
+          open_link "farmdirect://map"
+          shot 02-map 12
+          open_link "farmdirect://farm/real-nsw-carriageworks-farmers-market"
+          shot 03-market 10
+          open_link "farmdirect://farm/real-sa-beerenberg-farm"
+          shot 04-farm-shop 10
+          open_link "farmdirect://saved"
+          shot 05-saved 10
+          xcrun simctl ui "$UDID" appearance dark
+          open_link "farmdirect://"
+          shot 06-explore-dark 10
+          sips -g pixelWidth -g pixelHeight shots/*.png
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: app-store-screenshots
+          path: shots/*.png
+          if-no-files-found: warn

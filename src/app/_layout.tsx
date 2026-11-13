@@ -18,6 +18,7 @@ import { shouldShowWelcome } from '../domain/onboarding';
 import { AuthProvider, useAuth } from '../state/AuthContext';
 import { FavouritesProvider } from '../state/FavouritesContext';
 import { SearchProvider } from '../state/SearchContext';
+import { SCREENSHOT_MODE } from '../config';
 import { colors, darkPalette, lightPalette, type Palette } from '../theme';
 
 // Keep the splash screen up until we know whether to show the welcome screen, so the tabs never flash first.
@@ -71,7 +72,7 @@ function WelcomeGate() {
   useEffect(() => {
     if (!decided || !navigationReady || handled.current) return;
     handled.current = true;
-    if (shouldShowWelcome({ loaded: true, seen: !!welcomeSeen, signedIn: !!session || !!localProfile })) {
+    if (!SCREENSHOT_MODE && shouldShowWelcome({ loaded: true, seen: !!welcomeSeen, signedIn: !!session || !!localProfile })) {
       router.push('/(auth)/welcome');
     }
     SplashScreen.hideAsync().catch(() => {});
