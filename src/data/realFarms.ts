@@ -9,7 +9,6 @@ import type {
   VenueType,
 } from '../domain/types';
 import { PRODUCT_LABELS } from '../domain/types';
-import { isLicenceControlled } from '../domain/compliance';
 import listings from './realListings.json';
 
 /**
@@ -95,10 +94,13 @@ export function toOpeningHours(hours: RealListingRecord['hours'], hoursAsStated?
   };
 }
 
-/** One product per researched category, named by its label, no price. Licence-controlled categories are left off. */
+/**
+ * One product per researched category, named by its label, no price. Licence-controlled
+ * categories (milk, eggs, meat) are included as "advertised by the place": the owner chose this so
+ * the product filters work. No licence is recorded or implied; the farm page says so.
+ */
 export function toProducts(categories: ProductCategory[]): Product[] {
   return [...new Set(categories)]
-    .filter((category) => !isLicenceControlled(category))
     .map((category) => ({ category, name: PRODUCT_LABELS[category], inStock: true }));
 }
 

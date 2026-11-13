@@ -285,7 +285,14 @@ export default function FarmProfileScreen() {
       )}
 
       {farm.products.length > 0 ? (
-        <Section header={farm.unclaimed ? 'Produce' : 'Produce and prices'} footer={farm.otherProducts}>
+        <Section
+          header={farm.unclaimed ? 'Produce' : 'Produce and prices'}
+          footer={
+            farm.unclaimed
+              ? [farm.otherProducts, 'As advertised by this place. Farm Direct has not checked food licences here.'].filter(Boolean).join('\n')
+              : farm.otherProducts
+          }
+        >
           {farm.products.map((p) => (
             <Row
               key={`${p.category}-${p.name}`}

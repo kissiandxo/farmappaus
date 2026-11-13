@@ -66,13 +66,10 @@ describe('REAL_FARMS (the researched data)', () => {
     }
   });
 
-  it('never lists a licence-controlled product', () => {
-    for (const farm of REAL_FARMS) {
-      for (const product of farm.products) {
-        expect(LICENCE_CONTROLLED_CATEGORIES).not.toContain(product.category);
-      }
-      expect(farm.licences).toEqual([]);
-    }
+  it('records no licence for any place, even when it advertises licence-controlled produce', () => {
+    for (const farm of REAL_FARMS) expect(farm.licences).toEqual([]);
+    const controlled = REAL_FARMS.flatMap((f) => f.products).filter((p) => LICENCE_CONTROLLED_CATEGORIES.includes(p.category));
+    expect(controlled.length).toBeGreaterThan(0);
   });
 
   it('is never sample data, and is unclaimed, live and unpriced', () => {
@@ -179,11 +176,9 @@ describe('toProducts', () => {
     ]);
   });
 
-  it('leaves off milk, eggs, chicken, beef, lamb and pork', () => {
-    expect(toProducts(['milk', 'eggs', 'chicken', 'beef', 'lamb', 'pork', 'fruit'])).toEqual([
-      { category: 'fruit', name: 'Fruit', inStock: true },
-    ]);
-    expect(toProducts(['milk'])).toEqual([]);
+  it('keeps milk, eggs and meat as advertised, unpriced', () => {
+    expect(toProducts(['milk', 'eggs', 'fruit']).map((p) => p.category)).toEqual(['milk', 'eggs', 'fruit']);
+    expect(toProducts(['milk'])).toEqual([{ category: 'milk', name: 'Milk', inStock: true }]);
   });
 });
 
