@@ -1,3 +1,4 @@
+import { router } from 'expo-router';
 import { useState } from 'react';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
 
@@ -20,7 +21,9 @@ export default function FarmListScreen() {
       <FlatList
         data={results}
         keyExtractor={(r) => r.farm.id}
-        renderItem={({ item }) => <FarmCard result={item} />}
+        renderItem={({ item }) => (
+          <FarmCard result={item} onPress={() => router.push(`/farm/${item.farm.id}`)} />
+        )}
         ListHeaderComponent={
           <View style={styles.headerWrap}>
             <LocationBar

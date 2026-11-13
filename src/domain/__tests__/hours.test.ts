@@ -1,5 +1,32 @@
-import { formatMinutes, localDayAndMinutes, openStatus, parseMinutes, timezoneForState } from '../hours';
+import {
+  formatMinutes,
+  hoursLines,
+  localDayAndMinutes,
+  openStatus,
+  parseMinutes,
+  timezoneForState,
+} from '../hours';
 import type { OpeningHours } from '../types';
+
+describe('hoursLines', () => {
+  it('lists Monday to Sunday with closed days', () => {
+    const lines = hoursLines({
+      kind: 'weekly',
+      days: { wed: [['09:00', '17:00']], sat: [['08:00', '12:00'], ['14:00', '16:30']] },
+    });
+    expect(lines.map((l) => l.label)).toEqual([
+      'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday',
+    ]);
+    expect(lines[0]).toMatchObject({ day: 'mon', text: 'Closed' });
+    expect(lines[2].text).toBe('9:00 am – 5:00 pm');
+    expect(lines[5].text).toBe('8:00 am – 12:00 pm, 2:00 pm – 4:30 pm');
+  });
+
+  it('summarises always-open and by-appointment listings in one row', () => {
+    expect(hoursLines({ kind: 'always' })).toEqual([{ label: 'Every day', text: 'Open any time' }]);
+    expect(hoursLines({ kind: 'appointment' })).toEqual([{ label: 'Visits', text: 'By appointment' }]);
+  });
+});
 
 const SYDNEY = 'Australia/Sydney';
 

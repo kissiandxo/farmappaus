@@ -11,6 +11,7 @@ import {
 
 import { DEFAULT_FILTERS, searchFarms, type FarmFilters, type FarmResult } from '../domain/filters';
 import { SAMPLE_FARMS } from '../data/sampleFarms';
+import type { Farm } from '../domain/types';
 
 export interface UserLocation {
   /** Shown to the user, e.g. "Toowoomba QLD 4350". */
@@ -31,6 +32,8 @@ export const DEFAULT_LOCATION: UserLocation = {
 const STORAGE_KEY = 'farmdirect.location.v1';
 
 interface SearchState {
+  /** All listings currently available (sample data until the backend is connected). */
+  farms: Farm[];
   location: UserLocation;
   setLocation: (location: UserLocation) => void;
   filters: FarmFilters;
@@ -71,14 +74,16 @@ export function SearchProvider({ children }: { children: ReactNode }) {
     AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(next)).catch(() => {});
   }, []);
 
+  const farms = SAMPLE_FARMS;
+
   const results = useMemo(
-    () => searchFarms(SAMPLE_FARMS, filters, location, new Date()),
-    [filters, location],
+    () => searchFarms(farms, filters, location, new Date()),
+    [farms, filters, location],
   );
 
   const value = useMemo(
-    () => ({ location, setLocation, filters, setFilters, results }),
-    [location, setLocation, filters, results],
+    () => ({ farms, location, setLocation, filters, setFilters, results }),
+    [farms, location, setLocation, filters, results],
   );
 
   return <SearchContext.Provider value={value}>{children}</SearchContext.Provider>;

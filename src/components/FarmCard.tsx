@@ -1,22 +1,27 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { licenceBadge } from '../domain/compliance';
+import { useFavourites } from '../state/FavouritesContext';
 import type { FarmResult } from '../domain/filters';
 import { formatDistance } from '../domain/geo';
 import { PRODUCT_LABELS, TAG_LABELS, VENUE_LABELS } from '../domain/types';
 import { colors, font, radius, space } from '../theme';
 
-export function FarmCard({ result }: { result: FarmResult }) {
+export function FarmCard({ result, onPress }: { result: FarmResult; onPress?: () => void }) {
   const { farm, distanceKm, status } = result;
+  const { isFavourite } = useFavourites();
+  const saved = isFavourite(farm.id);
   const inStock = [...new Set(farm.products.filter((p) => p.inStock).map((p) => p.category))];
   const badge = licenceBadge(farm);
   const distance = formatDistance(distanceKm);
 
   return (
-    <View
-      style={styles.card}
-      accessible
-      accessibilityLabel={`${farm.name}. ${VENUE_LABELS[farm.type]} in ${farm.locality}, ${farm.state}. ${distance} away. ${status.label}.${farm.isSample ? ' Sample listing.' : ''}`}
+    <Pressable
+      onPress={onPress}
+      accessibilityRole="button"
+      accessibilityHint="Opens details"
+      style={({ pressed }) => [styles.card, pressed && { opacity: 0.85 }]}
+      accessibilityLabel={`${farm.name}. ${VENUE_LABELS[farm.type]} in ${farm.locality}, ${farm.state}. ${distance} away. ${status.label}.${saved ? ' Saved.' : ''}${farm.isSample ? ' Sample listing.' : ''}`}
     >
       {farm.isSample && (
         <View style={styles.sample}>
@@ -48,7 +53,8 @@ export function FarmCard({ result }: { result: FarmResult }) {
           {badge === 'checked' ? '✓ Licence checked' : 'Licence declared by farmer'}
         </Text>
       )}
-    </View>
+      {saved && <Text style={styles.saved}>♥ Saved</Text>}
+    </Pressable>
   );
 }
 
@@ -78,4 +84,5 @@ const styles = StyleSheet.create({
   products: { fontSize: font.body, color: colors.text, marginTop: space.xs },
   tags: { fontSize: font.small, color: colors.accent, fontWeight: '600' },
   licence: { fontSize: font.small, color: colors.textMuted, marginTop: space.xs },
+  saved: { fontSize: font.small, color: colors.accent, fontWeight: '700' },
 });

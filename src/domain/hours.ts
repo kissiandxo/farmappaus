@@ -65,6 +65,34 @@ export function formatMinutes(total: number): string {
   return `${h12}:${m.toString().padStart(2, '0')} ${suffix}`;
 }
 
+const WEEK_ORDER: DayKey[] = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
+
+export interface HoursLine {
+  label: string;
+  text: string;
+  /** Set for weekly rows so the current day can be highlighted. */
+  day?: DayKey;
+}
+
+/** Display rows for an opening-hours table, Monday first. */
+export function hoursLines(hours: OpeningHours): HoursLine[] {
+  if (hours.kind === 'always') return [{ label: 'Every day', text: 'Open any time' }];
+  if (hours.kind === 'appointment') return [{ label: 'Visits', text: 'By appointment' }];
+  return WEEK_ORDER.map((day) => {
+    const ranges = hours.days[day] ?? [];
+    return {
+      label: DAY_LABELS[day],
+      day,
+      text:
+        ranges.length === 0
+          ? 'Closed'
+          : ranges
+              .map(([open, close]) => `${formatMinutes(parseMinutes(open))} – ${formatMinutes(parseMinutes(close))}`)
+              .join(', '),
+    };
+  });
+}
+
 export function openStatus(hours: OpeningHours, timeZone: string, now: Date): OpenStatus {
   if (hours.kind === 'always') {
     return { isOpen: true, kind: 'always', label: 'Open any time' };

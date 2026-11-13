@@ -86,6 +86,26 @@ export type OpeningHours =
 export type Fulfilment = 'pickup' | 'delivery';
 export type PaymentType = 'cash' | 'card' | 'bank_transfer' | 'honesty_box';
 
+export const FULFILMENT_LABELS: Record<Fulfilment, string> = {
+  pickup: 'Pick-up from the farm or stall',
+  delivery: 'Local delivery',
+};
+
+export const PAYMENT_LABELS: Record<PaymentType, string> = {
+  cash: 'Cash',
+  card: 'Card',
+  bank_transfer: 'Bank transfer',
+  honesty_box: 'Honesty box (cash)',
+};
+
+export const LICENCE_LABELS: Record<LicenceCategory, string> = {
+  dairy: 'Dairy',
+  eggs: 'Eggs',
+  meat: 'Meat',
+  poultry: 'Poultry',
+  other: 'Other',
+};
+
 export interface Product {
   category: ProductCategory;
   name: string;
@@ -119,6 +139,8 @@ export interface Farm {
   lat: number;
   lng: number;
   story: string;
+  /** Public image URLs (Supabase Storage). Empty/absent for sample data. */
+  photos?: string[];
   products: Product[];
   tags: FarmTag[];
   hours: OpeningHours;

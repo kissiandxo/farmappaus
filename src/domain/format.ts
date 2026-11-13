@@ -9,6 +9,16 @@ export function formatAud(cents: number): string {
   return `${sign}$${dollars}.${rest}`;
 }
 
+const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+/** "2026-11-01" -> "1 Nov 2026". Returns the input unchanged if it is not an ISO date. */
+export function formatDateAu(iso: string): string {
+  const m = iso.match(/^(\d{4})-(\d{2})-(\d{2})/);
+  if (!m) return iso;
+  const month = MONTHS[Number(m[2]) - 1];
+  return month ? `${Number(m[3])} ${month} ${m[1]}` : iso;
+}
+
 /** "$7.50 / dozen", or just the price when there is no unit. */
 export function formatPrice(cents: number, unit?: string): string {
   return unit ? `${formatAud(cents)} / ${unit}` : formatAud(cents);
