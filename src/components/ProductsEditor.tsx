@@ -4,8 +4,10 @@ import { StyleSheet, Text, View } from 'react-native';
 import { blankProduct } from '../domain/listing';
 import { PRODUCT_CATEGORIES, PRODUCT_LABELS, type Product, type ProductCategory } from '../domain/types';
 import { centsToInput, priceToCents } from '../domain/validation';
-import { colors, font, space } from '../theme';
-import { Btn, ChipGroup, Field, SwitchRow } from './FormBits';
+import { colors, space, type } from '../theme';
+import { ChipGroup, Field, SwitchRow } from './FormBits';
+import { Divided, IconButton, Pad } from './EditorBits';
+import { Button } from './ui';
 
 const CATEGORY_OPTIONS = PRODUCT_CATEGORIES.map((value) => ({ value, label: PRODUCT_LABELS[value] }));
 
@@ -34,16 +36,31 @@ function PriceField({ cents, onChange }: { cents: number | undefined; onChange: 
   );
 }
 
+/** One row block per product, with an icon-only remove button; a plain "Add a product" row at the end. */
 export function ProductsEditor({ products, onChange }: { products: Product[]; onChange: (next: Product[]) => void }) {
   const update = (index: number, patch: Partial<Product>) =>
     onChange(products.map((p, i) => (i === index ? { ...p, ...patch } : p)));
 
   return (
-    <View style={styles.wrap}>
-      {products.length === 0 && <Text style={styles.empty}>No products yet. Add what you sell.</Text>}
+    <Divided>
+      {products.length === 0 && (
+        <Pad>
+          <Text style={styles.empty}>No products yet. Add what you sell.</Text>
+        </Pad>
+      )}
       {products.map((product, index) => (
-        <View key={product.id ?? `new-${index}`} style={styles.item}>
-          <Text style={styles.itemTitle}>Product {index + 1}</Text>
+        <Pad key={product.id ?? `new-${index}`} style={styles.item}>
+          <View style={styles.itemHead}>
+            <Text style={[type.headline, styles.itemTitle]} accessibilityRole="header">
+              Product {index + 1}
+            </Text>
+            <IconButton
+              icon="minus.circle.fill"
+              label="Remove this product"
+              color={colors.red}
+              onPress={() => onChange(products.filter((_, i) => i !== index))}
+            />
+          </View>
           <ChipGroup
             options={CATEGORY_OPTIONS}
             value={product.category}
@@ -63,17 +80,23 @@ export function ProductsEditor({ products, onChange }: { products: Product[]; on
               hint="Raw (unpasteurised) milk can’t be sold for drinking in Australia, so it can’t be listed."
             />
           )}
-          <Btn label="Remove this product" kind="danger" onPress={() => onChange(products.filter((_, i) => i !== index))} />
-        </View>
+        </Pad>
       ))}
-      <Btn label="Add a product" onPress={() => onChange([...products, blankProduct()])} />
-    </View>
+      <Pad>
+        <Button
+          label="Add a product"
+          icon="plus.circle.fill"
+          variant="plain"
+          onPress={() => onChange([...products, blankProduct()])}
+        />
+      </Pad>
+    </Divided>
   );
 }
 
 const styles = StyleSheet.create({
-  wrap: { gap: space.md },
-  empty: { fontSize: font.body, color: colors.textMuted },
-  item: { gap: space.md, borderTopWidth: 1, borderTopColor: colors.border, paddingTop: space.md },
-  itemTitle: { fontSize: font.large, fontWeight: '700', color: colors.text },
+  empty: { ...type.body, color: colors.secondaryLabel },
+  item: { gap: space.md },
+  itemHead: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
+  itemTitle: { color: colors.label },
 });

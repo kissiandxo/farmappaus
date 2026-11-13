@@ -2,8 +2,10 @@ import { StyleSheet, Text, View } from 'react-native';
 
 import { copyToWeekdays, DAY_LABELS, DEFAULT_RANGE, setDayRange, WEEK_ORDER } from '../domain/hours';
 import type { OpeningHours } from '../domain/types';
-import { colors, font, space } from '../theme';
-import { Btn, ChipGroup, Field, SwitchRow, TimeStepper } from './FormBits';
+import { colors, space, type } from '../theme';
+import { ChipGroup, Field, SwitchRow, TimeStepper } from './FormBits';
+import { Divided, Pad } from './EditorBits';
+import { Button } from './ui';
 
 type Mode = OpeningHours['kind'];
 
@@ -13,6 +15,7 @@ const MODES: { value: Mode; label: string }[] = [
   { value: 'appointment', label: 'By appointment' },
 ];
 
+/** Rows inside a Section: mode chips, one switch row per day (times revealed when open), then the note. */
 export function HoursEditor({ hours, onChange }: { hours: OpeningHours; onChange: (next: OpeningHours) => void }) {
   const note = hours.note ?? '';
   const setMode = (kind: Mode) => {
@@ -21,17 +24,17 @@ export function HoursEditor({ hours, onChange }: { hours: OpeningHours; onChange
   };
 
   return (
-    <View style={styles.wrap}>
-      <ChipGroup options={MODES} value={hours.kind} onChange={setMode} />
-      {hours.kind === 'always' && (
-        <Text style={styles.hint}>Good for an honesty-box stall that is always stocked.</Text>
-      )}
+    <Divided>
+      <Pad>
+        <ChipGroup options={MODES} value={hours.kind} onChange={setMode} />
+        {hours.kind === 'always' && <Text style={styles.hint}>Good for an honesty-box stall that is always stocked.</Text>}
+      </Pad>
 
       {hours.kind === 'weekly' &&
         WEEK_ORDER.map((day) => {
           const range = hours.days[day]?.[0];
           return (
-            <View key={day} style={styles.day}>
+            <Pad key={day} style={styles.day}>
               <SwitchRow
                 label={DAY_LABELS[day]}
                 value={!!range}
@@ -52,29 +55,39 @@ export function HoursEditor({ hours, onChange }: { hours: OpeningHours; onChange
                   />
                 </View>
               )}
-            </View>
+            </Pad>
           );
         })}
 
       {hours.kind === 'weekly' && (
-        <Btn label="Use the first weekday’s hours for Monday to Friday" onPress={() => onChange({ ...hours, days: copyToWeekdays(hours.days) })} />
+        <Pad>
+          <Button
+            label="Use the first weekday’s hours for Monday to Friday"
+            variant="tinted"
+            size="small"
+            onPress={() => onChange({ ...hours, days: copyToWeekdays(hours.days) })}
+            style={styles.copy}
+          />
+        </Pad>
       )}
 
-      <Field
-        label="Note for customers (optional)"
-        value={note}
-        onChangeText={(text) => onChange({ ...hours, note: text || undefined })}
-        placeholder="e.g. Closed on public holidays"
-        maxLength={140}
-      />
-    </View>
+      <Pad>
+        <Field
+          label="Note for customers (optional)"
+          value={note}
+          onChangeText={(text) => onChange({ ...hours, note: text || undefined })}
+          placeholder="e.g. Closed on public holidays"
+          maxLength={140}
+        />
+      </Pad>
+    </Divided>
   );
 }
 
 const styles = StyleSheet.create({
-  wrap: { gap: space.md },
-  hint: { fontSize: font.small, color: colors.textMuted },
-  day: { gap: space.xs, borderTopWidth: 1, borderTopColor: colors.border, paddingTop: space.sm },
+  hint: { ...type.footnote, color: colors.secondaryLabel },
+  day: { gap: space.xs },
   // Stacked, not side by side: each stepper needs about 200 pt, and phones are 320–430 pt wide.
-  times: { gap: space.md },
+  times: { gap: space.md, paddingTop: space.xs },
+  copy: { alignSelf: 'flex-start' },
 });

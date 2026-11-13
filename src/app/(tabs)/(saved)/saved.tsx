@@ -2,11 +2,12 @@ import { router } from 'expo-router';
 import { useMemo } from 'react';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
 
+import { EmptyState } from '../../../components/ui';
 import { FarmCard } from '../../../components/FarmCard';
 import { DEFAULT_FILTERS, searchFarms } from '../../../domain/filters';
 import { useFavourites } from '../../../state/FavouritesContext';
 import { useSearch } from '../../../state/SearchContext';
-import { colors, font, space } from '../../../theme';
+import { colors, space, type } from '../../../theme';
 
 export default function SavedScreen() {
   const { farms, location } = useSearch();
@@ -19,12 +20,14 @@ export default function SavedScreen() {
 
   return (
     <FlatList
+      style={styles.screen}
       data={saved}
       keyExtractor={(r) => r.farm.id}
       renderItem={({ item }) => (
         <FarmCard result={item} onPress={() => router.push(`/farm/${item.farm.id}`)} />
       )}
-      ItemSeparatorComponent={() => <View style={{ height: space.md }} />}
+      ItemSeparatorComponent={() => <View style={styles.gap} />}
+      contentInsetAdjustmentBehavior="automatic"
       contentContainerStyle={styles.list}
       ListHeaderComponent={
         saved.length > 0 ? (
@@ -32,21 +35,22 @@ export default function SavedScreen() {
         ) : undefined
       }
       ListEmptyComponent={
-        <View style={styles.empty}>
-          <Text style={styles.emptyTitle}>No saved places yet</Text>
-          <Text style={styles.emptyText}>
-            Open any farm, stall or market and tap “Save this place” to keep it here for next time.
-          </Text>
-        </View>
+        <EmptyState
+          icon="heart"
+          title="No saved places yet"
+          message="Open any farm, stall or market and tap “Save this place” to keep it here for next time."
+          action={{ label: 'Explore farms', onPress: () => router.navigate('/(tabs)/(explore)') }}
+          style={styles.empty}
+        />
       }
     />
   );
 }
 
 const styles = StyleSheet.create({
-  list: { padding: space.lg, paddingBottom: space.xl * 2, flexGrow: 1 },
-  count: { fontSize: font.title, fontWeight: '700', color: colors.text, marginBottom: space.md },
-  empty: { flex: 1, alignItems: 'center', justifyContent: 'center', gap: space.md, padding: space.xl },
-  emptyTitle: { fontSize: font.title, fontWeight: '700', color: colors.text },
-  emptyText: { fontSize: font.body, color: colors.textMuted, textAlign: 'center' },
+  screen: { flex: 1, backgroundColor: colors.groupedBackground },
+  list: { paddingHorizontal: space.lg, paddingBottom: space.xl * 2, paddingTop: space.xs, flexGrow: 1 },
+  gap: { height: space.md },
+  count: { ...type.subheadline, color: colors.secondaryLabel, paddingBottom: space.md, paddingHorizontal: space.xs },
+  empty: { flex: 1, paddingVertical: space.xxl },
 });

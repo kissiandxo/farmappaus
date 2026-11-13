@@ -1,44 +1,14 @@
 import { router } from 'expo-router';
 import { useState } from 'react';
-import { Alert, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Alert, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 
+import { Notice } from '../../../components/FormBits';
+import { Button, EmptyState, Icon, Row, Section } from '../../../components/ui';
 import { validateEmail, validatePassword } from '../../../domain/validation';
 import { useAuth } from '../../../state/AuthContext';
-import { colors, font, MIN_TAP, radius, space } from '../../../theme';
+import { colors, MIN_TAP, space, type } from '../../../theme';
 
 const ROLE_LABELS = { user: 'Customer', farmer: 'Farmer', admin: 'Administrator' } as const;
-
-function Button({
-  label,
-  onPress,
-  kind = 'secondary',
-  disabled,
-}: {
-  label: string;
-  onPress: () => void;
-  kind?: 'primary' | 'secondary' | 'danger';
-  disabled?: boolean;
-}) {
-  return (
-    <Pressable
-      onPress={onPress}
-      disabled={disabled}
-      accessibilityRole="button"
-      accessibilityState={{ disabled }}
-      style={({ pressed }) => [
-        styles.button,
-        kind === 'primary' && styles.primary,
-        kind === 'danger' && styles.danger,
-        disabled && { opacity: 0.5 },
-        pressed && { opacity: 0.8 },
-      ]}
-    >
-      <Text style={[styles.buttonText, kind === 'primary' && { color: colors.onPrimary }, kind === 'danger' && { color: colors.closed }]}>
-        {label}
-      </Text>
-    </Pressable>
-  );
-}
 
 export default function AccountScreen() {
   const { available, ready, session, email: signedInEmail, role, signIn, signUp, signOut, deleteAccount } = useAuth();
@@ -50,24 +20,25 @@ export default function AccountScreen() {
 
   if (!available) {
     return (
-      <ScrollView contentContainerStyle={styles.content}>
-        <Text style={styles.title} accessibilityRole="header">Accounts</Text>
-        <View style={styles.card}>
-          <Text style={styles.body}>
-            Accounts, saved favourites that follow you between phones, and farmer listings need the online service.
-            It isn’t connected in this version of the app, so everything you see is stored on your phone.
-          </Text>
-        </View>
-        <Button label="Privacy policy" onPress={() => router.push('/privacy')} />
+      <ScrollView contentInsetAdjustmentBehavior="automatic" contentContainerStyle={styles.content}>
+        <EmptyState
+          icon="person.crop.circle"
+          title="Accounts"
+          message="Accounts, saved favourites that follow you between phones, and farmer listings need the online service. It isn’t connected in this version of the app, so everything you see is stored on your phone."
+          style={styles.emptyState}
+        />
+        <Section>
+          <Row title="Privacy policy" accessory="chevron" onPress={() => router.push('/privacy')} />
+        </Section>
       </ScrollView>
     );
   }
 
   if (!ready) {
     return (
-      <View style={styles.content}>
-        <Text style={styles.body}>Loading…</Text>
-      </View>
+      <ScrollView contentInsetAdjustmentBehavior="automatic" contentContainerStyle={styles.content}>
+        <Text style={[type.body, styles.loading]}>Loading…</Text>
+      </ScrollView>
     );
   }
 
@@ -104,107 +75,135 @@ export default function AccountScreen() {
 
   if (session) {
     return (
-      <ScrollView contentContainerStyle={styles.content}>
-        <Text style={styles.title} accessibilityRole="header">Your account</Text>
-        <View style={styles.card}>
-          <Text style={styles.label}>Signed in as</Text>
-          <Text style={styles.body}>{signedInEmail}</Text>
-          <Text style={styles.label}>Account type</Text>
-          <Text style={styles.body}>{role ? ROLE_LABELS[role] : 'Checking…'}</Text>
-        </View>
-        <Button label={role === 'farmer' || role === 'admin' ? 'My farm listings' : 'List my farm (free)'} kind="primary" onPress={() => router.push('/farmer')} />
-        <Button label="Suggest a farm or market" onPress={() => router.push('/suggest')} />
-        {role === 'admin' && <Button label="Review queue" onPress={() => router.push('/admin')} />}
-        {notice && <Text style={[styles.notice, !notice.ok && styles.noticeError]}>{notice.text}</Text>}
-        <Button label="Sign out" onPress={signOut} />
-        <Button label="Privacy policy" onPress={() => router.push('/privacy')} />
-        <Button label="Delete my account" kind="danger" onPress={confirmDelete} />
+      <ScrollView contentInsetAdjustmentBehavior="automatic" contentContainerStyle={styles.content}>
+        <Section header="Signed in as">
+          <Row title={signedInEmail ?? ''} />
+          <Row title="Account type" value={role ? ROLE_LABELS[role] : 'Checking…'} />
+        </Section>
+
+        {notice && (
+          <View style={styles.pad}>
+            <Notice kind={notice.ok ? 'ok' : 'error'}>{notice.text}</Notice>
+          </View>
+        )}
+
+        <Section>
+          <Row
+            title={role === 'farmer' || role === 'admin' ? 'My farm listings' : 'List my farm (free)'}
+            accessory="chevron"
+            onPress={() => router.push('/farmer')}
+          />
+          <Row title="Suggest a farm or market" accessory="chevron" onPress={() => router.push('/suggest')} />
+        </Section>
+
+        {role === 'admin' && (
+          <Section>
+            <Row title="Review queue" accessory="chevron" onPress={() => router.push('/admin')} />
+          </Section>
+        )}
+
+        <Section>
+          <Row title="Privacy policy" accessory="chevron" onPress={() => router.push('/privacy')} />
+        </Section>
+
+        <Section>
+          <Row title="Sign out" onPress={signOut} />
+        </Section>
+
+        <Section>
+          <Row title="Delete my account" destructive onPress={confirmDelete} />
+        </Section>
       </ScrollView>
     );
   }
 
   return (
-    <ScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
-      <Text style={styles.title} accessibilityRole="header">
-        {mode === 'signin' ? 'Sign in' : 'Create an account'}
-      </Text>
-      <Text style={styles.body}>
-        Sign in to keep your saved places on every phone, suggest a farm, or list your own farm for free.
-      </Text>
-
-      <View style={styles.card}>
-        <Text style={styles.label}>Email</Text>
-        <TextInput
-          value={email}
-          onChangeText={setEmail}
-          autoCapitalize="none"
-          autoCorrect={false}
-          keyboardType="email-address"
-          autoComplete="email"
-          textContentType="emailAddress"
-          style={styles.input}
-          accessibilityLabel="Email"
-        />
-        <Text style={styles.label}>Password</Text>
-        <TextInput
-          value={password}
-          onChangeText={setPassword}
-          secureTextEntry
-          autoCapitalize="none"
-          autoComplete={mode === 'signin' ? 'current-password' : 'new-password'}
-          textContentType={mode === 'signin' ? 'password' : 'newPassword'}
-          style={styles.input}
-          accessibilityLabel="Password"
-          onSubmitEditing={submit}
-        />
-        {mode === 'signup' && <Text style={styles.hint}>At least 8 characters, with some letters.</Text>}
+    <ScrollView contentInsetAdjustmentBehavior="automatic" contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
+      <View style={styles.header}>
+        <Icon name="person.crop.circle" size={72} weight="light" color={colors.tint} />
+        <Text style={[type.title1, styles.title]} accessibilityRole="header">
+          {mode === 'signin' ? 'Sign in' : 'Create an account'}
+        </Text>
+        <Text style={[type.body, styles.message]}>
+          Sign in to keep your saved places on every phone, suggest a farm, or list your own farm for free.
+        </Text>
       </View>
 
-      {notice && <Text style={[styles.notice, !notice.ok && styles.noticeError]} accessibilityRole="alert">{notice.text}</Text>}
+      <Section footer={mode === 'signup' ? 'At least 8 characters, with some letters.' : undefined}>
+        <Row
+          title="Email"
+          accessory={
+            <TextInput
+              value={email}
+              onChangeText={setEmail}
+              autoCapitalize="none"
+              autoCorrect={false}
+              keyboardType="email-address"
+              autoComplete="email"
+              textContentType="emailAddress"
+              style={styles.input}
+              accessibilityLabel="Email"
+            />
+          }
+        />
+        <Row
+          title="Password"
+          accessory={
+            <TextInput
+              value={password}
+              onChangeText={setPassword}
+              secureTextEntry
+              autoCapitalize="none"
+              autoComplete={mode === 'signin' ? 'current-password' : 'new-password'}
+              textContentType={mode === 'signin' ? 'password' : 'newPassword'}
+              style={styles.input}
+              accessibilityLabel="Password"
+              onSubmitEditing={submit}
+            />
+          }
+        />
+      </Section>
 
-      <Button label={busy ? 'Please wait…' : mode === 'signin' ? 'Sign in' : 'Create account'} kind="primary" onPress={submit} disabled={busy} />
-      <Button
-        label={mode === 'signin' ? 'I’m new – create an account' : 'I already have an account'}
-        onPress={() => {
-          setMode(mode === 'signin' ? 'signup' : 'signin');
-          setNotice(null);
-        }}
-      />
-      <Button label="Privacy policy" onPress={() => router.push('/privacy')} />
+      {notice && (
+        <View style={styles.pad}>
+          <Notice kind={notice.ok ? 'ok' : 'error'}>{notice.text}</Notice>
+        </View>
+      )}
+
+      <View style={styles.actions}>
+        <Button label={busy ? 'Please wait…' : mode === 'signin' ? 'Sign in' : 'Create account'} onPress={submit} disabled={busy} />
+        <Button
+          variant="plain"
+          label={mode === 'signin' ? 'I’m new – create an account' : 'I already have an account'}
+          onPress={() => {
+            setMode(mode === 'signin' ? 'signup' : 'signin');
+            setNotice(null);
+          }}
+        />
+      </View>
+
+      <Section>
+        <Row title="Privacy policy" accessory="chevron" onPress={() => router.push('/privacy')} />
+      </Section>
     </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  content: { padding: space.lg, gap: space.md, paddingBottom: space.xl * 2 },
-  title: { fontSize: font.heading, fontWeight: '700', color: colors.text },
-  body: { fontSize: font.body, color: colors.text, lineHeight: 26 },
-  card: { backgroundColor: colors.surface, borderRadius: radius.card, borderWidth: 1, borderColor: colors.border, padding: space.lg, gap: space.sm },
-  label: { fontSize: font.body, fontWeight: '700', color: colors.text },
-  hint: { fontSize: font.small, color: colors.textMuted },
+  content: { paddingBottom: space.xxl },
+  emptyState: { flex: 0, paddingTop: space.xxl, paddingBottom: space.xl },
+  loading: { color: colors.secondaryLabel, padding: space.lg },
+  pad: { paddingHorizontal: space.lg, marginBottom: space.lg },
+  header: { alignItems: 'center', gap: space.sm, paddingHorizontal: space.xl, paddingTop: space.xl, paddingBottom: space.lg },
+  title: { color: colors.label, textAlign: 'center' },
+  message: { color: colors.secondaryLabel, textAlign: 'center' },
   input: {
-    minHeight: 56,
-    fontSize: font.large,
-    color: colors.text,
-    backgroundColor: colors.background,
-    borderWidth: 2,
-    borderColor: colors.border,
-    borderRadius: radius.card,
-    paddingHorizontal: space.lg,
+    ...type.body,
+    width: '62%',
+    minHeight: MIN_TAP,
+    color: colors.label,
+    textAlign: 'right',
+    paddingVertical: space.sm,
   },
-  button: {
-    minHeight: MIN_TAP + 4,
-    borderRadius: radius.chip,
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingHorizontal: space.lg,
-    borderWidth: 2,
-    borderColor: colors.border,
-    backgroundColor: colors.surface,
-  },
-  primary: { backgroundColor: colors.primary, borderColor: colors.primary },
-  danger: { borderColor: colors.closed },
-  buttonText: { fontSize: font.large, fontWeight: '700', color: colors.text },
-  notice: { fontSize: font.body, fontWeight: '700', color: colors.open },
-  noticeError: { color: colors.closed },
+  actions: { paddingHorizontal: space.lg, gap: space.sm, marginBottom: space.xl },
 });

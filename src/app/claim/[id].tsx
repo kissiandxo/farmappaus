@@ -2,13 +2,14 @@ import { router, useLocalSearchParams } from 'expo-router';
 import { useState } from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 
-import { Btn, Card, Field, Notice } from '../../components/FormBits';
+import { Field, Notice } from '../../components/FormBits';
+import { Button, Icon, Section, success } from '../../components/ui';
 import { submitClaim } from '../../data/mutations';
 import { friendlyDbError } from '../../domain/listing';
 import { isValidAbn, normaliseAuPhone } from '../../domain/validation';
 import { useAuth } from '../../state/AuthContext';
 import { useFarm } from '../../state/useFarm';
-import { colors, font, space } from '../../theme';
+import { colors, space, type } from '../../theme';
 
 export default function ClaimScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -23,22 +24,32 @@ export default function ClaimScreen() {
 
   if (!userId) {
     return (
-      <View style={styles.content}>
-        <Notice kind="info">Please sign in on the Account tab first, then come back to claim this listing.</Notice>
-        <Btn label="Go to Account" onPress={() => router.replace('/account')} />
-      </View>
+      <ScrollView contentInsetAdjustmentBehavior="automatic" contentContainerStyle={styles.content}>
+        <View style={styles.pad}>
+          <Notice kind="info">Please sign in on the Account tab first, then come back to claim this listing.</Notice>
+        </View>
+        <View style={styles.actions}>
+          <Button variant="tinted" label="Go to Account" onPress={() => router.replace('/account')} />
+        </View>
+      </ScrollView>
     );
   }
 
   if (done) {
     return (
-      <View style={styles.content}>
-        <Notice kind="ok">
-          Thanks. We’ve got your claim for {farm?.name ?? 'this listing'}. We’ll check your details against the public
-          record and may call you to confirm. Once approved, you can edit the listing and update your stock.
-        </Notice>
-        <Btn label="Done" onPress={() => router.back()} />
-      </View>
+      <ScrollView contentInsetAdjustmentBehavior="automatic" contentContainerStyle={styles.content}>
+        <View style={styles.done}>
+          <Icon name="checkmark.seal.fill" size={64} color={colors.tint} />
+        </View>
+        <View style={styles.pad}>
+          <Notice kind="ok">
+            {`Thanks. We’ve got your claim for ${farm?.name ?? 'this listing'}. We’ll check your details against the public record and may call you to confirm. Once approved, you can edit the listing and update your stock.`}
+          </Notice>
+        </View>
+        <View style={styles.actions}>
+          <Button label="Done" onPress={() => router.back()} />
+        </View>
+      </ScrollView>
     );
   }
 
@@ -54,6 +65,7 @@ export default function ClaimScreen() {
     try {
       await submitClaim({ farmId: id, userId, abn, phone: phoneNice as string, note });
       setDone(true);
+      success();
     } catch (e) {
       setError(friendlyDbError((e as Error).message));
     } finally {
@@ -62,25 +74,54 @@ export default function ClaimScreen() {
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
-      <Text style={styles.title}>{farm?.name ?? 'Claim this listing'}</Text>
-      <Text style={styles.body}>
-        Tell us who you are so we can make sure this listing goes to the right person. We use your ABN and phone number
-        only to check your claim.
+    <ScrollView contentInsetAdjustmentBehavior="automatic" contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
+      <Text style={[type.title2, styles.title]} accessibilityRole="header">
+        {farm?.name ?? 'Claim this listing'}
       </Text>
-      <Card>
-        <Field label="Your ABN (11 digits)" value={abn} onChangeText={setAbn} keyboardType="number-pad" placeholder="e.g. 51 824 753 556" error={abnProblem} />
-        <Field label="Phone number we can call" value={phone} onChangeText={setPhone} keyboardType="phone-pad" error={phoneProblem} />
-        <Field label="Anything else that helps (optional)" value={note} onChangeText={setNote} multiline maxLength={1000} hint="For example, how we can tell it’s your farm." />
-      </Card>
-      {error && <Notice kind="error">{error}</Notice>}
-      <Btn label={busy ? 'Sending…' : 'Send my claim'} kind="primary" onPress={submit} disabled={!ready || busy} />
+      <Section footer="Tell us who you are so we can make sure this listing goes to the right person. We use your ABN and phone number only to check your claim.">
+        <View style={styles.field}>
+          <Field
+            label="Your ABN (11 digits)"
+            value={abn}
+            onChangeText={setAbn}
+            keyboardType="number-pad"
+            placeholder="e.g. 51 824 753 556"
+            error={abnProblem}
+          />
+        </View>
+        <View style={styles.field}>
+          <Field label="Phone number we can call" value={phone} onChangeText={setPhone} keyboardType="phone-pad" error={phoneProblem} />
+        </View>
+        <View style={styles.field}>
+          <Field
+            label="Anything else that helps (optional)"
+            value={note}
+            onChangeText={setNote}
+            multiline
+            maxLength={1000}
+            hint="For example, how we can tell it’s your farm."
+          />
+        </View>
+      </Section>
+
+      {error && (
+        <View style={styles.pad}>
+          <Notice kind="error">{error}</Notice>
+        </View>
+      )}
+
+      <View style={styles.actions}>
+        <Button label={busy ? 'Sending…' : 'Send my claim'} onPress={submit} disabled={!ready || busy} />
+      </View>
     </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  content: { padding: space.lg, gap: space.md, paddingBottom: space.xl * 2 },
-  title: { fontSize: font.heading, fontWeight: '700', color: colors.text },
-  body: { fontSize: font.body, color: colors.text, lineHeight: 26 },
+  content: { paddingTop: space.sm, paddingBottom: space.xxl },
+  title: { color: colors.label, paddingHorizontal: space.lg, paddingBottom: space.md },
+  pad: { paddingHorizontal: space.lg, marginBottom: space.lg },
+  field: { paddingHorizontal: space.lg, paddingVertical: space.md, gap: space.sm },
+  actions: { paddingHorizontal: space.lg, marginBottom: space.xl, gap: space.sm },
+  done: { alignItems: 'center', paddingTop: space.xxl, paddingBottom: space.lg },
 });

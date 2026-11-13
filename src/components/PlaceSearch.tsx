@@ -1,9 +1,10 @@
 import { useMemo, useState } from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
 import { formatPlace, searchPlaces, type Place } from '../domain/places';
-import { colors, font, MIN_TAP, space } from '../theme';
-import { Field } from './FormBits';
+import { colors, space, type } from '../theme';
+import { SearchField } from './SearchField';
+import { Row, Section } from './ui';
 
 interface PlaceSearchProps {
   label: string;
@@ -13,42 +14,48 @@ interface PlaceSearchProps {
   error?: string | null;
 }
 
-/** Suburb/postcode picker backed by the offline list. Used for listing and suggestion locations. */
+/** Suburb/postcode picker backed by the offline list. Search field on top, matches as grouped Rows below. */
 export function PlaceSearch({ label, chosen, onSelect, error }: PlaceSearchProps) {
   const [query, setQuery] = useState('');
   const matches = useMemo(() => searchPlaces(query, { limit: 6 }), [query]);
 
   return (
     <View style={styles.wrap}>
-      <Field
-        label={label}
+      <Text style={styles.label}>{label}</Text>
+      <SearchField
         value={query}
         onChangeText={setQuery}
         placeholder="Type a suburb or postcode"
-        hint={chosen ? `Chosen: ${chosen}` : 'Choose from the list that appears.'}
-        error={error}
+        accessibilityLabel={label}
         autoCapitalize="words"
       />
-      {matches.map((place) => (
-        <Pressable
-          key={`${place.postcode}-${place.locality}-${place.state}`}
-          onPress={() => {
-            onSelect(place);
-            setQuery('');
-          }}
-          accessibilityRole="button"
-          accessibilityLabel={formatPlace(place)}
-          style={({ pressed }) => [styles.row, pressed && { backgroundColor: colors.chip }]}
-        >
-          <Text style={styles.rowText}>{formatPlace(place)}</Text>
-        </Pressable>
-      ))}
+      {error ? (
+        <Text style={styles.error}>{error}</Text>
+      ) : (
+        <Text style={styles.hint}>{chosen ? `Chosen: ${chosen}` : 'Choose from the list that appears.'}</Text>
+      )}
+      {matches.length > 0 && (
+        <Section>
+          {matches.map((place) => (
+            <Row
+              key={`${place.postcode}-${place.locality}-${place.state}`}
+              title={formatPlace(place)}
+              accessibilityLabel={formatPlace(place)}
+              onPress={() => {
+                onSelect(place);
+                setQuery('');
+              }}
+            />
+          ))}
+        </Section>
+      )}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  wrap: { gap: space.xs },
-  row: { minHeight: MIN_TAP, justifyContent: 'center', paddingHorizontal: space.md, borderBottomWidth: 1, borderBottomColor: colors.border },
-  rowText: { fontSize: font.large, color: colors.text },
+  wrap: { gap: space.sm },
+  label: { ...type.subheadline, fontWeight: '600', color: colors.secondaryLabel },
+  hint: { ...type.footnote, color: colors.secondaryLabel },
+  error: { ...type.footnote, color: colors.red, fontWeight: '600' },
 });

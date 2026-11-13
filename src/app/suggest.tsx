@@ -2,8 +2,9 @@ import { router } from 'expo-router';
 import { useState } from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 
-import { Btn, Card, ChipGroup, Field, Notice } from '../components/FormBits';
+import { ChipGroup, Field, Notice } from '../components/FormBits';
 import { PlaceSearch } from '../components/PlaceSearch';
+import { Button, Icon, Section, success } from '../components/ui';
 import { submitSuggestion } from '../data/mutations';
 import { friendlyDbError } from '../domain/listing';
 import { formatPlace, type Place } from '../domain/places';
@@ -15,7 +16,7 @@ import {
   type VenueType,
 } from '../domain/types';
 import { useAuth } from '../state/AuthContext';
-import { colors, font, space } from '../theme';
+import { colors, space, type } from '../theme';
 
 export default function SuggestScreen() {
   const { userId } = useAuth();
@@ -30,22 +31,33 @@ export default function SuggestScreen() {
 
   if (!userId) {
     return (
-      <View style={styles.content}>
-        <Notice kind="info">Please sign in on the Account tab first. It’s free, and it helps us stop spam.</Notice>
-        <Btn label="Go to Account" onPress={() => router.replace('/account')} />
-      </View>
+      <ScrollView contentInsetAdjustmentBehavior="automatic" contentContainerStyle={styles.content}>
+        <View style={styles.pad}>
+          <Notice kind="info">Please sign in on the Account tab first. It’s free, and it helps us stop spam.</Notice>
+        </View>
+        <View style={styles.actions}>
+          <Button variant="tinted" label="Go to Account" onPress={() => router.replace('/account')} />
+        </View>
+      </ScrollView>
     );
   }
 
   if (done) {
     return (
-      <View style={styles.content}>
-        <Notice kind="ok">
-          Thank you. We’ll check this place and, if it’s a good fit, invite the farmer to take over the listing. Nothing
-          appears in the app until it’s been reviewed.
-        </Notice>
-        <Btn label="Done" onPress={() => router.back()} />
-      </View>
+      <ScrollView contentInsetAdjustmentBehavior="automatic" contentContainerStyle={styles.content}>
+        <View style={styles.done}>
+          <Icon name="checkmark.seal.fill" size={64} color={colors.tint} />
+        </View>
+        <View style={styles.pad}>
+          <Notice kind="ok">
+            Thank you. We’ll check this place and, if it’s a good fit, invite the farmer to take over the listing. Nothing
+            appears in the app until it’s been reviewed.
+          </Notice>
+        </View>
+        <View style={styles.actions}>
+          <Button label="Done" onPress={() => router.back()} />
+        </View>
+      </ScrollView>
     );
   }
 
@@ -69,6 +81,7 @@ export default function SuggestScreen() {
         notes,
       });
       setDone(true);
+      success();
     } catch (e) {
       setError(friendlyDbError((e as Error).message));
     } finally {
@@ -77,36 +90,60 @@ export default function SuggestScreen() {
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
-      <Text style={styles.body}>
-        Know a farm, farm-gate stall, farm shop or farmers’ market that should be here? Tell us about it. We check every
-        suggestion before it goes live.
-      </Text>
-      <Card>
-        <Field label="Name of the place" value={name} onChangeText={setName} maxLength={100} />
-        <Text style={styles.label}>What kind of place is it?</Text>
-        <ChipGroup
-          options={(Object.keys(VENUE_LABELS) as VenueType[]).map((value) => ({ value, label: VENUE_LABELS[value] }))}
-          value={venueType}
-          onChange={setVenueType}
-        />
-        <PlaceSearch label="Suburb or postcode" chosen={place ? formatPlace(place) : ''} onSelect={setPlace} />
-        <Text style={styles.label}>What do they sell? (optional)</Text>
-        <ChipGroup
-          options={PRODUCT_CATEGORIES.map((value) => ({ value, label: PRODUCT_LABELS[value] }))}
-          value={products}
-          onChange={(p) => setProducts(products.includes(p) ? products.filter((x) => x !== p) : [...products, p])}
-        />
-        <Field label="Anything else that helps (optional)" value={notes} onChangeText={setNotes} multiline maxLength={1000} hint="Address, opening days, or how you know them." />
-      </Card>
-      {error && <Notice kind="error">{error}</Notice>}
-      <Btn label={busy ? 'Sending…' : 'Send suggestion'} kind="primary" onPress={submit} disabled={!ready || busy} />
+    <ScrollView contentInsetAdjustmentBehavior="automatic" contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
+      <Section footer="Know a farm, farm-gate stall, farm shop or farmers’ market that should be here? Tell us about it. We check every suggestion before it goes live.">
+        <View style={styles.field}>
+          <Field label="Name of the place" value={name} onChangeText={setName} maxLength={100} />
+        </View>
+        <View style={styles.field}>
+          <Text style={styles.label}>What kind of place is it?</Text>
+          <ChipGroup
+            options={(Object.keys(VENUE_LABELS) as VenueType[]).map((value) => ({ value, label: VENUE_LABELS[value] }))}
+            value={venueType}
+            onChange={setVenueType}
+          />
+        </View>
+        <View style={styles.field}>
+          <PlaceSearch label="Suburb or postcode" chosen={place ? formatPlace(place) : ''} onSelect={setPlace} />
+        </View>
+        <View style={styles.field}>
+          <Text style={styles.label}>What do they sell? (optional)</Text>
+          <ChipGroup
+            options={PRODUCT_CATEGORIES.map((value) => ({ value, label: PRODUCT_LABELS[value] }))}
+            value={products}
+            onChange={(p) => setProducts(products.includes(p) ? products.filter((x) => x !== p) : [...products, p])}
+          />
+        </View>
+        <View style={styles.field}>
+          <Field
+            label="Anything else that helps (optional)"
+            value={notes}
+            onChangeText={setNotes}
+            multiline
+            maxLength={1000}
+            hint="Address, opening days, or how you know them."
+          />
+        </View>
+      </Section>
+
+      {error && (
+        <View style={styles.pad}>
+          <Notice kind="error">{error}</Notice>
+        </View>
+      )}
+
+      <View style={styles.actions}>
+        <Button label={busy ? 'Sending…' : 'Send suggestion'} onPress={submit} disabled={!ready || busy} />
+      </View>
     </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  content: { padding: space.lg, gap: space.md, paddingBottom: space.xl * 2 },
-  body: { fontSize: font.body, color: colors.text, lineHeight: 26 },
-  label: { fontSize: font.body, fontWeight: '700', color: colors.text },
+  content: { paddingTop: space.sm, paddingBottom: space.xxl },
+  pad: { paddingHorizontal: space.lg, marginBottom: space.lg },
+  field: { paddingHorizontal: space.lg, paddingVertical: space.md, gap: space.sm },
+  label: { ...type.subheadline, fontWeight: '600', color: colors.secondaryLabel },
+  actions: { paddingHorizontal: space.lg, marginBottom: space.xl, gap: space.sm },
+  done: { alignItems: 'center', paddingTop: space.xxl, paddingBottom: space.lg },
 });

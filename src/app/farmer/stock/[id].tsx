@@ -1,19 +1,22 @@
-import { useLocalSearchParams } from 'expo-router';
+import { Stack, useLocalSearchParams } from 'expo-router';
 import { useCallback, useEffect, useState } from 'react';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ScrollView, StyleSheet, Switch, Text, TextInput, View } from 'react-native';
 
-import { Card, Field, Notice, SwitchRow } from '../../../components/FormBits';
+import { Notice } from '../../../components/FormBits';
 import { fetchFarmById, setProductPrice, setProductStock } from '../../../data/mutations';
 import { friendlyDbError } from '../../../domain/listing';
 import type { Farm, Product } from '../../../domain/types';
 import { centsToInput, priceToCents } from '../../../domain/validation';
 import { useSearch } from '../../../state/SearchContext';
-import { colors, font, space } from '../../../theme';
+import { colors, MIN_TAP, radius, space, type } from '../../../theme';
+import { Button, Section, selection } from '../../../components/ui';
 
-function Row({ product, onSaved, onError }: { product: Product; onSaved: () => void; onError: (m: string) => void }) {
+/** One product: name and status on the left, price box and stock switch on the right. */
+function ProductRow({ product, onSaved, onError }: { product: Product; onSaved: () => void; onError: (m: string) => void }) {
   const [inStock, setInStock] = useState(product.inStock);
   const [price, setPrice] = useState(centsToInput(product.priceCents));
   const invalid = price.trim() !== '' && priceToCents(price) === null;
+  const stockLabel = inStock ? 'In stock' : 'Out of stock';
 
   const toggle = async (next: boolean) => {
     setInStock(next);
@@ -38,20 +41,42 @@ function Row({ product, onSaved, onError }: { product: Product; onSaved: () => v
   };
 
   return (
-    <Card title={product.name || 'Unnamed product'}>
-      <SwitchRow label={inStock ? 'In stock' : 'Out of stock'} value={inStock} onChange={toggle} />
-      <Field
-        label={`Price in dollars${product.unit ? ` per ${product.unit}` : ''}`}
-        value={price}
-        onChangeText={setPrice}
-        keyboardType="decimal-pad"
-        error={invalid ? 'Enter a price like 7.50' : null}
-        hint="Tap “Save price” to keep a new price. Stock switches save straight away."
-      />
-      <Text style={styles.link} onPress={savePrice} accessibilityRole="button">
-        Save price
-      </Text>
-    </Card>
+    <View style={styles.product}>
+      <View style={styles.line}>
+        <View style={styles.nameCol}>
+          <Text style={[type.body, styles.name]} numberOfLines={2}>
+            {product.name || 'Unnamed product'}
+          </Text>
+          <Text style={[type.footnote, styles.meta]}>{product.unit ? `${stockLabel} · per ${product.unit}` : stockLabel}</Text>
+        </View>
+        <View style={[styles.priceBox, invalid && styles.priceInvalid]}>
+          <Text style={[type.body, styles.dollar]}>$</Text>
+          <TextInput
+            value={price}
+            onChangeText={setPrice}
+            keyboardType="decimal-pad"
+            placeholder="0.00"
+            placeholderTextColor={colors.placeholder}
+            selectionColor={colors.tint}
+            accessibilityLabel={`Price in dollars${product.unit ? ` per ${product.unit}` : ''}`}
+            style={[type.body, styles.priceInput]}
+          />
+        </View>
+        <Switch
+          value={inStock}
+          onValueChange={(v) => {
+            selection();
+            toggle(v);
+          }}
+          trackColor={{ true: colors.tint, false: colors.fill }}
+          accessibilityLabel={stockLabel}
+        />
+      </View>
+      {invalid && <Text style={[type.footnote, styles.error]}>Enter a price like 7.50</Text>}
+      <View style={styles.footRow}>
+        <Button label="Save price" variant="tinted" size="small" onPress={savePrice} />
+      </View>
+    </View>
   );
 }
 
@@ -75,25 +100,59 @@ export default function StockScreen() {
     refresh();
   }, [refresh]);
 
-  if (error && !farm) return <View style={styles.content}><Notice kind="error">{error}</Notice></View>;
-  if (!farm) return <View style={styles.content}><Text style={styles.body}>Loading…</Text></View>;
+  if (error && !farm) return <View style={styles.guard}><Notice kind="error">{error}</Notice></View>;
+  if (!farm) return <View style={styles.guard}><Text style={styles.body}>Loading…</Text></View>;
 
   return (
-    <ScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
-      <Text style={styles.title}>{farm.name}</Text>
-      <Text style={styles.body}>Switch items on or off as stock comes and goes. Changes are saved straight away.</Text>
-      {savedAt && <Notice kind="ok">{`Saved at ${savedAt}.`}</Notice>}
-      {error && <Notice kind="error">{error}</Notice>}
-      {farm.products.map((p) => (
-        <Row key={p.id ?? p.name} product={p} onSaved={onSaved} onError={setError} />
-      ))}
+    <ScrollView
+      style={styles.screen}
+      contentContainerStyle={styles.content}
+      keyboardShouldPersistTaps="handled"
+      contentInsetAdjustmentBehavior="automatic"
+    >
+      <Stack.Screen options={{ headerLargeTitle: true }} />
+      {(savedAt || error) && (
+        <View style={styles.inset}>
+          {savedAt && <Notice kind="ok">{`Saved at ${savedAt}.`}</Notice>}
+          {error && <Notice kind="error">{error}</Notice>}
+        </View>
+      )}
+      <Section
+        header={farm.name}
+        footer="Switch items on or off as stock comes and goes. Changes are saved straight away. Tap “Save price” to keep a new price."
+      >
+        {farm.products.map((p) => (
+          <ProductRow key={p.id ?? p.name} product={p} onSaved={onSaved} onError={setError} />
+        ))}
+      </Section>
     </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  content: { padding: space.lg, gap: space.md, paddingBottom: space.xl * 2 },
-  title: { fontSize: font.heading, fontWeight: '700', color: colors.text },
-  body: { fontSize: font.body, color: colors.text, lineHeight: 26 },
-  link: { fontSize: font.large, fontWeight: '700', color: colors.accent, textDecorationLine: 'underline', paddingVertical: space.sm },
+  screen: { backgroundColor: colors.groupedBackground },
+  content: { paddingTop: space.sm, paddingBottom: space.xxl },
+  guard: { padding: space.lg },
+  inset: { marginHorizontal: space.lg, marginBottom: space.lg, gap: space.md },
+  body: { ...type.callout, color: colors.label },
+  product: { paddingHorizontal: space.lg, paddingVertical: space.md, gap: space.xs },
+  line: { flexDirection: 'row', alignItems: 'center', gap: space.md, minHeight: MIN_TAP },
+  nameCol: { flex: 1, gap: 2 },
+  name: { color: colors.label, fontWeight: '600' },
+  meta: { color: colors.secondaryLabel },
+  priceBox: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: 112,
+    minHeight: MIN_TAP,
+    paddingHorizontal: space.md,
+    borderRadius: radius.control,
+    borderCurve: 'continuous',
+    backgroundColor: colors.fill,
+  },
+  priceInvalid: { borderWidth: 1, borderColor: colors.red },
+  dollar: { color: colors.secondaryLabel, marginRight: 2 },
+  priceInput: { flex: 1, color: colors.label, textAlign: 'right', paddingVertical: space.sm, minWidth: 0 },
+  error: { color: colors.red, fontWeight: '600' },
+  footRow: { flexDirection: 'row', justifyContent: 'flex-end' },
 });

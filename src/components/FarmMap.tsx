@@ -13,7 +13,7 @@ interface FarmMapProps {
   location: UserLocation;
 }
 
-/** Apple Maps on iPhone (no API key needed). Pins are green when open, terracotta when closed. */
+/** Apple Maps on iPhone (no API key needed). Pins are green when open, grey (secondaryLabel) when closed. */
 export default function FarmMap({ results, location }: FarmMapProps) {
   const mapRef = useRef<MapView>(null);
 
@@ -41,7 +41,7 @@ export default function FarmMap({ results, location }: FarmMapProps) {
           coordinate={{ latitude: location.lat, longitude: location.lng }}
           title="Your search area"
           description={location.label}
-          pinColor="#2F5D9C"
+          pinColor={lightPalette.label}
         />
       )}
       {results.map(({ farm, status }) => (
@@ -50,7 +50,7 @@ export default function FarmMap({ results, location }: FarmMapProps) {
           coordinate={{ latitude: farm.lat, longitude: farm.lng }}
           title={farm.isSample ? `SAMPLE: ${farm.name}` : farm.name}
           description={`${VENUE_LABELS[farm.type]} · ${status.label}`}
-          pinColor={status.isOpen ? lightPalette.green : lightPalette.orange}
+          pinColor={status.isOpen ? lightPalette.green : lightPalette.secondaryLabel}
         />
       ))}
     </MapView>

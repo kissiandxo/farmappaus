@@ -2,17 +2,18 @@ import { router, useLocalSearchParams } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { Alert, ScrollView, StyleSheet, Text, View } from 'react-native';
 
-import { Btn, Card, ChipGroup, Field, Notice, SwitchRow } from '../../components/FormBits';
+import { ChipGroup, Field, Notice } from '../../components/FormBits';
+import { BulletLine, FieldLabel, Pad } from '../../components/EditorBits';
 import { HoursEditor } from '../../components/HoursEditor';
 import { LicencesEditor } from '../../components/LicencesEditor';
 import { PhotosEditor } from '../../components/PhotosEditor';
 import { PlaceSearch } from '../../components/PlaceSearch';
 import { ProductsEditor } from '../../components/ProductsEditor';
+import { Button, Row, Section, success } from '../../components/ui';
 import { deleteFarm, fetchFarmById, saveFarm, submitForReview } from '../../data/mutations';
 import { blankFarm, friendlyDbError, STATUS_LABELS, statusAdvice } from '../../domain/listing';
 import { formatPlace } from '../../domain/places';
 import {
-  FARM_TAGS,
   FULFILMENT_LABELS,
   PAYMENT_LABELS,
   TAG_LABELS,
@@ -26,7 +27,7 @@ import {
 import { draftIssues, normaliseAuPhone } from '../../domain/validation';
 import { useSearch } from '../../state/SearchContext';
 import { useAuth } from '../../state/AuthContext';
-import { colors, font, space } from '../../theme';
+import { colors, space, type } from '../../theme';
 
 const toggleIn = <T,>(list: T[], item: T) => (list.includes(item) ? list.filter((x) => x !== item) : [...list, item]);
 const options = <T extends string>(labels: Record<T, string>) => (Object.keys(labels) as T[]).map((value) => ({ value, label: labels[value] }));
@@ -50,13 +51,13 @@ export default function EditListingScreen() {
 
   if (!userId || (role !== 'farmer' && role !== 'admin')) {
     return (
-      <View style={styles.content}>
+      <View style={styles.guard}>
         <Notice kind="info">Create a free farmer account first (Account tab, then My listings).</Notice>
       </View>
     );
   }
-  if (loadError) return <View style={styles.content}><Notice kind="error">{loadError}</Notice></View>;
-  if (!farm) return <View style={styles.content}><Text style={styles.body}>Loading…</Text></View>;
+  if (loadError) return <View style={styles.guard}><Notice kind="error">{loadError}</Notice></View>;
+  if (!farm) return <View style={styles.guard}><Text style={styles.body}>Loading…</Text></View>;
 
   const set = (patch: Partial<Farm>) => setFarm({ ...farm, ...patch });
   const status = farm.status ?? 'draft';
@@ -89,6 +90,7 @@ export default function EditListingScreen() {
     const savedId = await save();
     setBusy(false);
     if (savedId) {
+      success();
       setNotice({
         kind: 'ok',
         text:
@@ -112,6 +114,7 @@ export default function EditListingScreen() {
     if (savedId) {
       try {
         await submitForReview(savedId);
+        success();
         router.replace('/farmer');
         refresh();
       } catch (e) {
@@ -141,88 +144,131 @@ export default function EditListingScreen() {
   const phoneProblem = farm.phone && !normaliseAuPhone(farm.phone) ? 'That phone number doesn’t look right.' : null;
 
   return (
-    <ScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
+    <ScrollView
+      style={styles.screen}
+      contentContainerStyle={styles.content}
+      keyboardShouldPersistTaps="handled"
+      contentInsetAdjustmentBehavior="automatic"
+    >
       {farm.id ? (
-        <Notice kind={status === 'live' ? 'ok' : status === 'rejected' ? 'error' : 'info'}>
-          <Text style={styles.statusTitle}>{STATUS_LABELS[status]}</Text>
-          <Text style={styles.body}>{statusAdvice(status, farm.reviewNote)}</Text>
-        </Notice>
+        <View style={styles.inset}>
+          <Notice kind={status === 'live' ? 'ok' : status === 'rejected' ? 'error' : 'info'}>
+            <Text style={styles.statusTitle}>{STATUS_LABELS[status]}</Text>
+            <Text style={styles.body}>{statusAdvice(status, farm.reviewNote)}</Text>
+          </Notice>
+        </View>
       ) : null}
 
-      <Card title="About your place">
-        <Field label="Name" value={farm.name} onChangeText={(name) => set({ name })} maxLength={100} placeholder="e.g. Creek Road Eggs" />
-        <Text style={styles.label}>What kind of place is it?</Text>
-        <ChipGroup options={options<VenueType>(VENUE_LABELS)} value={farm.type} onChange={(type) => set({ type })} />
-        <Field
-          label="Your story"
-          value={farm.story}
-          onChangeText={(story) => set({ story })}
-          multiline
-          maxLength={2000}
-          hint="Who you are, how you farm, what makes your produce special."
-        />
-        <Text style={styles.label}>Good to know (tap any that are true)</Text>
-        <ChipGroup options={options<FarmTag>(TAG_LABELS)} value={farm.tags} onChange={(tag) => set({ tags: toggleIn(farm.tags, tag) })} />
-      </Card>
+      <Section header="About your place">
+        <Pad>
+          <Field label="Name" value={farm.name} onChangeText={(name) => set({ name })} maxLength={100} placeholder="e.g. Creek Road Eggs" />
+        </Pad>
+        <Pad>
+          <FieldLabel>What kind of place is it?</FieldLabel>
+          <ChipGroup options={options<VenueType>(VENUE_LABELS)} value={farm.type} onChange={(type) => set({ type })} />
+        </Pad>
+        <Pad>
+          <Field
+            label="Your story"
+            value={farm.story}
+            onChangeText={(story) => set({ story })}
+            multiline
+            maxLength={2000}
+            hint="Who you are, how you farm, what makes your produce special."
+          />
+        </Pad>
+        <Pad>
+          <FieldLabel>Good to know (tap any that are true)</FieldLabel>
+          <ChipGroup options={options<FarmTag>(TAG_LABELS)} value={farm.tags} onChange={(tag) => set({ tags: toggleIn(farm.tags, tag) })} />
+        </Pad>
+      </Section>
 
-      <Card title="Where are you?" hint="Customers see your suburb and a pin on the map.">
-        <PlaceSearch
-          label="Suburb or postcode"
-          chosen={farm.postcode ? formatPlace({ ...farm, postcode: farm.postcode }) : ''}
-          onSelect={(p) => set({ state: p.state, locality: p.locality, postcode: p.postcode, lat: p.lat, lng: p.lng })}
-        />
-      </Card>
+      <Section header="Where are you?" footer="Customers see your suburb and a pin on the map.">
+        <Pad>
+          <PlaceSearch
+            label="Suburb or postcode"
+            chosen={farm.postcode ? formatPlace({ ...farm, postcode: farm.postcode }) : ''}
+            onSelect={(p) => set({ state: p.state, locality: p.locality, postcode: p.postcode, lat: p.lat, lng: p.lng })}
+          />
+        </Pad>
+      </Section>
 
-      <Card title="Opening hours">
+      <Section header="Opening hours">
         <HoursEditor hours={farm.hours} onChange={(hours) => set({ hours })} />
-      </Card>
+      </Section>
 
-      <Card title="Pick-up, delivery and payment">
-        <Text style={styles.label}>How do customers get it?</Text>
-        <ChipGroup options={options<Fulfilment>(FULFILMENT_LABELS)} value={farm.fulfilment} onChange={(f) => set({ fulfilment: toggleIn(farm.fulfilment, f) })} />
-        <Text style={styles.label}>How can they pay you?</Text>
-        <ChipGroup options={options<PaymentType>(PAYMENT_LABELS)} value={farm.paymentTypes} onChange={(p) => set({ paymentTypes: toggleIn(farm.paymentTypes, p) })} />
-        <Text style={styles.hint}>Customers pay you directly. Farm Direct doesn’t take payments.</Text>
-      </Card>
+      <Section header="Pick-up, delivery and payment" footer="Customers pay you directly. Farm Direct doesn’t take payments.">
+        <Pad>
+          <FieldLabel>How do customers get it?</FieldLabel>
+          <ChipGroup options={options<Fulfilment>(FULFILMENT_LABELS)} value={farm.fulfilment} onChange={(f) => set({ fulfilment: toggleIn(farm.fulfilment, f) })} />
+        </Pad>
+        <Pad>
+          <FieldLabel>How can they pay you?</FieldLabel>
+          <ChipGroup options={options<PaymentType>(PAYMENT_LABELS)} value={farm.paymentTypes} onChange={(p) => set({ paymentTypes: toggleIn(farm.paymentTypes, p) })} />
+        </Pad>
+      </Section>
 
-      <Card title="Contact" hint="Add a phone number, a website, or both.">
-        <Field label="Phone" value={farm.phone ?? ''} onChangeText={(phone) => set({ phone })} keyboardType="phone-pad" placeholder="e.g. 0412 345 678" error={phoneProblem} />
-        <Field label="Website (optional)" value={farm.website ?? ''} onChangeText={(website) => set({ website })} keyboardType="url" autoCapitalize="none" placeholder="e.g. www.example.com.au" />
-      </Card>
+      <Section header="Contact" footer="Add a phone number, a website, or both.">
+        <Pad>
+          <Field label="Phone" value={farm.phone ?? ''} onChangeText={(phone) => set({ phone })} keyboardType="phone-pad" placeholder="e.g. 0412 345 678" error={phoneProblem} />
+        </Pad>
+        <Pad>
+          <Field label="Website (optional)" value={farm.website ?? ''} onChangeText={(website) => set({ website })} keyboardType="url" autoCapitalize="none" placeholder="e.g. www.example.com.au" />
+        </Pad>
+      </Section>
 
-      <Card title="What you sell">
+      <Section header="What you sell">
         <ProductsEditor products={farm.products} onChange={(products) => set({ products })} />
-      </Card>
+      </Section>
 
-      <Card title="Licences and accreditation">
+      <Section header="Licences and accreditation">
         <LicencesEditor farm={farm} onChange={(licences) => set({ licences })} />
-      </Card>
+      </Section>
 
-      <Card title="Photos">
+      <Section header="Photos">
         <PhotosEditor farmId={farm.id || undefined} photos={farm.photos ?? []} onChange={(photos) => set({ photos })} />
-      </Card>
+      </Section>
 
       {notice && (
-        <Notice kind={notice.kind}>
-          <Text style={styles.body}>{notice.text}</Text>
-          {notice.list?.map((line) => (
-            <Text key={line} style={styles.body}>• {line}</Text>
-          ))}
-        </Notice>
+        <View style={styles.inset}>
+          <Notice kind={notice.kind}>
+            <Text style={styles.body}>{notice.text}</Text>
+            {notice.list?.map((line) => (
+              <BulletLine key={line}>{line}</BulletLine>
+            ))}
+          </Notice>
+        </View>
       )}
 
-      <Btn label={busy ? 'Saving…' : status === 'live' ? 'Save changes' : 'Save draft'} kind={canSubmit ? 'secondary' : 'primary'} onPress={onSave} disabled={busy} />
-      {canSubmit && <Btn label="Send for review" kind="primary" onPress={onSubmit} disabled={busy} />}
-      {canSubmit && issues.length > 0 && <Text style={styles.hint}>{issues.length} thing{issues.length === 1 ? '' : 's'} left to fix before you can send it.</Text>}
-      {farm.id && (status === 'draft' || status === 'rejected') && <Btn label="Delete this listing" kind="danger" onPress={onDelete} />}
+      <View style={styles.actions}>
+        <Button
+          label={busy ? 'Saving…' : status === 'live' ? 'Save changes' : 'Save draft'}
+          variant={canSubmit ? 'tinted' : 'filled'}
+          onPress={onSave}
+          disabled={busy}
+        />
+        {canSubmit && <Button label="Send for review" variant="filled" onPress={onSubmit} disabled={busy} />}
+        {canSubmit && issues.length > 0 && (
+          <Text style={styles.hint}>{issues.length} thing{issues.length === 1 ? '' : 's'} left to fix before you can send it.</Text>
+        )}
+      </View>
+
+      {farm.id && (status === 'draft' || status === 'rejected') && (
+        <Section>
+          <Row title="Delete this listing" destructive onPress={onDelete} />
+        </Section>
+      )}
     </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  content: { padding: space.lg, gap: space.md, paddingBottom: space.xl * 3 },
-  body: { fontSize: font.body, color: colors.text, lineHeight: 26 },
-  label: { fontSize: font.body, fontWeight: '700', color: colors.text },
-  hint: { fontSize: font.small, color: colors.textMuted },
-  statusTitle: { fontSize: font.large, fontWeight: '700', color: colors.text },
+  screen: { backgroundColor: colors.groupedBackground },
+  content: { paddingTop: space.sm, paddingBottom: space.xxl },
+  guard: { padding: space.lg },
+  inset: { marginHorizontal: space.lg, marginBottom: space.xl, gap: space.md },
+  actions: { marginHorizontal: space.lg, marginBottom: space.xl, gap: space.md },
+  body: { ...type.callout, color: colors.label },
+  statusTitle: { ...type.headline, color: colors.label },
+  hint: { ...type.footnote, color: colors.secondaryLabel, textAlign: 'center' },
 });

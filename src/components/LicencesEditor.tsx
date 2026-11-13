@@ -4,8 +4,10 @@ import { StyleSheet, Text, View } from 'react-native';
 import { blankLicence, missingLicenceCategories } from '../domain/listing';
 import { LICENCE_LABELS, type Farm, type Licence, type LicenceCategory } from '../domain/types';
 import { isoToAuDate, parseAuDate } from '../domain/validation';
-import { colors, font, space } from '../theme';
-import { Btn, ChipGroup, Field, Notice } from './FormBits';
+import { colors, space, type } from '../theme';
+import { ChipGroup, Field, Notice } from './FormBits';
+import { Divided, IconButton, Pad } from './EditorBits';
+import { Button, Icon } from './ui';
 
 const CATEGORY_OPTIONS = (Object.keys(LICENCE_LABELS) as LicenceCategory[]).map((value) => ({ value, label: LICENCE_LABELS[value] }));
 
@@ -31,6 +33,7 @@ function ExpiryField({ iso, onChange }: { iso: string | undefined; onChange: (is
   );
 }
 
+/** One block per licence (remove as an icon button), then a plain "Add a licence" row per missing category. */
 export function LicencesEditor({
   farm,
   onChange,
@@ -44,20 +47,32 @@ export function LicencesEditor({
     onChange(licences.map((l, i) => (i === index ? { ...l, ...patch } : l)));
 
   return (
-    <View style={styles.wrap}>
-      <Text style={styles.explain}>
-        Milk, eggs, chicken, beef, lamb and pork must come from a licensed or registered business. Add the licence or
-        accreditation number your state regulator gave you. We check these before a listing goes live.
-      </Text>
-      {missing.length > 0 && (
-        <Notice kind="warn">
-          {`You sell products that need a licence: ${missing.map((c) => LICENCE_LABELS[c].toLowerCase()).join(', ')}. Add one below.`}
-        </Notice>
-      )}
+    <Divided>
+      <Pad>
+        <Text style={styles.explain}>
+          Milk, eggs, chicken, beef, lamb and pork must come from a licensed or registered business. Add the licence or
+          accreditation number your state regulator gave you. We check these before a listing goes live.
+        </Text>
+        {missing.length > 0 && (
+          <Notice kind="warn">
+            {`You sell products that need a licence: ${missing.map((c) => LICENCE_LABELS[c].toLowerCase()).join(', ')}. Add one below.`}
+          </Notice>
+        )}
+      </Pad>
 
       {licences.map((licence, index) => (
-        <View key={licence.id ?? `new-${index}`} style={styles.item}>
-          <Text style={styles.itemTitle}>Licence {index + 1}</Text>
+        <Pad key={licence.id ?? `new-${index}`} style={styles.item}>
+          <View style={styles.itemHead}>
+            <Text style={[type.headline, styles.itemTitle]} accessibilityRole="header">
+              Licence {index + 1}
+            </Text>
+            <IconButton
+              icon="minus.circle.fill"
+              label="Remove this licence"
+              color={colors.red}
+              onPress={() => onChange(licences.filter((_, i) => i !== index))}
+            />
+          </View>
           <ChipGroup options={CATEGORY_OPTIONS} value={licence.category} onChange={(category) => update(index, { category })} />
           <Field
             label="Who issued it? (regulator)"
@@ -68,28 +83,41 @@ export function LicencesEditor({
           />
           <Field label="Licence or registration number" value={licence.licenceNumber} onChangeText={(licenceNumber) => update(index, { licenceNumber })} maxLength={60} autoCapitalize="none" />
           <ExpiryField iso={licence.expiresOn} onChange={(expiresOn) => update(index, { expiresOn })} />
-          <Text style={styles.status}>
-            {licence.status === 'admin_checked' ? '✓ Checked by Farm Direct' : 'Declared by you. We’ll check it during review.'}
-          </Text>
-          <Btn label="Remove this licence" kind="danger" onPress={() => onChange(licences.filter((_, i) => i !== index))} />
-        </View>
+          {licence.status === 'admin_checked' ? (
+            <View style={styles.checked}>
+              <Icon name="checkmark.seal.fill" size={16} color={colors.green} />
+              <Text style={styles.status}>Checked by Farm Direct</Text>
+            </View>
+          ) : (
+            <Text style={styles.status}>Declared by you. We’ll check it during review.</Text>
+          )}
+        </Pad>
       ))}
 
-      {missing.length > 0 ? (
-        missing.map((category) => (
-          <Btn key={category} label={`Add a ${LICENCE_LABELS[category].toLowerCase()} licence`} onPress={() => onChange([...licences, blankLicence(category)])} />
-        ))
-      ) : (
-        <Btn label="Add a licence" onPress={() => onChange([...licences, blankLicence('other')])} />
-      )}
-    </View>
+      <Pad>
+        {missing.length > 0 ? (
+          missing.map((category) => (
+            <Button
+              key={category}
+              label={`Add a ${LICENCE_LABELS[category].toLowerCase()} licence`}
+              icon="plus.circle.fill"
+              variant="plain"
+              onPress={() => onChange([...licences, blankLicence(category)])}
+            />
+          ))
+        ) : (
+          <Button label="Add a licence" icon="plus.circle.fill" variant="plain" onPress={() => onChange([...licences, blankLicence('other')])} />
+        )}
+      </Pad>
+    </Divided>
   );
 }
 
 const styles = StyleSheet.create({
-  wrap: { gap: space.md },
-  explain: { fontSize: font.body, color: colors.text, lineHeight: 26 },
-  item: { gap: space.md, borderTopWidth: 1, borderTopColor: colors.border, paddingTop: space.md },
-  itemTitle: { fontSize: font.large, fontWeight: '700', color: colors.text },
-  status: { fontSize: font.small, color: colors.textMuted },
+  explain: { ...type.callout, color: colors.label },
+  item: { gap: space.md },
+  itemHead: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
+  itemTitle: { color: colors.label },
+  checked: { flexDirection: 'row', alignItems: 'center', gap: space.xs },
+  status: { ...type.footnote, color: colors.secondaryLabel },
 });

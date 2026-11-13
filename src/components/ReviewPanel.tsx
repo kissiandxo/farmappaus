@@ -7,10 +7,12 @@ import { validateListing } from '../domain/compliance';
 import { friendlyDbError } from '../domain/listing';
 import { LICENCE_LABELS, type Farm } from '../domain/types';
 import { draftIssues } from '../domain/validation';
-import { colors, font } from '../theme';
-import { Btn, Card, Field, Notice } from './FormBits';
+import { colors, space, type } from '../theme';
+import { Field, Notice } from './FormBits';
+import { BulletLine, Pad } from './EditorBits';
+import { Button, Section } from './ui';
 
-/** Shown to administrators above a listing that is waiting for review. */
+/** Shown to administrators above a listing that is waiting for review. A grouped Section with the decisions at the bottom. */
 export function ReviewPanel({ farm, onChanged }: { farm: Farm; onChanged: () => void }) {
   const [note, setNote] = useState('');
   const [busy, setBusy] = useState(false);
@@ -48,42 +50,58 @@ export function ReviewPanel({ farm, onChanged }: { farm: Farm; onChanged: () => 
   };
 
   return (
-    <Card title="Review this listing" hint="Only reviewers see this panel.">
+    <Section header="Review this listing" footer="Only reviewers see this panel.">
       {blocking.length > 0 && (
-        <Notice kind="error">
-          <Text style={styles.text}>Can’t be approved yet:</Text>
-          {blocking.map((m) => (
-            <Text key={m} style={styles.text}>• {m}</Text>
-          ))}
-        </Notice>
+        <Pad>
+          <Notice kind="error">
+            <Text style={styles.heading}>Can’t be approved yet:</Text>
+            {blocking.map((m) => (
+              <BulletLine key={m}>{m}</BulletLine>
+            ))}
+          </Notice>
+        </Pad>
       )}
       {otherIssues.length > 0 && (
-        <Notice kind="warn">
-          <Text style={styles.text}>Worth a look:</Text>
-          {otherIssues.map((m) => (
-            <Text key={m} style={styles.text}>• {m}</Text>
-          ))}
-        </Notice>
+        <Pad>
+          <Notice kind="warn">
+            <Text style={styles.heading}>Worth a look:</Text>
+            {otherIssues.map((m) => (
+              <BulletLine key={m}>{m}</BulletLine>
+            ))}
+          </Notice>
+        </Pad>
       )}
       {farm.licences.map(
         (l) =>
           l.id && (
-            <Btn
-              key={l.id}
-              label={`${LICENCE_LABELS[l.category]} licence ${l.licenceNumber}: ${l.status === 'admin_checked' ? '✓ checked (tap to undo)' : 'mark as checked'}`}
-              onPress={() => toggleChecked(l.id as string, l.status !== 'admin_checked')}
-            />
+            <Pad key={l.id}>
+              <Button
+                label={`${LICENCE_LABELS[l.category]} licence ${l.licenceNumber}: ${l.status === 'admin_checked' ? 'checked (tap to undo)' : 'mark as checked'}`}
+                icon={l.status === 'admin_checked' ? 'checkmark.circle.fill' : undefined}
+                variant="tinted"
+                onPress={() => toggleChecked(l.id as string, l.status !== 'admin_checked')}
+              />
+            </Pad>
           ),
       )}
-      <Field label="Note to the farmer (needed to ask for changes or reject)" value={note} onChangeText={setNote} multiline maxLength={500} />
-      {error && <Notice kind="error">{error}</Notice>}
-      <Btn label="Approve and publish" kind="primary" onPress={() => decide('approve')} disabled={busy || blocking.length > 0} />
-      <Btn label="Ask for changes" onPress={() => decide('request_changes')} disabled={busy} />
-      <Btn label="Reject" kind="danger" onPress={() => decide('reject')} disabled={busy} />
-    </Card>
+      <Pad>
+        <Field label="Note to the farmer (needed to ask for changes or reject)" value={note} onChangeText={setNote} multiline maxLength={500} />
+      </Pad>
+      {error && (
+        <Pad>
+          <Notice kind="error">{error}</Notice>
+        </Pad>
+      )}
+      <Pad style={styles.actions}>
+        <Button label="Approve and publish" variant="filled" onPress={() => decide('approve')} disabled={busy || blocking.length > 0} />
+        <Button label="Ask for changes" variant="tinted" onPress={() => decide('request_changes')} disabled={busy} />
+        <Button label="Reject" variant="tinted" role="destructive" onPress={() => decide('reject')} disabled={busy} />
+      </Pad>
+    </Section>
   );
 }
 
 const styles = StyleSheet.create({
-  text: { fontSize: font.body, color: colors.text, lineHeight: 26 },
+  heading: { ...type.headline, color: colors.label },
+  actions: { gap: space.sm },
 });

@@ -2,79 +2,93 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { activeFilterCount } from '../domain/filters';
 import { useSearch } from '../state/SearchContext';
-import { colors, font, MIN_TAP, radius, space } from '../theme';
+import { colors, MIN_TAP, radius, space, type } from '../theme';
+import { Icon } from './ui';
 
 interface LocationBarProps {
   onChangeLocation: () => void;
   onOpenFilters: () => void;
 }
 
-/** Compact bar shown above the list and the map: where we are searching from, and filters. */
+/**
+ * Compact row above the Explore list: pin + suburb (tint, opens the location sheet) on the left,
+ * a small Filters capsule with the active count on the right, then the result count underneath.
+ */
 export function LocationBar({ onChangeLocation, onOpenFilters }: LocationBarProps) {
   const { location, filters, results } = useSearch();
   const filterCount = activeFilterCount(filters);
   const count = results.length === 1 ? '1 place' : `${results.length} places`;
+  const isDefault = location.source === 'default';
 
   return (
     <View style={styles.bar}>
-      <Text style={styles.where} accessibilityRole="header">
-        {location.source === 'default' ? 'Showing distances from ' : 'Near '}
-        <Text style={styles.whereName}>{location.label}</Text>
-      </Text>
-      {location.source === 'default' && (
-        <Text style={styles.hint}>Set your location to see real distances.</Text>
-      )}
-
-      <View style={styles.buttons}>
+      <View style={styles.row}>
         <Pressable
           onPress={onChangeLocation}
           accessibilityRole="button"
           accessibilityLabel="Change location"
-          style={[styles.button, location.source === 'default' ? styles.primary : styles.secondary]}
+          hitSlop={6}
+          style={({ pressed }) => [styles.where, pressed && styles.pressed]}
         >
-          <Text style={[styles.buttonText, location.source === 'default' && styles.primaryText]}>
-            {location.source === 'default' ? 'Set my location' : 'Change location'}
+          <Icon name="location.fill" size={15} color={colors.tint} />
+          <Text style={styles.whereText} numberOfLines={1}>
+            {location.label}
           </Text>
+          <Icon name="chevron.down" size={12} weight="semibold" color={colors.tint} />
         </Pressable>
+
         <Pressable
           onPress={onOpenFilters}
           accessibilityRole="button"
           accessibilityLabel={`Filters, ${filterCount} on`}
-          style={[styles.button, styles.secondary]}
+          hitSlop={6}
+          style={({ pressed }) => [styles.filters, pressed && styles.pressed]}
         >
-          <Text style={styles.buttonText}>{filterCount > 0 ? `Filters (${filterCount})` : 'Filters'}</Text>
+          <Icon name="line.3.horizontal.decrease" size={15} weight="medium" color={colors.tint} />
+          <Text style={styles.filtersText}>Filters</Text>
+          {filterCount > 0 && (
+            <View style={styles.countBadge}>
+              <Text style={styles.countBadgeText}>{filterCount}</Text>
+            </View>
+          )}
         </Pressable>
       </View>
 
       <Text style={styles.count} accessibilityLiveRegion="polite">
         {count}
       </Text>
+      {isDefault && <Text style={styles.hint}>Set your location to see real distances.</Text>}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  bar: {
-    backgroundColor: colors.surface,
-    padding: space.lg,
-    gap: space.sm,
-    borderBottomWidth: 1,
-    borderBottomColor: colors.border,
+  bar: { gap: space.xs },
+  row: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: space.md, minHeight: MIN_TAP },
+  where: { flexDirection: 'row', alignItems: 'center', gap: 6, flexShrink: 1, minHeight: MIN_TAP },
+  whereText: { ...type.headline, color: colors.tint, flexShrink: 1 },
+  filters: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+    minHeight: 32,
+    paddingHorizontal: 12,
+    borderRadius: radius.capsule,
+    borderCurve: 'continuous',
+    backgroundColor: colors.fill,
   },
-  where: { fontSize: font.body, color: colors.textMuted },
-  whereName: { fontWeight: '700', color: colors.text, fontSize: font.large },
-  hint: { fontSize: font.small, color: colors.accent, fontWeight: '600' },
-  buttons: { flexDirection: 'row', flexWrap: 'wrap', gap: space.sm },
-  button: {
-    minHeight: MIN_TAP,
+  filtersText: { ...type.subheadline, fontWeight: '600', color: colors.label },
+  countBadge: {
+    minWidth: 18,
+    height: 18,
+    paddingHorizontal: 5,
+    borderRadius: 9,
+    alignItems: 'center',
     justifyContent: 'center',
-    paddingHorizontal: space.lg,
-    borderRadius: radius.chip,
-    borderWidth: 2,
+    backgroundColor: colors.tint,
   },
-  primary: { backgroundColor: colors.accent, borderColor: colors.accent },
-  secondary: { backgroundColor: colors.chip, borderColor: colors.border },
-  buttonText: { fontSize: font.body, fontWeight: '700', color: colors.text },
-  primaryText: { color: colors.onPrimary },
-  count: { fontSize: font.large, fontWeight: '700', color: colors.primary },
+  countBadgeText: { ...type.caption, fontWeight: '600', color: colors.onTint },
+  pressed: { opacity: 0.6 },
+  count: { ...type.footnote, color: colors.secondaryLabel },
+  hint: { ...type.footnote, color: colors.secondaryLabel },
 });

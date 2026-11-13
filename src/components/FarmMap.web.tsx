@@ -1,8 +1,9 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 import type { FarmResult } from '../domain/filters';
 import type { UserLocation } from '../state/SearchContext';
-import { colors, font, space } from '../theme';
+import { colors, space } from '../theme';
+import { EmptyState } from './ui';
 
 interface FarmMapProps {
   results: FarmResult[];
@@ -13,16 +14,15 @@ interface FarmMapProps {
 export default function FarmMap({ results, location }: FarmMapProps) {
   return (
     <View style={styles.box}>
-      <Text style={styles.title}>Map preview is available in the iPhone app</Text>
-      <Text style={styles.text}>
-        {results.length} places near {location.label} would be pinned here.
-      </Text>
+      <EmptyState
+        icon="map"
+        title="Map preview is available in the iPhone app"
+        message={`${results.length} places near ${location.label} would be pinned here.`}
+      />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  box: { flex: 1, alignItems: 'center', justifyContent: 'center', padding: space.xl, gap: space.sm, backgroundColor: colors.chip },
-  title: { fontSize: font.title, fontWeight: '700', color: colors.text, textAlign: 'center' },
-  text: { fontSize: font.body, color: colors.textMuted, textAlign: 'center' },
+  box: { flex: 1, backgroundColor: colors.groupedBackground, padding: space.lg },
 });

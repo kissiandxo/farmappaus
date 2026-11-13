@@ -1,7 +1,11 @@
 import { Image } from 'expo-image';
 import { router, Stack, useLocalSearchParams } from 'expo-router';
-import { Linking, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Linking, Pressable, ScrollView, StyleSheet, Text, useWindowDimensions, View, type ColorValue } from 'react-native';
 
+import { ReviewPanel } from '../../components/ReviewPanel';
+import { Notice } from '../../components/FormBits';
+import { Badge, EmptyState, Icon, Row, Section, tapLight, type SFSymbol } from '../../components/ui';
+import { ROW_PADDING } from '../../components/ui/Row';
 import { licenceBadge } from '../../domain/compliance';
 import { formatDistance, haversineKm } from '../../domain/geo';
 import { hoursLines, localDayAndMinutes, openStatus, timezoneForState } from '../../domain/hours';
@@ -16,35 +20,59 @@ import {
   TAG_LABELS,
   VENUE_LABELS,
 } from '../../domain/types';
-import { ReviewPanel } from '../../components/ReviewPanel';
 import { statusAdvice, STATUS_LABELS } from '../../domain/listing';
 import { isBackendConfigured } from '../../lib/supabase';
 import { useAuth } from '../../state/AuthContext';
 import { useFavourites } from '../../state/FavouritesContext';
 import { useSearch } from '../../state/SearchContext';
 import { useFarm } from '../../state/useFarm';
-import { colors, font, MIN_TAP, radius, space } from '../../theme';
+import { colors, MIN_TAP, radius, space, type } from '../../theme';
 
-function Section({ title, children }: { title: string; children: React.ReactNode }) {
-  return (
-    <View style={styles.section}>
-      <Text style={styles.sectionTitle} accessibilityRole="header">
-        {title}
-      </Text>
-      {children}
-    </View>
-  );
-}
+/** Hero photo height (pt). Edge to edge, under the navigation bar. */
+const HERO_HEIGHT = 240;
 
-function ActionButton({ label, onPress, primary }: { label: string; onPress: () => void; primary?: boolean }) {
+/** Equal-width action tile, like the Apple Maps place card: symbol above a footnote label. */
+function ActionTile({
+  icon,
+  label,
+  onPress,
+  accessibilityLabel,
+  color,
+  selected,
+}: {
+  icon: SFSymbol;
+  label: string;
+  onPress: () => void;
+  accessibilityLabel?: string;
+  color?: ColorValue;
+  selected?: boolean;
+}) {
+  const tone = color ?? colors.tint;
   return (
     <Pressable
       onPress={onPress}
       accessibilityRole="button"
-      style={({ pressed }) => [styles.action, primary ? styles.actionPrimary : styles.actionSecondary, pressed && { opacity: 0.8 }]}
+      accessibilityLabel={accessibilityLabel ?? label}
+      accessibilityState={selected !== undefined ? { selected } : undefined}
+      style={({ pressed }) => [styles.tile, pressed && styles.tilePressed]}
     >
-      <Text style={[styles.actionText, primary && { color: colors.onPrimary }]}>{label}</Text>
+      <Icon name={icon} size={24} color={tone} />
+      <Text style={[type.footnote, styles.tileLabel, { color: tone }]}>{label}</Text>
     </Pressable>
+  );
+}
+
+/**
+ * One opening-hours line. Same metrics as `Row`, but today's line is semibold, which `Row` cannot do.
+ */
+function HoursRow({ day, text, today }: { day: string; text: string; today: boolean }) {
+  return (
+    <View style={styles.hoursRow}>
+      <Text style={[type.body, { color: colors.label, fontWeight: today ? '600' : '400' }]}>{day}</Text>
+      <Text style={[type.body, styles.hoursValue, { fontWeight: today ? '600' : '400' }]} numberOfLines={1}>
+        {text}
+      </Text>
+    </View>
   );
 }
 
@@ -54,19 +82,24 @@ export default function FarmProfileScreen() {
   const { isFavourite, toggleFavourite } = useFavourites();
   const { userId, role } = useAuth();
   const { farm, loading, reload } = useFarm(id);
+  const { width } = useWindowDimensions();
 
   if (!farm) {
     return (
       <View style={styles.missing}>
         <Stack.Screen options={{ title: loading ? 'Loading…' : 'Not found' }} />
-        <Text style={styles.sectionTitle}>{loading ? 'Loading…' : 'We couldn’t find that place'}</Text>
-        {!loading && <Text style={styles.body}>It may have been removed. Go back and try another.</Text>}
+        {loading ? (
+          <EmptyState icon="leaf" title="Loading…" />
+        ) : (
+          <EmptyState icon="mappin.slash" title="We couldn’t find that place" message="It may have been removed. Go back and try another." />
+        )}
       </View>
     );
   }
 
   const isOwner = !!userId && farm.ownerId === userId;
   const canClaim = isBackendConfigured && !farm.isSample && farm.status === 'live' && !farm.ownerId && !!userId;
+  const canReport = isBackendConfigured && !farm.isSample && farm.status === 'live' && !!userId;
   const showReview = role === 'admin' && farm.status === 'pending';
 
   const tz = timezoneForState(farm.state);
@@ -79,18 +112,20 @@ export default function FarmProfileScreen() {
   const web = farm.website ? websiteUrl(farm.website) : null;
   const badge = licenceBadge(farm);
   const todayIso = now.toISOString().slice(0, 10);
+  const photos = farm.photos ?? [];
+  const meta = `${VENUE_LABELS[farm.type]} · ${farm.locality}, ${STATE_NAMES[farm.state]} ${farm.postcode}`;
 
   return (
-    <ScrollView contentContainerStyle={styles.content}>
+    <ScrollView contentInsetAdjustmentBehavior="automatic" contentContainerStyle={styles.content}>
       <Stack.Screen options={{ title: farm.name }} />
 
-      {farm.photos && farm.photos.length > 0 ? (
-        <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.photos}>
-          {farm.photos.map((uri) => (
+      {photos.length > 0 ? (
+        <ScrollView horizontal pagingEnabled showsHorizontalScrollIndicator={false} style={{ height: HERO_HEIGHT }}>
+          {photos.map((uri) => (
             <Image
               key={uri}
               source={{ uri }}
-              style={styles.photo}
+              style={{ width, height: HERO_HEIGHT, backgroundColor: colors.fill }}
               contentFit="cover"
               cachePolicy="memory-disk"
               accessibilityLabel={`Photo of ${farm.name}`}
@@ -98,176 +133,206 @@ export default function FarmProfileScreen() {
           ))}
         </ScrollView>
       ) : (
-        <View style={styles.noPhoto} accessible accessibilityLabel="No photos yet">
-          <Text style={styles.noPhotoText}>No photos yet</Text>
+        <View style={[styles.noPhoto, { width, height: HERO_HEIGHT }]} accessible accessibilityLabel="No photos yet">
+          <Icon name="leaf" size={56} color={colors.tertiaryLabel} weight="light" />
+          <Text style={[type.body, { color: colors.secondaryLabel }]}>No photos yet</Text>
         </View>
       )}
 
       {farm.status && farm.status !== 'live' && (
-        <View style={styles.sample} accessibilityRole="alert">
-          <Text style={styles.sampleText}>
-            {STATUS_LABELS[farm.status]}: {statusAdvice(farm.status, farm.reviewNote)} Only you{role === 'admin' ? ' and reviewers' : ''} can see this.
-          </Text>
+        <View style={styles.pad}>
+          <Notice kind="warn">
+            {`${STATUS_LABELS[farm.status]}: ${statusAdvice(farm.status, farm.reviewNote)} Only you${role === 'admin' ? ' and reviewers' : ''} can see this.`}
+          </Notice>
         </View>
       )}
 
-      {showReview && <ReviewPanel farm={farm} onChanged={reload} />}
+      {showReview && (
+        <View style={styles.pad}>
+          <ReviewPanel farm={farm} onChanged={reload} />
+        </View>
+      )}
 
       {(isOwner || role === 'admin') && !farm.isSample && !!farm.id && (
-        <View style={styles.actions}>
-          <ActionButton label={isOwner ? 'Edit my listing' : 'Edit this listing (reviewer)'} onPress={() => router.push(`/farmer/${farm.id}`)} />
-          {farm.products.length > 0 && <ActionButton label="Update stock and prices" onPress={() => router.push(`/farmer/stock/${farm.id}`)} />}
-        </View>
+        <Section>
+          <Row
+            title={isOwner ? 'Edit my listing' : 'Edit this listing (reviewer)'}
+            accessory="chevron"
+            onPress={() => router.push(`/farmer/${farm.id}`)}
+          />
+          {farm.products.length > 0 && (
+            <Row title="Update stock and prices" accessory="chevron" onPress={() => router.push(`/farmer/stock/${farm.id}`)} />
+          )}
+        </Section>
       )}
 
       {farm.isSample && (
-        <View style={styles.sample}>
-          <Text style={styles.sampleText}>SAMPLE – not a real farm. Details are made up for testing.</Text>
+        <View style={styles.pad}>
+          <Notice kind="warn">SAMPLE – not a real farm. Details are made up for testing.</Notice>
         </View>
       )}
 
-      <Text style={styles.name}>{farm.name}</Text>
-      <Text style={styles.meta}>
-        {VENUE_LABELS[farm.type]} · {farm.locality}, {STATE_NAMES[farm.state]} {farm.postcode}
-      </Text>
-      <Text style={styles.distance}>{distance} from {location.label}</Text>
-      <Text style={[styles.status, { color: status.isOpen ? colors.open : colors.closed }]}>
-        {status.isOpen ? '● ' : '○ '}
-        {status.label}
-      </Text>
-      {farm.tags.length > 0 && <Text style={styles.tags}>{farm.tags.map((t) => TAG_LABELS[t]).join(' · ')}</Text>}
+      <View style={styles.header}>
+        <Text style={[type.title1, { color: colors.label }]} accessibilityRole="header">
+          {farm.name}
+        </Text>
+        <Text style={[type.subheadline, { color: colors.secondaryLabel }]}>{`${meta} · ${distance} from ${location.label}`}</Text>
+        <View style={styles.statusLine}>
+          <View style={[styles.dot, { backgroundColor: status.isOpen ? colors.green : colors.secondaryLabel }]} />
+          <Text style={[type.subheadline, styles.statusText, { color: status.isOpen ? colors.green : colors.secondaryLabel }]}>
+            {status.label}
+          </Text>
+        </View>
+        {farm.isSample || farm.tags.length > 0 ? (
+          <View style={styles.badges}>
+            {farm.isSample && <Badge label="SAMPLE" tone="orange" />}
+            {farm.tags.map((t) => (
+              <Badge key={t} label={TAG_LABELS[t]} />
+            ))}
+          </View>
+        ) : null}
+      </View>
 
       <View style={styles.actions}>
-        <ActionButton label="Get directions" primary onPress={() => Linking.openURL(directionsUrl(farm))} />
-        {tel && <ActionButton label={`Call ${farm.phone}`} onPress={() => Linking.openURL(tel)} />}
-        {web && <ActionButton label="Visit website" onPress={() => Linking.openURL(web)} />}
-        <ActionButton
-          label={saved ? '♥ Saved – tap to remove' : '♡ Save this place'}
-          onPress={() => toggleFavourite(farm.id)}
+        <ActionTile icon="arrow.triangle.turn.up.right.circle.fill" label="Directions" onPress={() => Linking.openURL(directionsUrl(farm))} />
+        {tel && (
+          <ActionTile icon="phone.fill" label="Call" accessibilityLabel={`Call ${farm.phone}`} onPress={() => Linking.openURL(tel)} />
+        )}
+        {web && <ActionTile icon="safari" label="Website" accessibilityLabel="Visit website" onPress={() => Linking.openURL(web)} />}
+        <ActionTile
+          icon={saved ? 'heart.fill' : 'heart'}
+          label={saved ? 'Saved' : 'Save'}
+          accessibilityLabel={saved ? 'Saved – tap to remove' : 'Save this place'}
+          color={saved ? colors.red : undefined}
+          selected={saved}
+          onPress={() => {
+            tapLight();
+            toggleFavourite(farm.id);
+          }}
         />
       </View>
 
-      <Section title="About">
-        <Text style={styles.body}>{farm.story}</Text>
+      <Section header="About">
+        <View style={styles.paragraph}>
+          <Text style={[type.body, { color: colors.label }]}>{farm.story}</Text>
+        </View>
       </Section>
 
-      <Section title="What’s available">
+      <Section header="Produce and prices">
         {farm.products.map((p) => (
-          <View key={`${p.category}-${p.name}`} style={styles.productRow}>
-            <View style={{ flex: 1 }}>
-              <Text style={[styles.productName, !p.inStock && styles.muted]}>{p.name}</Text>
-              <Text style={styles.small}>{PRODUCT_LABELS[p.category]}{p.pasteurised ? ' · pasteurised' : ''}</Text>
-            </View>
-            <View style={styles.priceBox}>
-              <Text style={[styles.price, !p.inStock && styles.muted]}>
-                {p.priceCents !== undefined ? formatPrice(p.priceCents, p.unit) : 'Ask for price'}
-              </Text>
-              <Text style={[styles.small, { color: p.inStock ? colors.open : colors.closed, fontWeight: '700' }]}>
-                {p.inStock ? 'In stock' : 'Out of stock'}
-              </Text>
-            </View>
-          </View>
+          <Row
+            key={`${p.category}-${p.name}`}
+            title={p.name}
+            subtitle={[`${PRODUCT_LABELS[p.category]}${p.pasteurised ? ' · pasteurised' : ''}`, p.inStock ? null : 'Out of stock']
+              .filter(Boolean)
+              .join(' · ')}
+            value={p.priceCents !== undefined ? formatPrice(p.priceCents, p.unit) : 'Ask for price'}
+          />
         ))}
       </Section>
 
-      <Section title="Opening hours">
+      <Section
+        header="Opening hours"
+        footer={[farm.hours.note, `Times are local to ${farm.locality}.`].filter(Boolean).join('\n')}
+      >
         {hoursLines(farm.hours).map((line) => (
-          <View key={line.label} style={[styles.hoursRow, line.day === today && styles.hoursToday]}>
-            <Text style={[styles.hoursDay, line.day === today && styles.bold]}>{line.label}</Text>
-            <Text style={[styles.hoursText, line.day === today && styles.bold]}>{line.text}</Text>
-          </View>
+          <HoursRow key={line.label} day={line.label} text={line.text} today={line.day === today} />
         ))}
-        {farm.hours.note ? <Text style={styles.small}>{farm.hours.note}</Text> : null}
-        <Text style={styles.small}>Times are local to {farm.locality}.</Text>
       </Section>
 
-      <Section title="Pick-up and delivery">
-        <Text style={styles.body}>{farm.fulfilment.map((f) => FULFILMENT_LABELS[f]).join(' · ')}</Text>
+      <Section header="Pick-up and delivery">
+        <Row title={farm.fulfilment.map((f) => FULFILMENT_LABELS[f]).join(' · ')} />
       </Section>
 
-      <Section title="How to pay">
-        <Text style={styles.body}>{farm.paymentTypes.map((p) => PAYMENT_LABELS[p]).join(' · ')}</Text>
-        <Text style={styles.small}>You pay the farmer directly. Payments are not made in this app.</Text>
+      <Section
+        header="Payment"
+        footer="You pay the farmer directly. Payments are not made in this app."
+      >
+        <Row title={farm.paymentTypes.map((p) => PAYMENT_LABELS[p]).join(' · ')} />
       </Section>
 
       {farm.licences.length > 0 && (
-        <Section title="Licences and accreditation">
+        <Section
+          header="Licences and food safety"
+          footer={`${badge === 'checked' ? '' : 'Licence details are provided by the farmer. '}If you are unsure, check with your state food regulator.`}
+        >
           {farm.licences.map((l) => {
             const expired = l.expiresOn !== undefined && l.expiresOn < todayIso;
+            const checked = l.status === 'admin_checked';
+            const detail = `${expired ? 'Expired' : l.expiresOn ? `Valid to ${formatDateAu(l.expiresOn)}` : 'No expiry given'} · ${
+              checked ? 'Checked by Farm Direct' : 'Declared by the farmer'
+            }`;
             return (
-              <View key={`${l.category}-${l.licenceNumber}`} style={styles.licence}>
-                <Text style={styles.productName}>{LICENCE_LABELS[l.category]}</Text>
-                <Text style={styles.body}>
-                  {l.regulator} · {l.licenceNumber}
+              <Row
+                key={`${l.category}-${l.licenceNumber}`}
+                title={LICENCE_LABELS[l.category]}
+                subtitle={`${l.regulator} · ${l.licenceNumber}`}
+                icon={checked ? 'checkmark.seal.fill' : 'doc.text'}
+                iconColor={checked ? colors.tint : colors.secondaryLabel}
+              >
+                <Text style={[type.footnote, { color: expired ? colors.red : colors.secondaryLabel, fontWeight: expired ? '600' : '400' }]}>
+                  {detail}
                 </Text>
-                <Text style={[styles.small, expired && { color: colors.closed, fontWeight: '700' }]}>
-                  {expired ? 'Expired' : l.expiresOn ? `Valid to ${formatDateAu(l.expiresOn)}` : 'No expiry given'} ·{' '}
-                  {l.status === 'admin_checked' ? 'Checked by Farm Direct' : 'Declared by the farmer'}
-                </Text>
-              </View>
+              </Row>
             );
           })}
-          <Text style={styles.small}>
-            {badge === 'checked' ? '' : 'Licence details are provided by the farmer. '}
-            If you are unsure, check with your state food regulator.
-          </Text>
         </Section>
       )}
 
       {!farm.isSample && isStale(farm.updatedOn, now) && (
-        <View style={styles.sample} accessibilityRole="alert">
-          <Text style={styles.sampleText}>
-            This listing hasn’t been updated for a while. Call ahead to check before you travel.
-          </Text>
+        <View style={styles.pad}>
+          <Notice kind="warn">This listing hasn’t been updated for a while. Call ahead to check before you travel.</Notice>
         </View>
       )}
-      <Text style={styles.updated}>
-        Listing last updated {formatDateAu(farm.updatedOn)} ({describeAge(farm.updatedOn, now)})
-      </Text>
 
-      {canClaim && (
-        <ActionButton label="Is this your farm? Claim it" onPress={() => router.push(`/claim/${farm.id}`)} />
-      )}
-      {isBackendConfigured && !farm.isSample && farm.status === 'live' && !!userId && (
-        <ActionButton label="Report a problem with this listing" onPress={() => router.push(`/report/${farm.id}`)} />
-      )}
+      <Section footer={`Listing last updated ${formatDateAu(farm.updatedOn)} (${describeAge(farm.updatedOn, now)})`}>
+        {canReport && <Row title="Report a problem" accessory="chevron" onPress={() => router.push(`/report/${farm.id}`)} />}
+        {canClaim && (
+          <Row
+            title="Claim this listing"
+            subtitle="Is this your farm?"
+            accessory="chevron"
+            onPress={() => router.push(`/claim/${farm.id}`)}
+          />
+        )}
+      </Section>
     </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  content: { padding: space.lg, paddingBottom: space.xl * 2, gap: space.sm },
-  missing: { flex: 1, padding: space.xl, gap: space.md },
-  photos: { gap: space.sm },
-  photo: { width: 280, height: 190, borderRadius: radius.card, backgroundColor: colors.chip },
-  noPhoto: { height: 120, borderRadius: radius.card, backgroundColor: colors.chip, alignItems: 'center', justifyContent: 'center' },
-  noPhotoText: { fontSize: font.body, color: colors.textMuted },
-  sample: { backgroundColor: colors.sampleBackground, borderRadius: 8, padding: space.md },
-  sampleText: { fontSize: font.small, fontWeight: '700', color: colors.sampleText },
-  name: { fontSize: font.heading, fontWeight: '700', color: colors.text, marginTop: space.sm },
-  meta: { fontSize: font.body, color: colors.textMuted },
-  distance: { fontSize: font.body, color: colors.primary, fontWeight: '700' },
-  status: { fontSize: font.large, fontWeight: '700' },
-  tags: { fontSize: font.body, color: colors.accent, fontWeight: '600' },
-  actions: { gap: space.sm, marginVertical: space.md },
-  action: { minHeight: MIN_TAP + 4, borderRadius: radius.chip, alignItems: 'center', justifyContent: 'center', paddingHorizontal: space.lg, borderWidth: 2 },
-  actionPrimary: { backgroundColor: colors.primary, borderColor: colors.primary },
-  actionSecondary: { backgroundColor: colors.surface, borderColor: colors.border },
-  actionText: { fontSize: font.large, fontWeight: '700', color: colors.text },
-  section: { backgroundColor: colors.surface, borderRadius: radius.card, borderWidth: 1, borderColor: colors.border, padding: space.lg, gap: space.sm, marginTop: space.sm },
-  sectionTitle: { fontSize: font.title, fontWeight: '700', color: colors.text },
-  body: { fontSize: font.body, color: colors.text, lineHeight: 26 },
-  small: { fontSize: font.small, color: colors.textMuted },
-  muted: { color: colors.textMuted },
-  bold: { fontWeight: '700' },
-  productRow: { flexDirection: 'row', gap: space.md, paddingVertical: space.sm, borderBottomWidth: 1, borderBottomColor: colors.border },
-  productName: { fontSize: font.body, fontWeight: '700', color: colors.text },
-  priceBox: { alignItems: 'flex-end' },
-  price: { fontSize: font.body, fontWeight: '700', color: colors.text },
-  hoursRow: { flexDirection: 'row', justifyContent: 'space-between', gap: space.md, paddingVertical: 6, paddingHorizontal: space.sm, borderRadius: 8 },
-  hoursToday: { backgroundColor: colors.chip },
-  hoursDay: { fontSize: font.body, color: colors.text },
-  hoursText: { fontSize: font.body, color: colors.text, textAlign: 'right', flexShrink: 1 },
-  licence: { gap: 2, paddingVertical: space.xs },
-  updated: { fontSize: font.small, color: colors.textMuted, textAlign: 'center', marginTop: space.lg },
+  content: { paddingBottom: space.xxl },
+  missing: { flex: 1, backgroundColor: colors.groupedBackground },
+  noPhoto: { alignItems: 'center', justifyContent: 'center', gap: space.sm, backgroundColor: colors.fill },
+  pad: { paddingHorizontal: space.lg, marginTop: space.md },
+  header: { paddingHorizontal: space.lg, paddingTop: space.lg, paddingBottom: space.md, gap: space.xs },
+  statusLine: { flexDirection: 'row', alignItems: 'center', gap: space.sm, marginTop: space.xs },
+  dot: { width: 8, height: 8, borderRadius: 4 },
+  statusText: { fontWeight: '600' },
+  badges: { flexDirection: 'row', flexWrap: 'wrap', gap: space.sm, marginTop: space.sm },
+  actions: { flexDirection: 'row', gap: space.sm, paddingHorizontal: space.lg, marginVertical: space.md },
+  tile: {
+    flex: 1,
+    minHeight: MIN_TAP + 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: space.xs,
+    paddingVertical: space.md,
+    borderRadius: radius.group,
+    borderCurve: 'continuous',
+    backgroundColor: colors.cell,
+  },
+  tilePressed: { backgroundColor: colors.fill },
+  tileLabel: { fontWeight: '500' },
+  paragraph: { paddingHorizontal: ROW_PADDING, paddingVertical: space.md },
+  hoursRow: {
+    minHeight: MIN_TAP,
+    paddingHorizontal: ROW_PADDING,
+    paddingVertical: space.sm + 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: space.md,
+  },
+  hoursValue: { color: colors.secondaryLabel, flexShrink: 1, textAlign: 'right' },
 });
