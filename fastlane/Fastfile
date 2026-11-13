@@ -2,6 +2,19 @@
 # Used by .github/workflows/testflight.yml. No Mac or Expo account needed.
 default_platform(:ios)
 
+# Distribution certificates created by earlier CI runs whose private keys are lost.
+STALE_CI_CERTIFICATES = ["U8T7B7HT2F"].freeze
+
+def revoke_certificates(ids)
+  return if ids.empty?
+  Spaceship::ConnectAPI::Certificate.all.select { |c| ids.include?(c.id) }.each do |cert|
+    UI.message("Revoking CI distribution certificate #{cert.id}")
+    cert.delete!
+  end
+rescue StandardError => e
+  UI.important("Could not revoke certificates #{ids.join(", ")}: #{e.message}")
+end
+
 platform :ios do
   lane :beta do
     setup_ci # temporary keychain on the CI machine
@@ -16,35 +29,47 @@ platform :ios do
     )
 
     # Distribution certificate + App Store provisioning profile, via the API key.
-    # Put the certificate in setup_ci's temporary keychain (empty password). Without this it
-    # goes to the login keychain, whose password CI doesn't know, and signing can't find it.
-    get_certificates(
-      api_key: api_key,
-      keychain_path: File.expand_path("~/Library/Keychains/fastlane_tmp_keychain-db"),
-      keychain_password: ""
-    )
-    get_provisioning_profile(api_key: api_key, app_identifier: "au.farmdirect.app", force: true)
-    profile = lane_context[SharedValues::SIGH_NAME]
+    # Apple allows only a couple of distribution certificates, and a fresh CI machine can never
+    # reuse one (its private key is gone with the old machine). So: clear out certificates left
+    # behind by earlier CI runs, make a new one for this run, and revoke it again when the run ends.
+    # Builds already uploaded keep working: Apple re-signs TestFlight and App Store builds.
+    revoke_certificates(STALE_CI_CERTIFICATES)
 
-    update_code_signing_settings(
-      path: "ios/FarmDirect.xcodeproj",
-      use_automatic_signing: false,
-      team_id: "JAFHQKKHVK",
-      code_sign_identity: "Apple Distribution",
-      profile_name: profile,
-      bundle_identifier: "au.farmdirect.app",
-      targets: ["FarmDirect"]
-    )
+    created_cert = nil
+    begin
+      # Put the certificate in setup_ci's temporary keychain (empty password). Without this it
+      # goes to the login keychain, whose password CI doesn't know, and signing can't find it.
+      get_certificates(
+        api_key: api_key,
+        keychain_path: File.expand_path("~/Library/Keychains/fastlane_tmp_keychain-db"),
+        keychain_password: ""
+      )
+      created_cert = lane_context[SharedValues::CERT_CERTIFICATE_ID]
+      get_provisioning_profile(api_key: api_key, app_identifier: "au.farmdirect.app", force: true)
+      profile = lane_context[SharedValues::SIGH_NAME]
 
-    increment_build_number(xcodeproj: "ios/FarmDirect.xcodeproj", build_number: ENV.fetch("BUILD_NUMBER"))
+      update_code_signing_settings(
+        path: "ios/FarmDirect.xcodeproj",
+        use_automatic_signing: false,
+        team_id: "JAFHQKKHVK",
+        code_sign_identity: "Apple Distribution",
+        profile_name: profile,
+        bundle_identifier: "au.farmdirect.app",
+        targets: ["FarmDirect"]
+      )
 
-    build_app(
-      workspace: "ios/FarmDirect.xcworkspace",
-      scheme: "FarmDirect",
-      export_method: "app-store",
-      export_options: { provisioningProfiles: { "au.farmdirect.app" => profile } }
-    )
+      increment_build_number(xcodeproj: "ios/FarmDirect.xcodeproj", build_number: ENV.fetch("BUILD_NUMBER"))
 
-    upload_to_testflight(api_key: api_key, skip_waiting_for_build_processing: true)
+      build_app(
+        workspace: "ios/FarmDirect.xcworkspace",
+        scheme: "FarmDirect",
+        export_method: "app-store",
+        export_options: { provisioningProfiles: { "au.farmdirect.app" => profile } }
+      )
+
+      upload_to_testflight(api_key: api_key, skip_waiting_for_build_processing: true)
+    ensure
+      revoke_certificates([created_cert].compact)
+    end
   end
 end
