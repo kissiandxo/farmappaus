@@ -10,7 +10,8 @@ on:
 jobs:
   ios:
     if: github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '[testflight]')
-    runs-on: macos-15
+    # Expo SDK 58's Swift packages need Swift 6.2, i.e. Xcode 26 or newer.
+    runs-on: macos-26
     timeout-minutes: 60
     env:
       ASC_KEY_ID: RLG22BW6CR
@@ -26,6 +27,11 @@ jobs:
           if [ -z "$ASC_KEY_P8" ]; then
             echo "::error::Add the ASC_KEY_P8 secret (Settings → Secrets and variables → Actions)."; exit 1
           fi
+      - name: Use the newest Xcode on the machine
+        run: |
+          XCODE=$(ls -d /Applications/Xcode_*.app | sort -V | tail -1)
+          sudo xcode-select -s "$XCODE"
+          xcodebuild -version
       - uses: actions/setup-node@v4
         with:
           node-version: 22
