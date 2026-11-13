@@ -4,10 +4,13 @@ import {
   activeFilterCount,
   DEFAULT_FILTERS,
   DISTANCE_OPTIONS_KM,
+  offeredOptions,
   toggle,
   type FarmFilters,
 } from '../domain/filters';
 import { FARM_TAGS, PRODUCT_CATEGORIES, PRODUCT_LABELS, TAG_LABELS } from '../domain/types';
+import { isBackendConfigured } from '../lib/supabase';
+import { useSearch } from '../state/SearchContext';
 import { colors, space } from '../theme';
 import { Chip } from './Chip';
 import { Button, Row, Section, selection } from './ui';
@@ -19,13 +22,19 @@ interface FilterPanelProps {
 
 /** Filters as grouped Sections: chips for multi-select options, a system Switch for "Open now". */
 export function FilterPanel({ filters, onChange }: FilterPanelProps) {
+  const { farms } = useSearch();
   const set = (patch: Partial<FarmFilters>) => onChange({ ...filters, ...patch });
+  // Without a backend the list is fixed, so only offer options that at least one place has (a filter that
+  // can never match is a dead end). With a backend listings change, so every option stays available.
+  const offered = offeredOptions(farms, filters, PRODUCT_CATEGORIES, FARM_TAGS);
+  const productOptions = isBackendConfigured ? PRODUCT_CATEGORIES : offered.products;
+  const tagOptions = isBackendConfigured ? FARM_TAGS : offered.tags;
 
   return (
     <View style={styles.panel}>
       <Section header="What are you after?">
         <View style={styles.chips}>
-          {PRODUCT_CATEGORIES.map((category) => (
+          {productOptions.map((category) => (
             <Chip
               key={category}
               label={PRODUCT_LABELS[category]}
@@ -67,18 +76,20 @@ export function FilterPanel({ filters, onChange }: FilterPanelProps) {
         />
       </Section>
 
-      <Section header="Good to know">
-        <View style={styles.chips}>
-          {FARM_TAGS.map((tag) => (
-            <Chip
-              key={tag}
-              label={TAG_LABELS[tag]}
-              selected={filters.tags.includes(tag)}
-              onPress={() => set({ tags: toggle(filters.tags, tag) })}
-            />
-          ))}
-        </View>
-      </Section>
+      {tagOptions.length > 0 && (
+        <Section header="Good to know">
+          <View style={styles.chips}>
+            {tagOptions.map((tag) => (
+              <Chip
+                key={tag}
+                label={TAG_LABELS[tag]}
+                selected={filters.tags.includes(tag)}
+                onPress={() => set({ tags: toggle(filters.tags, tag) })}
+              />
+            ))}
+          </View>
+        </Section>
+      )}
 
       {activeFilterCount(filters) > 0 && (
         <Button

@@ -17,8 +17,9 @@ import {
 } from '../domain/types';
 import { useAuth } from '../state/AuthContext';
 import { colors, space, type } from '../theme';
+import { requireBackend } from '../components/RequireBackend';
 
-export default function SuggestScreen() {
+function SuggestScreen() {
   const { userId } = useAuth();
   const [name, setName] = useState('');
   const [venueType, setVenueType] = useState<VenueType>('farm');
@@ -153,3 +154,5 @@ const styles = StyleSheet.create({
   actions: { paddingHorizontal: space.lg, marginBottom: space.xl, gap: space.sm },
   done: { alignItems: 'center', paddingTop: space.xxl, paddingBottom: space.lg },
 });
+
+export default requireBackend(SuggestScreen);

@@ -4,8 +4,9 @@ import { ScrollView } from 'react-native';
 
 import { EmailForm } from '../../components/auth/EmailForm';
 import { useAuth } from '../../state/AuthContext';
+import { requireBackend } from '../../components/RequireBackend';
 
-export default function EmailScreen() {
+function EmailScreen() {
   const { session } = useAuth();
 
   // A successful sign-in closes this screen (the welcome screen below it closes too).
@@ -24,3 +25,5 @@ export default function EmailScreen() {
     </ScrollView>
   );
 }
+
+export default requireBackend(EmailScreen);

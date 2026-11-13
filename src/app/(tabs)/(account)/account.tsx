@@ -2,6 +2,7 @@ import { router } from 'expo-router';
 import { useState } from 'react';
 import { Alert, ScrollView, StyleSheet, Text, View } from 'react-native';
 
+import { AboutContent, Attribution } from '../../../components/AboutContent';
 import { Notice } from '../../../components/FormBits';
 import { Icon, Row, Section } from '../../../components/ui';
 import { displayName } from '../../../domain/onboarding';
@@ -12,11 +13,6 @@ const ROLE_LABELS = { user: 'Customer', farmer: 'Farmer', admin: 'Administrator'
 
 const openWelcome = () => router.push('/(auth)/welcome');
 const openPrivacy = () => router.push('/privacy');
-
-/** Required credit for the place locations, which were found with OpenStreetMap's Nominatim (ODbL). */
-function Attribution() {
-  return <Text style={[type.footnote, styles.attribution]}>Map locations © OpenStreetMap contributors</Text>;
-}
 
 export default function AccountScreen() {
   const {
@@ -73,6 +69,25 @@ export default function AccountScreen() {
     const result = await signInWithApple();
     if (result.message) setNotice({ ok: result.ok, text: result.message });
   };
+
+  // No backend: no accounts. The tab is "About". A profile saved by an earlier version is still shown and removable.
+  if (!available) {
+    return (
+      <ScrollView contentInsetAdjustmentBehavior="automatic" contentContainerStyle={styles.content}>
+        {localProfile ? (
+          <Section header="Signed in with Apple">
+            <Row
+              title={displayName(localProfile)}
+              subtitle={localProfile.givenName || localProfile.familyName ? localProfile.email ?? undefined : undefined}
+            />
+            <Row title="Stored on this iPhone" icon="iphone" />
+            <Row title="Remove from this iPhone" destructive onPress={confirmRemoveProfile} />
+          </Section>
+        ) : null}
+        <AboutContent />
+      </ScrollView>
+    );
+  }
 
   if (session) {
     return (
@@ -133,11 +148,9 @@ export default function AccountScreen() {
           <Row title="Stored on this iPhone" icon="iphone" />
         </Section>
 
-        {available ? (
-          <Section footer="Create an account to keep your saved places on every phone.">
-            <Row title="Sign in or create an account" accessory="chevron" onPress={openWelcome} />
-          </Section>
-        ) : null}
+        <Section footer="Create an account to keep your saved places on every phone.">
+          <Row title="Sign in or create an account" accessory="chevron" onPress={openWelcome} />
+        </Section>
 
         <Section>
           <Row title="Privacy policy" accessory="chevron" onPress={openPrivacy} />
@@ -151,7 +164,6 @@ export default function AccountScreen() {
     );
   }
 
-  const canSignIn = available || appleAvailable;
   return (
     <ScrollView contentInsetAdjustmentBehavior="automatic" contentContainerStyle={styles.content}>
       <View style={styles.header}>
@@ -160,17 +172,13 @@ export default function AccountScreen() {
           Accounts
         </Text>
         <Text style={[type.body, styles.message]}>
-          {available
-            ? 'Sign in to keep your saved places on every phone, suggest a farm, or list your own farm for free.'
-            : 'Signing in is optional. Farm Direct works without an account, and everything you save stays on this iPhone.'}
+          Sign in to keep your saved places on every phone, suggest a farm, or list your own farm for free.
         </Text>
       </View>
 
-      {canSignIn ? (
-        <Section>
-          <Row title="Sign in" icon="person.crop.circle" accessory="chevron" onPress={openWelcome} />
-        </Section>
-      ) : null}
+      <Section>
+        <Row title="Sign in" icon="person.crop.circle" accessory="chevron" onPress={openWelcome} />
+      </Section>
 
       <Section>
         <Row title="Privacy policy" accessory="chevron" onPress={openPrivacy} />
@@ -187,5 +195,4 @@ const styles = StyleSheet.create({
   header: { alignItems: 'center', gap: space.sm, paddingHorizontal: space.xl, paddingTop: space.xl, paddingBottom: space.lg },
   title: { color: colors.label, textAlign: 'center' },
   message: { color: colors.secondaryLabel, textAlign: 'center' },
-  attribution: { color: colors.secondaryLabel, textAlign: 'center', paddingHorizontal: space.lg, marginTop: space.sm },
 });

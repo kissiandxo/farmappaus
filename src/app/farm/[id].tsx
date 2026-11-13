@@ -1,7 +1,8 @@
 import { Image } from 'expo-image';
 import { router, Stack, useLocalSearchParams } from 'expo-router';
-import { Alert, Linking, Pressable, ScrollView, StyleSheet, Text, useWindowDimensions, View, type ColorValue } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, Text, useWindowDimensions, View, type ColorValue } from 'react-native';
 
+import { SUPPORT_EMAIL } from '../../config';
 import { ReviewPanel } from '../../components/ReviewPanel';
 import { Notice } from '../../components/FormBits';
 import { Badge, EmptyState, Icon, Row, Section, tapLight, type SFSymbol } from '../../components/ui';
@@ -21,6 +22,8 @@ import {
   VENUE_LABELS,
 } from '../../domain/types';
 import { statusAdvice, STATUS_LABELS } from '../../domain/listing';
+import { claimMailto, reportMailto } from '../../domain/support';
+import { openLink } from '../../lib/openLink';
 import { isBackendConfigured } from '../../lib/supabase';
 import { useAuth } from '../../state/AuthContext';
 import { useFavourites } from '../../state/FavouritesContext';
@@ -30,15 +33,6 @@ import { colors, MIN_TAP, radius, space, type } from '../../theme';
 
 /** Hero photo height (pt). Edge to edge, under the navigation bar. */
 const HERO_HEIGHT = 240;
-
-/** Opens an external link; shows an alert instead of an unhandled rejection if no app can open it. */
-async function openLink(url: string) {
-  try {
-    await Linking.openURL(url);
-  } catch {
-    Alert.alert('Couldn’t open that', 'Check that the app for this link is installed, then try again.');
-  }
-}
 
 /**
  * Equal-width action tile, like the Apple Maps place card: symbol above a footnote label.
@@ -118,10 +112,12 @@ export default function FarmProfileScreen() {
   }
 
   const isOwner = !!userId && farm.ownerId === userId;
-  const canClaim = farm.unclaimed
-    ? true
-    : isBackendConfigured && !farm.isSample && farm.status === 'live' && !farm.ownerId && !!userId;
+  // With a backend, claims and reports are in-app forms. Without one there is no sign-in, so they are
+  // pre-filled emails instead (hidden when the build has no support address). Never a screen that needs accounts.
+  const canClaim = isBackendConfigured && (farm.unclaimed ? true : !farm.isSample && farm.status === 'live' && !farm.ownerId && !!userId);
   const canReport = isBackendConfigured && !farm.unclaimed && !farm.isSample && farm.status === 'live' && !!userId;
+  const claimEmail = !isBackendConfigured && farm.unclaimed ? claimMailto(SUPPORT_EMAIL, farm) : null;
+  const reportEmail = !isBackendConfigured ? reportMailto(SUPPORT_EMAIL, farm) : null;
   const showReview = role === 'admin' && farm.status === 'pending';
 
   const tz = timezoneForState(farm.state);
@@ -199,7 +195,7 @@ export default function FarmProfileScreen() {
 
       {farm.isSample && (
         <View style={styles.pad}>
-          <Notice kind="warn">SAMPLE – not a real farm. Details are made up for testing.</Notice>
+          <Notice kind="warn">Sample listing. This is not a real farm.</Notice>
         </View>
       )}
 
@@ -256,15 +252,25 @@ export default function FarmProfileScreen() {
         />
       </View>
 
-      {farm.unclaimed && canClaim && (
+      {farm.unclaimed && (canClaim || claimEmail) && (
         <Section>
-          <Row
-            title="Claim this listing"
-            subtitle="Is this your place?"
-            icon="person.crop.circle.badge.checkmark"
-            accessory="chevron"
-            onPress={() => router.push(`/claim/${farm.id}`)}
-          />
+          {canClaim ? (
+            <Row
+              title="Claim this listing"
+              subtitle="Is this your place?"
+              icon="person.crop.circle.badge.checkmark"
+              accessory="chevron"
+              onPress={() => router.push(`/claim/${farm.id}`)}
+            />
+          ) : claimEmail ? (
+            <Row
+              title="Is this your place?"
+              subtitle="Email us to claim or update this listing"
+              icon="person.crop.circle.badge.checkmark"
+              accessory="chevron"
+              onPress={() => openLink(claimEmail)}
+            />
+          ) : null}
         </Section>
       )}
 
@@ -386,6 +392,14 @@ export default function FarmProfileScreen() {
 
       <Section footer={`Listing last updated ${formatDateAu(farm.updatedOn)} (${describeAge(farm.updatedOn, now)})`}>
         {canReport && <Row title="Report a problem" accessory="chevron" onPress={() => router.push(`/report/${farm.id}`)} />}
+        {reportEmail && (
+          <Row
+            title="Report a problem"
+            subtitle="Wrong hours, closed or moved? Email us"
+            accessory="chevron"
+            onPress={() => openLink(reportEmail)}
+          />
+        )}
         {canClaim && !farm.unclaimed && (
           <Row
             title="Claim this listing"

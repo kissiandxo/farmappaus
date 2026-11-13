@@ -1,4 +1,4 @@
-import { directionsUrl, hostLabel, telUrl, websiteUrl } from '../links';
+import { directionsUrl, hostLabel, mailtoUrl, telUrl, websiteUrl } from '../links';
 
 describe('directionsUrl', () => {
   it('builds an Apple Maps driving link with an encoded name', () => {
@@ -71,5 +71,39 @@ describe('hostLabel', () => {
   it('rejects links that are not web pages', () => {
     expect(hostLabel('javascript:alert(1)')).toBeNull();
     expect(hostLabel('')).toBeNull();
+  });
+});
+
+describe('mailtoUrl', () => {
+  it('encodes the subject and body, with spaces as %20 and line breaks as %0A', () => {
+    expect(mailtoUrl('help@example.com', 'Hello & welcome', 'Line one\nLine two')).toBe(
+      'mailto:help@example.com?subject=Hello%20%26%20welcome&body=Line%20one%0ALine%20two',
+    );
+  });
+
+  it('round-trips awkward characters', () => {
+    const url = mailtoUrl('a@b.co', 'Fred’s “Farm” 50% off?', 'a=b&c=d #1 é')!;
+    const query = new URLSearchParams(url.slice(url.indexOf('?') + 1).replace(/\+/g, '%2B'));
+    expect(query.get('subject')).toBe('Fred’s “Farm” 50% off?');
+    expect(query.get('body')).toBe('a=b&c=d #1 é');
+  });
+
+  it('leaves out blank parts and trims the address', () => {
+    expect(mailtoUrl('  help@example.com ')).toBe('mailto:help@example.com');
+    expect(mailtoUrl('help@example.com', '', 'Hi')).toBe('mailto:help@example.com?body=Hi');
+    expect(mailtoUrl('help@example.com', 'Hi', '')).toBe('mailto:help@example.com?subject=Hi');
+  });
+
+  it('keeps the subject on one line', () => {
+    expect(mailtoUrl('help@example.com', 'One\r\nBcc: x@y.com')).toBe('mailto:help@example.com?subject=One%20Bcc%3A%20x%40y.com');
+  });
+
+  it('returns null for a blank, malformed or multiple address', () => {
+    expect(mailtoUrl('')).toBeNull();
+    expect(mailtoUrl('   ')).toBeNull();
+    expect(mailtoUrl('not an email')).toBeNull();
+    expect(mailtoUrl('a@b.co,c@d.co')).toBeNull();
+    expect(mailtoUrl('a@b.co?cc=x@y.com')).toBeNull();
+    expect(mailtoUrl('a@b')).toBeNull();
   });
 });

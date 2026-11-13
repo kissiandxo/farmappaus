@@ -27,7 +27,7 @@ When no backend is configured, the app shows **55 real places** from public sour
 Every place loaded this way is `unclaimed`: public facts only, no owner has confirmed it. In the app:
 
 - It carries an **Unclaimed** badge, and the farm page opens with "From public sources. Not yet confirmed by the owner."
-- It lists its **sources** as tappable rows, and a prominent "Claim this listing / Is this your place?" row. (Claiming needs the backend, so it says so until accounts are switched on.)
+- It lists its **sources** as tappable rows, and a prominent "Claim this listing / Is this your place?" row. (With no backend the row opens a pre-filled email to the support address instead, and is hidden when the build has none.)
 - **Milk, eggs and meat are listed as advertised** (owner's decision, 13 Nov 2026, so the product filters work). No licence is recorded for unclaimed places, and the farm page says the licences have not been checked. This relaxes the rule in `docs/COMPLIANCE.md` for unclaimed public-source listings only; farmer-entered listings still need licence details. Other categories become unpriced products named by their label. Free-text "also sold" wording from the source is shown as written, as a footer under produce.
 - No prices, photos, payment types, tags, licences or stories beyond the one research sentence. Phone numbers are only those the research recorded, and personal numbers were already left out.
 - **Hours are never invented.** A day with no published times is dropped and the wording goes in the note. Monthly, seasonal, fortnightly and unpublished-times places are flagged `irregular`, so the status reads "Check dates" (never "Open now" or "opens Saturday") and the note is shown.

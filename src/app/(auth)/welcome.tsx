@@ -39,7 +39,8 @@ export default function WelcomeScreen() {
     if (!result.ok && result.message) setError(result.message);
   };
 
-  const skip = () => {
+  // Closes the welcome screen: "Get started" without a backend, "Continue without an account" with one.
+  const finish = () => {
     markWelcomeSeen();
     router.dismiss();
   };
@@ -65,30 +66,34 @@ export default function WelcomeScreen() {
       </View>
 
       <View style={styles.bottom}>
-        {error ? <Notice kind="error">{error}</Notice> : null}
-
-        {appleAvailable ? (
-          <AppleAuthentication.AppleAuthenticationButton
-            buttonType={AppleAuthentication.AppleAuthenticationButtonType.SIGN_IN}
-            buttonStyle={
-              scheme === 'dark'
-                ? AppleAuthentication.AppleAuthenticationButtonStyle.WHITE
-                : AppleAuthentication.AppleAuthenticationButtonStyle.BLACK
-            }
-            cornerRadius={APPLE_BUTTON_RADIUS}
-            style={[styles.appleButton, busy && styles.busy]}
-            onPress={busy ? () => {} : apple}
-          />
-        ) : null}
-
         {available ? (
-          <Button variant="tinted" label="Continue with email" onPress={() => router.push('/(auth)/email')} />
-        ) : null}
+          <>
+            {error ? <Notice kind="error">{error}</Notice> : null}
 
-        <Button variant="plain" label="Continue without an account" onPress={skip} />
+            {appleAvailable ? (
+              <AppleAuthentication.AppleAuthenticationButton
+                buttonType={AppleAuthentication.AppleAuthenticationButtonType.SIGN_IN}
+                buttonStyle={
+                  scheme === 'dark'
+                    ? AppleAuthentication.AppleAuthenticationButtonStyle.WHITE
+                    : AppleAuthentication.AppleAuthenticationButtonStyle.BLACK
+                }
+                cornerRadius={APPLE_BUTTON_RADIUS}
+                style={[styles.appleButton, busy && styles.busy]}
+                onPress={busy ? () => {} : apple}
+              />
+            ) : null}
+
+            <Button variant="tinted" label="Continue with email" onPress={() => router.push('/(auth)/email')} />
+            <Button variant="plain" label="Continue without an account" onPress={finish} />
+          </>
+        ) : (
+          <Button label="Get started" onPress={finish} />
+        )}
 
         <Text style={[type.footnote, styles.footnote]}>
-          Signing in is optional. See how we handle your information in our{' '}
+          {available ? 'Signing in is optional. ' : ''}
+          See how we handle your information in our{' '}
           <Text style={styles.link} accessibilityRole="link" onPress={() => router.push('/privacy')}>
             privacy policy
           </Text>

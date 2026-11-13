@@ -28,11 +28,12 @@ import { draftIssues, normaliseAuPhone } from '../../domain/validation';
 import { useSearch } from '../../state/SearchContext';
 import { useAuth } from '../../state/AuthContext';
 import { colors, space, type } from '../../theme';
+import { requireBackend } from '../../components/RequireBackend';
 
 const toggleIn = <T,>(list: T[], item: T) => (list.includes(item) ? list.filter((x) => x !== item) : [...list, item]);
 const options = <T extends string>(labels: Record<T, string>) => (Object.keys(labels) as T[]).map((value) => ({ value, label: labels[value] }));
 
-export default function EditListingScreen() {
+function EditListingScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const isNew = id === 'new';
   const { userId, role } = useAuth();
@@ -274,3 +275,5 @@ const styles = StyleSheet.create({
   statusTitle: { ...type.headline, color: colors.label },
   hint: { ...type.footnote, color: colors.secondaryLabel, textAlign: 'center' },
 });
+
+export default requireBackend(EditListingScreen);

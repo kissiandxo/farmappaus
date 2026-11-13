@@ -8,7 +8,7 @@ import { createClient, type SupabaseClient } from '@supabase/supabase-js';
 const url = process.env.EXPO_PUBLIC_SUPABASE_URL;
 const anonKey = process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY;
 
-/** False until a Supabase project is connected. The app then runs on sample data. */
+/** False until a Supabase project is connected. The app then runs as a directory of built-in places, with no accounts. */
 export const isBackendConfigured = Boolean(url && anonKey);
 
 export const supabase: SupabaseClient | null = isBackendConfigured

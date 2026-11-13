@@ -1,4 +1,4 @@
-import { activeFilterCount, DEFAULT_FILTERS, searchFarms, toggle } from '../filters';
+import { activeFilterCount, DEFAULT_FILTERS, offeredOptions, searchFarms, toggle } from '../filters';
 import { makeFarm } from './fixtures';
 
 const SYDNEY = { lat: -33.8688, lng: 151.2093 };
@@ -105,5 +105,31 @@ describe('helpers', () => {
   it('counts active filter groups', () => {
     expect(activeFilterCount(DEFAULT_FILTERS)).toBe(0);
     expect(activeFilterCount({ products: ['eggs', 'beef'], maxKm: 25, openNow: true, tags: ['organic'] })).toBe(4);
+  });
+});
+
+describe('offeredOptions', () => {
+  const all = ['milk', 'eggs', 'beef', 'honey'] as const;
+  const tags = ['free_range', 'organic', 'spray_free'] as const;
+
+  it('offers only products and tags that some place has, in the original order', () => {
+    const offered = offeredOptions([near, mid], DEFAULT_FILTERS, all, tags);
+    expect(offered.products).toEqual(['eggs', 'beef']);
+    expect(offered.tags).toEqual(['free_range', 'organic']);
+  });
+
+  it('offers no tags when no place has any', () => {
+    const plain = makeFarm({ tags: [] });
+    expect(offeredOptions([plain], DEFAULT_FILTERS, all, tags).tags).toEqual([]);
+  });
+
+  it('keeps an option that is already selected so it can be turned off', () => {
+    const offered = offeredOptions([near], { products: ['milk'], tags: ['spray_free'] }, all, tags);
+    expect(offered.products).toContain('milk');
+    expect(offered.tags).toContain('spray_free');
+  });
+
+  it('offers nothing for an empty list', () => {
+    expect(offeredOptions([], DEFAULT_FILTERS, all, tags)).toEqual({ products: [], tags: [] });
   });
 });

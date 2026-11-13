@@ -30,7 +30,7 @@ export interface AuthResult {
 }
 
 interface AuthState {
-  /** False when no backend is connected (sample mode): accounts are hidden. */
+  /** False when the app runs without a backend: there are no accounts and no sign-in. */
   available: boolean;
   /** True once the saved session (if any) has been checked. */
   ready: boolean;
@@ -41,7 +41,7 @@ interface AuthState {
   signIn: (email: string, password: string) => Promise<AuthResult>;
   signUp: (email: string, password: string) => Promise<AuthResult>;
   signOut: () => Promise<void>;
-  /** Apple profile kept on this phone (only when no backend is connected, or not yet linked to an account). */
+  /** Apple profile saved on this phone by an earlier version, or not yet linked to an account. Shown and removable; never created without a backend. */
   localProfile: LocalProfile | null;
   /** True when Sign in with Apple can run on this device (iOS, not web or Jest). */
   appleAvailable: boolean;
@@ -74,6 +74,7 @@ export function friendlyAuthError(message: string | undefined): string {
 }
 
 const APPLE_CANCELLED = 'ERR_REQUEST_CANCELED';
+const UNAVAILABLE = 'Accounts aren’t available right now.';
 
 /** Random hex string used as the Apple nonce. */
 function randomNonce(): string {
@@ -164,13 +165,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, [loadRole]);
 
   const signIn = useCallback<AuthState['signIn']>(async (email, password) => {
-    if (!supabase) return { ok: false, message: 'Accounts are not available in this version.' };
+    if (!supabase) return { ok: false, message: UNAVAILABLE };
     const { error } = await supabase.auth.signInWithPassword({ email: email.trim(), password });
     return error ? { ok: false, message: friendlyAuthError(error.message) } : { ok: true, message: 'Signed in.' };
   }, []);
 
   const signUp = useCallback<AuthState['signUp']>(async (email, password) => {
-    if (!supabase) return { ok: false, message: 'Accounts are not available in this version.' };
+    if (!supabase) return { ok: false, message: UNAVAILABLE };
     const { data, error } = await supabase.auth.signUp({ email: email.trim(), password });
     if (error) return { ok: false, message: friendlyAuthError(error.message) };
     return data.session
@@ -184,10 +185,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const signInWithApple = useCallback<AuthState['signInWithApple']>(async () => {
     const failed = { ok: false, message: 'Apple sign-in didn’t work. Please try again.' };
+    // Without a backend there is nothing to sign in to, and no profile is ever created on the phone.
+    if (!supabase) return { ok: false, message: UNAVAILABLE };
     try {
       // The nonce only matters when Supabase checks the token. Apple gets the hash, Supabase the raw value.
-      const rawNonce = supabase ? randomNonce() : undefined;
-      const hashedNonce = rawNonce ? await Crypto.digestStringAsync(Crypto.CryptoDigestAlgorithm.SHA256, rawNonce) : undefined;
+      const rawNonce = randomNonce();
+      const hashedNonce = await Crypto.digestStringAsync(Crypto.CryptoDigestAlgorithm.SHA256, rawNonce);
       const credential = await AppleAuthentication.signInAsync({
         requestedScopes: [
           AppleAuthentication.AppleAuthenticationScope.FULL_NAME,
@@ -202,28 +205,21 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         email: credential.email,
       });
 
-      if (supabase) {
-        if (!credential.identityToken) return failed;
-        const { error } = await supabase.auth.signInWithIdToken({
-          provider: 'apple',
-          token: credential.identityToken,
-          nonce: rawNonce,
-        });
-        if (error) return { ok: false, message: friendlyAuthError(error.message) };
-        if (merged.givenName || merged.familyName) {
-          const fullName = [merged.givenName, merged.familyName].filter(Boolean).join(' ');
-          await supabase.auth
-            .updateUser({ data: { full_name: fullName, given_name: merged.givenName, family_name: merged.familyName } })
-            .catch(() => {});
-        }
-        // The account now holds the name, so the copy on this phone is no longer needed.
-        await removeLocalProfile();
-        return { ok: true, message: 'You’re signed in.' };
+      if (!credential.identityToken) return failed;
+      const { error } = await supabase.auth.signInWithIdToken({
+        provider: 'apple',
+        token: credential.identityToken,
+        nonce: rawNonce,
+      });
+      if (error) return { ok: false, message: friendlyAuthError(error.message) };
+      if (merged.givenName || merged.familyName) {
+        const fullName = [merged.givenName, merged.familyName].filter(Boolean).join(' ');
+        await supabase.auth
+          .updateUser({ data: { full_name: fullName, given_name: merged.givenName, family_name: merged.familyName } })
+          .catch(() => {});
       }
-
-      // No backend: keep a small profile on this phone. The identity token is never stored.
-      setLocalProfile(merged);
-      await AsyncStorage.setItem(PROFILE_KEY, JSON.stringify(merged)).catch(() => {});
+      // The account now holds the name, so the copy on this phone is no longer needed.
+      await removeLocalProfile();
       return { ok: true, message: 'You’re signed in.' };
     } catch (e) {
       if ((e as { code?: string } | null)?.code === APPLE_CANCELLED) return { ok: false, message: '' };
@@ -232,7 +228,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, [localProfile, removeLocalProfile]);
 
   const becomeFarmer = useCallback<AuthState['becomeFarmer']>(async () => {
-    if (!supabase) return { ok: false, message: 'Accounts are not available in this version.' };
+    if (!supabase) return { ok: false, message: UNAVAILABLE };
     const { error } = await supabase.rpc('become_farmer');
     if (error) return { ok: false, message: friendlyAuthError(error.message) };
     await loadRole();
@@ -240,7 +236,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, [loadRole]);
 
   const deleteAccount = useCallback<AuthState['deleteAccount']>(async () => {
-    if (!supabase) return { ok: false, message: 'Accounts are not available in this version.' };
+    if (!supabase) return { ok: false, message: UNAVAILABLE };
     const { error } = await supabase.rpc('delete_my_account');
     if (error) return { ok: false, message: friendlyAuthError(error.message) };
     await supabase.auth.signOut();

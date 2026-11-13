@@ -10,10 +10,11 @@ import type { Farm, ListingStatus } from '../../domain/types';
 import { useAuth } from '../../state/AuthContext';
 import { colors, space, type } from '../../theme';
 import { Badge, Button, EmptyState, Row, Section, type BadgeTone } from '../../components/ui';
+import { requireBackend } from '../../components/RequireBackend';
 
 const STATUS_TONES: Record<ListingStatus, BadgeTone> = { draft: 'neutral', pending: 'orange', live: 'green', rejected: 'red' };
 
-export default function MyListingsScreen() {
+function MyListingsScreen() {
   const { available, session, userId, role, becomeFarmer } = useAuth();
   const [farms, setFarms] = useState<Farm[] | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -39,11 +40,7 @@ export default function MyListingsScreen() {
     return (
       <ScrollView style={styles.screen} contentContainerStyle={styles.content} contentInsetAdjustmentBehavior="automatic">
         <View style={styles.inset}>
-          <Notice kind="info">
-            {available
-              ? 'Sign in on the Account tab first. It’s free, and takes a minute.'
-              : 'Listings need the online service, which isn’t connected in this version of the app.'}
-          </Notice>
+          <Notice kind="info">Sign in on the Account tab first. It’s free, and takes a minute.</Notice>
           <Button label="Go to Account" onPress={() => router.replace('/account')} />
         </View>
       </ScrollView>
@@ -133,3 +130,5 @@ const styles = StyleSheet.create({
   name: { color: colors.label },
   advice: { color: colors.secondaryLabel },
 });
+
+export default requireBackend(MyListingsScreen);

@@ -18,7 +18,7 @@ export async function locateMe(): Promise<LocateResult> {
       return {
         ok: false,
         message:
-          'Location is switched off for this app. You can turn it on in Settings, or search by suburb or postcode instead.',
+          'Location access is off for Farm Direct. You can turn it on in Settings, or search by suburb or postcode instead.',
         canOpenSettings: !permission.canAskAgain,
       };
     }
@@ -40,7 +40,7 @@ export async function locateMe(): Promise<LocateResult> {
     return {
       ok: false,
       message:
-        'We could not find your location. Check that Location Services is on, or search by suburb or postcode.',
+        'We couldn’t find your location. Check that Location Services is on, or search by suburb or postcode.',
       canOpenSettings: false,
     };
   }

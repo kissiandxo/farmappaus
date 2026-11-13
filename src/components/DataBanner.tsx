@@ -47,7 +47,7 @@ export function DataBanner() {
         background={colors.fill}
         icon="info.circle"
         iconColor={colors.secondaryLabel}
-        text="These places come from public sources and haven't been confirmed by their owners yet. Check details before you travel."
+        text="From public sources and not yet confirmed by their owners. Check details before you go."
       />
     );
   }

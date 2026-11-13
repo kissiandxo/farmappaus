@@ -10,6 +10,7 @@ import { centsToInput, priceToCents } from '../../../domain/validation';
 import { useSearch } from '../../../state/SearchContext';
 import { colors, MIN_TAP, radius, space, type } from '../../../theme';
 import { Button, Section, selection } from '../../../components/ui';
+import { requireBackend } from '../../../components/RequireBackend';
 
 /** One product: name and status on the left, price box and stock switch on the right. */
 function ProductRow({ product, onSaved, onError }: { product: Product; onSaved: () => void; onError: (m: string) => void }) {
@@ -80,7 +81,7 @@ function ProductRow({ product, onSaved, onError }: { product: Product; onSaved: 
   );
 }
 
-export default function StockScreen() {
+function StockScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const { refresh } = useSearch();
   const [farm, setFarm] = useState<Farm | null>(null);
@@ -158,3 +159,5 @@ const styles = StyleSheet.create({
   error: { color: colors.red, fontWeight: '600' },
   footRow: { flexDirection: 'row', justifyContent: 'flex-end' },
 });
+
+export default requireBackend(StockScreen);

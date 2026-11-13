@@ -57,7 +57,7 @@ export function LocationBar({ onChangeLocation, onOpenFilters }: LocationBarProp
       <Text style={styles.count} accessibilityLiveRegion="polite">
         {count}
       </Text>
-      {isDefault && <Text style={styles.hint}>Set your location to see real distances.</Text>}
+      {isDefault && <Text style={styles.hint}>Set your location to see how far each place is.</Text>}
     </View>
   );
 }

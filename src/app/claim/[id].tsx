@@ -7,12 +7,12 @@ import { Button, Icon, Section, success } from '../../components/ui';
 import { submitClaim } from '../../data/mutations';
 import { friendlyDbError } from '../../domain/listing';
 import { isValidAbn, normaliseAuPhone } from '../../domain/validation';
-import { isBackendConfigured } from '../../lib/supabase';
 import { useAuth } from '../../state/AuthContext';
 import { useFarm } from '../../state/useFarm';
 import { colors, space, type } from '../../theme';
+import { requireBackend } from '../../components/RequireBackend';
 
-export default function ClaimScreen() {
+function ClaimScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const { farm } = useFarm(id);
   const { userId } = useAuth();
@@ -22,16 +22,6 @@ export default function ClaimScreen() {
   const [busy, setBusy] = useState(false);
   const [done, setDone] = useState(false);
   const [error, setError] = useState<string | null>(null);
-
-  if (!isBackendConfigured) {
-    return (
-      <ScrollView contentInsetAdjustmentBehavior="automatic" contentContainerStyle={styles.content}>
-        <View style={styles.pad}>
-          <Notice kind="info">Claiming a listing isn’t switched on in this version of the app yet.</Notice>
-        </View>
-      </ScrollView>
-    );
-  }
 
   if (!userId) {
     return (
@@ -142,3 +132,5 @@ const styles = StyleSheet.create({
   actions: { paddingHorizontal: space.lg, marginBottom: space.xl, gap: space.sm },
   done: { alignItems: 'center', paddingTop: space.xxl, paddingBottom: space.lg },
 });
+
+export default requireBackend(ClaimScreen);

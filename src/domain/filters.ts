@@ -71,3 +71,20 @@ export function searchFarms(
 
   return results.sort((a, b) => a.distanceKm - b.distanceKm || a.farm.name.localeCompare(b.farm.name));
 }
+
+/**
+ * Filter options worth offering for a fixed list of places: only the product categories and tags that at least
+ * one place has, plus any already selected (so a chosen filter can always be switched off). Keeps the order of
+ * `allProducts` and `allTags`.
+ */
+export function offeredOptions(
+  farms: Farm[],
+  filters: Pick<FarmFilters, 'products' | 'tags'>,
+  allProducts: readonly ProductCategory[],
+  allTags: readonly FarmTag[],
+): { products: ProductCategory[]; tags: FarmTag[] } {
+  return {
+    products: allProducts.filter((c) => filters.products.includes(c) || farms.some((f) => f.products.some((p) => p.category === c))),
+    tags: allTags.filter((t) => filters.tags.includes(t) || farms.some((f) => f.tags.includes(t))),
+  };
+}

@@ -38,8 +38,8 @@ export default function FarmListScreen() {
         ListEmptyComponent={
           <EmptyState
             icon="magnifyingglass"
-            title="Nothing matches yet"
-            message="Try a bigger distance or fewer filters."
+            title="No places match"
+            message="Try a bigger distance, or clear some filters."
             action={{ label: 'Clear all filters', onPress: () => setFilters(DEFAULT_FILTERS) }}
             style={styles.empty}
           />

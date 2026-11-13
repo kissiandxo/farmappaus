@@ -17,6 +17,7 @@ import { friendlyDbError } from '../../domain/listing';
 import { PRODUCT_LABELS, STATE_NAMES, VENUE_LABELS } from '../../domain/types';
 import { useAuth } from '../../state/AuthContext';
 import { colors, space, type } from '../../theme';
+import { requireBackend } from '../../components/RequireBackend';
 
 /** Heading for one queue type, with an optional hint underneath. */
 function QueueHead({ title, hint }: { title: string; hint?: string }) {
@@ -30,7 +31,7 @@ function QueueHead({ title, hint }: { title: string; hint?: string }) {
   );
 }
 
-export default function AdminQueueScreen() {
+function AdminQueueScreen() {
   const { role } = useAuth();
   const [queue, setQueue] = useState<ReviewQueue | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -199,3 +200,5 @@ const styles = StyleSheet.create({
   long: { color: colors.label },
   actions: { gap: space.sm },
 });
+
+export default requireBackend(AdminQueueScreen);

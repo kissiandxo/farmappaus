@@ -24,4 +24,32 @@ describe('privacy policy', () => {
     expect(text).toMatch(/do not keep Apple’s sign-in token/);
     expect(text).toMatch(/do not sell your information/);
   });
+
+  it('says plainly that version 1.0 has no accounts and sends nothing to Farm Direct', () => {
+    const first = PRIVACY_SECTIONS.find((s) => /no accounts/i.test(s.title));
+    expect(first).toBeDefined();
+    const text = first!.paragraphs.join(' ');
+    expect(text).toMatch(/no accounts and no sign-in/);
+    expect(text).toMatch(/Nothing you do in the app is sent to Farm Direct/);
+    expect(text).toMatch(/ordinary email/);
+    expect(text).toMatch(/public sources/);
+  });
+
+  it('covers Apple Maps and the OpenStreetMap credit', () => {
+    const text = PRIVACY_SECTIONS.flatMap((s) => s.paragraphs).join(' ');
+    expect(text).toMatch(/Apple Maps, which is Apple’s service/);
+    expect(text).toMatch(/© OpenStreetMap contributors/);
+  });
+
+  it('marks every account-only section so it is clear it does not apply to 1.0', () => {
+    const accountOnly = PRIVACY_SECTIONS.filter((s) => /only when accounts are available/.test(s.title));
+    const titles = accountOnly.map((s) => s.title.toLowerCase()).join(' | ');
+    for (const topic of ['create an account', 'sign in with apple', 'list your farm', 'claim a listing', 'kept']) {
+      expect(titles).toContain(topic);
+    }
+    // Sections that apply to both modes are not marked.
+    for (const s of PRIVACY_SECTIONS.filter((x) => /location|maps|children|contact|choices|share/i.test(x.title))) {
+      expect(s.title).not.toMatch(/only when accounts/);
+    }
+  });
 });

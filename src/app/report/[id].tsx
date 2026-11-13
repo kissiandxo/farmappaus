@@ -9,10 +9,11 @@ import { friendlyDbError } from '../../domain/listing';
 import { useAuth } from '../../state/AuthContext';
 import { useFarm } from '../../state/useFarm';
 import { colors, space, type } from '../../theme';
+import { requireBackend } from '../../components/RequireBackend';
 
 const REASONS = ['Wrong details', 'Closed or moved', 'Not a real farm', 'Food safety concern', 'Something else'];
 
-export default function ReportScreen() {
+function ReportScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const { farm } = useFarm(id);
   const { userId } = useAuth();
@@ -107,3 +108,5 @@ const styles = StyleSheet.create({
   actions: { paddingHorizontal: space.lg, marginBottom: space.xl, gap: space.sm },
   done: { alignItems: 'center', paddingTop: space.xxl, paddingBottom: space.lg },
 });
+
+export default requireBackend(ReportScreen);

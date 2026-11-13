@@ -55,3 +55,20 @@ export function hostLabel(raw: string): string | null {
     return null;
   }
 }
+
+const EMAIL_ADDRESS = /^[^\s@?&#%,;:<>()"'\\]+@[^\s@?&#%,;:<>()"'\\]+\.[^\s@?&#%,;:<>()"'\\]{2,}$/;
+
+/**
+ * Builds a `mailto:` link with the subject and body percent-encoded (spaces as %20, line breaks as %0A).
+ * Returns null when the address is blank or not a plain single address, so callers can hide the action.
+ * Line breaks in the subject are collapsed so it stays a single header line.
+ */
+export function mailtoUrl(to: string, subject = '', body = ''): string | null {
+  const address = to.trim();
+  if (!EMAIL_ADDRESS.test(address)) return null;
+  const params: string[] = [];
+  const cleanSubject = subject.replace(/\s+/g, ' ').trim();
+  if (cleanSubject) params.push(`subject=${encodeURIComponent(cleanSubject)}`);
+  if (body) params.push(`body=${encodeURIComponent(body)}`);
+  return `mailto:${address}${params.length ? `?${params.join('&')}` : ''}`;
+}
