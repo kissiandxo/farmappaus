@@ -1,12 +1,27 @@
-import { DarkTheme, DefaultTheme, Stack, ThemeProvider, type ErrorBoundaryProps, type Theme } from 'expo-router';
+import {
+  DarkTheme,
+  DefaultTheme,
+  Stack,
+  ThemeProvider,
+  useRootNavigationState,
+  useRouter,
+  type ErrorBoundaryProps,
+  type Theme,
+} from 'expo-router';
+import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
-import { useColorScheme, View } from 'react-native';
+import { useEffect, useRef } from 'react';
+import { StyleSheet, useColorScheme, View } from 'react-native';
 
 import { EmptyState } from '../components/ui/EmptyState';
-import { AuthProvider } from '../state/AuthContext';
+import { shouldShowWelcome } from '../domain/onboarding';
+import { AuthProvider, useAuth } from '../state/AuthContext';
 import { FavouritesProvider } from '../state/FavouritesContext';
 import { SearchProvider } from '../state/SearchContext';
 import { colors, darkPalette, lightPalette, type Palette } from '../theme';
+
+// Keep the splash screen up until we know whether to show the welcome screen, so the tabs never flash first.
+SplashScreen.preventAutoHideAsync().catch(() => {});
 
 /** React Navigation theme built from our hex palettes (navigation needs plain strings). */
 function navTheme(dark: boolean, p: Palette): Theme {
@@ -42,6 +57,29 @@ export function ErrorBoundary({ retry }: ErrorBoundaryProps) {
   );
 }
 
+/**
+ * Shows the welcome screen once on first launch. Until the saved flag, profile and session have been read,
+ * a plain cover hides the tabs and the splash screen stays up.
+ */
+function WelcomeGate() {
+  const router = useRouter();
+  const navigationReady = !!useRootNavigationState()?.key;
+  const { welcomeSeen, ready, session, localProfile } = useAuth();
+  const decided = welcomeSeen !== null && ready;
+  const handled = useRef(false);
+
+  useEffect(() => {
+    if (!decided || !navigationReady || handled.current) return;
+    handled.current = true;
+    if (shouldShowWelcome({ loaded: true, seen: !!welcomeSeen, signedIn: !!session || !!localProfile })) {
+      router.push('/(auth)/welcome');
+    }
+    SplashScreen.hideAsync().catch(() => {});
+  }, [decided, navigationReady, welcomeSeen, session, localProfile, router]);
+
+  return decided ? null : <View style={[StyleSheet.absoluteFill, styles.cover]} />;
+}
+
 export default function RootLayout() {
   const scheme = useColorScheme();
   return (
@@ -52,14 +90,19 @@ export default function RootLayout() {
             <StatusBar style="auto" />
             <Stack
               screenOptions={{
-                // System navigation bars: no coloured header, tint-coloured buttons, iOS default back titles.
-                headerTintColor: colors.tint,
+                // System navigation bars: no coloured header. The theme's `primary` tints the back button,
+                // so titles stay in the label colour (a headerTintColor would turn them green).
                 headerShadowVisible: false,
                 headerLargeTitleShadowVisible: false,
                 contentStyle: { backgroundColor: colors.groupedBackground },
               }}
             >
-              <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+              {/* `title` is what iOS 18 and earlier show on the back button of the next screen. */}
+              <Stack.Screen name="(tabs)" options={{ headerShown: false, title: 'Back' }} />
+              <Stack.Screen
+                name="(auth)"
+                options={{ presentation: 'fullScreenModal', headerShown: false, animation: 'slide_from_bottom' }}
+              />
               <Stack.Screen name="farmer/index" options={{ title: 'My listings', headerLargeTitle: true }} />
               <Stack.Screen name="farmer/[id]" options={{ title: 'Your listing' }} />
               <Stack.Screen name="farmer/stock/[id]" options={{ title: 'Update stock' }} />
@@ -69,9 +112,14 @@ export default function RootLayout() {
               <Stack.Screen name="admin/index" options={{ title: 'Review queue', headerLargeTitle: true }} />
               <Stack.Screen name="privacy" options={{ title: 'Privacy policy' }} />
             </Stack>
+            <WelcomeGate />
           </SearchProvider>
         </FavouritesProvider>
       </AuthProvider>
     </ThemeProvider>
   );
 }
+
+const styles = StyleSheet.create({
+  cover: { backgroundColor: colors.groupedBackground, pointerEvents: 'none' },
+});

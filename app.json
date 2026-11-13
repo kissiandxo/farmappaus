@@ -2,7 +2,7 @@
   "expo": {
     "name": "Farm Direct",
     "slug": "farm-direct",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "farmdirect",
@@ -10,6 +10,7 @@
     "ios": {
       "bundleIdentifier": "au.farmdirect.app",
       "supportsTablet": false,
+      "usesAppleSignIn": true,
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
       },
@@ -21,6 +22,7 @@
     },
     "plugins": [
       "expo-router",
+      "expo-apple-authentication",
       [
         "expo-splash-screen",
         {

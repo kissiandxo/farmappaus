@@ -32,6 +32,14 @@ export const PRIVACY_SECTIONS: PrivacySection[] = [
     ],
   },
   {
+    title: 'If you sign in with Apple',
+    paragraphs: [
+      'Signing in is optional. If you use Sign in with Apple, Apple gives the app a private user ID and, the first time only, the name and email address you choose to share. You can hide your email with Apple’s private relay.',
+      'Without an online account, we keep your name, email address and that user ID on your phone only. They are not sent to our servers. We do not keep Apple’s sign-in token. Account tab, then “Remove from this iPhone” deletes them. If you revoke Farm Direct in your Apple ID settings, the app removes them the next time it opens.',
+      'With an online account, Apple’s sign-in token is checked by our sign-in provider, Supabase, and your name and email are kept with your account like any other account details.',
+    ],
+  },
+  {
     title: 'If you list your farm',
     paragraphs: [
       'What you enter for a listing is shown publicly once we approve it: your name or business name, suburb and map pin, story, products, prices, opening hours, phone number, website, licence or accreditation details, and photos. Only enter what you are happy for anyone to see.',

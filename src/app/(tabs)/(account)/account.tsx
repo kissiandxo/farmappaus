@@ -1,60 +1,41 @@
 import { router } from 'expo-router';
 import { useState } from 'react';
-import { Alert, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Alert, ScrollView, StyleSheet, Text, View } from 'react-native';
 
 import { Notice } from '../../../components/FormBits';
-import { Button, EmptyState, Icon, Row, Section } from '../../../components/ui';
-import { validateEmail, validatePassword } from '../../../domain/validation';
+import { Icon, Row, Section } from '../../../components/ui';
+import { displayName } from '../../../domain/onboarding';
 import { useAuth } from '../../../state/AuthContext';
-import { colors, MIN_TAP, space, type } from '../../../theme';
+import { colors, space, type } from '../../../theme';
 
 const ROLE_LABELS = { user: 'Customer', farmer: 'Farmer', admin: 'Administrator' } as const;
 
+const openWelcome = () => router.push('/(auth)/welcome');
+const openPrivacy = () => router.push('/privacy');
+
 export default function AccountScreen() {
-  const { available, ready, session, email: signedInEmail, role, signIn, signUp, signOut, deleteAccount } = useAuth();
-  const [mode, setMode] = useState<'signin' | 'signup'>('signin');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [busy, setBusy] = useState(false);
+  const {
+    available,
+    appleAvailable,
+    ready,
+    session,
+    email: signedInEmail,
+    role,
+    localProfile,
+    signOut,
+    deleteAccount,
+    signInWithApple,
+    removeLocalProfile,
+  } = useAuth();
   const [notice, setNotice] = useState<{ ok: boolean; text: string } | null>(null);
 
-  if (!available) {
-    return (
-      <ScrollView contentInsetAdjustmentBehavior="automatic" contentContainerStyle={styles.content}>
-        <EmptyState
-          icon="person.crop.circle"
-          title="Accounts"
-          message="Accounts, saved favourites that follow you between phones, and farmer listings need the online service. It isn’t connected in this version of the app, so everything you see is stored on your phone."
-          style={styles.emptyState}
-        />
-        <Section>
-          <Row title="Privacy policy" accessory="chevron" onPress={() => router.push('/privacy')} />
-        </Section>
-      </ScrollView>
-    );
-  }
-
-  if (!ready) {
+  if (available && !ready) {
     return (
       <ScrollView contentInsetAdjustmentBehavior="automatic" contentContainerStyle={styles.content}>
         <Text style={[type.body, styles.loading]}>Loading…</Text>
       </ScrollView>
     );
   }
-
-  const submit = async () => {
-    const problem = validateEmail(email) ?? (mode === 'signup' ? validatePassword(password) : password ? null : 'Enter your password.');
-    if (problem) {
-      setNotice({ ok: false, text: problem });
-      return;
-    }
-    setBusy(true);
-    setNotice(null);
-    const result = await (mode === 'signin' ? signIn : signUp)(email, password);
-    setBusy(false);
-    setNotice({ ok: result.ok, text: result.message });
-    if (result.ok && mode === 'signin') setPassword('');
-  };
 
   const confirmDelete = () =>
     Alert.alert(
@@ -73,6 +54,21 @@ export default function AccountScreen() {
       ],
     );
 
+  const confirmRemoveProfile = () =>
+    Alert.alert(
+      'Remove from this iPhone?',
+      'Your name and email are deleted from this iPhone. You can sign in with Apple again whenever you like.',
+      [
+        { text: 'Cancel', style: 'cancel' },
+        { text: 'Remove', style: 'destructive', onPress: () => removeLocalProfile() },
+      ],
+    );
+
+  const finishSetup = async () => {
+    const result = await signInWithApple();
+    if (result.message) setNotice({ ok: result.ok, text: result.message });
+  };
+
   if (session) {
     return (
       <ScrollView contentInsetAdjustmentBehavior="automatic" contentContainerStyle={styles.content}>
@@ -86,6 +82,12 @@ export default function AccountScreen() {
             <Notice kind={notice.ok ? 'ok' : 'error'}>{notice.text}</Notice>
           </View>
         )}
+
+        {localProfile && appleAvailable ? (
+          <Section footer="Your Apple sign-in is saved on this iPhone. Tap to add it to your account.">
+            <Row title="Finish setting up your account" icon="apple.logo" accessory="chevron" onPress={finishSetup} />
+          </Section>
+        ) : null}
 
         <Section>
           <Row
@@ -103,7 +105,7 @@ export default function AccountScreen() {
         )}
 
         <Section>
-          <Row title="Privacy policy" accessory="chevron" onPress={() => router.push('/privacy')} />
+          <Row title="Privacy policy" accessory="chevron" onPress={openPrivacy} />
         </Section>
 
         <Section>
@@ -117,73 +119,54 @@ export default function AccountScreen() {
     );
   }
 
+  if (localProfile) {
+    return (
+      <ScrollView contentInsetAdjustmentBehavior="automatic" contentContainerStyle={styles.content}>
+        <Section header="Signed in with Apple">
+          <Row title={displayName(localProfile)} subtitle={localProfile.givenName || localProfile.familyName ? localProfile.email ?? undefined : undefined} />
+          <Row title="Stored on this iPhone" icon="iphone" />
+        </Section>
+
+        {available ? (
+          <Section footer="Create an account to keep your saved places on every phone.">
+            <Row title="Sign in or create an account" accessory="chevron" onPress={openWelcome} />
+          </Section>
+        ) : null}
+
+        <Section>
+          <Row title="Privacy policy" accessory="chevron" onPress={openPrivacy} />
+        </Section>
+
+        <Section>
+          <Row title="Remove from this iPhone" destructive onPress={confirmRemoveProfile} />
+        </Section>
+      </ScrollView>
+    );
+  }
+
+  const canSignIn = available || appleAvailable;
   return (
-    <ScrollView contentInsetAdjustmentBehavior="automatic" contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
+    <ScrollView contentInsetAdjustmentBehavior="automatic" contentContainerStyle={styles.content}>
       <View style={styles.header}>
         <Icon name="person.crop.circle" size={72} weight="light" color={colors.tint} />
         <Text style={[type.title1, styles.title]} accessibilityRole="header">
-          {mode === 'signin' ? 'Sign in' : 'Create an account'}
+          Accounts
         </Text>
         <Text style={[type.body, styles.message]}>
-          Sign in to keep your saved places on every phone, suggest a farm, or list your own farm for free.
+          {available
+            ? 'Sign in to keep your saved places on every phone, suggest a farm, or list your own farm for free.'
+            : 'Signing in is optional. Farm Direct works without an account, and everything you save stays on this iPhone.'}
         </Text>
       </View>
 
-      <Section footer={mode === 'signup' ? 'At least 8 characters, with some letters.' : undefined}>
-        <Row
-          title="Email"
-          accessory={
-            <TextInput
-              value={email}
-              onChangeText={setEmail}
-              autoCapitalize="none"
-              autoCorrect={false}
-              keyboardType="email-address"
-              autoComplete="email"
-              textContentType="emailAddress"
-              style={styles.input}
-              accessibilityLabel="Email"
-            />
-          }
-        />
-        <Row
-          title="Password"
-          accessory={
-            <TextInput
-              value={password}
-              onChangeText={setPassword}
-              secureTextEntry
-              autoCapitalize="none"
-              autoComplete={mode === 'signin' ? 'current-password' : 'new-password'}
-              textContentType={mode === 'signin' ? 'password' : 'newPassword'}
-              style={styles.input}
-              accessibilityLabel="Password"
-              onSubmitEditing={submit}
-            />
-          }
-        />
-      </Section>
-
-      {notice && (
-        <View style={styles.pad}>
-          <Notice kind={notice.ok ? 'ok' : 'error'}>{notice.text}</Notice>
-        </View>
-      )}
-
-      <View style={styles.actions}>
-        <Button label={busy ? 'Please wait…' : mode === 'signin' ? 'Sign in' : 'Create account'} onPress={submit} disabled={busy} />
-        <Button
-          variant="plain"
-          label={mode === 'signin' ? 'I’m new – create an account' : 'I already have an account'}
-          onPress={() => {
-            setMode(mode === 'signin' ? 'signup' : 'signin');
-            setNotice(null);
-          }}
-        />
-      </View>
+      {canSignIn ? (
+        <Section>
+          <Row title="Sign in" icon="person.crop.circle" accessory="chevron" onPress={openWelcome} />
+        </Section>
+      ) : null}
 
       <Section>
-        <Row title="Privacy policy" accessory="chevron" onPress={() => router.push('/privacy')} />
+        <Row title="Privacy policy" accessory="chevron" onPress={openPrivacy} />
       </Section>
     </ScrollView>
   );
@@ -191,19 +174,9 @@ export default function AccountScreen() {
 
 const styles = StyleSheet.create({
   content: { paddingBottom: space.xxl },
-  emptyState: { flexGrow: 0, flexShrink: 0, flexBasis: 'auto', paddingVertical: space.xxl },
   loading: { color: colors.secondaryLabel, padding: space.lg },
   pad: { paddingHorizontal: space.lg, marginBottom: space.lg },
   header: { alignItems: 'center', gap: space.sm, paddingHorizontal: space.xl, paddingTop: space.xl, paddingBottom: space.lg },
   title: { color: colors.label, textAlign: 'center' },
   message: { color: colors.secondaryLabel, textAlign: 'center' },
-  input: {
-    ...type.body,
-    width: '62%',
-    minHeight: MIN_TAP,
-    color: colors.label,
-    textAlign: 'right',
-    paddingVertical: space.sm,
-  },
-  actions: { paddingHorizontal: space.lg, gap: space.sm, marginBottom: space.xl },
 });

@@ -26,6 +26,20 @@ In **Project Settings → API** copy the *Project URL* and the *anon public* key
 - **Local / Expo Go previews:** copy `.env.example` to `.env` and fill in both values.
 - **EAS builds (TestFlight):** add both as EAS environment variables named `EXPO_PUBLIC_SUPABASE_URL` and `EXPO_PUBLIC_SUPABASE_ANON_KEY` (expo.dev → your project → Environment variables), visible to the `preview` and `production` environments.
 
+### Sign in with Apple (optional)
+
+The app shows the Apple button either way. Without a backend it keeps a small profile on the phone; with one it signs in to Supabase.
+
+1. **Apple Developer → Identifiers → `au.farmdirect.app`:** Sign in with Apple must be ticked (done). Rebuild with EAS after any change to `app.json`; this is a new native build, not an over-the-air update.
+2. **Supabase → Authentication → Providers → Apple:** switch it on.
+3. In **Client IDs** enter `au.farmdirect.app` (the app's bundle ID). A native iOS app needs no Services ID, secret key or redirect URL, because the app sends Apple's identity token straight to Supabase.
+4. Save. Leave *Allow users without an email* off unless you want people who hide their email to be accepted without one (Apple's private relay address still counts as an email).
+5. Test on a real iPhone build; the simulator needs an Apple ID signed in under Settings.
+
+The app sends a hashed nonce to Apple and the raw nonce to Supabase, which rejects replayed tokens. The user's name arrives only on the first Apple sign-in, so the app saves it to the user's metadata straight away.
+
+Later: deleting an account that signed in with Apple should also revoke the Apple token from a server (an Edge Function); App Review may ask for this.
+
 ## 4. Make yourself the administrator
 
 1. Open the app, create an account, and confirm your email.

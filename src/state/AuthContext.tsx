@@ -1,4 +1,7 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import type { Session } from '@supabase/supabase-js';
+import * as AppleAuthentication from 'expo-apple-authentication';
+import * as Crypto from 'expo-crypto';
 import {
   createContext,
   useCallback,
@@ -9,6 +12,13 @@ import {
   type ReactNode,
 } from 'react';
 
+import {
+  mergeAppleProfile,
+  parseLocalProfile,
+  PROFILE_KEY,
+  WELCOME_KEY,
+  type LocalProfile,
+} from '../domain/onboarding';
 import { isBackendConfigured, supabase } from '../lib/supabase';
 
 export type Role = 'user' | 'farmer' | 'admin';
@@ -31,6 +41,16 @@ interface AuthState {
   signIn: (email: string, password: string) => Promise<AuthResult>;
   signUp: (email: string, password: string) => Promise<AuthResult>;
   signOut: () => Promise<void>;
+  /** Apple profile kept on this phone (only when no backend is connected, or not yet linked to an account). */
+  localProfile: LocalProfile | null;
+  /** True when Sign in with Apple can run on this device (iOS, not web or Jest). */
+  appleAvailable: boolean;
+  /** Runs the Apple flow. A cancelled sheet returns `{ ok: false, message: '' }`: show nothing. */
+  signInWithApple: () => Promise<AuthResult>;
+  removeLocalProfile: () => Promise<void>;
+  /** null until the saved flag has been read. */
+  welcomeSeen: boolean | null;
+  markWelcomeSeen: () => void;
   becomeFarmer: () => Promise<AuthResult>;
   deleteAccount: () => Promise<AuthResult>;
 }
@@ -53,11 +73,71 @@ export function friendlyAuthError(message: string | undefined): string {
   return 'Something went wrong. Please try again.';
 }
 
+const APPLE_CANCELLED = 'ERR_REQUEST_CANCELED';
+
+/** Random hex string used as the Apple nonce. */
+function randomNonce(): string {
+  return Array.from(Crypto.getRandomBytes(16), (b) => b.toString(16).padStart(2, '0')).join('');
+}
+
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [session, setSession] = useState<Session | null>(null);
   const [role, setRole] = useState<Role | null>(null);
   const [ready, setReady] = useState(!isBackendConfigured);
   const userId = session?.user.id ?? null;
+  const [localProfile, setLocalProfile] = useState<LocalProfile | null>(null);
+  const [profileLoaded, setProfileLoaded] = useState(false);
+  const [appleAvailable, setAppleAvailable] = useState(false);
+  const [welcomeSeen, setWelcomeSeen] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    AppleAuthentication.isAvailableAsync()
+      .then(setAppleAvailable)
+      .catch(() => setAppleAvailable(false));
+    // Read both together so the welcome gate never decides before it knows about a saved profile.
+    Promise.all([AsyncStorage.getItem(WELCOME_KEY), AsyncStorage.getItem(PROFILE_KEY)])
+      .then(([flag, raw]) => {
+        setLocalProfile(parseLocalProfile(raw));
+        setWelcomeSeen(flag === '1');
+      })
+      .catch(() => setWelcomeSeen(false))
+      .finally(() => setProfileLoaded(true));
+  }, []);
+
+  const removeLocalProfile = useCallback(async () => {
+    setLocalProfile(null);
+    await AsyncStorage.removeItem(PROFILE_KEY).catch(() => {});
+  }, []);
+
+  // On launch, and whenever Apple reports a revoked sign-in, drop a profile Apple no longer vouches for.
+  const appleUserId = localProfile?.appleUserId ?? null;
+  useEffect(() => {
+    if (!profileLoaded || !appleAvailable || !appleUserId) return;
+    let cancelled = false;
+    AppleAuthentication.getCredentialStateAsync(appleUserId)
+      .then((state) => {
+        if (cancelled) return;
+        if (
+          state === AppleAuthentication.AppleAuthenticationCredentialState.REVOKED ||
+          state === AppleAuthentication.AppleAuthenticationCredentialState.NOT_FOUND
+        ) {
+          removeLocalProfile().catch(() => {});
+        }
+      })
+      .catch(() => {});
+    const subscription = AppleAuthentication.addRevokeListener(() => {
+      removeLocalProfile().catch(() => {});
+    });
+    return () => {
+      cancelled = true;
+      subscription.remove();
+    };
+  }, [profileLoaded, appleAvailable, appleUserId, removeLocalProfile]);
+
+  const markWelcomeSeen = useCallback(() => {
+    setWelcomeSeen(true);
+    AsyncStorage.setItem(WELCOME_KEY, '1').catch(() => {});
+  }, []);
 
   useEffect(() => {
     if (!supabase) return;
@@ -102,6 +182,55 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     await supabase?.auth.signOut();
   }, []);
 
+  const signInWithApple = useCallback<AuthState['signInWithApple']>(async () => {
+    const failed = { ok: false, message: 'Apple sign-in didn’t work. Please try again.' };
+    try {
+      // The nonce only matters when Supabase checks the token. Apple gets the hash, Supabase the raw value.
+      const rawNonce = supabase ? randomNonce() : undefined;
+      const hashedNonce = rawNonce ? await Crypto.digestStringAsync(Crypto.CryptoDigestAlgorithm.SHA256, rawNonce) : undefined;
+      const credential = await AppleAuthentication.signInAsync({
+        requestedScopes: [
+          AppleAuthentication.AppleAuthenticationScope.FULL_NAME,
+          AppleAuthentication.AppleAuthenticationScope.EMAIL,
+        ],
+        nonce: hashedNonce,
+      });
+      const merged = mergeAppleProfile(localProfile, {
+        appleUserId: credential.user,
+        givenName: credential.fullName?.givenName,
+        familyName: credential.fullName?.familyName,
+        email: credential.email,
+      });
+
+      if (supabase) {
+        if (!credential.identityToken) return failed;
+        const { error } = await supabase.auth.signInWithIdToken({
+          provider: 'apple',
+          token: credential.identityToken,
+          nonce: rawNonce,
+        });
+        if (error) return { ok: false, message: friendlyAuthError(error.message) };
+        if (merged.givenName || merged.familyName) {
+          const fullName = [merged.givenName, merged.familyName].filter(Boolean).join(' ');
+          await supabase.auth
+            .updateUser({ data: { full_name: fullName, given_name: merged.givenName, family_name: merged.familyName } })
+            .catch(() => {});
+        }
+        // The account now holds the name, so the copy on this phone is no longer needed.
+        await removeLocalProfile();
+        return { ok: true, message: 'You’re signed in.' };
+      }
+
+      // No backend: keep a small profile on this phone. The identity token is never stored.
+      setLocalProfile(merged);
+      await AsyncStorage.setItem(PROFILE_KEY, JSON.stringify(merged)).catch(() => {});
+      return { ok: true, message: 'You’re signed in.' };
+    } catch (e) {
+      if ((e as { code?: string } | null)?.code === APPLE_CANCELLED) return { ok: false, message: '' };
+      return failed;
+    }
+  }, [localProfile, removeLocalProfile]);
+
   const becomeFarmer = useCallback<AuthState['becomeFarmer']>(async () => {
     if (!supabase) return { ok: false, message: 'Accounts are not available in this version.' };
     const { error } = await supabase.rpc('become_farmer');
@@ -129,10 +258,32 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       signIn,
       signUp,
       signOut,
+      localProfile,
+      appleAvailable,
+      signInWithApple,
+      removeLocalProfile,
+      welcomeSeen,
+      markWelcomeSeen,
       becomeFarmer,
       deleteAccount,
     }),
-    [ready, session, userId, role, signIn, signUp, signOut, becomeFarmer, deleteAccount],
+    [
+      ready,
+      session,
+      userId,
+      role,
+      signIn,
+      signUp,
+      signOut,
+      localProfile,
+      appleAvailable,
+      signInWithApple,
+      removeLocalProfile,
+      welcomeSeen,
+      markWelcomeSeen,
+      becomeFarmer,
+      deleteAccount,
+    ],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

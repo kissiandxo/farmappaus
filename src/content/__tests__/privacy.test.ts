@@ -11,7 +11,7 @@ describe('privacy policy', () => {
 
   it('covers location, accounts, listings, claims, storage, sharing, deletion and contact', () => {
     const titles = PRIVACY_SECTIONS.map((s) => s.title.toLowerCase()).join(' | ');
-    for (const topic of ['location', 'account', 'list your farm', 'claim', 'kept', 'share', 'choices', 'contact']) {
+    for (const topic of ['location', 'account', 'apple', 'list your farm', 'claim', 'kept', 'share', 'choices', 'contact']) {
       expect(titles).toContain(topic);
     }
   });
@@ -20,6 +20,8 @@ describe('privacy policy', () => {
     const text = PRIVACY_SECTIONS.flatMap((s) => s.paragraphs).join(' ');
     expect(text).toMatch(/not sent to our servers/);
     expect(text).toMatch(/Delete my account/);
+    expect(text).toMatch(/Remove from this iPhone/);
+    expect(text).toMatch(/do not keep Apple’s sign-in token/);
     expect(text).toMatch(/do not sell your information/);
   });
 });
