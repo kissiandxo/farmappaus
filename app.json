@@ -1,0 +1,33 @@
+{
+  "expo": {
+    "name": "Farm Direct",
+    "slug": "farm-direct",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/icon.png",
+    "scheme": "farmdirect",
+    "userInterfaceStyle": "light",
+    "ios": {
+      "bundleIdentifier": "au.example.farmdirect",
+      "supportsTablet": false
+    },
+    "web": {
+      "output": "single",
+      "favicon": "./assets/images/favicon.png"
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#F7F1E5",
+          "image": "./assets/images/splash-icon.png",
+          "imageWidth": 120
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}
