@@ -17,6 +17,8 @@ No in-app payments in v1: the app connects people, the sale happens at the farm 
 | Claim checks | Manual review: ABN + phone + note, compared by an admin |
 | Apple account | Paid Developer account available |
 
+> **Status:** all eight milestones are built. See the README for what is built and what still needs your accounts or a real phone to check, and `docs/RELEASE.md` for the steps to launch.
+
 ## Milestones
 
 Each milestone ends with a commit, passing tests, and a "how to test on your phone" note.

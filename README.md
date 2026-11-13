@@ -1,95 +1,96 @@
 # Farm Direct (working name)
 
-An iOS app for Australians to find and buy food directly from local farmers, so more of the money goes to the farmer. Built with Expo (React Native + TypeScript) so it can be developed, tested and shipped to TestFlight without a Mac.
+An iOS app for Australians to find and buy food directly from local farmers, so more of the money goes to the farmer. Built with Expo (React Native + TypeScript), so it can be developed, tested and shipped to TestFlight without a Mac.
 
-- Plan and milestones: [`docs/PLAN.md`](docs/PLAN.md)
-- Connecting the backend (Supabase), first admin, and how reviews work: [`docs/BACKEND.md`](docs/BACKEND.md)
-- Food-safety rules and the licence field: [`docs/COMPLIANCE.md`](docs/COMPLIANCE.md)
+Buyers find farms, farm-gate stalls, farm shops and farmers’ markets near them (GPS or suburb/postcode), filter by product, distance, “open now” and tags like free-range or organic, read profiles with prices and hours, and get in touch or get directions. Farmers sign up free, list their farm and keep stock up to date. Every listing is reviewed before it goes live. There are no in-app payments: you pay the farmer directly.
 
-## Status
+## Documents
 
-**Milestones 5 and 6 – farmer tools, suggestions and review.** With the backend connected:
+| Read this | For |
+|---|---|
+| [`docs/RELEASE.md`](docs/RELEASE.md) | **Start here.** Step by step: Expo project, signing, preview on your phone, TestFlight, launch checklist |
+| [`docs/BACKEND.md`](docs/BACKEND.md) | Connecting Supabase, becoming the administrator, how reviews work |
+| [`docs/REAL_LISTINGS.md`](docs/REAL_LISTINGS.md) | Plan for getting real farms onto the map |
+| [`docs/COMPLIANCE.md`](docs/COMPLIANCE.md) | Direct-sale food-safety rules (raw milk, eggs, meat) and the licence field |
+| [`docs/APP_STORE.md`](docs/APP_STORE.md) | App Store text, privacy answers, review notes, screenshot list |
+| [`docs/PRIVACY.md`](docs/PRIVACY.md) | Draft privacy policy (same text as in the app) |
+| [`docs/DATA.md`](docs/DATA.md) | Data sources and licence caveats |
+| [`docs/PLAN.md`](docs/PLAN.md) | Original plan and milestones |
 
-- **Farmers** (free, one tap from the Account tab) can create a listing, set weekly hours with big +/− time buttons, add products and AUD prices, add licences and accreditation, add photos (resized to small JPEGs before upload), save drafts, and send for review. A quick **Update stock and prices** screen saves each change straight away.
-- **Claims:** on any live listing with no owner, tap “Is this your farm? Claim it” and give an ABN (checksum-checked), phone number and note.
-- **Suggestions:** any signed-in person can suggest a farm or market (5 a day).
-- **Reports:** signed-in people can report a problem with a live listing.
-- **Reviewers** (administrators) get a **Review queue** with pending listings, claims and suggestions. They approve, ask for changes, or reject with a note; confirm licences; approve claims; and turn suggestions into unowned listings. Approval is blocked if the food-safety rules aren't met (raw milk, missing or expired licences), enforced in the database as well as the app.
+## What’s built
 
-These screens need a Supabase project to do anything, so they are untested end to end here; the rules behind them are covered by the 28 database checks, and the editors were exercised in a browser.
+| Milestone | What you get |
+|---|---|
+| 1. Browse | List of places sorted by distance; filters for product, distance, open now, tags; open/closed worked out in each farm’s own time zone |
+| 2. Location and map | “Use my location” or search any suburb/postcode (works offline, about 17,800 localities); List and Map tabs (Apple Maps); last location remembered |
+| 3. Profiles and favourites | Photos, story, products and AUD prices with stock, hours, pick-up/delivery, payment types, licences, call, website, Apple Maps directions; saved places |
+| 4. Backend and accounts | Supabase database with row-level security; email/password accounts; favourites that follow your account; in-app account deletion; listings cached on the phone for patchy reception |
+| 5. Farmer tools | Free farmer account; listing editor (big +/− time steppers, products, licences, photos); drafts and send for review; quick stock and price updates; claim an existing listing |
+| 6. Suggestions and review | Suggest a farm; report a listing; reviewer queue to approve, ask for changes or reject; licence checks; claim approval; food-safety rules enforced in the database |
+| 7. Polish | “Saved listings” notice when offline; 20-second load timeout; “not updated for a while” warnings (90 days); friendly error screen; in-app privacy policy; colour contrast checked automatically (WCAG AA, main text AAA) |
+| 8. Release | App icon and splash; EAS preview and TestFlight workflows; release guide, App Store text and privacy answers; real-listings plan |
 
-**Milestone 4 – backend and accounts.** The app can now run against a Supabase project: live listings load from the server and are saved on the phone, so the last-seen listings still show with no reception (with a clear "saved listings" notice). Accounts (email and password), favourites that follow your account, in-app account deletion, and the database rules for farmers, reviews, claims and suggestions are in place and tested (`npm run test:sql`). With no Supabase keys the app runs on clearly labelled sample data. Set-up: [`docs/BACKEND.md`](docs/BACKEND.md).
+With no Supabase keys the app runs on **clearly labelled sample data** (16 invented places across all states and territories, each marked “SAMPLE – not a real farm”). No real farms are invented.
 
-**Milestone 3 – farm profiles and favourites.** Each place has a full profile (photos, story, products and prices, hours, pick-up/delivery, payment types, licences, call, website, Apple Maps directions) and you can save favourites.
+## What has and hasn’t been checked
 
-**Milestone 2 – location and map.** On top of M1's list and filters (product, distance, "open now", tags), you can now:
+Checked automatically (`npm test`, `npm run test:sql`, `npm run typecheck`): all the app’s logic (distance, opening hours, filters, search, food-safety rules, validation, data mapping, offline cache, contrast), and the whole database design in a real Postgres engine (who can see and change what, the review workflow, raw-milk and licence rules, claims, suggestions, account deletion). The iOS and web bundles build.
 
-- tap **Set my location** → **Use my current location** (GPS, asks permission only when tapped), or search any Australian **suburb or postcode** (works offline, from a bundled list of about 17,800 localities);
-- switch between a **List** tab and a **Map** tab (Apple Maps on iPhone, no API key). Pins are green when open and terracotta when closed;
-- reopen the app with your last location remembered, even with no reception.
+Checked by looking at it in a phone-sized browser: the list, filters, location search, profiles, favourites, and the hours, product and licence editors.
 
-If location permission is denied, the app explains how to turn it on in Settings and offers suburb/postcode search instead. The map is iPhone-only; the browser preview shows a placeholder.
+**Not yet checked, because it needs your accounts or a real phone:**
 
-> All listings are **sample data** (invented names, labelled "SAMPLE" in the app). No real farms are shown. See `src/data/sampleFarms.ts`.
+- Running on a real iPhone (GPS, Apple Maps, the camera and photo picker).
+- Everything that talks to Supabase (sign-in, loading live listings, saving listings, uploading photos, the review screens). The rules behind them are tested; the screens themselves need a connected project.
+- The Expo workflows (they can only be validated once your Expo project exists) and the TestFlight build.
+- The photo storage rules (`supabase/migrations/0002_storage.sql`), which only exist on Supabase.
 
 ## Stack
 
 | Area | Choice |
 |---|---|
 | App | Expo SDK 58, React Native, TypeScript, Expo Router |
-| Build and ship | EAS Build + EAS Submit (TestFlight), EAS Update for previews |
-| Backend (from M4) | Supabase (Postgres + PostGIS, Auth, Storage) |
-| Tests | Jest (`jest-expo`) |
+| Build and ship | EAS Build, EAS Update (previews) and TestFlight, via the workflows in `.eas/workflows/` |
+| Backend | Supabase (Postgres, Auth, Storage), Sydney region |
+| Maps and location | Apple Maps (`react-native-maps`), `expo-location` |
+| Tests | Jest (`jest-expo`) for app logic; PGlite (Postgres in Node) for the database |
 
 ## Project layout
 
 ```
-src/app/(tabs)/   List and Map screens (Expo Router)
-src/components/   Chip, FilterPanel, FarmCard, FarmMap, location and filter sheets
-src/state/        Search state (location, filters, results) and saved location
-src/domain/       Pure logic: types, geo, places, hours, filters, compliance, formatting
-src/data/         Sample farms and the offline suburb/postcode list
-scripts/          build-postcodes.mjs (regenerates the suburb list)
-docs/             Plan, compliance notes, data sources and licence caveats
+src/app/            Screens (Expo Router): tabs, farm profile, farmer, claim, report, suggest, admin, privacy
+src/components/     Cards, filters, map, form pieces, editors, review panel
+src/state/          Search, favourites and account state
+src/domain/         Pure logic with no React or network code (the best-tested part)
+src/data/           Sample farms, offline postcode list, database mapping, reads and writes
+src/content/        Privacy policy text
+supabase/migrations Database tables, security rules, review workflow, photo storage
+scripts/            Postcode list builder, privacy doc builder, database tests
+.eas/workflows/     Preview-update and TestFlight workflows
+docs/               Guides and plans (see above)
 ```
-
-Core logic in `src/domain` has no React or network code, so it is fast to test and reusable when the backend arrives.
 
 ## Develop
 
 ```bash
 npm install
-npm test            # Jest unit tests (app logic)
-npm run test:sql    # database schema and security rules, run in a local Postgres
-npm run typecheck   # TypeScript
-npm start           # Expo dev server (needs a computer or tunnel; see below)
+npm test             # app logic tests
+npm run test:sql     # database design and security rules, in a local Postgres
+npm run typecheck
+npm run build:privacy   # regenerate docs/PRIVACY.md after editing src/content/privacy.ts
+npm start            # Expo dev server (needs a computer; from an iPhone use the workflows instead)
 ```
 
-Note: `npx expo install` and EAS commands need access to `expo.dev`, `api.expo.dev` and `u.expo.dev`. If `expo install` is unavailable, install with `npm install` using the versions in `package.json` (SDK 58).
+Copy `.env.example` to `.env` to connect Supabase locally (see `docs/BACKEND.md`). `npx expo install` and the EAS command line need access to `expo.dev` and `api.expo.dev`. Without that, install packages with `npm install` using the SDK 58 versions already in `package.json`.
 
-## Test on your iPhone (no Mac)
+## Try it on your iPhone
 
 1. Install **Expo Go** from the App Store and sign in with your Expo account.
-2. Preview builds are published with EAS Update to a `preview` channel. One-off setup, from a machine with network access to Expo and an access token (`EXPO_TOKEN`, created at expo.dev → Settings → Access tokens):
-   ```bash
-   npx eas-cli init                 # links the project to your Expo account
-   npx expo install expo-updates
-   npx eas-cli update:configure
-   npx eas-cli update --branch preview --message "M1"
-   ```
-3. In Expo Go, open the project from the **Projects** tab (or scan the QR/link EAS prints).
-
-## Release to TestFlight (outline, completed in M8)
-
-1. Change `ios.bundleIdentifier` in `app.json` from the placeholder `au.example.farmdirect` to your own reverse-domain ID. It cannot be changed after the app is created in App Store Connect.
-2. Create the app record in App Store Connect with that bundle ID.
-3. `npx eas-cli build --platform ios --profile production` (EAS manages signing with your Apple Developer account).
-4. `npx eas-cli submit --platform ios --latest` to send the build to TestFlight.
-5. Add testers in App Store Connect → TestFlight.
+2. Follow `docs/RELEASE.md` steps 1–2 once (link the Expo project), then push to `main` or a `claude/` branch. The *Publish preview update* workflow publishes the app; open it in Expo Go under Projects → Farm Direct.
 
 ## Design notes
 
-- Earthy palette, 18 pt base text that scales with the iPhone text-size setting, 52 pt minimum tap targets.
-- Open/closed is always written in words as well as colour.
+- Earthy palette, 18 pt base text that scales with the iPhone text-size setting, 52 pt minimum tap targets, open/closed always in words as well as colour.
 - Australian English, AUD, kilometres, all states and territories.
-- No in-app payments in v1.
+- Fast on patchy reception: listings and your last location are saved on the phone, loads give up after 20 seconds, photos are shrunk before upload.
+- Food safety first: milk must be pasteurised; milk, eggs and meat need licence details before a listing can go live (rules in `docs/COMPLIANCE.md`, enforced in the app and the database).

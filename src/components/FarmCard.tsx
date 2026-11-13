@@ -3,6 +3,7 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { licenceBadge } from '../domain/compliance';
 import { useFavourites } from '../state/FavouritesContext';
 import type { FarmResult } from '../domain/filters';
+import { isStale } from '../domain/format';
 import { formatDistance } from '../domain/geo';
 import { PRODUCT_LABELS, TAG_LABELS, VENUE_LABELS } from '../domain/types';
 import { colors, font, radius, space } from '../theme';
@@ -53,6 +54,9 @@ export function FarmCard({ result, onPress }: { result: FarmResult; onPress?: ()
           {badge === 'checked' ? '✓ Licence checked' : 'Licence declared by farmer'}
         </Text>
       )}
+      {!farm.isSample && isStale(farm.updatedOn, new Date()) && (
+        <Text style={styles.stale}>Not updated for a while. Call ahead to check.</Text>
+      )}
       {saved && <Text style={styles.saved}>♥ Saved</Text>}
     </Pressable>
   );
@@ -85,4 +89,5 @@ const styles = StyleSheet.create({
   tags: { fontSize: font.small, color: colors.accent, fontWeight: '600' },
   licence: { fontSize: font.small, color: colors.textMuted, marginTop: space.xs },
   saved: { fontSize: font.small, color: colors.accent, fontWeight: '700' },
+  stale: { fontSize: font.small, color: colors.closed, fontWeight: '700', marginTop: space.xs },
 });

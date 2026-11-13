@@ -14,6 +14,7 @@ import { parseFarmCache, serialiseFarmCache } from '../data/mappers';
 import { fetchLiveFarms } from '../data/repository';
 import { SAMPLE_FARMS } from '../data/sampleFarms';
 import type { Farm } from '../domain/types';
+import { withTimeout } from '../lib/async';
 import { isBackendConfigured } from '../lib/supabase';
 
 /** Where the listings on screen came from. */
@@ -101,7 +102,8 @@ export function SearchProvider({ children }: { children: ReactNode }) {
     if (!isBackendConfigured) return;
     setRefreshing(true);
     try {
-      const live = await fetchLiveFarms();
+      // On patchy reception a request can hang; give up after 20 s and keep the saved listings.
+      const live = await withTimeout(fetchLiveFarms(), 20_000);
       const now = new Date();
       setFarms(live);
       setDataStatus({ kind: 'live', at: now.toISOString() });

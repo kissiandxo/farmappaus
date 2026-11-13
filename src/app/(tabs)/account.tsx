@@ -58,6 +58,7 @@ export default function AccountScreen() {
             It isn’t connected in this version of the app, so everything you see is stored on your phone.
           </Text>
         </View>
+        <Button label="Privacy policy" onPress={() => router.push('/privacy')} />
       </ScrollView>
     );
   }
@@ -116,6 +117,7 @@ export default function AccountScreen() {
         {role === 'admin' && <Button label="Review queue" onPress={() => router.push('/admin')} />}
         {notice && <Text style={[styles.notice, !notice.ok && styles.noticeError]}>{notice.text}</Text>}
         <Button label="Sign out" onPress={signOut} />
+        <Button label="Privacy policy" onPress={() => router.push('/privacy')} />
         <Button label="Delete my account" kind="danger" onPress={confirmDelete} />
       </ScrollView>
     );
@@ -168,6 +170,7 @@ export default function AccountScreen() {
           setNotice(null);
         }}
       />
+      <Button label="Privacy policy" onPress={() => router.push('/privacy')} />
     </ScrollView>
   );
 }

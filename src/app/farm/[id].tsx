@@ -5,7 +5,7 @@ import { Linking, Pressable, ScrollView, StyleSheet, Text, View } from 'react-na
 import { licenceBadge } from '../../domain/compliance';
 import { formatDistance, haversineKm } from '../../domain/geo';
 import { hoursLines, localDayAndMinutes, openStatus, timezoneForState } from '../../domain/hours';
-import { formatDateAu, formatPrice } from '../../domain/format';
+import { describeAge, formatDateAu, formatPrice, isStale } from '../../domain/format';
 import { directionsUrl, telUrl, websiteUrl } from '../../domain/links';
 import {
   FULFILMENT_LABELS,
@@ -214,7 +214,16 @@ export default function FarmProfileScreen() {
         </Section>
       )}
 
-      <Text style={styles.updated}>Listing last updated {formatDateAu(farm.updatedOn)}</Text>
+      {!farm.isSample && isStale(farm.updatedOn, now) && (
+        <View style={styles.sample} accessibilityRole="alert">
+          <Text style={styles.sampleText}>
+            This listing hasn’t been updated for a while. Call ahead to check before you travel.
+          </Text>
+        </View>
+      )}
+      <Text style={styles.updated}>
+        Listing last updated {formatDateAu(farm.updatedOn)} ({describeAge(farm.updatedOn, now)})
+      </Text>
 
       {canClaim && (
         <ActionButton label="Is this your farm? Claim it" onPress={() => router.push(`/claim/${farm.id}`)} />
