@@ -6,9 +6,10 @@ import {
   offeredOptions,
   searchFarms,
   sellsMeat,
+  venueTypeOptions,
   toggle,
 } from '../filters';
-import { MEAT_CATEGORIES, PRODUCT_CATEGORIES, PRODUCT_DISPLAY_ORDER, VENUE_TYPES } from '../types';
+import { MEAT_CATEGORIES, PRODUCT_CATEGORIES, PRODUCT_DISPLAY_ORDER, VENUE_LABELS, VENUE_PLURAL_LABELS, VENUE_TYPES } from '../types';
 import { REAL_FARMS } from '../../data/realFarms';
 import { makeFarm, makeFilters } from './fixtures';
 
@@ -165,6 +166,34 @@ describe('offeredOptions', () => {
     ]);
     expect(offeredOptions([shop], DEFAULT_FILTERS, all, tags, ['farm', 'farm_shop']).types).toEqual(['farm_shop']);
   });
+
+  it('offers butchers only when at least one butcher is in the list (or Butchers is selected)', () => {
+    const market = makeFarm({ id: 'm', type: 'farmers_market' });
+    const butcher = makeFarm({ id: 'b', type: 'butcher' });
+    expect(offeredOptions([market, near], DEFAULT_FILTERS, all, tags).types).not.toContain('butcher');
+    expect(offeredOptions([butcher, market, near], DEFAULT_FILTERS, all, tags).types).toEqual([
+      'farmers_market',
+      'farm',
+      'butcher',
+    ]);
+    expect(offeredOptions([market], makeFilters({ types: ['butcher'] }), all, tags).types).toEqual([
+      'farmers_market',
+      'butcher',
+    ]);
+  });
+});
+
+describe('venueTypeOptions', () => {
+  it('without a backend offers exactly the types some place has', () => {
+    expect(venueTypeOptions(['farm_shop', 'butcher'], false)).toEqual(['farm_shop', 'butcher']);
+    expect(venueTypeOptions([], false)).toEqual([]);
+  });
+
+  it('with a backend keeps the four other types and adds Butchers only when one is offered', () => {
+    expect(venueTypeOptions([], true)).toEqual(['farmers_market', 'farm_shop', 'farm_gate_stall', 'farm']);
+    expect(venueTypeOptions(['farm'], true)).toEqual(['farmers_market', 'farm_shop', 'farm_gate_stall', 'farm']);
+    expect(venueTypeOptions(['butcher'], true)).toEqual(['farmers_market', 'farm_shop', 'farm_gate_stall', 'farm', 'butcher']);
+  });
 });
 
 describe('type and weekend filters', () => {
@@ -180,6 +209,23 @@ describe('type and weekend filters', () => {
       'shop',
     ]);
     expect(ids(searchFarms(list, makeFilters({ types: [] }), SYDNEY, NOW))).toHaveLength(3);
+  });
+
+  it('filters butchers by type and by the Meat categories like any other place', () => {
+    const butcher = makeFarm({
+      id: 'butcher',
+      name: 'Butcher',
+      type: 'butcher',
+      products: [
+        { category: 'beef', name: 'Beef', inStock: true },
+        { category: 'lamb', name: 'Lamb', inStock: true },
+      ],
+    });
+    const list = [market, shop, plain, butcher];
+    expect(ids(searchFarms(list, makeFilters({ types: ['butcher'] }), SYDNEY, NOW))).toEqual(['butcher']);
+    expect(ids(searchFarms(list, makeFilters({ products: [...MEAT_CATEGORIES] }), SYDNEY, NOW))).toContain('butcher');
+    expect(sellsMeat(butcher)).toBe(true);
+    expect(matchesQuery(butcher, 'butchers')).toBe(true);
   });
 
   it('"This weekend" keeps places with weekend times and attaches them', () => {
@@ -230,8 +276,15 @@ describe('category and type lists', () => {
     expect([...PRODUCT_DISPLAY_ORDER].sort()).toEqual([...PRODUCT_CATEGORIES].sort());
   });
 
-  it('venue types start with markets', () => {
-    expect(VENUE_TYPES).toEqual(['farmers_market', 'farm_shop', 'farm_gate_stall', 'farm']);
+  it('venue types start with markets and end with butchers', () => {
+    expect(VENUE_TYPES).toEqual(['farmers_market', 'farm_shop', 'farm_gate_stall', 'farm', 'butcher']);
+  });
+
+  it('every venue type has a singular and plural label and appears once in VENUE_TYPES', () => {
+    expect([...VENUE_TYPES].sort()).toEqual(Object.keys(VENUE_LABELS).sort());
+    expect(Object.keys(VENUE_PLURAL_LABELS).sort()).toEqual(Object.keys(VENUE_LABELS).sort());
+    expect(VENUE_LABELS.butcher).toBe('Butcher');
+    expect(VENUE_PLURAL_LABELS.butcher).toBe('Butchers');
   });
 });
 

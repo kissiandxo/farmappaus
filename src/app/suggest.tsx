@@ -51,7 +51,7 @@ function SuggestScreen() {
         </View>
         <View style={styles.pad}>
           <Notice kind="ok">
-            Thank you. We’ll check this place and, if it’s a good fit, invite the farmer to take over the listing. Nothing
+            Thank you. We’ll check this place and, if it’s a good fit, invite the owner to take over the listing. Nothing
             appears in the app until it’s been reviewed.
           </Notice>
         </View>
@@ -98,7 +98,7 @@ function SuggestScreen() {
       keyboardDismissMode="interactive"
       automaticallyAdjustKeyboardInsets
     >
-      <Section footer="Know a farm, farm-gate stall, farm shop or farmers’ market that should be here? Tell us about it. We check every suggestion before it goes live.">
+      <Section footer="Know a farm, farm-gate stall, farm shop, farmers’ market or independent butcher that should be here? Tell us about it. We check every suggestion before it goes live.">
         <View style={styles.field}>
           <Field label="Name of the place" value={name} onChangeText={setName} maxLength={100} />
         </View>

@@ -58,7 +58,9 @@ export interface Palette {
   blue: string;
   /** Map pin: market. AA as a fill under `onPin` glyphs and as text on cell. */
   purple: string;
-  /** Glyph on a pin fill (`green`, `orange`, `blue`, `purple`). */
+  /** Map pin: butcher. AA as a fill under `onPin` glyphs and as text on cell. */
+  pink: string;
+  /** Glyph on a pin fill (`green`, `orange`, `blue`, `purple`, `pink`). */
   onPin: string;
   /** Shadow colour for things floating over a map. Black in both modes (never a white glow). */
   shadow: string;
@@ -85,6 +87,7 @@ export const lightPalette: Palette = {
   redFill: '#C400121A',
   blue: '#0A5AC8',
   purple: '#8944AB',
+  pink: '#B0275E',
   onPin: '#FFFFFF',
   shadow: '#000000',
 };
@@ -111,6 +114,7 @@ export const darkPalette: Palette = {
   redFill: '#FF696126',
   blue: '#409CFF',
   purple: '#BF5AF2',
+  pink: '#FF7AA8',
   // Bright dark-mode pin fills need dark glyphs, as with `onTint`.
   onPin: '#000000',
   shadow: '#000000',
@@ -165,6 +169,7 @@ const base = {
   redFill: dyn('redFill'),
   blue: dyn('blue'),
   purple: dyn('purple'),
+  pink: dyn('pink'),
   onPin: dyn('onPin'),
   shadow: dyn('shadow'),
 };

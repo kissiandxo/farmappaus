@@ -60,6 +60,8 @@ const TEXT_PAIRS: Pair[] = [
   ['onPin on orange (stall pin)', 'onPin', 'orange', 'cell'],
   ['onPin on blue (shop pin)', 'onPin', 'blue', 'cell'],
   ['onPin on purple (market pin)', 'onPin', 'purple', 'cell'],
+  ['onPin on pink (butcher pin)', 'onPin', 'pink', 'cell'],
+  ['pink on cell (hollow butcher pin)', 'pink', 'cell', 'cell'],
   ['blue on cell', 'blue', 'cell', 'cell'],
 ];
 

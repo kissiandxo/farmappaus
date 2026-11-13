@@ -3,7 +3,7 @@ import type { SFSymbol } from 'expo-symbols';
 import { VENUE_LABELS, type VenueType } from './types';
 
 /** Palette keys (src/theme.ts) used for pin fills. */
-export type PinColor = 'green' | 'orange' | 'blue' | 'purple';
+export type PinColor = 'green' | 'orange' | 'blue' | 'purple' | 'pink';
 
 export interface PinStyle {
   symbol: SFSymbol;
@@ -17,6 +17,7 @@ export const PIN_STYLES: Record<VenueType, PinStyle> = {
   farm_gate_stall: { symbol: 'basket.fill', color: 'orange', label: VENUE_LABELS.farm_gate_stall },
   farm_shop: { symbol: 'bag.fill', color: 'blue', label: VENUE_LABELS.farm_shop },
   farmers_market: { symbol: 'tent.fill', color: 'purple', label: VENUE_LABELS.farmers_market },
+  butcher: { symbol: 'storefront.fill', color: 'pink', label: VENUE_LABELS.butcher },
 };
 
 export function pinStyle(type: VenueType): PinStyle {

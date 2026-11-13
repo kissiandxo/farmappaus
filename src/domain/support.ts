@@ -63,7 +63,7 @@ export function suggestMailto(to: string): string | null {
     [
       'Hi Farm Direct,',
       '',
-      'I’d like to suggest a farm, stall, shop or market.',
+      'I’d like to suggest a farm, stall, shop, market or butcher.',
       '',
       'Name:',
       'Suburb, state and postcode:',
@@ -75,7 +75,7 @@ export function suggestMailto(to: string): string | null {
   );
 }
 
-/** "Own a farm, stall or market? List it or claim it" email, for a place that is not in the app yet. */
+/** "Own a farm, stall, market or butcher shop? List it or claim it" email, for a place that is not in the app yet. */
 export function listMailto(to: string): string | null {
   return mailtoUrl(
     to,
@@ -83,7 +83,7 @@ export function listMailto(to: string): string | null {
     [
       'Hi Farm Direct,',
       '',
-      'I own or run a farm, stall or market and would like it listed, or to claim it if it is already in the app.',
+      'I own or run a farm, stall, market or butcher shop and would like it listed, or to claim it if it is already in the app.',
       '',
       'Name of the place:',
       'Address or suburb:',

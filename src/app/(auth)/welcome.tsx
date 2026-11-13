@@ -98,10 +98,12 @@ export default function WelcomeScreen() {
         <Text style={[type.largeTitle, styles.title]} accessibilityRole="header">
           Farm Direct
         </Text>
-        <Text style={[type.body, styles.tagline]}>Fresh from local farms, stalls and markets near you.</Text>
+        <Text style={[type.body, styles.tagline]}>
+          Farmers’ markets, farm shops, farm-gate stalls, farms and independent butchers near you.
+        </Text>
 
         <View style={styles.features}>
-          <FeatureRow icon="map" title="Find places near you" message="Farms, stalls, shops and markets on one map." />
+          <FeatureRow icon="map" title="Find places near you" message="Farms, stalls, shops, markets and butchers on one map." />
           <FeatureRow icon="clock" title="Check before you go" message="See opening hours and what’s on offer." />
           <FeatureRow icon="heart" title="Save your favourites" message="Keep the places you love in one list." />
         </View>

@@ -15,6 +15,9 @@ import listings from './realListings.json';
  * Real places, taken from public sources and researched by hand. They are "unclaimed": no owner has
  * confirmed them yet. Built by `scripts/build-real-listings.mjs` from `docs/research/listings/`.
  * Public facts only. See docs/REAL_LISTINGS.md.
+ *
+ * Every type, including `butcher` (an independent butcher shop), is mapped by the same rules: products as
+ * advertised, no licences, no tags, honest hours and the sources kept.
  */
 export interface RealListingRecord {
   name: string;
@@ -42,6 +45,13 @@ export interface RealListingRecord {
   lng: number;
   locationPrecision: 'address' | 'locality';
 }
+
+/**
+ * Sourcing or animal-welfare claims that must not appear in a butcher's shopper copy: a butcher is a shop,
+ * not the producer. Kept in step with BUTCHER_SOURCING_CLAIM in scripts/build-real-listings.mjs.
+ */
+export const BUTCHER_SOURCING_CLAIM =
+  /\b(farms?|farmers?|paddock|local(ly)?[- ](sourced|raised|grown|produced|meat|beef|lamb|pork|chicken)|sourced|grass[- ]fed|grain[- ]fed|free[- ]range|pasture[- ]raised|organic|ethical(ly)?|humane(ly)?|direct from|our own|home[- ]grown|raised)\b/i;
 
 const DAY_KEYS: DayKey[] = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
 const TIME = /^([01]\d|2[0-3]):[0-5]\d$/;

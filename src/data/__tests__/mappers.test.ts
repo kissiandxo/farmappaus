@@ -1,4 +1,9 @@
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
+
+import { VENUE_LABELS } from '../../domain/types';
 import {
+  DB_VENUE_TYPES,
   farmToRow,
   groupFarms,
   licenceToRow,
@@ -132,5 +137,26 @@ describe('offline cache', () => {
     expect(parseFarmCache('{"savedAt":1,"farms":[]}')).toBeNull();
     expect(parseFarmCache('{"savedAt":"x","farms":[{"id":"a"}]}')).toBeNull();
     expect(parseFarmCache('{"savedAt":"x","farms":"nope"}')).toBeNull();
+  });
+});
+
+describe('venue types in the database', () => {
+  it('DB_VENUE_TYPES lists every VenueType', () => {
+    expect([...DB_VENUE_TYPES].sort()).toEqual(Object.keys(VENUE_LABELS).sort());
+  });
+
+  it('the latest migration allows every type, butcher included, on farms and suggestions', () => {
+    const sql = readFileSync(join(__dirname, '../../../supabase/migrations/0003_butcher_venue_type.sql'), 'utf8');
+    const checks = [...sql.matchAll(/check \((?:type|venue_type) in \(([^)]*)\)\)/g)].map((m) =>
+      m[1].split(',').map((v) => v.trim().replace(/'/g, '')).sort(),
+    );
+    expect(checks).toHaveLength(2);
+    for (const values of checks) expect(values).toEqual([...DB_VENUE_TYPES].sort());
+  });
+
+  it('maps a butcher row and writes it back unchanged', () => {
+    const farm = toFarm({ ...farmRow, type: 'butcher' }, [], []);
+    expect(farm.type).toBe('butcher');
+    expect(farmToRow(farm).type).toBe('butcher');
   });
 });

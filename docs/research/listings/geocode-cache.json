@@ -689,5 +689,280 @@
     "lat": -33.4826646,
     "lng": 115.7285025
   },
-  "Boyanup Memorial Park, South Western Highway, Boyanup WA 6237, Australia": null
+  "Boyanup Memorial Park, South Western Highway, Boyanup WA 6237, Australia": null,
+  "Marrickville NSW 2204, Australia": {
+    "lat": -33.9063,
+    "lng": 151.1721222
+  },
+  "8/10-14 Lilian Fowler Place, Marrickville NSW 2204, Australia": null,
+  "Miranda NSW 2228, Australia": {
+    "lat": -34.0373614,
+    "lng": 151.1017638
+  },
+  "Shop 1170, Level 1, Westfield Miranda, 600 Kingsway, Miranda NSW 2228, Australia": null,
+  "Fyshwick ACT 2609, Australia": {
+    "lat": -35.3282145,
+    "lng": 149.1829617
+  },
+  "Fyshwick Fresh Food Markets, 36 Mildura Street, Fyshwick ACT 2609, Australia": null,
+  "Mullumbimby NSW 2482, Australia": {
+    "lat": -28.5533512,
+    "lng": 153.4993146
+  },
+  "70 Dalley Street, Mullumbimby NSW 2482, Australia": {
+    "lat": -28.5526375,
+    "lng": 153.4999759
+  },
+  "Dorrigo NSW 2453, Australia": {
+    "lat": -30.3405516,
+    "lng": 152.7120052
+  },
+  "42 Hickory Street, Dorrigo NSW 2453, Australia": {
+    "lat": -30.3341227,
+    "lng": 152.7132299
+  },
+  "Woy Woy NSW 2258, Australia": {
+    "lat": -33.4851957,
+    "lng": 151.3237321
+  },
+  "Shop 9, Peninsula Plaza, 48-64 Blackwall Road, Woy Woy NSW 2258, Australia": null,
+  "Wyong NSW 2259, Australia": {
+    "lat": -33.2837921,
+    "lng": 151.4225139
+  },
+  "Shop 12, 18-34 Alison Road, Wyong NSW 2259, Australia": null,
+  "Lockhart NSW 2656, Australia": {
+    "lat": -35.220926,
+    "lng": 146.716563
+  },
+  "102 Green Street, Lockhart NSW 2656, Australia": {
+    "lat": -35.220764,
+    "lng": 146.7140239
+  },
+  "1/122 Terralong Street, Kiama NSW 2533, Australia": {
+    "lat": -34.6687817,
+    "lng": 150.8520472
+  },
+  "Gwynneville NSW 2500, Australia": {
+    "lat": -34.4159253,
+    "lng": 150.8838286
+  },
+  "2/4 Murphys Avenue, Gwynneville NSW 2500, Australia": {
+    "lat": -34.4125416,
+    "lng": 150.8820148
+  },
+  "East Blaxland NSW 2774, Australia": {
+    "lat": -33.746284,
+    "lng": 150.6225279
+  },
+  "Shop 45, 43/65 Old Bathurst Road, East Blaxland NSW 2774, Australia": null,
+  "Glen Innes NSW 2370, Australia": {
+    "lat": -29.7337957,
+    "lng": 151.724592
+  },
+  "193 Grey Street, Glen Innes NSW 2370, Australia": {
+    "lat": -29.7403029,
+    "lng": 151.7354178
+  },
+  "180 Mollison St, Kyneton VIC 3444, Australia": {
+    "lat": -37.244618,
+    "lng": 144.4542987
+  },
+  "Bendigo VIC 3550, Australia": {
+    "lat": -36.7372746,
+    "lng": 144.2871714
+  },
+  "Cnr Condon St & Edwards Rd, Bendigo VIC 3550, Australia": null,
+  "Cremorne VIC 3121, Australia": {
+    "lat": -37.8325992,
+    "lng": 144.9953643
+  },
+  "218 Swan St, Cremorne VIC 3121, Australia": {
+    "lat": -37.8257331,
+    "lng": 144.9968973
+  },
+  "Daylesford VIC 3460, Australia": {
+    "lat": -37.3437345,
+    "lng": 144.14202
+  },
+  "37 Vincent Street, Daylesford VIC 3460, Australia": {
+    "lat": -37.3421224,
+    "lng": 144.1428255
+  },
+  "Koroit VIC 3282, Australia": {
+    "lat": -38.2923105,
+    "lng": 142.3676542
+  },
+  "120 Commercial Rd, Koroit VIC 3282, Australia": {
+    "lat": -38.2918373,
+    "lng": 142.3658735
+  },
+  "Shop 2, 205 Charles St, Launceston TAS 7250, Australia": null,
+  "Sandy Bay TAS 7005, Australia": {
+    "lat": -42.8949063,
+    "lng": 147.3273895
+  },
+  "180 Sandy Bay Road, Sandy Bay TAS 7005, Australia": {
+    "lat": -42.9088423,
+    "lng": 147.3464474
+  },
+  "Alice Springs NT 0870, Australia": {
+    "lat": -23.7016272,
+    "lng": 133.8816876
+  },
+  "Shop 7/28 Gason Street, Alice Springs NT 0870, Australia": null,
+  "Katherine NT 0850, Australia": {
+    "lat": -14.4625222,
+    "lng": 132.2583074
+  },
+  "Shop 3, 31 Katherine Terrace North, Katherine NT 0850, Australia": null,
+  "Nightcliff Shopping Centre, 18/159 Dick Ward Drive, Nightcliff NT 0810, Australia": null,
+  "Palmerston City NT 0830, Australia": {
+    "lat": -12.4796925,
+    "lng": 130.9833044
+  },
+  "T31, Palmerston Shopping Centre, 10 Temple Terrace, Palmerston City NT 0830, Australia": null,
+  "Parap NT 0820, Australia": {
+    "lat": -12.4338641,
+    "lng": 130.8479192
+  },
+  "40 Parap Road, Parap NT 0820, Australia": {
+    "lat": -12.4301418,
+    "lng": 130.8433108
+  },
+  "Ashgrove QLD 4060, Australia": {
+    "lat": -27.4493676,
+    "lng": 152.9777819
+  },
+  "241 Waterworks Road, Ashgrove QLD 4060, Australia": {
+    "lat": -27.4478772,
+    "lng": 152.9808251
+  },
+  "Cannon Hill QLD 4170, Australia": {
+    "lat": -27.4710507,
+    "lng": 153.1037417
+  },
+  "Shop 31, 1145 Wynnum Road, Cannon Hill QLD 4170, Australia": null,
+  "Plainland QLD 4341, Australia": {
+    "lat": -27.5655149,
+    "lng": 152.4226398
+  },
+  "4424 Warrego Highway, Plainland QLD 4341, Australia": {
+    "lat": -27.564255,
+    "lng": 152.4225307
+  },
+  "Caloundra QLD 4551, Australia": {
+    "lat": -26.7726932,
+    "lng": 153.1065729
+  },
+  "Shop 12B, Caloundra Village, 1 Ormuz Avenue, Caloundra QLD 4551, Australia": null,
+  "Edge Hill QLD 4870, Australia": {
+    "lat": -16.9012703,
+    "lng": 145.7422179
+  },
+  "136 Collins Avenue, Edge Hill QLD 4870, Australia": {
+    "lat": -16.9002464,
+    "lng": 145.745069
+  },
+  "Bargara QLD 4670, Australia": {
+    "lat": -24.8155842,
+    "lng": 152.4640596
+  },
+  "2/699 Bargara Road, Bargara QLD 4670, Australia": {
+    "lat": -24.8192601,
+    "lng": 152.4559841
+  },
+  "Highfields QLD 4352, Australia": {
+    "lat": -27.450606,
+    "lng": 151.9460492
+  },
+  "Shop 11/66 Highfields Road, Highfields Village Shopping Centre, Highfields QLD 4352, Australia": null,
+  "Rural View QLD 4740, Australia": {
+    "lat": -21.0654671,
+    "lng": 149.1609477
+  },
+  "10 Eimeo Road, Rural View QLD 4740, Australia": {
+    "lat": -21.0651342,
+    "lng": 149.1579377
+  },
+  "North Rockhampton QLD 4701, Australia": {
+    "lat": -23.3492539,
+    "lng": 150.5357359
+  },
+  "188 Berserker Street, North Rockhampton QLD 4701, Australia": null,
+  "Warwick QLD 4370, Australia": {
+    "lat": -28.2163275,
+    "lng": 152.0418232
+  },
+  "39 Locke Street, Warwick QLD 4370, Australia": {
+    "lat": -28.2225908,
+    "lng": 152.0107631
+  },
+  "Lyndoch SA 5351, Australia": {
+    "lat": -34.6009049,
+    "lng": 138.8908094
+  },
+  "36 Barossa Valley Way, Lyndoch SA 5351, Australia": {
+    "lat": -34.6009365,
+    "lng": 138.8900168
+  },
+  "Goodwood SA 5034, Australia": {
+    "lat": -34.9532313,
+    "lng": 138.5895102
+  },
+  "121 Goodwood Road, Goodwood SA 5034, Australia": {
+    "lat": -34.9523312,
+    "lng": 138.5897115
+  },
+  "Norwood SA 5067, Australia": {
+    "lat": -34.9221203,
+    "lng": 138.6327543
+  },
+  "Shop 17, 161 Norwood Place, The Parade, Norwood SA 5067, Australia": null,
+  "275 Main North Road, Clare SA 5453, Australia": {
+    "lat": -33.8349611,
+    "lng": 138.6133076
+  },
+  "Mount Gambier SA 5290, Australia": {
+    "lat": -37.8342795,
+    "lng": 140.7983751
+  },
+  "193 Commercial Street West, Mount Gambier SA 5290, Australia": {
+    "lat": -37.8249116,
+    "lng": 140.769591
+  },
+  "Malaga WA 6090, Australia": {
+    "lat": -31.8618042,
+    "lng": 115.8790793
+  },
+  "58 Westchester Road, Malaga WA 6090, Australia": {
+    "lat": -31.8569231,
+    "lng": 115.8806455
+  },
+  "Applecross WA 6153, Australia": {
+    "lat": -32.0125086,
+    "lng": 115.8489431
+  },
+  "777 Canning Highway, Applecross WA 6153, Australia": {
+    "lat": -32.0120554,
+    "lng": 115.8502019
+  },
+  "Greenwood WA 6024, Australia": {
+    "lat": -31.8311564,
+    "lng": 115.802567
+  },
+  "Shop 2, 120 Cockman Road, Greenwood WA 6024, Australia": null,
+  "Osborne Park WA 6017, Australia": {
+    "lat": -31.9001971,
+    "lng": 115.8116543
+  },
+  "Shop 7, 227 Main Street, Osborne Park WA 6017, Australia": null,
+  "Collie WA 6225, Australia": {
+    "lat": -33.3575867,
+    "lng": 116.1555183
+  },
+  "144 Atkinson Street North, Collie WA 6225, Australia": {
+    "lat": -33.3438983,
+    "lng": 116.153279
+  }
 }

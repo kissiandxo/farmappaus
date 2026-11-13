@@ -43,7 +43,7 @@ export function privacySections(opts: PrivacyOptions = {}): PrivacySection[] {
     {
       title: 'The short version',
       paragraphs: [
-        'Farm Direct helps you find farmers’ markets, farm shops and farm-gate stalls near you. We collect as little as we can. We do not sell your information, show ads, or track you across other apps or websites.',
+        'Farm Direct helps you find farmers’ markets, farm shops, farm-gate stalls, farms and independent butchers near you. We collect as little as we can. We do not sell your information, show ads, or track you across other apps or websites.',
       ],
     },
     ...(operator

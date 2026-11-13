@@ -14,7 +14,14 @@ import type {
   TimeRange,
 } from '../domain/types';
 
-/** Rows exactly as they come back from the database (see supabase/migrations/0001_init.sql). */
+/**
+ * Values the database accepts for farms.type and suggestions.venue_type (the check constraints in
+ * supabase/migrations/0001_init.sql, widened to include 'butcher' by 0003_butcher_venue_type.sql).
+ * Must list every VenueType; src/data/__tests__/mappers.test.ts checks both.
+ */
+export const DB_VENUE_TYPES = ['farm', 'farm_gate_stall', 'farm_shop', 'farmers_market', 'butcher'] as const satisfies readonly VenueType[];
+
+/** Rows exactly as they come back from the database (see supabase/migrations/0001_init.sql and later). */
 export interface FarmRow {
   id: string;
   owner_id: string | null;

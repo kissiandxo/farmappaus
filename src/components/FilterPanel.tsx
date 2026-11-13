@@ -6,6 +6,7 @@ import {
   DISTANCE_OPTIONS_KM,
   offeredOptions,
   toggle,
+  venueTypeOptions,
   type FarmFilters,
   type WhenFilter,
 } from '../domain/filters';
@@ -116,11 +117,12 @@ export function FilterPanel({ filters, onChange }: FilterPanelProps) {
   const { farms, isDefaultLocation } = useSearch();
   const set = (patch: Partial<FarmFilters>) => onChange({ ...filters, ...patch });
   // Without a backend the list is fixed, so only offer options that at least one place has (a filter that
-  // can never match is a dead end). With a backend listings change, so every option stays available.
+  // can never match is a dead end). With a backend listings change, so every option stays available, except
+  // Butchers, which appears only when at least one butcher is listed.
   const offered = offeredOptions(farms, filters, PRODUCT_DISPLAY_ORDER, FARM_TAGS, VENUE_TYPES);
   const productOptions = isBackendConfigured ? PRODUCT_DISPLAY_ORDER : offered.products;
   const tagOptions = isBackendConfigured ? FARM_TAGS : offered.tags;
-  const typeOptions = isBackendConfigured ? VENUE_TYPES : offered.types;
+  const typeOptions = venueTypeOptions(offered.types, isBackendConfigured);
   const meat = meatChip(productOptions, filters.products);
 
   return (

@@ -1,11 +1,11 @@
 # Farm Direct (working name)
 
-An iOS app for Australians to find and buy food directly from local farmers, so more of the money goes to the farmer. Built with Expo (React Native + TypeScript), so it can be developed, tested and shipped to TestFlight without a Mac.
+An iOS app for Australians to find and buy food directly from the people who produce it, so more of the money goes to the farmer. It lists farmers’ markets, farm shops, farm-gate stalls, farms and independent butchers. Butchers are retail shops, not producers, so the app makes no claim about where their meat comes from or how the animals were raised. Built with Expo (React Native + TypeScript), so it can be developed, tested and shipped to TestFlight without a Mac.
 
-**Version 1.0.0 (the App Store release) is a free directory with no backend and no accounts.** It bundles **106 real places from public sources** in every state and territory (67 farmers’ markets, 26 farm shops, 8 farms, 5 farm-gate stalls), all marked “Unclaimed”. 41 of them list beef, lamb, pork or chicken (16 of those are farm shops, farms or farm-gate stalls rather than markets). Shoppers can:
+**Version 1.0.0 (the App Store release) is a free directory with no backend and no accounts.** It bundles **151 real places from public sources** in every state and territory (67 farmers’ markets, 45 butchers, 26 farm shops, 8 farms, 5 farm-gate stalls), all marked “Unclaimed”. 86 of them list beef, lamb, pork or chicken: 45 butchers, 25 farmers’ markets and 16 farm shops, farms or farm-gate stalls. The 45 independent butcher shops are listed as shops (see `docs/REAL_LISTINGS.md`). Shoppers can:
 
 - search by name, town, postcode or produce;
-- filter by type of place, produce (with a **Meat** shortcut for beef, lamb, pork and chicken), distance, and **when** they can go (any time, open now, or this weekend, with this weekend’s published times on each place);
+- filter by type of place (including Butchers), produce (with a **Meat** shortcut for beef, lamb, pork and chicken), distance, and **when** they can go (any time, open now, or this weekend, with this weekend’s published times on each place);
 - use their location or any suburb or postcode, and see places on a list or a clustered map;
 - open a place page with hours, address, sources, directions in Apple Maps, **Share**, and up to three **Nearby** places;
 - keep **Saved** places on the phone, and remove one with a long press.
@@ -18,7 +18,7 @@ There are no sample farms in the app (they are used by tests only), no in-app pa
 |---|---|
 | [`docs/RELEASE.md`](docs/RELEASE.md) | **Start here.** Step by step: Apple setup, repository secrets, TestFlight build (GitHub Actions and fastlane), screenshots, launch checklist |
 | [`docs/BACKEND.md`](docs/BACKEND.md) | Connecting Supabase, becoming the administrator, how reviews work |
-| [`docs/REAL_LISTINGS.md`](docs/REAL_LISTINGS.md) | How the 106 bundled places were researched and built, and the plan for more |
+| [`docs/REAL_LISTINGS.md`](docs/REAL_LISTINGS.md) | How the 151 bundled places were researched and built, and the plan for more |
 | [`docs/COMPLIANCE.md`](docs/COMPLIANCE.md) | Direct-sale food-safety rules (raw milk, eggs, meat) and the licence field |
 | [`docs/APP_STORE.md`](docs/APP_STORE.md) | App Store text, privacy answers, review notes, screenshot list |
 | [`docs/PRIVACY.md`](docs/PRIVACY.md) | Draft privacy policy (same text as in the app) |
@@ -35,7 +35,7 @@ There are no sample farms in the app (they are used by tests only), no in-app pa
 | 3. Profiles and favourites | Photos, story, products and AUD prices with stock, hours, pick-up/delivery, payment types, licences, call, website, Apple Maps directions; saved places |
 | 4. Backend and accounts | Supabase database with row-level security; email/password accounts; favourites that follow your account; in-app account deletion; listings cached on the phone for patchy reception |
 | 5. Farmer tools | Free farmer account; listing editor (big +/− time steppers, products, licences, photos); drafts and send for review; quick stock and price updates; claim an existing listing |
-| 6. Suggestions and review | Suggest a farm; report a listing; reviewer queue to approve, ask for changes or reject; licence checks; claim approval; food-safety rules enforced in the database |
+| 6. Suggestions and review | Suggest a place (farm, stall, shop, market or butcher); report a listing; reviewer queue to approve, ask for changes or reject; licence checks; claim approval; food-safety rules enforced in the database |
 | 7. Polish | “Saved listings” notice when offline; 20-second load timeout; “not updated for a while” warnings (90 days); friendly error screen; in-app privacy policy; colour contrast checked automatically (WCAG AA, main text AAA) |
 | 8. Release | App icon and splash; GitHub Actions TestFlight and screenshot workflows (fastlane); release guide, App Store text and privacy answers; real-listings plan |
 | 9. 1.0 polish | Search; type-of-place, Meat and When (open now, this weekend) filters; Share; Nearby; clustered map with place card; honest location prompt; compact opening hours; Saved that never loses a save; OTA updates off |
@@ -72,7 +72,7 @@ src/app/            Screens (Expo Router): tabs, farm profile, farmer, claim, re
 src/components/     Cards, filters, map, form pieces, editors, review panel
 src/state/          Search, favourites and account state
 src/domain/         Pure logic with no React or network code (the best-tested part)
-src/data/           The 106 bundled places (realListings.json, built by scripts/build-real-listings.mjs), offline postcode list, database mapping; sample farms for tests only
+src/data/           The 151 bundled places (realListings.json, built by scripts/build-real-listings.mjs), offline postcode list, database mapping; sample farms for tests only
 src/content/        Privacy policy text
 supabase/migrations Database tables, security rules, review workflow, photo storage
 scripts/            Real-listings builder, postcode list builder, privacy doc builder, database tests

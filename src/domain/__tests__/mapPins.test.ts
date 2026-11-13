@@ -8,7 +8,7 @@ describe('map pins', () => {
     for (const type of TYPES) {
       const style = pinStyle(type);
       expect(style.symbol).toMatch(/\.fill$/);
-      expect(style.color).toMatch(/^(green|orange|blue|purple)$/);
+      expect(style.color).toMatch(/^(green|orange|blue|purple|pink)$/);
       expect(style.label).toBe(VENUE_LABELS[type]);
     }
     expect(Object.keys(PIN_STYLES).sort()).toEqual([...TYPES].sort());
@@ -17,6 +17,17 @@ describe('map pins', () => {
   it('gives each type its own glyph and colour', () => {
     expect(new Set(TYPES.map((t) => PIN_STYLES[t].symbol)).size).toBe(TYPES.length);
     expect(new Set(TYPES.map((t) => PIN_STYLES[t].color)).size).toBe(TYPES.length);
+  });
+
+  it('covers all five venue types', () => {
+    expect([...TYPES].sort()).toEqual(['butcher', 'farm', 'farm_gate_stall', 'farm_shop', 'farmers_market']);
+  });
+
+  it('draws butchers as a pink storefront', () => {
+    expect(pinStyle('butcher')).toEqual({ symbol: 'storefront.fill', color: 'pink', label: 'Butcher' });
+    expect(pinAccessibilityLabel({ name: 'Smith St Butchery', type: 'butcher' }, 'Open now')).toBe(
+      'Smith St Butchery, Butcher, Open now',
+    );
   });
 
   it('labels a pin with name, kind and status, and flags approximate locations', () => {

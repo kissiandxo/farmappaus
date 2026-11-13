@@ -11,23 +11,29 @@ export const STATE_NAMES: Record<StateCode, string> = {
   ACT: 'Australian Capital Territory',
 };
 
-export type VenueType = 'farm' | 'farm_gate_stall' | 'farm_shop' | 'farmers_market';
+/**
+ * Kinds of place. `butcher` is an independent butcher shop: a retailer, not a producer, so nothing in
+ * the app claims where its meat comes from (see docs/REAL_LISTINGS.md).
+ */
+export type VenueType = 'farm' | 'farm_gate_stall' | 'farm_shop' | 'farmers_market' | 'butcher';
 
 export const VENUE_LABELS: Record<VenueType, string> = {
   farm: 'Farm',
   farm_gate_stall: 'Farm-gate stall',
   farm_shop: 'Farm shop',
   farmers_market: "Farmers' market",
+  butcher: 'Butcher',
 };
 
 /** Venue types in the order the type filter offers them. */
-export const VENUE_TYPES: VenueType[] = ['farmers_market', 'farm_shop', 'farm_gate_stall', 'farm'];
+export const VENUE_TYPES: VenueType[] = ['farmers_market', 'farm_shop', 'farm_gate_stall', 'farm', 'butcher'];
 
 export const VENUE_PLURAL_LABELS: Record<VenueType, string> = {
   farmers_market: "Farmers' markets",
   farm_shop: 'Farm shops',
   farm_gate_stall: 'Farm-gate stalls',
   farm: 'Farms',
+  butcher: 'Butchers',
 };
 
 export type ProductCategory =
@@ -118,7 +124,7 @@ export type Fulfilment = 'pickup' | 'delivery';
 export type PaymentType = 'cash' | 'card' | 'bank_transfer' | 'honesty_box';
 
 export const FULFILMENT_LABELS: Record<Fulfilment, string> = {
-  pickup: 'Pick-up from the farm or stall',
+  pickup: 'Pick-up in person',
   delivery: 'Local delivery',
 };
 

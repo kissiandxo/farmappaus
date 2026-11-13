@@ -46,8 +46,8 @@ export function AboutContent() {
           Farm Direct
         </Text>
         <Text style={[type.body, styles.message]}>
-          A free directory of farmers’ markets, farm shops and farm-gate stalls near you. See opening hours and get
-          directions.
+          A free directory of farmers’ markets, farm shops, farm-gate stalls, farms and independent butchers near you.
+          See opening hours and get directions.
         </Text>
         <Text style={[type.body, styles.message]}>
           The places come from public sources, such as each place’s own website and council or tourism pages. They are
@@ -63,7 +63,7 @@ export function AboutContent() {
             <Row
               icon="plus.circle"
               title="Suggest a place"
-              subtitle="Know a farm, stall or market that’s missing?"
+              subtitle="Know a farm, stall, market or butcher that’s missing?"
               accessory="chevron"
               onPress={() => openEmail(suggest, SUPPORT_EMAIL)}
             />
@@ -82,11 +82,11 @@ export function AboutContent() {
       ) : null}
 
       {list ? (
-        <Section header="For farmers and market managers" footer="These open an email to us, ready to fill in.">
+        <Section header="For owners and market managers" footer="These open an email to us, ready to fill in.">
           <Row
             icon="person.crop.circle.badge.checkmark"
             title="List or claim your place"
-            subtitle="Own a farm, stall or market?"
+            subtitle="Own a farm, stall, market or butcher shop?"
             accessory="chevron"
             onPress={() => openEmail(list, SUPPORT_EMAIL)}
           />

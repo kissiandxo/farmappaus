@@ -149,7 +149,7 @@ export default function SavedScreen() {
           <EmptyState
             icon="heart"
             title="No saved places yet"
-            message="Open any farm, stall or market and tap “Save” to keep it here for next time."
+            message="Open any place and tap “Save” to keep it here for next time."
             action={{ label: 'Explore farms', onPress: () => router.navigate('/(tabs)/(explore)') }}
             style={styles.empty}
           />

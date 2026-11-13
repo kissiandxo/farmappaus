@@ -129,6 +129,19 @@ export function offeredOptions(
   };
 }
 
+/** Venue types offered only when at least one listed place (or the current selection) has them. */
+export const ON_DEMAND_VENUE_TYPES: readonly VenueType[] = ['butcher'];
+
+/**
+ * Type-of-place chips. Without a backend the list is fixed, so only the types some place has (`offeredTypes`,
+ * from offeredOptions). With a backend every type stays available, except the on-demand ones (butchers),
+ * which appear only once at least one is offered.
+ */
+export function venueTypeOptions(offeredTypes: readonly VenueType[], backendConfigured: boolean): VenueType[] {
+  if (!backendConfigured) return [...offeredTypes];
+  return VENUE_TYPES.filter((t) => !ON_DEMAND_VENUE_TYPES.includes(t) || offeredTypes.includes(t));
+}
+
 /**
  * Folds text for matching: removes accents, lower-cases, drops apostrophes (straight and curly) and collapses
  * whitespace. "Farmers’ Market  Café" -> "farmers market cafe".

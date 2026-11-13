@@ -4,7 +4,7 @@ Last updated: 13 November 2026
 
 ## The short version
 
-Farm Direct helps you find farmers’ markets, farm shops and farm-gate stalls near you. We collect as little as we can. We do not sell your information, show ads, or track you across other apps or websites.
+Farm Direct helps you find farmers’ markets, farm shops, farm-gate stalls, farms and independent butchers near you. We collect as little as we can. We do not sell your information, show ads, or track you across other apps or websites.
 
 ## Who we are
 

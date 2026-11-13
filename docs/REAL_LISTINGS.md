@@ -1,6 +1,6 @@
 # Getting real listings
 
-Version 1.0.0 ships with **106 real places from public sources** and no sample farms (sample farms are used by tests only). This page explains how those places were researched and built, the rules they follow, and the plan for adding more, honestly and legally.
+Version 1.0.0 ships with **151 real places from public sources** and no sample farms (sample farms are used by tests only). This page explains how those places were researched and built, the rules they follow, and the plan for adding more, honestly and legally.
 
 ## Principles
 
@@ -12,14 +12,15 @@ Version 1.0.0 ships with **106 real places from public sources** and no sample f
 
 ## What is loaded (app version 1.0.0)
 
-When no backend is configured, the app shows **106 real places** from public sources instead of sample farms (67 farmers' markets, 26 farm shops, 8 farms, 5 farm-gate stalls; three research passes, seven research files, plus confirmed product updates), across every state and territory (QLD 26, NSW 21, WA 20, VIC 18, SA 9, TAS 5, NT 5, ACT 2). They were researched by hand on 13 Nov 2026 from each place's own site, council pages and tourism pages. When Supabase **is** configured, behaviour is unchanged: the app shows only reviewed live listings from the database.
+When no backend is configured, the app shows **151 real places** from public sources instead of sample farms (67 farmers' markets, 45 butchers, 26 farm shops, 8 farms, 5 farm-gate stalls; four research passes, eleven research files, plus confirmed product updates), across every state and territory (QLD 36, NSW 32, WA 25, VIC 23, SA 14, NT 10, TAS 7, ACT 4). They were researched by hand on 13 Nov 2026 from each place's own site, council pages and tourism pages. When Supabase **is** configured, behaviour is unchanged: the app shows only reviewed live listings from the database.
 
-**Meat.** 41 places list beef, lamb, pork or chicken (beef 28, lamb 23, pork 18, chicken 16): 25 farmers' markets and 16 farm shops (12), farms (3) or farm-gate stalls (1). The meat research pass (`meat-3.json`) added meat-focused places, and `product-updates.json` added confirmed meat, egg and milk categories to 21 existing listings, each with its evidence URL in `sources`. The Meat filter chip and the screenshot tour (Torello Farm, Barossa Farmers Market) use this data.
+**Meat.** 86 places list beef, lamb, pork or chicken (beef 70, lamb 61, pork 52, chicken 51): 45 butchers, 25 farmers' markets and 16 farm shops (12), farms (3) or farm-gate stalls (1). Without the butchers, 41 list meat (beef 28, lamb 23, pork 18, chicken 16). The meat research pass (`meat-3.json`) added meat-focused places, and `product-updates.json` added confirmed meat, egg and milk categories to 21 existing listings, each with its evidence URL in `sources`. The Meat filter chip and the screenshot tour (Torello Farm, Barossa Farmers Market) use this data.
 
 | Step | File |
 |---|---|
 | Research (entries plus unverified leads, with sources and caveats) | `docs/research/listings/{nsw-act,vic-tas,qld-nt,sa-wa,east-2,north-west-2}.json` |
 | Later passes (optional: the script works without them; both are present and applied in 1.0) | `docs/research/listings/meat-3.json` (new places), `docs/research/listings/product-updates.json` (confirmed products for existing places) |
+| Butcher passes (optional; all four are present and applied in 1.0) | `docs/research/listings/butchers-nsw-act.json`, `butchers-vic-tas.json`, `butchers-qld-nt.json` and `butchers-sa-wa.json` (new places of type `butcher`) |
 | Geocoding script | `scripts/build-real-listings.mjs` |
 | Geocode cache (every Nominatim answer, including "no result") | `docs/research/listings/geocode-cache.json` |
 | Built records (research plus `lat`, `lng`, `locationPrecision`) | `src/data/realListings.json` |
@@ -38,16 +39,34 @@ Every place loaded this way is `unclaimed`: public facts only, no owner has conf
 - **"Open any time" is for honesty-box stalls only.** `hours.kind: "always"` is allowed only on a `farm_gate_stall`. A shop or farm that is "open daily" gets its published daily times, or, if no times are published, every day with empty times (so it reads "Check dates") and a note saying to call first. The build fails otherwise.
 - **Website means the place's own site.** The Website button opens only the place's own site (or, where it has none, its own Facebook page, as for Kiama and Lismore; Golden Plains is council-run, so its council page is its own). Tourism, blog and council listings are never the Website; they stay in `sources`, so they are still reachable from the Sources section of the place page. The build fails on a known tourism or council host.
 - **Shopper copy, not research notes.** Descriptions, "also sold" text and hours notes are written for shoppers. Research-process wording ("page opened", "see caveats", "per the site", "not itemised", "not recorded", "regional guide", "no product list", a leading "Per …") belongs in `caveats`, and the build fails if it appears in shopper copy. Names carry no aliases in brackets and no " - "; an alias (Bermi Market, Farmy, Snake Creek Cattle Company, The Chook House) goes in the description so search still finds it.
-- **Location precision:** 57 pins sit on a geocoded street address or venue; 49 are the suburb centre only (the farm page says "Approximate location"). Directions use the street address when there is one.
+- **Location precision:** 82 pins sit on a geocoded street address or venue; 69 are the suburb centre only (the farm page says "Approximate location"). Directions use the street address when there is one.
 - **Checked date.** `LISTINGS_CHECKED_ON` in `src/data/realFarms.ts` is the latest `researchedOn` across the bundled records; each place's `updatedOn` is its own `researchedOn`.
 
+### Butchers
+
+**45 butchers are bundled:** NSW 11, QLD 10, VIC 5, NT 5, SA 5, WA 5, ACT 2, TAS 2, from the four research files `docs/research/listings/butchers-nsw-act.json`, `butchers-vic-tas.json`, `butchers-qld-nt.json` and `butchers-sa-wa.json`. Criteria: an independent shop with a public address, hours and named meats on its own or an official page; no supermarket butcheries, online-only, wholesale-only or chains of five or more; no sourcing claims. All 45 list at least one of beef, lamb, pork or chicken. Seven records are excluded by the build script (see Excluded below).
+
+`butcher` is a place type alongside farmers' markets, farm shops, farm-gate stalls and farms (map pin: a pink `storefront.fill`; filter chip "Butchers"). Farm Direct's promise is buying food direct from the people who produce it, and a butcher is a retail shop, not a producer, so butchers are listed as shops and nothing more. A butcher record must meet these criteria:
+
+- **An independent butcher shop**, with a public street address, published opening hours and the meat species it sells (beef, lamb, pork, chicken) named on its own website or an official page. Those species become its products, as advertised, like any other unclaimed place.
+- **Not** a supermarket's in-store butchery, and **not** an online-only or wholesale-only business.
+- **No sourcing claims.** The description and "also sold" text never say where the meat comes from (farms, local, a named property), or how the animals were raised (grass-fed, free-range, pasture-raised, organic, ethical), even when the shop's own site says so. No tags are ever set.
+
+The build enforces the checkable parts and stops, writing nothing, if a `butcher` record has no usable street address, hours other than `weekly`, no meat category, or sourcing or welfare wording in shopper copy (`BUTCHER_SOURCING_CLAIM`, kept in step with `src/data/realFarms.ts`). The independence and not-online-only checks are the researcher's job; note the evidence in `caveats`. The backend accepts the type from migration `supabase/migrations/0003_butcher_venue_type.sql`.
+
 ### Excluded
+
+Seven records are dropped by the `EXCLUDE` list in `scripts/build-real-listings.mjs`:
 
 | Entry | Reason |
 |---|---|
 | Mulgowie Farmers Market (QLD) | A single dated event (5 Dec 2026), recurrence unconfirmed, so not a recurring place |
 | Baudin's Macadamias (WA) | Seasonal stall; the research says the season may already be ending and asks to confirm before listing; no published hours |
 | HOTA Farmers and Artisan Markets (QLD) | The market's own event page still shows 2025 dates, so it is not confirmed as running now |
+| Ryan's Quality Meats Bunbury Outlet (butcher, WA) | Mainly a wholesale and food-service supplier; the research could not confirm the Davenport outlet is a walk-in shop for the public |
+| Gold Coast Fresh Meat Centre (butcher, QLD) | The shop's own site shows two different sets of opening hours and a 2025 footer, so open/closed status cannot be shown truthfully |
+| Brendan Bouchier's Mortlake Butchers (butcher, VIC) | The site's hours are labelled "Business Hours" and may not be the counter hours, so open/closed status cannot be shown truthfully |
+| Gippsland Butchers Block (butcher, VIC) | The shop's own site and the Wellington Shire tourism page disagree on closing time, so open/closed status cannot be shown truthfully |
 
 ### Rerun it
 
@@ -55,7 +74,7 @@ Every place loaded this way is `unclaimed`: public facts only, no owner has conf
 node scripts/build-real-listings.mjs
 ```
 
-Reads the six research files (plus `meat-3.json` and `product-updates.json` when present) and rewrites `src/data/realListings.json`. It first checks every record against the rules above and stops, writing nothing, if any record breaks one, naming the record. `meat-3.json` has the same shape as the other files; a place already listed (same name and state) is skipped. `product-updates.json` is `{"updates":[{"name","state","addProducts":[...],"evidenceUrl","evidence"}]}`: each update adds its categories to the one listing with that name and state and adds `evidenceUrl` to its `sources`; a name that matches no listing stops the build. It geocodes with Nominatim at no more than one request per second and caches every answer, so a rerun with unchanged research makes no requests. To add or fix a place, edit the research JSON (keep `sources` and `caveats`) and rerun; to drop one, add it to `EXCLUDE` in the script with a reason. Uses `curl` when `HTTPS_PROXY` is set, because Node's `fetch` ignores the proxy.
+Reads the six research files (plus `meat-3.json`, the four `butchers-*.json` files and `product-updates.json` when present) and rewrites `src/data/realListings.json`. It first checks every record against the rules above and stops, writing nothing, if any record breaks one, naming the record. `meat-3.json` and the `butchers-*.json` files have the same shape as the other files; a place already listed (same name and state) is skipped. Every record's `type` must be one of `farmers_market`, `farm_shop`, `farm_gate_stall`, `farm` or `butcher`. `product-updates.json` is `{"updates":[{"name","state","addProducts":[...],"evidenceUrl","evidence"}]}`: each update adds its categories to the one listing with that name and state and adds `evidenceUrl` to its `sources`; a name that matches no listing stops the build. It geocodes with Nominatim at no more than one request per second and caches every answer, so a rerun with unchanged research makes no requests. To add or fix a place, edit the research JSON (keep `sources` and `caveats`) and rerun; to drop one, add it to `EXCLUDE` in the script with a reason. Uses `curl` when `HTTPS_PROXY` is set, because Node's `fetch` ignores the proxy.
 
 ### Doubtful or unconfirmed details (read the `caveats` in the research files)
 

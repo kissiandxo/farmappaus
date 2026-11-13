@@ -1,8 +1,10 @@
 # App Store listing: Farm Direct 1.0 (directory launch)
 
-Text for App Store Connect, in Australian English. Version 1.0.0 is a **free directory with no accounts and no backend**: 106 real places from public sources, with search, filters (type of place, produce including a Meat shortcut, distance, and when you can go), a map, place pages with Share and Nearby, saved places and directions. Everything below promises only what this build does. Limits are Apple's; each count is the number of characters in the text as written here (curly apostrophes count as one).
+Text for App Store Connect, in Australian English. Version 1.0.0 is a **free directory with no accounts and no backend**: 151 real places from public sources, with search, filters (type of place, produce including a Meat shortcut, distance, and when you can go), a map, place pages with Share and Nearby, saved places and directions. Everything below promises only what this build does. Limits are Apple's; each count is the number of characters in the text as written here (curly apostrophes count as one).
 
-**The place counts used below** (from `src/data/realListings.json`, built 13 Nov 2026): 106 places in all eight states and territories (67 farmers' markets, 26 farm shops, 8 farms, 5 farm-gate stalls). 41 list beef, lamb, pork or chicken; 25 of those are farmers' markets and 16 are farm shops (12), farms (3) or farm-gate stalls (1). If the listings are rebuilt, recount and update every number here (`docs/REAL_LISTINGS.md` shows how).
+**The place counts used below** (from `src/data/realListings.json`, built 13 Nov 2026): 151 places in all eight states and territories (67 farmers' markets, 45 butchers, 26 farm shops, 8 farms, 5 farm-gate stalls). 86 list beef, lamb, pork or chicken; 45 of those are butchers and 41 are not (25 farmers' markets, 12 farm shops, 3 farms, 1 farm-gate stall). If the listings are rebuilt, recount and update every number here, including the character counts (`docs/REAL_LISTINGS.md` shows how).
+
+**Butchers.** The 45 butchers are independent shops with a public address, hours and named meats on their own or an official page (no supermarket butcheries, online-only or wholesale-only businesses, or chains of five or more). They are retail shops, not producers: the copy never says where their meat comes from, that it is local, or how the animals were raised, and not every place in the app is a producer.
 
 ## Basics
 
@@ -17,24 +19,24 @@ Text for App Store Connect, in Australian English. Version 1.0.0 is a **free dir
 | Marketing URL | Optional, leave blank | |
 | Privacy policy URL | *Owner to supply* (host `docs/PRIVACY.md`) | |
 
-## Promotional text (161 / 170)
+## Promotional text (167 / 170)
 
-Find farmers’ markets, farm shops and farm-gate stalls near you, including 41 places that list beef, lamb, pork or chicken. Check the hours, then get directions.
+Find farmers’ markets, farm shops, farm-gate stalls, farms and independent butchers near you, including 86 places that list meat. Check the hours, then get directions.
 
-## Keywords (93 / 100)
+## Keywords (90 / 100)
 
-`farmers market,farm shop,farm gate,local food,meat,beef,lamb,pork,eggs,honey,fruit,vegetables`
+`farmers market,farm shop,farm gate,butcher,meat,beef,lamb,pork,eggs,honey,fruit,vegetables`
 
-Comma-separated, no spaces after commas. There is no "organic", "free range" or "grass fed" here because the places in 1.0 carry no such labels in the app (some descriptions mention them, but the app has no tag data for unclaimed places), and no "butcher" because no listing is a butcher's shop.
+Comma-separated, no spaces after commas. There is no "organic", "free range" or "grass fed" here because the places carry no such labels in the app (some descriptions mention them, but the app has no tag data for unclaimed places), and none of them would be true of the butcher shops.
 
-## Description (2140 / 4000)
+## Description (2219 / 4000)
 
-Farm Direct is a free directory of farmers’ markets, farm shops, farms and farm-gate stalls across Australia. Find good local food, check when a place is open, and get there.
+Farm Direct is a free directory of farmers’ markets, farm shops, farms, farm-gate stalls and independent butchers across Australia. Find good food near you, check when a place is open, and get there.
 
-The app starts with 106 real places in every state and territory: 67 farmers’ markets, 26 farm shops, 8 farms and 5 farm-gate stalls. 41 of them list beef, lamb, pork or chicken, and 16 of those are farm shops, farms or farm-gate stalls rather than markets. The details come from public sources such as each place’s own website and council or tourism pages. The owners haven’t confirmed them yet, so the app says so and shows where each place’s details came from.
+The app starts with 151 real places in every state and territory: 67 farmers’ markets, 26 farm shops, 8 farms, 5 farm-gate stalls and 45 independent butcher shops. 86 of them list beef, lamb, pork or chicken. Butchers are listed as shops: the app doesn’t say where their meat comes from. The details come from public sources such as each place’s own website and council or tourism pages. The owners haven’t confirmed them yet, so the app says so and shows where each place’s details came from.
 
 • Search by name, town, postcode or produce
-• Filter by type of place: farmers’ markets, farm shops, farm-gate stalls or farms
+• Filter by type of place: farmers’ markets, farm shops, farm-gate stalls, farms or butchers
 • Filter by what’s sold: milk, eggs, chicken, beef, lamb, pork, honey, fruit or vegetables, with one Meat button for beef, lamb, pork and chicken
 • Choose when you can go: any time, open now, or this weekend, with this weekend’s published times on each place
 • Choose how far you’ll travel, and see places on a list sorted by distance or on a map
@@ -50,15 +52,15 @@ No account, no sign-in and no ads. Farm Direct doesn’t collect your informatio
 
 Details can change, so check before you travel. See something wrong? Tap “Report a problem” on any place to send us an email.
 
-Run a farm, stall or market? Get in touch from the About tab and we’ll help you claim your listing or add your place.
+Run a farm, stall, market or butcher shop? Get in touch from the About tab and we’ll help you claim your listing or add your place.
 
 Farm Direct is a directory only. It doesn’t sell or deliver anything, and there are no payments in the app.
 
 The "Report a problem" and "Get in touch" sentences are only true when the build has a support email (`SUPPORT_EMAIL`, see the checklist). Never submit a build without one.
 
-## What's New (1.0) (140 / 4000)
+## What's New (1.0) (169 / 4000)
 
-Welcome to Farm Direct. Find farmers’ markets, farm shops and farm-gate stalls near you, including 41 that list beef, lamb, pork or chicken.
+Welcome to Farm Direct. Find farmers’ markets, farm shops, farm-gate stalls, farms and independent butchers near you, including 86 that list beef, lamb, pork or chicken.
 
 ## Age rating
 
@@ -96,7 +98,7 @@ Before you submit, check that no build variable turns on a backend: leave `EXPO_
 >
 > **Reviewers outside Australia:** the app starts at Sydney NSW 2000. Tap the location at the top and search e.g. "Brisbane 4000", "Perth 6000" or "Hobart 7000".
 >
-> **Where the data comes from:** the 106 places are real farmers' markets, farm shops, farms and farm-gate stalls, researched from public sources (each place's own website, council and tourism pages). They are shown as "Unclaimed" because their owners have not confirmed them, and each place page lists its sources. Nothing is invented. Nobody can post content in the app.
+> **Where the data comes from:** the 151 places are real farmers' markets, farm shops, farms, farm-gate stalls and independent butcher shops, researched from public sources (each place's own website, council and tourism pages). Butchers are listed as retail shops; the app makes no claim about where their meat comes from. They are shown as "Unclaimed" because their owners have not confirmed them, and each place page lists its sources. Nothing is invented. Nobody can post content in the app.
 >
 > **How to try each feature:**
 > 1. First launch shows a short welcome. Tap **Use my location** (optional; asks for location permission), **Choose a suburb**, or **Not now**. No sign-in.

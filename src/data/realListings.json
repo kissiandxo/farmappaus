@@ -5099,5 +5099,3325 @@
     "lat": -33.48266,
     "lng": 115.7285,
     "locationPrecision": "locality"
+  },
+  {
+    "name": "Feather and Bone",
+    "type": "butcher",
+    "address": "8/10-14 Lilian Fowler Place",
+    "locality": "Marrickville",
+    "state": "NSW",
+    "postcode": "2204",
+    "products": [
+      "beef",
+      "lamb",
+      "pork",
+      "chicken",
+      "eggs",
+      "honey",
+      "veg"
+    ],
+    "otherProducts": "Also goat, duck, veal, smallgoods, seafood, dairy, pantry goods and ready meals.",
+    "tags": [],
+    "hours": {
+      "kind": "weekly",
+      "days": {
+        "mon": [
+          [
+            "09:00",
+            "16:00"
+          ]
+        ],
+        "tue": [
+          [
+            "09:00",
+            "16:00"
+          ]
+        ],
+        "wed": [
+          [
+            "09:00",
+            "16:00"
+          ]
+        ],
+        "thu": [
+          [
+            "09:00",
+            "16:00"
+          ]
+        ],
+        "fri": [
+          [
+            "09:00",
+            "16:00"
+          ]
+        ],
+        "sat": [
+          [
+            "08:00",
+            "16:00"
+          ]
+        ]
+      },
+      "note": "Marrickville shop only; the business has a second shop at 270 Bronte Road, Waverley with different hours."
+    },
+    "hoursAsStated": "Marrickville shop: Monday to Friday 9.00am to 4.00pm, Saturday 8.00am to 4.00pm.",
+    "website": "https://featherandbone.com.au/",
+    "phone": "02 9818 2717",
+    "description": "A butcher shop and production space in Marrickville that also runs butchery classes and an online shop.",
+    "sources": [
+      "https://featherandbone.com.au/pages/get-in-touch"
+    ],
+    "confidence": "high",
+    "caveats": "Product list is taken from the site's shop menu, which covers online and in-store range; vegetables, honey and eggs may not all be on the shop counter. Two shops in total, so it is well under the chain limit.",
+    "researchedOn": "2026-11-14",
+    "region": "NSW/ACT butchers",
+    "lat": -33.9063,
+    "lng": 151.17212,
+    "locationPrecision": "locality"
+  },
+  {
+    "name": "Pryde Butchery",
+    "type": "butcher",
+    "address": "Shop 1170, Level 1, Westfield Miranda, 600 Kingsway",
+    "locality": "Miranda",
+    "state": "NSW",
+    "postcode": "2228",
+    "products": [
+      "beef",
+      "lamb",
+      "pork",
+      "chicken"
+    ],
+    "otherProducts": "Also sausages, game meats, marinated products, ready-to-cook meals and meat packs.",
+    "tags": [],
+    "hours": {
+      "kind": "weekly",
+      "days": {
+        "sun": [
+          [
+            "07:00",
+            "18:00"
+          ]
+        ],
+        "mon": [
+          [
+            "07:00",
+            "18:00"
+          ]
+        ],
+        "tue": [
+          [
+            "07:00",
+            "18:00"
+          ]
+        ],
+        "wed": [
+          [
+            "07:00",
+            "18:00"
+          ]
+        ],
+        "thu": [
+          [
+            "07:00",
+            "18:00"
+          ]
+        ],
+        "fri": [
+          [
+            "07:00",
+            "18:00"
+          ]
+        ],
+        "sat": [
+          [
+            "07:00",
+            "18:00"
+          ]
+        ]
+      },
+      "note": null
+    },
+    "hoursAsStated": "Monday to Sunday, 07:00 to 18:00.",
+    "website": "https://prydebutchery.com.au/",
+    "phone": "02 9525 5281",
+    "description": "A family-run butcher shop on Level 1 of Westfield Miranda, near Woolworths, that also takes online orders for collection or delivery.",
+    "sources": [
+      "https://prydebutchery.com.au/about/",
+      "https://prydebutchery.com.au/contact-us/"
+    ],
+    "confidence": "high",
+    "caveats": "Hours come from a company-details block on the About page; the shop sits inside Westfield Miranda, so check they match centre hours, especially late-night trading days.",
+    "researchedOn": "2026-11-14",
+    "region": "NSW/ACT butchers",
+    "lat": -34.03736,
+    "lng": 151.10176,
+    "locationPrecision": "locality"
+  },
+  {
+    "name": "Barry Hawke's Butchery",
+    "type": "butcher",
+    "address": "Fyshwick Fresh Food Markets, 36 Mildura Street",
+    "locality": "Fyshwick",
+    "state": "ACT",
+    "postcode": "2609",
+    "products": [
+      "beef",
+      "lamb",
+      "pork",
+      "chicken"
+    ],
+    "otherProducts": "Also smallgoods and sausages.",
+    "tags": [],
+    "hours": {
+      "kind": "weekly",
+      "days": {
+        "thu": [
+          [
+            "07:00",
+            "17:30"
+          ]
+        ],
+        "fri": [
+          [
+            "07:00",
+            "17:30"
+          ]
+        ],
+        "sat": [
+          [
+            "07:00",
+            "17:30"
+          ]
+        ],
+        "sun": [
+          [
+            "07:00",
+            "17:30"
+          ]
+        ]
+      },
+      "note": "Trades on market days only."
+    },
+    "hoursAsStated": "Thursday to Sunday, 7am to 5:30pm.",
+    "website": "https://www.fyshwickmarkets.com.au/our-stores/barry-hawkes-butchery",
+    "phone": null,
+    "description": "A family butcher shop inside the Fyshwick Fresh Food Markets that cuts and packs meat on site.",
+    "sources": [
+      "https://www.fyshwickmarkets.com.au/our-stores/barry-hawkes-butchery",
+      "https://www.fyshwickmarkets.com.au/"
+    ],
+    "confidence": "medium",
+    "caveats": "Facts come from the markets' own store page, not a site run by the shop itself (none found). Phone left blank because it is not on a business-owned site. Mike's Meats in the same markets is run by a member of the same family but trades as a separate shop.",
+    "researchedOn": "2026-11-14",
+    "region": "NSW/ACT butchers",
+    "lat": -35.32821,
+    "lng": 149.18296,
+    "locationPrecision": "locality"
+  },
+  {
+    "name": "Mike's Meats",
+    "type": "butcher",
+    "address": "Fyshwick Fresh Food Markets, 36 Mildura Street",
+    "locality": "Fyshwick",
+    "state": "ACT",
+    "postcode": "2609",
+    "products": [
+      "beef",
+      "lamb",
+      "pork",
+      "chicken"
+    ],
+    "otherProducts": "Also veal and house-brand smallgoods; bulk orders taken.",
+    "tags": [],
+    "hours": {
+      "kind": "weekly",
+      "days": {
+        "thu": [
+          [
+            "07:00",
+            "17:30"
+          ]
+        ],
+        "fri": [
+          [
+            "07:00",
+            "17:30"
+          ]
+        ],
+        "sat": [
+          [
+            "07:00",
+            "17:30"
+          ]
+        ],
+        "sun": [
+          [
+            "07:00",
+            "17:30"
+          ]
+        ]
+      },
+      "note": "Trades on market days only."
+    },
+    "hoursAsStated": "Thursday to Sunday, 7am to 5:30pm.",
+    "website": "https://www.fyshwickmarkets.com.au/our-stores/mikes-meats",
+    "phone": null,
+    "description": "A family-run butcher shop inside the Fyshwick Fresh Food Markets.",
+    "sources": [
+      "https://www.fyshwickmarkets.com.au/our-stores/mikes-meats",
+      "https://www.fyshwickmarkets.com.au/"
+    ],
+    "confidence": "medium",
+    "caveats": "Facts come from the markets' own store page; no site run by the shop was found. Phone left blank for the same reason.",
+    "researchedOn": "2026-11-14",
+    "region": "NSW/ACT butchers",
+    "lat": -35.32821,
+    "lng": 149.18296,
+    "locationPrecision": "locality"
+  },
+  {
+    "name": "Byron Bay Pork & Meats Butchery",
+    "type": "butcher",
+    "address": "70 Dalley Street",
+    "locality": "Mullumbimby",
+    "state": "NSW",
+    "postcode": "2482",
+    "products": [
+      "beef",
+      "chicken",
+      "pork",
+      "lamb"
+    ],
+    "otherProducts": "Also goat, deli meats, sausages, rissoles, marinated meats and roast chickens.",
+    "tags": [],
+    "hours": {
+      "kind": "weekly",
+      "days": {
+        "mon": [
+          [
+            "08:00",
+            "17:00"
+          ]
+        ],
+        "tue": [
+          [
+            "08:00",
+            "17:00"
+          ]
+        ],
+        "wed": [
+          [
+            "08:00",
+            "17:00"
+          ]
+        ],
+        "thu": [
+          [
+            "08:00",
+            "17:00"
+          ]
+        ],
+        "fri": [
+          [
+            "08:00",
+            "17:00"
+          ]
+        ],
+        "sat": [
+          [
+            "08:00",
+            "12:00"
+          ]
+        ]
+      },
+      "note": "Closed Sunday."
+    },
+    "hoursAsStated": "Monday to Friday 8:00am to 5:00pm, Saturday 8:00am to 12:00pm, Sunday closed.",
+    "website": "https://www.byronbaypork.com.au/",
+    "phone": "02 6684 2137",
+    "description": "A butcher shop in Mullumbimby that has traded since 2007, despite the Byron Bay in its name.",
+    "sources": [
+      "https://www.byronbaypork.com.au/"
+    ],
+    "confidence": "high",
+    "caveats": "Name says Byron Bay but the shop address is in Mullumbimby.",
+    "researchedOn": "2026-11-14",
+    "region": "NSW/ACT butchers",
+    "lat": -28.55264,
+    "lng": 153.49998,
+    "locationPrecision": "address"
+  },
+  {
+    "name": "The Dorrigo Butcher",
+    "type": "butcher",
+    "address": "42 Hickory Street",
+    "locality": "Dorrigo",
+    "state": "NSW",
+    "postcode": "2453",
+    "products": [
+      "beef",
+      "lamb",
+      "pork",
+      "chicken"
+    ],
+    "otherProducts": "Also smokehouse products, deli lines, game and pantry goods.",
+    "tags": [],
+    "hours": {
+      "kind": "weekly",
+      "days": {
+        "mon": [
+          [
+            "07:00",
+            "17:00"
+          ]
+        ],
+        "tue": [
+          [
+            "07:00",
+            "17:00"
+          ]
+        ],
+        "wed": [
+          [
+            "07:00",
+            "17:00"
+          ]
+        ],
+        "thu": [
+          [
+            "07:00",
+            "17:00"
+          ]
+        ],
+        "fri": [
+          [
+            "07:00",
+            "17:00"
+          ]
+        ],
+        "sat": [
+          [
+            "07:00",
+            "12:00"
+          ]
+        ]
+      },
+      "note": "Closed Sunday."
+    },
+    "hoursAsStated": "Monday to Friday 7am to 5pm, Saturday 7am to 12pm, closed Sunday.",
+    "website": "https://www.thedorrigobutcher.com.au/",
+    "phone": "02 6657 2023",
+    "description": "A whole-carcass butcher shop and smokehouse on the main street of Dorrigo.",
+    "sources": [
+      "https://www.thedorrigobutcher.com.au/contact",
+      "https://www.visitnsw.com/destinations/north-coast/coffs-harbour-area/dorrigo/food-and-drink/the-dorrigo-butcher"
+    ],
+    "confidence": "high",
+    "caveats": "The site banner says online orders and deliveries to Bellingen and Coffs Harbour are paused because of a road closure; the shop hours are still listed.",
+    "researchedOn": "2026-11-14",
+    "region": "NSW/ACT butchers",
+    "lat": -30.33412,
+    "lng": 152.71323,
+    "locationPrecision": "address"
+  },
+  {
+    "name": "The Butcher's Chop",
+    "type": "butcher",
+    "address": "Shop 9, Peninsula Plaza, 48-64 Blackwall Road",
+    "locality": "Woy Woy",
+    "state": "NSW",
+    "postcode": "2258",
+    "products": [
+      "pork",
+      "lamb"
+    ],
+    "otherProducts": "Also sausages, in-store smoked products and knife sharpening.",
+    "tags": [],
+    "hours": {
+      "kind": "weekly",
+      "days": {
+        "mon": [
+          [
+            "07:00",
+            "18:00"
+          ]
+        ],
+        "tue": [
+          [
+            "07:00",
+            "18:00"
+          ]
+        ],
+        "wed": [
+          [
+            "07:00",
+            "18:00"
+          ]
+        ],
+        "thu": [
+          [
+            "07:00",
+            "18:00"
+          ]
+        ],
+        "fri": [
+          [
+            "07:00",
+            "18:00"
+          ]
+        ],
+        "sat": [
+          [
+            "07:00",
+            "17:00"
+          ]
+        ],
+        "sun": [
+          [
+            "07:00",
+            "16:00"
+          ]
+        ]
+      },
+      "note": null
+    },
+    "hoursAsStated": "Monday to Friday 7am to 6pm, Saturday 7am to 5pm, Sunday 7am to 4pm.",
+    "website": "https://www.thebutcherschop.com.au/",
+    "phone": "02 4342 2372",
+    "description": "A family-owned butcher shop in Peninsula Plaza, Woy Woy, that took over the former Edwards Family Butchery.",
+    "sources": [
+      "https://www.thebutcherschop.com.au/",
+      "https://www.thebutcherschop.com.au/services",
+      "https://www.thebutcherschop.com.au/contact"
+    ],
+    "confidence": "high",
+    "caveats": "Only pork and lamb are named on the site; beef and chicken are very likely sold but are not stated, so they are left out.",
+    "researchedOn": "2026-11-14",
+    "region": "NSW/ACT butchers",
+    "lat": -33.4852,
+    "lng": 151.32373,
+    "locationPrecision": "locality"
+  },
+  {
+    "name": "Murphy's Quality Butchery",
+    "type": "butcher",
+    "address": "Shop 12, 18-34 Alison Road",
+    "locality": "Wyong",
+    "state": "NSW",
+    "postcode": "2259",
+    "products": [
+      "beef"
+    ],
+    "otherProducts": "Also sausages, meat packs and bulk meat orders.",
+    "tags": [],
+    "hours": {
+      "kind": "weekly",
+      "days": {
+        "mon": [
+          [
+            "08:00",
+            "17:30"
+          ]
+        ],
+        "tue": [
+          [
+            "08:00",
+            "17:30"
+          ]
+        ],
+        "wed": [
+          [
+            "08:00",
+            "17:30"
+          ]
+        ],
+        "thu": [
+          [
+            "08:00",
+            "17:30"
+          ]
+        ],
+        "fri": [
+          [
+            "08:00",
+            "17:30"
+          ]
+        ],
+        "sat": [
+          [
+            "08:00",
+            "15:00"
+          ]
+        ],
+        "sun": [
+          [
+            "08:00",
+            "14:00"
+          ]
+        ]
+      },
+      "note": null
+    },
+    "hoursAsStated": "Monday to Friday 8am to 5:30pm, Saturday 8am to 3pm, Sunday 8am to 2pm.",
+    "website": "https://murphysqualitybutchery.com.au/",
+    "phone": "02 4397 1813",
+    "description": "A family butcher shop in Wyong, one of three shops the business runs on the Central Coast.",
+    "sources": [
+      "https://murphysqualitybutchery.com.au/",
+      "https://murphysqualitybutchery.com.au/pages/about-us",
+      "https://murphysqualitybutchery.com.au/collections"
+    ],
+    "confidence": "high",
+    "caveats": "Three shops (Chittaway Bay, Lisarow, Wyong); a single hours block appears under the Wyong entry, so it is unclear whether it covers all three. Only beef is named (bulk beef orders), so other meats are left out.",
+    "researchedOn": "2026-11-14",
+    "region": "NSW/ACT butchers",
+    "lat": -33.28379,
+    "lng": 151.42251,
+    "locationPrecision": "locality"
+  },
+  {
+    "name": "That Butcher Shop",
+    "type": "butcher",
+    "address": "102 Green Street",
+    "locality": "Lockhart",
+    "state": "NSW",
+    "postcode": "2656",
+    "products": [
+      "beef"
+    ],
+    "otherProducts": "Also smoked bacon, sausages, schnitzels and home-cooked meals; delivers to Wagga Wagga and nearby towns.",
+    "tags": [],
+    "hours": {
+      "kind": "weekly",
+      "days": {
+        "mon": [
+          [
+            "08:00",
+            "18:00"
+          ]
+        ],
+        "tue": [
+          [
+            "08:00",
+            "18:00"
+          ]
+        ],
+        "wed": [
+          [
+            "08:00",
+            "18:00"
+          ]
+        ],
+        "thu": [
+          [
+            "08:00",
+            "18:00"
+          ]
+        ],
+        "fri": [
+          [
+            "08:00",
+            "18:00"
+          ]
+        ],
+        "sat": [
+          [
+            "08:00",
+            "13:00"
+          ]
+        ]
+      },
+      "note": null
+    },
+    "hoursAsStated": "Monday to Friday 8am to 6pm, Saturday 8am to 1pm.",
+    "website": "https://thatbutchershop.au/",
+    "phone": "02 6920 5089",
+    "description": "A family butcher shop in Lockhart, opened in 2019, that also delivers around the Wagga Wagga area.",
+    "sources": [
+      "https://thatbutchershop.au/",
+      "https://thatbutchershop.au/pages/contact",
+      "https://thatbutchershop.au/pages/about-us",
+      "https://www.visitnsw.com/destinations/country-nsw/riverina/lockhart/food-and-drink/butcher-shop"
+    ],
+    "confidence": "high",
+    "caveats": "Postcode not shown on the shop's site. Only beef items are named on the pages read; bacon is sold but pork is not named as such.",
+    "researchedOn": "2026-11-14",
+    "region": "NSW/ACT butchers",
+    "lat": -35.22076,
+    "lng": 146.71402,
+    "locationPrecision": "address"
+  },
+  {
+    "name": "Butcher's Nook Kiama",
+    "type": "butcher",
+    "address": "1/122 Terralong Street",
+    "locality": "Kiama",
+    "state": "NSW",
+    "postcode": "2533",
+    "products": [
+      "beef",
+      "chicken",
+      "lamb",
+      "pork"
+    ],
+    "otherProducts": "Also veal, sausages, mince, skewers and value packs; click and collect available.",
+    "tags": [],
+    "hours": {
+      "kind": "weekly",
+      "days": {
+        "mon": [
+          [
+            "07:00",
+            "17:00"
+          ]
+        ],
+        "tue": [
+          [
+            "07:00",
+            "17:00"
+          ]
+        ],
+        "wed": [
+          [
+            "07:00",
+            "17:00"
+          ]
+        ],
+        "thu": [
+          [
+            "07:00",
+            "17:00"
+          ]
+        ],
+        "fri": [
+          [
+            "07:00",
+            "17:00"
+          ]
+        ],
+        "sat": [
+          [
+            "07:00",
+            "12:00"
+          ]
+        ]
+      },
+      "note": null
+    },
+    "hoursAsStated": "Store trading hours 7am to 5pm weekdays, 7am to 12pm Saturday.",
+    "website": "https://butchersnookkiama.com.au/",
+    "phone": "02 4232 1952",
+    "description": "A butcher shop on Terralong Street in Kiama, formerly trading as Rosebank Meats.",
+    "sources": [
+      "https://butchersnookkiama.com.au/",
+      "https://butchersnookkiama.com.au/pages/contact-us"
+    ],
+    "confidence": "high",
+    "caveats": "Sunday not mentioned on the site; treated as closed.",
+    "researchedOn": "2026-11-14",
+    "region": "NSW/ACT butchers",
+    "lat": -34.66878,
+    "lng": 150.85205,
+    "locationPrecision": "address"
+  },
+  {
+    "name": "Cleaver & Co Quality Meats",
+    "type": "butcher",
+    "address": "2/4 Murphys Avenue",
+    "locality": "Gwynneville",
+    "state": "NSW",
+    "postcode": "2500",
+    "products": [
+      "beef"
+    ],
+    "otherProducts": "Also house-made sausages and beef boxes.",
+    "tags": [],
+    "hours": {
+      "kind": "weekly",
+      "days": {
+        "mon": [
+          [
+            "08:00",
+            "17:00"
+          ]
+        ],
+        "tue": [
+          [
+            "08:00",
+            "17:00"
+          ]
+        ],
+        "wed": [
+          [
+            "08:00",
+            "17:00"
+          ]
+        ],
+        "thu": [
+          [
+            "08:00",
+            "17:00"
+          ]
+        ],
+        "fri": [
+          [
+            "08:00",
+            "17:00"
+          ]
+        ],
+        "sat": [
+          [
+            "07:00",
+            "12:00"
+          ]
+        ]
+      },
+      "note": "Closed Sunday. Gwynneville shop only."
+    },
+    "hoursAsStated": "Monday to Friday 8:00am to 5:00pm, Saturday 7:00am to 12:00pm, closed Sunday.",
+    "website": "https://www.cleaverandcomeats.com.au/",
+    "phone": "02 4229 4562",
+    "description": "A whole-carcass butcher shop in Gwynneville, Wollongong, that breaks down carcasses in house.",
+    "sources": [
+      "https://www.cleaverandcomeats.com.au/",
+      "https://www.cleaverandcomeats.com.au/pages/gwynneville",
+      "https://www.cleaverandcomeats.com.au/pages/contact"
+    ],
+    "confidence": "high",
+    "caveats": "The business also has a counter inside IGA Port Kembla; that outlet is excluded as an in-supermarket butchery. Only beef is named on the pages read.",
+    "researchedOn": "2026-11-14",
+    "region": "NSW/ACT butchers",
+    "lat": -34.41254,
+    "lng": 150.88201,
+    "locationPrecision": "address"
+  },
+  {
+    "name": "East Blaxland Butchery",
+    "type": "butcher",
+    "address": "Shop 45, 43/65 Old Bathurst Road",
+    "locality": "East Blaxland",
+    "state": "NSW",
+    "postcode": "2774",
+    "products": [
+      "beef",
+      "lamb",
+      "pork",
+      "chicken"
+    ],
+    "otherProducts": "Also sausages, American-style barbecue cuts, rubs, sauces, smokers and barbecue fuel.",
+    "tags": [],
+    "hours": {
+      "kind": "weekly",
+      "days": {
+        "mon": [
+          [
+            "07:00",
+            "18:00"
+          ]
+        ],
+        "tue": [
+          [
+            "07:00",
+            "18:00"
+          ]
+        ],
+        "wed": [
+          [
+            "07:00",
+            "18:00"
+          ]
+        ],
+        "thu": [
+          [
+            "07:00",
+            "18:00"
+          ]
+        ],
+        "fri": [
+          [
+            "07:00",
+            "18:00"
+          ]
+        ],
+        "sat": [
+          [
+            "07:00",
+            "14:00"
+          ]
+        ]
+      },
+      "note": "Closed Sunday."
+    },
+    "hoursAsStated": "Monday to Friday 7:00am to 6:00pm, Saturday 7:00am to 2:00pm, Sunday closed.",
+    "website": "https://www.eastblaxlandbutchery.com.au/",
+    "phone": "02 4739 1395",
+    "description": "A butcher shop in the lower Blue Mountains that also sells barbecue gear and runs cooking classes.",
+    "sources": [
+      "https://www.eastblaxlandbutchery.com.au/",
+      "https://www.eastblaxlandbutchery.com.au/meats-1",
+      "https://www.eastblaxlandbutchery.com.au/about"
+    ],
+    "confidence": "high",
+    "caveats": "Street number is written '43/65 Old Bathurst Road' on the site; a 2019 third-party list had '45/65', so check the shopping-centre address when geocoding.",
+    "researchedOn": "2026-11-14",
+    "region": "NSW/ACT butchers",
+    "lat": -33.74628,
+    "lng": 150.62253,
+    "locationPrecision": "locality"
+  },
+  {
+    "name": "Duddy's Butchery",
+    "type": "butcher",
+    "address": "193 Grey Street",
+    "locality": "Glen Innes",
+    "state": "NSW",
+    "postcode": "2370",
+    "products": [
+      "beef",
+      "lamb",
+      "pork",
+      "chicken"
+    ],
+    "otherProducts": "Also sausages, smallgoods and meat packs.",
+    "tags": [],
+    "hours": {
+      "kind": "weekly",
+      "days": {
+        "mon": [
+          [
+            "07:00",
+            "17:30"
+          ]
+        ],
+        "tue": [
+          [
+            "07:00",
+            "17:30"
+          ]
+        ],
+        "wed": [
+          [
+            "07:00",
+            "17:30"
+          ]
+        ],
+        "thu": [
+          [
+            "07:00",
+            "17:30"
+          ]
+        ],
+        "fri": [
+          [
+            "07:00",
+            "17:30"
+          ]
+        ],
+        "sat": [
+          [
+            "07:00",
+            "12:00"
+          ]
+        ]
+      },
+      "note": null
+    },
+    "hoursAsStated": "Shop open Monday to Friday 7am to 5.30pm, Saturday 7am to 12pm.",
+    "website": "https://campbellsbutchery.com.au/",
+    "phone": "02 6732 3047",
+    "description": "A butcher shop on Grey Street in Glen Innes, trading under the Duddy's name on the former Campbells Butchery website.",
+    "sources": [
+      "https://campbellsbutchery.com.au/"
+    ],
+    "confidence": "high",
+    "caveats": "The site is at campbellsbutchery.com.au and still has a 'Campbells Butchery Specials' heading, but is branded Duddy's Butchery throughout; looks like a change of owner or name. Check which name is on the shopfront. Postcode not shown.",
+    "researchedOn": "2026-11-14",
+    "region": "NSW/ACT butchers",
+    "lat": -29.7403,
+    "lng": 151.73542,
+    "locationPrecision": "address"
+  },
+  {
+    "name": "Hardwicks of Kyneton",
+    "type": "butcher",
+    "address": "180 Mollison St",
+    "locality": "Kyneton",
+    "state": "VIC",
+    "postcode": "3444",
+    "products": [
+      "beef",
+      "lamb",
+      "pork",
+      "chicken"
+    ],
+    "otherProducts": null,
+    "tags": [],
+    "hours": {
+      "kind": "weekly",
+      "days": {
+        "mon": [
+          [
+            "08:30",
+            "17:30"
+          ]
+        ],
+        "tue": [
+          [
+            "08:30",
+            "17:30"
+          ]
+        ],
+        "wed": [
+          [
+            "08:30",
+            "17:30"
+          ]
+        ],
+        "thu": [
+          [
+            "08:30",
+            "17:30"
+          ]
+        ],
+        "fri": [
+          [
+            "08:30",
+            "17:30"
+          ]
+        ],
+        "sat": [
+          [
+            "08:30",
+            "15:00"
+          ]
+        ],
+        "sun": [
+          [
+            "09:00",
+            "15:00"
+          ]
+        ]
+      },
+      "note": null
+    },
+    "hoursAsStated": "Monday to Friday 8:30am-5:30pm, Saturday 8:30am-3pm, Sunday 9am-3pm",
+    "website": "https://www.hardwicksofkyneton.com.au/",
+    "phone": "(03) 5422 3851",
+    "description": "Family-owned retail butcher on Mollison Street in Kyneton selling lamb, beef, pork and chicken direct to the public.",
+    "sources": [
+      "https://www.hardwicksofkyneton.com.au/",
+      "https://rdfnl.com.au/sponsors-directory/43-hardwick-s-of-kyneton"
+    ],
+    "confidence": "high",
+    "caveats": "Business describes itself as also processing and supplying meat; the retail shop is open to the public. Public holiday hours not checked.",
+    "researchedOn": "2026-11-14",
+    "region": "VIC/TAS butchers",
+    "lat": -37.24462,
+    "lng": 144.4543,
+    "locationPrecision": "address"
+  },
+  {
+    "name": "Strath Hill Butcher",
+    "type": "butcher",
+    "address": "Cnr Condon St & Edwards Rd",
+    "locality": "Bendigo",
+    "state": "VIC",
+    "postcode": "3550",
+    "products": [
+      "beef",
+      "lamb",
+      "pork",
+      "chicken"
+    ],
+    "otherProducts": "Burgers, sausages, seafood and meat packs",
+    "tags": [],
+    "hours": {
+      "kind": "weekly",
+      "days": {
+        "mon": [
+          [
+            "07:30",
+            "17:30"
+          ]
+        ],
+        "tue": [
+          [
+            "07:30",
+            "17:30"
+          ]
+        ],
+        "wed": [
+          [
+            "07:30",
+            "17:30"
+          ]
+        ],
+        "thu": [
+          [
+            "07:30",
+            "17:30"
+          ]
+        ],
+        "fri": [
+          [
+            "07:30",
+            "17:30"
+          ]
+        ],
+        "sat": [
+          [
+            "07:30",
+            "12:00"
+          ]
+        ]
+      },
+      "note": null
+    },
+    "hoursAsStated": "Monday to Friday 7:30am-5:30pm, Saturday 7:30am-12pm, Sunday closed",
+    "website": "https://www.strathhillbutcher.com.au/",
+    "phone": "(03) 5443 4467",
+    "description": "Family-owned butcher shop at the corner of Condon Street and Edwards Road in Bendigo selling beef, lamb, pork and poultry.",
+    "sources": [
+      "https://www.strathhillbutcher.com.au/",
+      "https://bebendigo.com.au/member-directory/strath-hill-butcher/"
+    ],
+    "confidence": "high",
+    "caveats": "Site gives the locality only as 'Bendigo' with no postcode; the exact suburb for the corner address should be confirmed before geocoding. Site lists poultry, recorded here as chicken.",
+    "researchedOn": "2026-11-14",
+    "region": "VIC/TAS butchers",
+    "lat": -36.73727,
+    "lng": 144.28717,
+    "locationPrecision": "locality"
+  },
+  {
+    "name": "Bertie's Butcher",
+    "type": "butcher",
+    "address": "218 Swan St",
+    "locality": "Cremorne",
+    "state": "VIC",
+    "postcode": "3121",
+    "products": [
+      "beef",
+      "lamb",
+      "pork",
+      "chicken"
+    ],
+    "otherProducts": "Sausages; small on-site smoker and grill counter",
+    "tags": [],
+    "hours": {
+      "kind": "weekly",
+      "days": {
+        "mon": [
+          [
+            "08:00",
+            "19:00"
+          ]
+        ],
+        "tue": [
+          [
+            "08:00",
+            "19:00"
+          ]
+        ],
+        "wed": [
+          [
+            "08:00",
+            "19:00"
+          ]
+        ],
+        "thu": [
+          [
+            "08:00",
+            "19:00"
+          ]
+        ],
+        "fri": [
+          [
+            "08:00",
+            "19:00"
+          ]
+        ],
+        "sat": [
+          [
+            "08:00",
+            "17:00"
+          ]
+        ],
+        "sun": [
+          [
+            "10:00",
+            "16:00"
+          ]
+        ]
+      },
+      "note": null
+    },
+    "hoursAsStated": "Store open Monday to Friday 8am-7pm, Saturday 8am-5pm, Sunday 10am-4pm",
+    "website": "https://www.bertiesbutcher.com.au/",
+    "phone": "(03) 9428 2655",
+    "description": "Butcher shop on Swan Street in Cremorne with an attached smoker and grill counter.",
+    "sources": [
+      "https://www.bertiesbutcher.com.au/",
+      "https://www.bertiesbutcher.com.au/pages/contact",
+      "https://www.broadsheet.com.au/melbourne/shops/berties-butcher"
+    ],
+    "confidence": "high",
+    "caveats": "Older third-party coverage places the shop in Richmond; the shop's own site gives Cremorne 3121. Separate shorter hours on the site apply to the grill counter, not the butcher.",
+    "researchedOn": "2026-11-14",
+    "region": "VIC/TAS butchers",
+    "lat": -37.82573,
+    "lng": 144.9969,
+    "locationPrecision": "address"
+  },
+  {
+    "name": "The Daylesford Meat Co.",
+    "type": "butcher",
+    "address": "37 Vincent Street",
+    "locality": "Daylesford",
+    "state": "VIC",
+    "postcode": "3460",
+    "products": [
+      "beef",
+      "lamb",
+      "pork",
+      "chicken"
+    ],
+    "otherProducts": "Smallgoods; seasonal duck and turkey",
+    "tags": [],
+    "hours": {
+      "kind": "weekly",
+      "days": {
+        "mon": [
+          [
+            "07:00",
+            "17:30"
+          ]
+        ],
+        "tue": [
+          [
+            "07:00",
+            "17:30"
+          ]
+        ],
+        "wed": [
+          [
+            "07:00",
+            "17:30"
+          ]
+        ],
+        "thu": [
+          [
+            "07:00",
+            "17:30"
+          ]
+        ],
+        "fri": [
+          [
+            "07:00",
+            "18:00"
+          ]
+        ],
+        "sat": [
+          [
+            "07:00",
+            "13:00"
+          ]
+        ],
+        "sun": [
+          [
+            "10:00",
+            "15:00"
+          ]
+        ]
+      },
+      "note": null
+    },
+    "hoursAsStated": "Shop trading hours Monday to Thursday 7am-5:30pm, Friday 7am-6pm, Saturday 7am-1pm, Sunday 10am-3pm",
+    "website": "https://daylesfordmeatco.com.au/",
+    "phone": "03 5348 2094",
+    "description": "Traditional butcher shop on Vincent Street in Daylesford selling beef, lamb, pork and chicken.",
+    "sources": [
+      "https://daylesfordmeatco.com.au/",
+      "https://daylesford-meat-co.squarespace.com/contact",
+      "https://daylesford-meat-co.squarespace.com/about-us"
+    ],
+    "confidence": "high",
+    "caveats": "Also delivers and supplies wholesale customers; the Vincent Street shop is open to the public.",
+    "researchedOn": "2026-11-14",
+    "region": "VIC/TAS butchers",
+    "lat": -37.34212,
+    "lng": 144.14283,
+    "locationPrecision": "address"
+  },
+  {
+    "name": "Meat @ Beany's",
+    "type": "butcher",
+    "address": "120 Commercial Rd",
+    "locality": "Koroit",
+    "state": "VIC",
+    "postcode": "3282",
+    "products": [
+      "beef",
+      "lamb",
+      "pork"
+    ],
+    "otherProducts": "Local produce and hampers",
+    "tags": [],
+    "hours": {
+      "kind": "weekly",
+      "days": {
+        "mon": [
+          [
+            "07:00",
+            "18:00"
+          ]
+        ],
+        "tue": [
+          [
+            "07:00",
+            "18:00"
+          ]
+        ],
+        "wed": [
+          [
+            "07:00",
+            "18:00"
+          ]
+        ],
+        "thu": [
+          [
+            "07:00",
+            "18:00"
+          ]
+        ],
+        "fri": [
+          [
+            "07:00",
+            "18:00"
+          ]
+        ],
+        "sat": [
+          [
+            "07:00",
+            "14:00"
+          ]
+        ]
+      },
+      "note": null
+    },
+    "hoursAsStated": "Monday to Friday 7am-6pm, Saturday 7am-2pm, Sunday closed",
+    "website": "https://www.meatatbeanysbutcher.com.au/",
+    "phone": "(03) 5565 8282",
+    "description": "Family-owned and operated butcher shop on Commercial Road in Koroit.",
+    "sources": [
+      "https://www.meatatbeanysbutcher.com.au/",
+      "https://www.meatatbeanysbutcher.com.au/shop-our-meat",
+      "https://visitgreatoceanroad.org.au/restaurants/meat-beanys/"
+    ],
+    "confidence": "high",
+    "caveats": null,
+    "researchedOn": "2026-11-14",
+    "region": "VIC/TAS butchers",
+    "lat": -38.29184,
+    "lng": 142.36587,
+    "locationPrecision": "address"
+  },
+  {
+    "name": "Casalinga Gourmet Meats",
+    "type": "butcher",
+    "address": "Shop 2, 205 Charles St",
+    "locality": "Launceston",
+    "state": "TAS",
+    "postcode": "7250",
+    "products": [
+      "beef",
+      "lamb",
+      "pork"
+    ],
+    "otherProducts": "Smallgoods, charcuterie, sausages and game meats",
+    "tags": [],
+    "hours": {
+      "kind": "weekly",
+      "days": {
+        "tue": [
+          [
+            "07:00",
+            "18:00"
+          ]
+        ],
+        "wed": [
+          [
+            "07:00",
+            "18:00"
+          ]
+        ],
+        "thu": [
+          [
+            "07:00",
+            "18:00"
+          ]
+        ],
+        "fri": [
+          [
+            "07:00",
+            "18:00"
+          ]
+        ]
+      },
+      "note": null
+    },
+    "hoursAsStated": "Tuesday to Friday 7am-6pm; closed Saturday to Monday",
+    "website": "https://www.casalingagourmetmeats.com/",
+    "phone": "(03) 6334 9899",
+    "description": "Family-owned corner butcher on Charles Street in central Launceston that also makes its own smallgoods.",
+    "sources": [
+      "https://www.casalingagourmetmeats.com/",
+      "https://www.casalingagourmetmeats.com/traditional-meats",
+      "https://northerntasmania.com.au/eat-and-drink/casalinga-gourmet-meats"
+    ],
+    "confidence": "high",
+    "caveats": "Closed on weekends and Mondays.",
+    "researchedOn": "2026-11-14",
+    "region": "VIC/TAS butchers",
+    "lat": -41.46515,
+    "lng": 147.15939,
+    "locationPrecision": "locality"
+  },
+  {
+    "name": "Vermey's Quality Meats",
+    "type": "butcher",
+    "address": "180 Sandy Bay Road",
+    "locality": "Sandy Bay",
+    "state": "TAS",
+    "postcode": "7005",
+    "products": [
+      "beef",
+      "lamb",
+      "pork",
+      "chicken",
+      "eggs",
+      "milk"
+    ],
+    "otherProducts": "Veal, game, deli items and sausages",
+    "tags": [],
+    "hours": {
+      "kind": "weekly",
+      "days": {
+        "mon": [
+          [
+            "07:00",
+            "18:00"
+          ]
+        ],
+        "tue": [
+          [
+            "07:00",
+            "18:00"
+          ]
+        ],
+        "wed": [
+          [
+            "07:00",
+            "18:00"
+          ]
+        ],
+        "thu": [
+          [
+            "07:00",
+            "18:00"
+          ]
+        ],
+        "fri": [
+          [
+            "07:00",
+            "18:00"
+          ]
+        ],
+        "sat": [
+          [
+            "07:00",
+            "16:00"
+          ]
+        ]
+      },
+      "note": null
+    },
+    "hoursAsStated": "Monday to Friday 7am-6pm, Saturday 7am-4pm (homepage); contact page gives 6am opening",
+    "website": "https://www.vermeys.com.au/",
+    "phone": "(03) 6223 6378",
+    "description": "Family butcher shop on Sandy Bay Road in Hobart's Sandy Bay with a walk-in shop and local delivery.",
+    "sources": [
+      "https://www.vermeys.com.au/",
+      "https://www.vermeys.com.au/pages/contact-us"
+    ],
+    "confidence": "medium",
+    "caveats": "Opening time conflicts on the shop's own site: homepage says 7am, contact page says 6am (closing times agree). Later 7am recorded. Site lists poultry, recorded here as chicken; milk and eggs are sold via online orders, confirm they are stocked in-store.",
+    "researchedOn": "2026-11-14",
+    "region": "VIC/TAS butchers",
+    "lat": -42.90884,
+    "lng": 147.34645,
+    "locationPrecision": "address"
+  },
+  {
+    "name": "Milner Meat & Seafood",
+    "type": "butcher",
+    "address": "Shop 7/28 Gason Street",
+    "locality": "Alice Springs",
+    "state": "NT",
+    "postcode": "0870",
+    "products": [
+      "beef",
+      "lamb",
+      "pork"
+    ],
+    "otherProducts": "Seafood, smallgoods such as ham and bacon, and cheese",
+    "tags": [],
+    "hours": {
+      "kind": "weekly",
+      "days": {
+        "mon": [
+          [
+            "07:00",
+            "17:30"
+          ]
+        ],
+        "tue": [
+          [
+            "07:00",
+            "17:30"
+          ]
+        ],
+        "wed": [
+          [
+            "07:00",
+            "17:30"
+          ]
+        ],
+        "thu": [
+          [
+            "07:00",
+            "17:30"
+          ]
+        ],
+        "fri": [
+          [
+            "07:00",
+            "17:30"
+          ]
+        ],
+        "sat": [
+          [
+            "07:00",
+            "12:00"
+          ]
+        ]
+      },
+      "note": "Closed Sunday."
+    },
+    "hoursAsStated": "Monday to Friday 7am to 5:30pm, Saturday 7am to 12pm, Sunday closed.",
+    "website": "https://www.milnermeats.com.au",
+    "phone": "(08) 8952 1171",
+    "description": "Butcher and seafood shop at the Gillen store on Gason Street in Alice Springs.",
+    "sources": [
+      "https://www.milnermeats.com.au/contact-us",
+      "https://www.milnermeats.com.au/"
+    ],
+    "confidence": "high",
+    "caveats": "The business also runs a separate wholesale site at Kennett Court, Ciccone; only the Gason Street retail shop is listed here.",
+    "researchedOn": "2026-11-14",
+    "region": "QLD/NT butchers",
+    "lat": -23.70163,
+    "lng": 133.88169,
+    "locationPrecision": "locality"
+  },
+  {
+    "name": "Town & Country Butchers",
+    "type": "butcher",
+    "address": "Shop 3, 31 Katherine Terrace North",
+    "locality": "Katherine",
+    "state": "NT",
+    "postcode": "0850",
+    "products": [
+      "beef",
+      "lamb",
+      "pork",
+      "chicken"
+    ],
+    "otherProducts": "Smallgoods made in store and a Lenard's chicken range",
+    "tags": [],
+    "hours": {
+      "kind": "weekly",
+      "days": {
+        "mon": [
+          [
+            "07:00",
+            "17:30"
+          ]
+        ],
+        "tue": [
+          [
+            "07:00",
+            "17:30"
+          ]
+        ],
+        "wed": [
+          [
+            "07:00",
+            "17:30"
+          ]
+        ],
+        "thu": [
+          [
+            "07:00",
+            "17:30"
+          ]
+        ],
+        "fri": [
+          [
+            "07:00",
+            "17:30"
+          ]
+        ],
+        "sat": [
+          [
+            "07:00",
+            "13:00"
+          ]
+        ]
+      },
+      "note": "Closed Sunday (per the Katherine Visitor Centre listing)."
+    },
+    "hoursAsStated": "Monday to Friday 7am to 5:30pm, Saturday 7am to 1pm; the visitor centre listing adds Sunday closed.",
+    "website": "https://www.townandcountrybutchers.com.au",
+    "phone": "08 8971 0353",
+    "description": "Wholesale and retail butcher shop on Katherine Terrace in the centre of Katherine.",
+    "sources": [
+      "https://www.townandcountrybutchers.com.au/",
+      "https://www.visitkatherine.com.au/accommodation/town-country-butcher-lenards-chicken-franchise"
+    ],
+    "confidence": "high",
+    "caveats": "Shop operates a Lenard's chicken franchise within the store; it is an independent butcher, not a chain outlet. Site text about the owners taking over 'late last year' is undated.",
+    "researchedOn": "2026-11-14",
+    "region": "QLD/NT butchers",
+    "lat": -14.46252,
+    "lng": 132.25831,
+    "locationPrecision": "locality"
+  },
+  {
+    "name": "Dobbie's Butchery",
+    "type": "butcher",
+    "address": "Nightcliff Shopping Centre, 18/159 Dick Ward Drive",
+    "locality": "Nightcliff",
+    "state": "NT",
+    "postcode": "0810",
+    "products": [
+      "beef",
+      "chicken",
+      "lamb",
+      "pork"
+    ],
+    "otherProducts": "Sausages, burgers and meat packs",
+    "tags": [],
+    "hours": {
+      "kind": "weekly",
+      "days": {
+        "mon": [
+          [
+            "07:00",
+            "18:00"
+          ]
+        ],
+        "tue": [
+          [
+            "07:00",
+            "18:00"
+          ]
+        ],
+        "wed": [
+          [
+            "07:00",
+            "18:00"
+          ]
+        ],
+        "thu": [
+          [
+            "07:00",
+            "18:00"
+          ]
+        ],
+        "fri": [
+          [
+            "07:00",
+            "18:00"
+          ]
+        ],
+        "sat": [
+          [
+            "07:00",
+            "17:00"
+          ]
+        ],
+        "sun": [
+          [
+            "07:00",
+            "15:00"
+          ]
+        ]
+      },
+      "note": null
+    },
+    "hoursAsStated": "Monday to Friday 7am to 6pm, Saturday 7am to 5pm, Sunday 7am to 3pm.",
+    "website": "https://dobbiesbutchery.com.au",
+    "phone": "(08) 8948 1877",
+    "description": "Family-run butcher shop inside the Nightcliff Shopping Centre in Darwin's northern suburbs.",
+    "sources": [
+      "https://dobbiesbutchery.com.au/pages/contact",
+      "https://dobbiesbutchery.com.au"
+    ],
+    "confidence": "high",
+    "caveats": null,
+    "researchedOn": "2026-11-14",
+    "region": "QLD/NT butchers",
+    "lat": -12.38762,
+    "lng": 130.85049,
+    "locationPrecision": "locality"
+  },
+  {
+    "name": "Palmerston Quality Meats",
+    "type": "butcher",
+    "address": "T31, Palmerston Shopping Centre, 10 Temple Terrace",
+    "locality": "Palmerston City",
+    "state": "NT",
+    "postcode": "0830",
+    "products": [
+      "chicken",
+      "beef",
+      "pork",
+      "lamb"
+    ],
+    "otherProducts": "Buffalo, sausages, burgers, marinated meats and meat packs",
+    "tags": [],
+    "hours": {
+      "kind": "weekly",
+      "days": {
+        "mon": [
+          [
+            "08:00",
+            "18:00"
+          ]
+        ],
+        "tue": [
+          [
+            "08:00",
+            "18:00"
+          ]
+        ],
+        "wed": [
+          [
+            "08:00",
+            "18:00"
+          ]
+        ],
+        "thu": [
+          [
+            "08:00",
+            "18:00"
+          ]
+        ],
+        "fri": [
+          [
+            "08:00",
+            "18:00"
+          ]
+        ],
+        "sat": [
+          [
+            "08:00",
+            "16:00"
+          ]
+        ],
+        "sun": [
+          [
+            "08:00",
+            "15:00"
+          ]
+        ]
+      },
+      "note": null
+    },
+    "hoursAsStated": "Monday to Friday 8am to 6pm, Saturday 8am to 4pm, Sunday 8am to 3pm.",
+    "website": "https://palmerstonqualitymeats.com.au",
+    "phone": "(08) 7978 6694",
+    "description": "Butcher shop in the Palmerston Shopping Centre, next to Coles, in Palmerston City.",
+    "sources": [
+      "https://palmerstonqualitymeats.com.au/contacts/",
+      "https://palmerstonqualitymeats.com.au"
+    ],
+    "confidence": "high",
+    "caveats": "Site footer reads 2024 and the site gives two different founding claims ('since 1984' and 'over 20 years'); trading details were consistent on re-check.",
+    "researchedOn": "2026-11-14",
+    "region": "QLD/NT butchers",
+    "lat": -12.47969,
+    "lng": 130.9833,
+    "locationPrecision": "locality"
+  },
+  {
+    "name": "Lakim Butcher",
+    "type": "butcher",
+    "address": "40 Parap Road",
+    "locality": "Parap",
+    "state": "NT",
+    "postcode": "0820",
+    "products": [
+      "beef",
+      "lamb",
+      "chicken"
+    ],
+    "otherProducts": "Halal-certified meats, sausages and frozen offal",
+    "tags": [],
+    "hours": {
+      "kind": "weekly",
+      "days": {
+        "mon": [
+          [
+            "09:00",
+            "18:00"
+          ]
+        ],
+        "tue": [
+          [
+            "09:00",
+            "18:00"
+          ]
+        ],
+        "wed": [
+          [
+            "09:00",
+            "18:00"
+          ]
+        ],
+        "thu": [
+          [
+            "09:00",
+            "18:00"
+          ]
+        ],
+        "fri": [
+          [
+            "09:00",
+            "18:00"
+          ]
+        ],
+        "sat": [
+          [
+            "07:30",
+            "14:00"
+          ]
+        ]
+      },
+      "note": "Closed Sunday."
+    },
+    "hoursAsStated": "Monday to Friday 9am to 6pm, Saturday 7:30am to 2pm, Sunday closed.",
+    "website": "https://www.lakimbutcher.com.au",
+    "phone": "0407 574 166",
+    "description": "Halal butcher in the Parap Village shops in Darwin that does not sell pork.",
+    "sources": [
+      "https://www.lakimbutcher.com.au/"
+    ],
+    "confidence": "high",
+    "caveats": "The owner history on the site mentions first opening at the Oasis shopping centre in Palmerston in 2019; only the Parap shop is confirmed on the current site. The listed phone is a mobile number.",
+    "researchedOn": "2026-11-14",
+    "region": "QLD/NT butchers",
+    "lat": -12.43014,
+    "lng": 130.84331,
+    "locationPrecision": "address"
+  },
+  {
+    "name": "Meat at Billy's – Ashgrove",
+    "type": "butcher",
+    "address": "241 Waterworks Road",
+    "locality": "Ashgrove",
+    "state": "QLD",
+    "postcode": "4060",
+    "products": [
+      "beef",
+      "lamb",
+      "pork",
+      "chicken"
+    ],
+    "otherProducts": "Sausages, ready-to-cook meals, deli meats and pantry items",
+    "tags": [],
+    "hours": {
+      "kind": "weekly",
+      "days": {
+        "mon": [
+          [
+            "06:30",
+            "18:00"
+          ]
+        ],
+        "tue": [
+          [
+            "06:30",
+            "18:00"
+          ]
+        ],
+        "wed": [
+          [
+            "06:30",
+            "18:00"
+          ]
+        ],
+        "thu": [
+          [
+            "06:30",
+            "18:00"
+          ]
+        ],
+        "fri": [
+          [
+            "06:30",
+            "18:00"
+          ]
+        ],
+        "sat": [
+          [
+            "06:30",
+            "17:00"
+          ]
+        ],
+        "sun": [
+          [
+            "06:30",
+            "16:00"
+          ]
+        ]
+      },
+      "note": "Public holidays usually 6:30am to 4pm; updates posted on social media."
+    },
+    "hoursAsStated": "Monday to Friday 6:30am to 6pm, Saturday 6:30am to 5pm, Sunday 6:30am to 4pm.",
+    "website": "https://meatatbillys.com.au",
+    "phone": "(07) 3366 2912",
+    "description": "Inner-west Brisbane butcher shop on Waterworks Road in Ashgrove.",
+    "sources": [
+      "https://meatatbillys.com.au/contact-us-butcher-brisbane/",
+      "https://meatatbillys.com.au/"
+    ],
+    "confidence": "high",
+    "caveats": "The business has three retail shops (Ashgrove, Rosalie/Paddington and Woolloongabba) plus a Windsor office; the phone number is shared across stores via a menu.",
+    "researchedOn": "2026-11-14",
+    "region": "QLD/NT butchers",
+    "lat": -27.44788,
+    "lng": 152.98083,
+    "locationPrecision": "address"
+  },
+  {
+    "name": "The Butcher Shoppe – Cannon Hill",
+    "type": "butcher",
+    "address": "Shop 31, 1145 Wynnum Road",
+    "locality": "Cannon Hill",
+    "state": "QLD",
+    "postcode": "4170",
+    "products": [
+      "beef",
+      "chicken",
+      "lamb",
+      "pork"
+    ],
+    "otherProducts": "Sausages, burgers, marinated and crumbed lines, ready-made meals",
+    "tags": [],
+    "hours": {
+      "kind": "weekly",
+      "days": {
+        "mon": [
+          [
+            "07:00",
+            "18:00"
+          ]
+        ],
+        "tue": [
+          [
+            "07:00",
+            "18:00"
+          ]
+        ],
+        "wed": [
+          [
+            "07:00",
+            "18:00"
+          ]
+        ],
+        "thu": [
+          [
+            "07:00",
+            "20:30"
+          ]
+        ],
+        "fri": [
+          [
+            "07:00",
+            "18:00"
+          ]
+        ],
+        "sat": [
+          [
+            "07:00",
+            "17:00"
+          ]
+        ],
+        "sun": [
+          [
+            "07:00",
+            "17:00"
+          ]
+        ]
+      },
+      "note": null
+    },
+    "hoursAsStated": "Monday to Wednesday and Friday 7am to 6pm, Thursday 7am to 8:30pm, Saturday and Sunday 7am to 5pm.",
+    "website": "https://thebutchershoppe.com.au",
+    "phone": "(07) 3890 3751",
+    "description": "Family butcher shop on Wynnum Road in the eastern Brisbane suburb of Cannon Hill.",
+    "sources": [
+      "https://thebutchershoppe.com.au/pages/contact",
+      "https://thebutchershoppe.com.au/"
+    ],
+    "confidence": "high",
+    "caveats": "Postcode not shown on the page.",
+    "researchedOn": "2026-11-14",
+    "region": "QLD/NT butchers",
+    "lat": -27.47105,
+    "lng": 153.10374,
+    "locationPrecision": "locality"
+  },
+  {
+    "name": "Schulte's Fresh Gourmet Market",
+    "type": "butcher",
+    "address": "4424 Warrego Highway",
+    "locality": "Plainland",
+    "state": "QLD",
+    "postcode": "4341",
+    "products": [
+      "beef",
+      "lamb",
+      "pork",
+      "chicken",
+      "fruit",
+      "veg"
+    ],
+    "otherProducts": "Smallgoods including mettwurst, cheeses and continental dry goods",
+    "tags": [],
+    "hours": {
+      "kind": "weekly",
+      "days": {
+        "mon": [
+          [
+            "07:30",
+            "18:00"
+          ]
+        ],
+        "tue": [
+          [
+            "07:30",
+            "18:00"
+          ]
+        ],
+        "wed": [
+          [
+            "07:30",
+            "18:00"
+          ]
+        ],
+        "thu": [
+          [
+            "07:30",
+            "18:00"
+          ]
+        ],
+        "fri": [
+          [
+            "07:30",
+            "18:00"
+          ]
+        ],
+        "sat": [
+          [
+            "09:00",
+            "16:00"
+          ]
+        ],
+        "sun": [
+          [
+            "09:00",
+            "16:00"
+          ]
+        ]
+      },
+      "note": "Wholesale hours differ (weekdays 8:30am to 4pm)."
+    },
+    "hoursAsStated": "Monday to Friday 7:30am to 6pm, Saturday and Sunday 9am to 4pm.",
+    "website": "https://schultes.com.au",
+    "phone": "(07) 5465 6592",
+    "description": "Long-running butcher, smallgoods and fresh-food market on the Warrego Highway at Plainland in the Lockyer Valley.",
+    "sources": [
+      "https://schultes.com.au/contact/",
+      "https://schultes.com.au/",
+      "https://www.luvyalockyer.com.au/schultes-fresh-gourmet-market"
+    ],
+    "confidence": "high",
+    "caveats": "Beef and chicken are named via product packs (e.g. beef roast, chicken packs) rather than in the main description.",
+    "researchedOn": "2026-11-14",
+    "region": "QLD/NT butchers",
+    "lat": -27.56425,
+    "lng": 152.42253,
+    "locationPrecision": "address"
+  },
+  {
+    "name": "Pinnell's Gourmet Meats",
+    "type": "butcher",
+    "address": "Shop 12B, Caloundra Village, 1 Ormuz Avenue",
+    "locality": "Caloundra",
+    "state": "QLD",
+    "postcode": "4551",
+    "products": [
+      "beef",
+      "chicken",
+      "pork",
+      "lamb",
+      "eggs"
+    ],
+    "otherProducts": "Gluten-free sausages, ready-made meals and condiments",
+    "tags": [],
+    "hours": {
+      "kind": "weekly",
+      "days": {
+        "mon": [
+          [
+            "06:00",
+            "17:00"
+          ]
+        ],
+        "tue": [
+          [
+            "06:00",
+            "17:00"
+          ]
+        ],
+        "wed": [
+          [
+            "06:00",
+            "17:00"
+          ]
+        ],
+        "thu": [
+          [
+            "06:00",
+            "17:00"
+          ]
+        ],
+        "fri": [
+          [
+            "06:00",
+            "17:00"
+          ]
+        ],
+        "sat": [
+          [
+            "06:00",
+            "14:00"
+          ]
+        ]
+      },
+      "note": "No Sunday hours given."
+    },
+    "hoursAsStated": "Monday to Friday 6am to 5pm, Saturday 6am to 2pm.",
+    "website": "https://www.pinnellsgourmetmeats.com.au",
+    "phone": "07 5491 3552",
+    "description": "Butcher shop in the Caloundra Village shopping centre on Ormuz Avenue.",
+    "sources": [
+      "https://www.pinnellsgourmetmeats.com.au/"
+    ],
+    "confidence": "high",
+    "caveats": null,
+    "researchedOn": "2026-11-14",
+    "region": "QLD/NT butchers",
+    "lat": -26.77269,
+    "lng": 153.10657,
+    "locationPrecision": "locality"
+  },
+  {
+    "name": "Edge Hill Butchery",
+    "type": "butcher",
+    "address": "136 Collins Avenue",
+    "locality": "Edge Hill",
+    "state": "QLD",
+    "postcode": "4870",
+    "products": [
+      "beef",
+      "pork",
+      "chicken"
+    ],
+    "otherProducts": "Sausages, Wagyu and specialty cuts",
+    "tags": [],
+    "hours": {
+      "kind": "weekly",
+      "days": {
+        "mon": [
+          [
+            "06:30",
+            "17:30"
+          ]
+        ],
+        "tue": [
+          [
+            "06:30",
+            "17:30"
+          ]
+        ],
+        "wed": [
+          [
+            "06:30",
+            "17:30"
+          ]
+        ],
+        "thu": [
+          [
+            "06:30",
+            "17:30"
+          ]
+        ],
+        "fri": [
+          [
+            "06:30",
+            "17:30"
+          ]
+        ],
+        "sat": [
+          [
+            "06:30",
+            "13:00"
+          ]
+        ]
+      },
+      "note": "Closed Sunday and public holidays."
+    },
+    "hoursAsStated": "Monday to Friday 6:30am to 5:30pm, Saturday 6:30am to 1pm, closed Sunday and public holidays.",
+    "website": "https://www.edgehillbutchery.com.au",
+    "phone": "(07) 4053 1526",
+    "description": "Suburban butcher shop on Collins Avenue in Edge Hill, a few minutes from central Cairns.",
+    "sources": [
+      "https://www.edgehillbutchery.com.au/"
+    ],
+    "confidence": "high",
+    "caveats": "Site says the shop recently passed to new owners; trading details shown are from the current site.",
+    "researchedOn": "2026-11-14",
+    "region": "QLD/NT butchers",
+    "lat": -16.90025,
+    "lng": 145.74507,
+    "locationPrecision": "address"
+  },
+  {
+    "name": "Bargara Meats",
+    "type": "butcher",
+    "address": "2/699 Bargara Road",
+    "locality": "Bargara",
+    "state": "QLD",
+    "postcode": "4670",
+    "products": [
+      "beef",
+      "lamb",
+      "pork"
+    ],
+    "otherProducts": "Sausages, poultry and pantry items",
+    "tags": [],
+    "hours": {
+      "kind": "weekly",
+      "days": {
+        "mon": [
+          [
+            "07:00",
+            "18:00"
+          ]
+        ],
+        "tue": [
+          [
+            "07:00",
+            "18:00"
+          ]
+        ],
+        "wed": [
+          [
+            "07:00",
+            "18:00"
+          ]
+        ],
+        "thu": [
+          [
+            "07:00",
+            "18:00"
+          ]
+        ],
+        "fri": [
+          [
+            "07:00",
+            "18:00"
+          ]
+        ],
+        "sat": [
+          [
+            "07:00",
+            "14:00"
+          ]
+        ],
+        "sun": [
+          [
+            "07:00",
+            "14:00"
+          ]
+        ]
+      },
+      "note": "Christmas 2026 trading hours differ and are posted on the site (closed 25 to 28 Dec and 1 Jan)."
+    },
+    "hoursAsStated": "Monday to Friday 7am to 6pm, Saturday and Sunday 7am to 2pm.",
+    "website": "https://bargarameats.com.au",
+    "phone": "(07) 4159 2267",
+    "description": "Butcher shop on Bargara Road in the coastal town of Bargara near Bundaberg.",
+    "sources": [
+      "https://bargarameats.com.au/",
+      "https://bargarameats.com.au/contact-us/"
+    ],
+    "confidence": "high",
+    "caveats": "Contact page labels the Bargara Road address 'Headquarters'; directories also show a Bauer Street address, which I could not confirm on the business's own site.",
+    "researchedOn": "2026-11-14",
+    "region": "QLD/NT butchers",
+    "lat": -24.81926,
+    "lng": 152.45598,
+    "locationPrecision": "address"
+  },
+  {
+    "name": "Highfields Gourmet Meats",
+    "type": "butcher",
+    "address": "Shop 11/66 Highfields Road, Highfields Village Shopping Centre",
+    "locality": "Highfields",
+    "state": "QLD",
+    "postcode": "4352",
+    "products": [
+      "beef",
+      "chicken",
+      "lamb",
+      "pork"
+    ],
+    "otherProducts": "Christmas hams, seafood and meat packs",
+    "tags": [],
+    "hours": {
+      "kind": "weekly",
+      "days": {
+        "mon": [
+          [
+            "08:00",
+            "18:00"
+          ]
+        ],
+        "tue": [
+          [
+            "08:00",
+            "18:00"
+          ]
+        ],
+        "wed": [
+          [
+            "08:00",
+            "18:00"
+          ]
+        ],
+        "thu": [
+          [
+            "08:00",
+            "18:00"
+          ]
+        ],
+        "fri": [
+          [
+            "08:00",
+            "18:00"
+          ]
+        ],
+        "sat": [
+          [
+            "07:00",
+            "16:00"
+          ]
+        ]
+      },
+      "note": "No Sunday hours given."
+    },
+    "hoursAsStated": "Monday to Friday 8am to 6pm, Saturday 7am to 4pm.",
+    "website": "https://highfieldsgourmetmeats.com.au",
+    "phone": "07 4696 8235",
+    "description": "Butcher shop in the Highfields Village Shopping Centre, north of Toowoomba.",
+    "sources": [
+      "https://highfieldsgourmetmeats.com.au/"
+    ],
+    "confidence": "high",
+    "caveats": null,
+    "researchedOn": "2026-11-14",
+    "region": "QLD/NT butchers",
+    "lat": -27.45061,
+    "lng": 151.94605,
+    "locationPrecision": "locality"
+  },
+  {
+    "name": "King of Meats",
+    "type": "butcher",
+    "address": "10 Eimeo Road",
+    "locality": "Rural View",
+    "state": "QLD",
+    "postcode": "4740",
+    "products": [
+      "beef",
+      "lamb",
+      "pork",
+      "chicken"
+    ],
+    "otherProducts": "Sausages, rissoles and meat packs",
+    "tags": [],
+    "hours": {
+      "kind": "weekly",
+      "days": {
+        "mon": [
+          [
+            "07:00",
+            "18:00"
+          ]
+        ],
+        "tue": [
+          [
+            "07:00",
+            "18:00"
+          ]
+        ],
+        "wed": [
+          [
+            "07:00",
+            "18:00"
+          ]
+        ],
+        "thu": [
+          [
+            "07:00",
+            "18:00"
+          ]
+        ],
+        "fri": [
+          [
+            "07:00",
+            "18:00"
+          ]
+        ],
+        "sat": [
+          [
+            "07:00",
+            "15:00"
+          ]
+        ],
+        "sun": [
+          [
+            "08:00",
+            "14:00"
+          ]
+        ]
+      },
+      "note": null
+    },
+    "hoursAsStated": "Monday to Friday 7am to 6pm, Saturday 7am to 3pm, Sunday 8am to 2pm.",
+    "website": "https://kingofmeats.com.au",
+    "phone": "(07) 4954 7211",
+    "description": "Butcher shop on Eimeo Road in Rural View, in Mackay's northern beaches.",
+    "sources": [
+      "https://kingofmeats.com.au/"
+    ],
+    "confidence": "high",
+    "caveats": "Postcode not shown on the page.",
+    "researchedOn": "2026-11-14",
+    "region": "QLD/NT butchers",
+    "lat": -21.06513,
+    "lng": 149.15794,
+    "locationPrecision": "address"
+  },
+  {
+    "name": "Boodles Meats",
+    "type": "butcher",
+    "address": "188 Berserker Street",
+    "locality": "North Rockhampton",
+    "state": "QLD",
+    "postcode": "4701",
+    "products": [
+      "beef",
+      "chicken"
+    ],
+    "otherProducts": "Sausages, schnitzels, kievs and cooked BBQ chickens",
+    "tags": [],
+    "hours": {
+      "kind": "weekly",
+      "days": {
+        "mon": [
+          [
+            "06:00",
+            "18:00"
+          ]
+        ],
+        "tue": [
+          [
+            "06:00",
+            "18:00"
+          ]
+        ],
+        "wed": [
+          [
+            "06:00",
+            "18:00"
+          ]
+        ],
+        "thu": [
+          [
+            "06:00",
+            "18:00"
+          ]
+        ],
+        "fri": [
+          [
+            "06:00",
+            "18:00"
+          ]
+        ],
+        "sat": [
+          [
+            "06:00",
+            "17:00"
+          ]
+        ],
+        "sun": [
+          [
+            "06:00",
+            "14:00"
+          ]
+        ]
+      },
+      "note": null
+    },
+    "hoursAsStated": "Monday to Friday 6am to 6pm, Saturday 6am to 5pm, Sunday 6am to 2pm.",
+    "website": "https://boodlesmeats.com.au",
+    "phone": "07 4928 4069",
+    "description": "Large single-site butcher shop on Berserker Street in North Rockhampton.",
+    "sources": [
+      "https://boodlesmeats.com.au/contact-us/",
+      "https://boodlesmeats.com.au/",
+      "https://boodlesmeats.com.au/about/"
+    ],
+    "confidence": "high",
+    "caveats": "About page says the business once ran up to five stores but now trades from this one site. Postcode not shown on the page (the 4701 on the site is a PO Box).",
+    "researchedOn": "2026-11-14",
+    "region": "QLD/NT butchers",
+    "lat": -23.34925,
+    "lng": 150.53574,
+    "locationPrecision": "locality"
+  },
+  {
+    "name": "W. Carey & Sons",
+    "type": "butcher",
+    "address": "39 Locke Street",
+    "locality": "Warwick",
+    "state": "QLD",
+    "postcode": "4370",
+    "products": [
+      "beef",
+      "chicken",
+      "lamb",
+      "pork"
+    ],
+    "otherProducts": null,
+    "tags": [],
+    "hours": {
+      "kind": "weekly",
+      "days": {
+        "mon": [
+          [
+            "07:00",
+            "17:15"
+          ]
+        ],
+        "tue": [
+          [
+            "07:00",
+            "17:15"
+          ]
+        ],
+        "wed": [
+          [
+            "07:00",
+            "17:15"
+          ]
+        ],
+        "thu": [
+          [
+            "07:00",
+            "17:15"
+          ]
+        ],
+        "fri": [
+          [
+            "07:00",
+            "17:15"
+          ]
+        ],
+        "sat": [
+          [
+            "07:00",
+            "12:00"
+          ]
+        ]
+      },
+      "note": "No Sunday hours given."
+    },
+    "hoursAsStated": "Monday to Friday 7am to 5:15pm, Saturdays 7am to 12pm.",
+    "website": "https://careyandsons.com.au",
+    "phone": "(07) 4661 1799",
+    "description": "Butcher shop on Locke Street in Warwick on the Southern Downs.",
+    "sources": [
+      "https://careyandsons.com.au/pages/contact-us",
+      "https://careyandsons.com.au/"
+    ],
+    "confidence": "high",
+    "caveats": null,
+    "researchedOn": "2026-11-14",
+    "region": "QLD/NT butchers",
+    "lat": -28.22259,
+    "lng": 152.01076,
+    "locationPrecision": "address"
+  },
+  {
+    "name": "Lyndoch Valley Butcher",
+    "type": "butcher",
+    "address": "36 Barossa Valley Way",
+    "locality": "Lyndoch",
+    "state": "SA",
+    "postcode": "5351",
+    "products": [
+      "beef",
+      "lamb",
+      "pork",
+      "chicken"
+    ],
+    "otherProducts": "Sausages, mettwurst, salami, ham and bacon",
+    "tags": [],
+    "hours": {
+      "kind": "weekly",
+      "days": {
+        "mon": [
+          [
+            "08:00",
+            "17:30"
+          ]
+        ],
+        "tue": [
+          [
+            "08:00",
+            "17:30"
+          ]
+        ],
+        "wed": [
+          [
+            "08:00",
+            "17:30"
+          ]
+        ],
+        "thu": [
+          [
+            "08:00",
+            "17:30"
+          ]
+        ],
+        "fri": [
+          [
+            "08:00",
+            "17:30"
+          ]
+        ],
+        "sat": [
+          [
+            "08:00",
+            "13:00"
+          ]
+        ]
+      },
+      "note": null
+    },
+    "hoursAsStated": "Monday to Friday 8am to 5:30pm, Saturday 8am to 1pm, closed Sunday.",
+    "website": "https://lyndochvalleybutcher.com.au/",
+    "phone": "(08) 8524 4078",
+    "description": "A butcher shop on the main road through Lyndoch in the southern Barossa selling fresh meat and house-made smallgoods.",
+    "sources": [
+      "https://lyndochvalleybutcher.com.au/",
+      "https://www.barossa.com/wp-content/uploads/2025/07/Barossa-Visitor-Centre-Food-Farm-Gate-Experiences-Factsheet.pdf"
+    ],
+    "confidence": "high",
+    "caveats": "The Barossa Visitor Centre factsheet (July 2025) gives the same address and hours.",
+    "researchedOn": "2026-11-14",
+    "region": "SA/WA butchers",
+    "lat": -34.60094,
+    "lng": 138.89002,
+    "locationPrecision": "address"
+  },
+  {
+    "name": "Goodwood Quality Meats",
+    "type": "butcher",
+    "address": "121 Goodwood Road",
+    "locality": "Goodwood",
+    "state": "SA",
+    "postcode": "5034",
+    "products": [
+      "beef"
+    ],
+    "otherProducts": "Sausages and smallgoods",
+    "tags": [],
+    "hours": {
+      "kind": "weekly",
+      "days": {
+        "mon": [
+          [
+            "07:00",
+            "17:30"
+          ]
+        ],
+        "tue": [
+          [
+            "07:00",
+            "17:30"
+          ]
+        ],
+        "wed": [
+          [
+            "07:00",
+            "17:30"
+          ]
+        ],
+        "thu": [
+          [
+            "07:00",
+            "17:30"
+          ]
+        ],
+        "fri": [
+          [
+            "07:00",
+            "17:30"
+          ]
+        ],
+        "sat": [
+          [
+            "07:00",
+            "12:00"
+          ]
+        ]
+      },
+      "note": null
+    },
+    "hoursAsStated": "Monday to Friday 7am to 5:30pm, Saturday 7am to 12pm, Sunday closed.",
+    "website": "https://www.goodwoodqualitymeats.com.au/",
+    "phone": "08 8271 4183",
+    "description": "A suburban butcher shop on Goodwood Road in Adelaide's inner south selling fresh meat, sausages and smallgoods.",
+    "sources": [
+      "https://www.goodwoodqualitymeats.com.au/"
+    ],
+    "confidence": "high",
+    "caveats": "Postcode not shown on the page. The home page still carries a Christmas/New Year trading notice from the 2025 holidays, with normal hours after that. Only beef is named in the text I could read; other meats are likely but not stated.",
+    "researchedOn": "2026-11-14",
+    "region": "SA/WA butchers",
+    "lat": -34.95233,
+    "lng": 138.58971,
+    "locationPrecision": "address"
+  },
+  {
+    "name": "Bos Taurus Butchery",
+    "type": "butcher",
+    "address": "Shop 17, 161 Norwood Place, The Parade",
+    "locality": "Norwood",
+    "state": "SA",
+    "postcode": "5067",
+    "products": [
+      "beef"
+    ],
+    "otherProducts": "Dry-aged meats, meat trays and barbecue packs",
+    "tags": [],
+    "hours": {
+      "kind": "weekly",
+      "days": {
+        "mon": [
+          [
+            "07:00",
+            "18:00"
+          ]
+        ],
+        "tue": [
+          [
+            "07:00",
+            "18:00"
+          ]
+        ],
+        "wed": [
+          [
+            "07:00",
+            "18:00"
+          ]
+        ],
+        "thu": [
+          [
+            "07:00",
+            "21:00"
+          ]
+        ],
+        "fri": [
+          [
+            "07:00",
+            "18:00"
+          ]
+        ],
+        "sat": [
+          [
+            "07:00",
+            "17:00"
+          ]
+        ],
+        "sun": [
+          [
+            "08:00",
+            "17:00"
+          ]
+        ]
+      },
+      "note": null
+    },
+    "hoursAsStated": "Mon to Wed 7am-6pm, Thu 7am-9pm, Fri 7am-6pm, Sat 7am-5pm, Sun 8am-5pm.",
+    "website": "https://bostaurusbutchery.com.au/",
+    "phone": "08 7130 0213",
+    "description": "A butcher shop in the Norwood Place shopping arcade on The Parade that also makes up meat trays and barbecue packs.",
+    "sources": [
+      "https://bostaurusbutchery.com.au/"
+    ],
+    "confidence": "high",
+    "caveats": "Web search results showed business-for-sale listings for this shop (not opened); confirm it is still trading under this name. Only beef is named in the text I could read.",
+    "researchedOn": "2026-11-14",
+    "region": "SA/WA butchers",
+    "lat": -34.92212,
+    "lng": 138.63275,
+    "locationPrecision": "locality"
+  },
+  {
+    "name": "Mathie's Meat Shoppe",
+    "type": "butcher",
+    "address": "275 Main North Road",
+    "locality": "Clare",
+    "state": "SA",
+    "postcode": "5453",
+    "products": [
+      "lamb",
+      "chicken"
+    ],
+    "otherProducts": "Sausages, bacon, ham, mettwurst and other smallgoods",
+    "tags": [],
+    "hours": {
+      "kind": "weekly",
+      "days": {
+        "mon": [
+          [
+            "07:30",
+            "17:30"
+          ]
+        ],
+        "tue": [
+          [
+            "07:30",
+            "17:30"
+          ]
+        ],
+        "wed": [
+          [
+            "07:30",
+            "17:30"
+          ]
+        ],
+        "thu": [
+          [
+            "07:30",
+            "17:30"
+          ]
+        ],
+        "fri": [
+          [
+            "07:30",
+            "17:30"
+          ]
+        ],
+        "sat": [
+          [
+            "08:00",
+            "12:30"
+          ]
+        ]
+      },
+      "note": null
+    },
+    "hoursAsStated": "Open Monday to Friday 7:30am - 5:30pm, Saturday 8:00am - 12:30pm.",
+    "website": "https://www.mathiesmeatshoppe.com.au/",
+    "phone": "08 8842 2818",
+    "description": "A butcher shop on the main road through Clare that sells fresh cuts alongside its own sausages and smallgoods.",
+    "sources": [
+      "https://www.mathiesmeatshoppe.com.au/"
+    ],
+    "confidence": "high",
+    "caveats": "Sunday not mentioned on the page; treated as closed. Beef and pork not named in the text I could read (lamb and chicken appear in the shop specials).",
+    "researchedOn": "2026-11-14",
+    "region": "SA/WA butchers",
+    "lat": -33.83496,
+    "lng": 138.61331,
+    "locationPrecision": "address"
+  },
+  {
+    "name": "Fox's Chook House",
+    "type": "butcher",
+    "address": "193 Commercial Street West",
+    "locality": "Mount Gambier",
+    "state": "SA",
+    "postcode": "5290",
+    "products": [
+      "lamb",
+      "chicken"
+    ],
+    "otherProducts": "Turkey and game meats such as venison, goat and kangaroo",
+    "tags": [],
+    "hours": {
+      "kind": "weekly",
+      "days": {
+        "mon": [
+          [
+            "07:00",
+            "17:30"
+          ]
+        ],
+        "tue": [
+          [
+            "07:00",
+            "17:30"
+          ]
+        ],
+        "wed": [
+          [
+            "07:00",
+            "17:30"
+          ]
+        ],
+        "thu": [
+          [
+            "07:00",
+            "17:30"
+          ]
+        ],
+        "fri": [
+          [
+            "07:00",
+            "17:30"
+          ]
+        ],
+        "sat": [
+          [
+            "08:00",
+            "13:00"
+          ]
+        ]
+      },
+      "note": "Closed most public holidays."
+    },
+    "hoursAsStated": "Mount Gambier: Monday - Friday 7am - 5:30pm, Saturday 8am - 1pm; closed most public holidays.",
+    "website": "https://foxschookhouse.com.au/",
+    "phone": "08 8773 8194",
+    "description": "A Mount Gambier meat shop run by a qualified butcher that specialises in chicken, turkey and game meats.",
+    "sources": [
+      "https://foxschookhouse.com.au/",
+      "https://southaustralia.com/products/limestone-coast/food-and-drink/foxs-chookhouse-and-game-meat"
+    ],
+    "confidence": "high",
+    "caveats": "Specialist chicken and game shop rather than a general butcher; reviewer to decide fit. It also sells online with delivery. A second shop operates at 10 George Street, Millicent (Mon-Fri 10am-5:30pm, Sat 9am-12:30pm per the same page). The SA tourism listing shows different hours for Millicent, so I used the business's own page.",
+    "researchedOn": "2026-11-14",
+    "region": "SA/WA butchers",
+    "lat": -37.82491,
+    "lng": 140.76959,
+    "locationPrecision": "address"
+  },
+  {
+    "name": "McLoughlin Butchers",
+    "type": "butcher",
+    "address": "58 Westchester Road",
+    "locality": "Malaga",
+    "state": "WA",
+    "postcode": "6090",
+    "products": [
+      "beef",
+      "lamb",
+      "pork",
+      "chicken"
+    ],
+    "otherProducts": "Irish and European-style sausages, bacon, black pudding and smallgoods",
+    "tags": [],
+    "hours": {
+      "kind": "weekly",
+      "days": {
+        "mon": [
+          [
+            "09:00",
+            "17:00"
+          ]
+        ],
+        "tue": [
+          [
+            "09:00",
+            "17:00"
+          ]
+        ],
+        "wed": [
+          [
+            "09:00",
+            "17:00"
+          ]
+        ],
+        "thu": [
+          [
+            "09:00",
+            "17:00"
+          ]
+        ],
+        "fri": [
+          [
+            "09:00",
+            "17:00"
+          ]
+        ],
+        "sat": [
+          [
+            "08:00",
+            "15:00"
+          ]
+        ]
+      },
+      "note": "Closed public holidays."
+    },
+    "hoursAsStated": "Mon-Fri 9am-5pm, Sat 8am-3pm, Sun closed, public holidays closed.",
+    "website": "https://www.mcloughlinbutchers.com.au/",
+    "phone": "08 9249 8039",
+    "description": "A family-run butcher shop in Malaga known for Irish and European-style smallgoods made on site.",
+    "sources": [
+      "https://www.mcloughlinbutchers.com.au/",
+      "https://www.mcloughlinbutchers.com.au/contact-us/",
+      "https://www.swan.wa.gov.au/business-support/business-directory/mcloughlin-butchers"
+    ],
+    "confidence": "high",
+    "caveats": "Malaga is a light-industrial area and the business also does wholesale and online orders; the site has a retail section and City of Swan directory lists it, so walk-in retail appears to be offered.",
+    "researchedOn": "2026-11-14",
+    "region": "SA/WA butchers",
+    "lat": -31.85692,
+    "lng": 115.88065,
+    "locationPrecision": "address"
+  },
+  {
+    "name": "Fussy Meats Applecross",
+    "type": "butcher",
+    "address": "777 Canning Highway",
+    "locality": "Applecross",
+    "state": "WA",
+    "postcode": "6153",
+    "products": [
+      "beef",
+      "lamb",
+      "chicken"
+    ],
+    "otherProducts": "Pies, sausage rolls and cooked foods",
+    "tags": [],
+    "hours": {
+      "kind": "weekly",
+      "days": {
+        "mon": [
+          [
+            "07:00",
+            "19:00"
+          ]
+        ],
+        "tue": [
+          [
+            "07:00",
+            "19:00"
+          ]
+        ],
+        "wed": [
+          [
+            "07:00",
+            "19:00"
+          ]
+        ],
+        "thu": [
+          [
+            "07:00",
+            "19:00"
+          ]
+        ],
+        "fri": [
+          [
+            "07:00",
+            "19:00"
+          ]
+        ],
+        "sat": [
+          [
+            "07:00",
+            "18:30"
+          ]
+        ],
+        "sun": [
+          [
+            "07:00",
+            "18:30"
+          ]
+        ]
+      },
+      "note": null
+    },
+    "hoursAsStated": "Applecross: Mon-Fri 7am-7pm, Sat-Sun 7am-6:30pm.",
+    "website": "https://fussymeats.com.au/",
+    "phone": "08 9417 3878",
+    "description": "A butcher shop on Canning Highway in Applecross that also sells its own pies and sausage rolls.",
+    "sources": [
+      "https://fussymeats.com.au/"
+    ],
+    "confidence": "high",
+    "caveats": "The business has a second butcher shop at 86 Hammond Rd, Cockburn Central, and a pie shop in Yangebup (three outlets, under the chain limit). Poultry is described generally; chicken is named.",
+    "researchedOn": "2026-11-14",
+    "region": "SA/WA butchers",
+    "lat": -32.01206,
+    "lng": 115.8502,
+    "locationPrecision": "address"
+  },
+  {
+    "name": "Barbaro Bros Butchers",
+    "type": "butcher",
+    "address": "Shop 2, 120 Cockman Road",
+    "locality": "Greenwood",
+    "state": "WA",
+    "postcode": "6024",
+    "products": [
+      "beef",
+      "lamb",
+      "pork",
+      "chicken"
+    ],
+    "otherProducts": "Sausages, smallgoods, pies, duck and rabbit",
+    "tags": [],
+    "hours": {
+      "kind": "weekly",
+      "days": {
+        "mon": [
+          [
+            "07:00",
+            "17:00"
+          ]
+        ],
+        "tue": [
+          [
+            "07:00",
+            "17:00"
+          ]
+        ],
+        "wed": [
+          [
+            "07:00",
+            "17:00"
+          ]
+        ],
+        "thu": [
+          [
+            "07:00",
+            "17:00"
+          ]
+        ],
+        "fri": [
+          [
+            "07:00",
+            "17:00"
+          ]
+        ],
+        "sat": [
+          [
+            "07:00",
+            "13:00"
+          ]
+        ]
+      },
+      "note": null
+    },
+    "hoursAsStated": "Monday to Friday 7:00am to 5:00pm, Saturday 7:00am to 1:00pm, Sunday closed.",
+    "website": "https://barbarobutchers.com/",
+    "phone": "(08) 9247 4244",
+    "description": "A family butcher shop in Greenwood in Perth's northern suburbs that also offers catering.",
+    "sources": [
+      "https://barbarobutchers.com/"
+    ],
+    "confidence": "high",
+    "caveats": null,
+    "researchedOn": "2026-11-14",
+    "region": "SA/WA butchers",
+    "lat": -31.83116,
+    "lng": 115.80257,
+    "locationPrecision": "locality"
+  },
+  {
+    "name": "Silvestro Butchers",
+    "type": "butcher",
+    "address": "Shop 7, 227 Main Street",
+    "locality": "Osborne Park",
+    "state": "WA",
+    "postcode": "6017",
+    "products": [
+      "beef",
+      "lamb",
+      "pork",
+      "chicken"
+    ],
+    "otherProducts": "Sausages, marinated meats and goat",
+    "tags": [],
+    "hours": {
+      "kind": "weekly",
+      "days": {
+        "mon": [
+          [
+            "08:00",
+            "17:00"
+          ]
+        ],
+        "tue": [
+          [
+            "08:00",
+            "17:00"
+          ]
+        ],
+        "wed": [
+          [
+            "08:00",
+            "17:00"
+          ]
+        ],
+        "thu": [
+          [
+            "08:00",
+            "17:00"
+          ]
+        ],
+        "fri": [
+          [
+            "08:00",
+            "17:00"
+          ]
+        ],
+        "sat": [
+          [
+            "07:00",
+            "14:00"
+          ]
+        ]
+      },
+      "note": null
+    },
+    "hoursAsStated": "Monday to Friday 8am to 5pm, Saturday 7am to 2pm, closed Sunday.",
+    "website": "https://silvestrobutchers.com.au/",
+    "phone": "(08) 6478 0894",
+    "description": "A family-operated butcher shop in the Crystal Shopping Plaza on Main Street, Osborne Park, open since 2019.",
+    "sources": [
+      "https://silvestrobutchers.com.au/"
+    ],
+    "confidence": "high",
+    "caveats": "Also supplies cafes and restaurants wholesale.",
+    "researchedOn": "2026-11-14",
+    "region": "SA/WA butchers",
+    "lat": -31.9002,
+    "lng": 115.81165,
+    "locationPrecision": "locality"
+  },
+  {
+    "name": "Spry's Meat Market",
+    "type": "butcher",
+    "address": "144 Atkinson Street North",
+    "locality": "Collie",
+    "state": "WA",
+    "postcode": "6225",
+    "products": [
+      "beef",
+      "lamb",
+      "chicken"
+    ],
+    "otherProducts": "Sausages, burgers, rissoles and meat packs",
+    "tags": [],
+    "hours": {
+      "kind": "weekly",
+      "days": {
+        "mon": [
+          [
+            "07:00",
+            "17:30"
+          ]
+        ],
+        "tue": [
+          [
+            "07:00",
+            "17:30"
+          ]
+        ],
+        "wed": [
+          [
+            "07:00",
+            "17:30"
+          ]
+        ],
+        "thu": [
+          [
+            "07:00",
+            "17:30"
+          ]
+        ],
+        "fri": [
+          [
+            "07:00",
+            "17:30"
+          ]
+        ],
+        "sat": [
+          [
+            "07:00",
+            "12:30"
+          ]
+        ]
+      },
+      "note": null
+    },
+    "hoursAsStated": "Mon - Fri 7:00am - 5:30pm, Saturday 7:00am - 12:30pm, Sunday closed.",
+    "website": "https://www.sprysmeatmarket.com.au/",
+    "phone": "(08) 9734 1277",
+    "description": "A butcher shop in the town of Collie, inland from Bunbury, that sells fresh cuts and ready-made meat packs.",
+    "sources": [
+      "https://www.sprysmeatmarket.com.au/"
+    ],
+    "confidence": "high",
+    "caveats": "Meats named via product and pack listings (rump steak, beef roast, lamb cutlets, chicken). Site footer copyright reads 2023; hours not dated.",
+    "researchedOn": "2026-11-14",
+    "region": "SA/WA butchers",
+    "lat": -33.3439,
+    "lng": 116.15328,
+    "locationPrecision": "address"
   }
 ]

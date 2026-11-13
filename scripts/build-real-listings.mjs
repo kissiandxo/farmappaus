@@ -7,9 +7,12 @@
 // - Tries the full street address first, then "<locality> <STATE> <postcode>", then the locality
 //   centre from src/data/auPostcodes.json. A place nothing can locate is skipped, with the reason printed.
 // - Facts come only from the research files. Nothing is invented or improved here.
-// - Optional later passes: meat-3.json (new places; a name+state already listed is skipped) and
-//   product-updates.json (confirmed products added to existing places, with the evidence URL added to
-//   sources). Both may be absent.
+// - Optional later passes: meat-3.json and butchers-<region>.json (new places; a name+state already
+//   listed is skipped) and product-updates.json (confirmed products added to existing places, with the
+//   evidence URL added to sources). All may be absent.
+// - Butchers (type "butcher") are independent butcher shops: retailers, not producers. They need a street
+//   address, weekly opening hours and at least one meat category, and their shopper copy must make no
+//   claim about where the meat comes from or how the animals were raised (see BUTCHER_SOURCING_CLAIM).
 // - Guards: the build stops, writing nothing, if a record breaks a listing rule (see check()):
 //   "always" hours on anything but an honesty-box stall, research wording in shopper copy, an alias in
 //   a name, or a tourism/council page as the Website.
@@ -26,7 +29,7 @@ const OUT_FILE = join(ROOT, 'src/data/realListings.json');
 const POSTCODES_FILE = join(ROOT, 'src/data/auPostcodes.json');
 const FILES = ['nsw-act', 'vic-tas', 'qld-nt', 'sa-wa', 'east-2', 'north-west-2'];
 /** Later research passes. Each is optional; the build works without them. */
-const OPTIONAL_FILES = ['meat-3'];
+const OPTIONAL_FILES = ['meat-3', 'butchers-nsw-act', 'butchers-vic-tas', 'butchers-qld-nt', 'butchers-sa-wa'];
 /** Optional {"updates":[{name, state, addProducts, evidenceUrl, evidence}]}: confirmed products for existing places. */
 const PRODUCT_UPDATES_FILE = join(RESEARCH_DIR, 'product-updates.json');
 
@@ -52,6 +55,26 @@ const EXCLUDE = [
   {
     name: 'HOTA Farmers and Artisan Markets',
     reason: "The market's own event page still shows 2025 dates, so it is not confirmed as running now.",
+  },
+  {
+    name: "Ryan's Quality Meats Bunbury Outlet",
+    reason:
+      "Mainly a wholesale and food-service supplier; the research could not confirm the Davenport outlet is a walk-in shop for the public.",
+  },
+  {
+    name: "Gold Coast Fresh Meat Centre",
+    reason:
+      "The shop's own site shows two different sets of opening hours (footer vs Location page) and a 2025 footer, so open/closed status cannot be shown truthfully.",
+  },
+  {
+    name: "Brendan Bouchier's Mortlake Butchers",
+    reason:
+      "The site's hours are labelled 'Business Hours' and may not be the counter hours, so open/closed status cannot be shown truthfully.",
+  },
+  {
+    name: "Gippsland Butchers Block",
+    reason:
+      "The shop's own site (weekdays to 6 pm) and the Wellington Shire tourism page (to 4:30 pm) disagree on closing time, so open/closed status cannot be shown truthfully.",
   },
 ];
 
@@ -181,6 +204,15 @@ async function locate(listing) {
 
 // ------------------------------------------------------------------ guards
 const PRODUCT_CATEGORIES = ['milk', 'eggs', 'chicken', 'beef', 'lamb', 'pork', 'honey', 'fruit', 'veg'];
+/** Kept in step with VenueType in src/domain/types.ts. */
+const VENUE_TYPES = ['farmers_market', 'farm_shop', 'farm_gate_stall', 'farm', 'butcher'];
+const MEAT_CATEGORIES = ['beef', 'lamb', 'pork', 'chicken'];
+
+/**
+ * Sourcing or animal-welfare claims that must not appear in a butcher's shopper copy. A butcher is a shop,
+ * not the producer, and Farm Direct does not vouch for where its meat comes from.
+ */
+const BUTCHER_SOURCING_CLAIM = /\b(farms?|farmers?|paddock|local(ly)?[- ](sourced|raised|grown|produced|meat|beef|lamb|pork|chicken)|sourced|grass[- ]fed|grain[- ]fed|free[- ]range|pasture[- ]raised|organic|ethical(ly)?|humane(ly)?|direct from|our own|home[- ]grown|raised)\b/i;
 
 /**
  * Research-process wording that must never reach a shopper. Kept in step with
@@ -210,6 +242,18 @@ function check(listing) {
   const problems = [];
   const { name } = listing;
   if (/\(| - /.test(name)) problems.push('name contains "(" or " - "; move the alias into the description');
+  if (!VENUE_TYPES.includes(listing.type)) problems.push(`unknown type "${listing.type}"`);
+  if (listing.type === 'butcher') {
+    if (!hasUsableAddress(listing.address)) problems.push('a butcher needs a public street address');
+    if (listing.hours?.kind !== 'weekly') problems.push('a butcher needs published weekly opening hours');
+    if (!(listing.products ?? []).some((p) => MEAT_CATEGORIES.includes(p))) {
+      problems.push('a butcher needs at least one named meat category (beef, lamb, pork or chicken)');
+    }
+    for (const [field, value] of Object.entries({ description: listing.description, otherProducts: listing.otherProducts })) {
+      const claim = value?.match(BUTCHER_SOURCING_CLAIM);
+      if (claim) problems.push(`${field} makes a sourcing claim ("${claim[0]}"); butchers are listed as shops only`);
+    }
+  }
   if (listing.hours?.kind === 'always' && listing.type !== 'farm_gate_stall') {
     problems.push(`hours.kind "always" is only for honesty-box farm-gate stalls, not "${listing.type}"`);
   }

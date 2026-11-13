@@ -1,8 +1,9 @@
 import { LICENCE_CONTROLLED_CATEGORIES } from '../../domain/compliance';
 import { openStatus, timezoneForState } from '../../domain/hours';
-import { PRODUCT_LABELS, STATE_NAMES } from '../../domain/types';
+import { PRODUCT_LABELS, STATE_NAMES, VENUE_LABELS } from '../../domain/types';
 import listings from '../realListings.json';
 import {
+  BUTCHER_SOURCING_CLAIM,
   LISTINGS_CHECKED_ON,
   REAL_FARMS,
   latestResearchedOn,
@@ -121,6 +122,22 @@ describe('REAL_FARMS (the researched data)', () => {
 });
 
 describe('REAL_FARMS listing rules', () => {
+  it('uses only known venue types', () => {
+    for (const farm of REAL_FARMS) expect(Object.keys(VENUE_LABELS)).toContain(farm.type);
+  });
+
+  it('lists butchers as shops only: an address, weekly hours, a meat product, no tags and no sourcing claim', () => {
+    for (const farm of REAL_FARMS.filter((f) => f.type === 'butcher')) {
+      expect(farm.address).toBeTruthy();
+      expect(farm.hours.kind).toBe('weekly');
+      expect(farm.products.some((p) => ['beef', 'lamb', 'pork', 'chicken'].includes(p.category))).toBe(true);
+      expect(farm.tags).toEqual([]);
+      for (const t of [farm.story, farm.otherProducts].filter((x): x is string => !!x)) {
+        expect(`${farm.name}: ${t}`).not.toMatch(BUTCHER_SOURCING_CLAIM);
+      }
+    }
+  });
+
   it('only lets honesty-box farm-gate stalls be "open any time"', () => {
     for (const farm of REAL_FARMS) {
       if (farm.hours.kind === 'always') expect(`${farm.name}: ${farm.type}`).toBe(`${farm.name}: farm_gate_stall`);
@@ -215,6 +232,52 @@ describe('LISTINGS_CHECKED_ON', () => {
 });
 
 describe('toRealFarm', () => {
+  it('maps a butcher record like any other unclaimed place', () => {
+    const farm = toRealFarm(
+      record({
+        name: 'Main Street Butchery',
+        type: 'butcher',
+        address: '12 Main St',
+        products: ['beef', 'lamb', 'pork', 'chicken', 'eggs', 'beef'],
+        otherProducts: 'Sausages and marinated cuts made in store.',
+        hours: { kind: 'weekly', days: { mon: [['07:00', '17:30']], sat: [['07:00', '12:00']] }, note: null },
+        hoursAsStated: 'Mon 7am to 5:30pm, Sat 7am to 12pm',
+        description: 'Independent butcher shop on the main street.',
+        sources: ['https://example.com/butchery'],
+      }),
+    );
+    expect(farm).toMatchObject({
+      id: 'real-vic-main-street-butchery',
+      type: 'butcher',
+      address: '12 Main St',
+      unclaimed: true,
+      status: 'live',
+      isSample: false,
+      licences: [],
+      tags: [],
+      paymentTypes: [],
+      sources: ['https://example.com/butchery'],
+      otherProducts: 'Sausages and marinated cuts made in store.',
+    });
+    expect(farm.products).toEqual([
+      { category: 'beef', name: 'Beef', inStock: true },
+      { category: 'lamb', name: 'Lamb', inStock: true },
+      { category: 'pork', name: 'Pork', inStock: true },
+      { category: 'chicken', name: 'Chicken', inStock: true },
+      { category: 'eggs', name: 'Eggs', inStock: true },
+    ]);
+    expect(farm.hours).toEqual({ kind: 'weekly', days: { mon: [['07:00', '17:30']], sat: [['07:00', '12:00']] }, note: undefined });
+    expect(VENUE_LABELS[farm.type]).toBe('Butcher');
+  });
+
+  it('flags sourcing claims a butcher listing must not make', () => {
+    expect('Independent butcher shop on the main street.').not.toMatch(BUTCHER_SOURCING_CLAIM);
+    expect('Sausages made in store.').not.toMatch(BUTCHER_SOURCING_CLAIM);
+    for (const claim of ['Locally sourced beef.', 'Meat from our own farm.', 'Grass-fed lamb.', 'Free range chicken.', 'Ethically raised pork.']) {
+      expect(claim).toMatch(BUTCHER_SOURCING_CLAIM);
+    }
+  });
+
   it('maps the researched facts and marks the place unclaimed', () => {
     const farm = toRealFarm(record());
     expect(farm).toMatchObject({
