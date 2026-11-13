@@ -60,6 +60,10 @@ Expo Go can run this app because every library it uses is bundled with Expo Go. 
    - for friends, family and farmers outside your team, create an **External** group. The first build needs Apple's short Beta App Review.
 4. Install **TestFlight** on your iPhone and accept the invite.
 
+## TestFlight without Expo (GitHub's Mac runners)
+
+`.github/workflows/testflight.yml` builds, signs and uploads the app on a GitHub macOS runner using fastlane (`fastlane/Fastfile`). It needs one repository secret, `ASC_KEY_P8`: the full text of an App Store Connect API key (`.p8`, App Manager role). The key ID and issuer ID are in the workflow file. Run it from GitHub → Actions → *TestFlight (GitHub Mac build)* → Run workflow, or push a commit whose message contains `[testflight]`. Optional secrets `EXPO_PUBLIC_SUPABASE_URL` and `EXPO_PUBLIC_SUPABASE_ANON_KEY` connect the build to the live backend; without them it shows sample data.
+
 ## 7. App Store
 
 Use `docs/APP_STORE.md` for the text, privacy answers, screenshots checklist and review notes. Take screenshots on your iPhone from the TestFlight build. Host the privacy policy at a public URL (any simple page works; the text is `docs/PRIVACY.md`). Then App Store Connect → your app version → Add for Review.
