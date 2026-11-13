@@ -32,6 +32,14 @@
           "locationAlwaysAndWhenInUsePermission": "Farm Direct uses your location to show farms, stalls and markets near you.",
           "motionUsagePermission": false
         }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Farm Direct needs your photos so you can add pictures of your farm, stall or produce to your listing.",
+          "cameraPermission": "Farm Direct uses your camera so you can take pictures of your farm, stall or produce for your listing.",
+          "microphonePermission": false
+        }
       ]
     ],
     "experiments": {

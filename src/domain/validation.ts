@@ -38,6 +38,22 @@ export function isValidAbn(abn: string): boolean {
   return sum % 89 === 0;
 }
 
+/** "31/12/2030" -> "2030-12-31". Null for impossible dates like 31/02/2030. */
+export function parseAuDate(text: string): string | null {
+  const m = text.trim().match(/^(\d{1,2})[/\-.](\d{1,2})[/\-.](\d{4})$/);
+  if (!m) return null;
+  const [day, month, year] = [Number(m[1]), Number(m[2]), Number(m[3])];
+  const date = new Date(Date.UTC(year, month - 1, day));
+  if (date.getUTCFullYear() !== year || date.getUTCMonth() !== month - 1 || date.getUTCDate() !== day) return null;
+  return date.toISOString().slice(0, 10);
+}
+
+/** "2030-12-31" -> "31/12/2030" for editing. */
+export function isoToAuDate(iso: string | undefined): string {
+  const m = iso?.match(/^(\d{4})-(\d{2})-(\d{2})/);
+  return m ? `${m[3]}/${m[2]}/${m[1]}` : '';
+}
+
 /** "7.50", "$7.5", "7" -> cents. Null if not a sensible price. */
 export function priceToCents(text: string): number | null {
   const cleaned = text.replace(/[$,\s]/g, '');

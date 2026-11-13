@@ -8,6 +8,16 @@ An iOS app for Australians to find and buy food directly from local farmers, so 
 
 ## Status
 
+**Milestones 5 and 6 – farmer tools, suggestions and review.** With the backend connected:
+
+- **Farmers** (free, one tap from the Account tab) can create a listing, set weekly hours with big +/− time buttons, add products and AUD prices, add licences and accreditation, add photos (resized to small JPEGs before upload), save drafts, and send for review. A quick **Update stock and prices** screen saves each change straight away.
+- **Claims:** on any live listing with no owner, tap “Is this your farm? Claim it” and give an ABN (checksum-checked), phone number and note.
+- **Suggestions:** any signed-in person can suggest a farm or market (5 a day).
+- **Reports:** signed-in people can report a problem with a live listing.
+- **Reviewers** (administrators) get a **Review queue** with pending listings, claims and suggestions. They approve, ask for changes, or reject with a note; confirm licences; approve claims; and turn suggestions into unowned listings. Approval is blocked if the food-safety rules aren't met (raw milk, missing or expired licences), enforced in the database as well as the app.
+
+These screens need a Supabase project to do anything, so they are untested end to end here; the rules behind them are covered by the 28 database checks, and the editors were exercised in a browser.
+
 **Milestone 4 – backend and accounts.** The app can now run against a Supabase project: live listings load from the server and are saved on the phone, so the last-seen listings still show with no reception (with a clear "saved listings" notice). Accounts (email and password), favourites that follow your account, in-app account deletion, and the database rules for farmers, reviews, claims and suggestions are in place and tested (`npm run test:sql`). With no Supabase keys the app runs on clearly labelled sample data. Set-up: [`docs/BACKEND.md`](docs/BACKEND.md).
 
 **Milestone 3 – farm profiles and favourites.** Each place has a full profile (photos, story, products and prices, hours, pick-up/delivery, payment types, licences, call, website, Apple Maps directions) and you can save favourites.

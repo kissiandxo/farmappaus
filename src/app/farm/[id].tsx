@@ -1,5 +1,5 @@
 import { Image } from 'expo-image';
-import { Stack, useLocalSearchParams } from 'expo-router';
+import { router, Stack, useLocalSearchParams } from 'expo-router';
 import { Linking, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 
 import { licenceBadge } from '../../domain/compliance';
@@ -16,8 +16,13 @@ import {
   TAG_LABELS,
   VENUE_LABELS,
 } from '../../domain/types';
+import { ReviewPanel } from '../../components/ReviewPanel';
+import { statusAdvice, STATUS_LABELS } from '../../domain/listing';
+import { isBackendConfigured } from '../../lib/supabase';
+import { useAuth } from '../../state/AuthContext';
 import { useFavourites } from '../../state/FavouritesContext';
 import { useSearch } from '../../state/SearchContext';
+import { useFarm } from '../../state/useFarm';
 import { colors, font, MIN_TAP, radius, space } from '../../theme';
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
@@ -45,19 +50,24 @@ function ActionButton({ label, onPress, primary }: { label: string; onPress: () 
 
 export default function FarmProfileScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
-  const { farms, location } = useSearch();
+  const { location } = useSearch();
   const { isFavourite, toggleFavourite } = useFavourites();
-  const farm = farms.find((f) => f.id === id);
+  const { userId, role } = useAuth();
+  const { farm, loading, reload } = useFarm(id);
 
   if (!farm) {
     return (
       <View style={styles.missing}>
-        <Stack.Screen options={{ title: 'Not found' }} />
-        <Text style={styles.sectionTitle}>We couldn’t find that place</Text>
-        <Text style={styles.body}>It may have been removed. Go back and try another.</Text>
+        <Stack.Screen options={{ title: loading ? 'Loading…' : 'Not found' }} />
+        <Text style={styles.sectionTitle}>{loading ? 'Loading…' : 'We couldn’t find that place'}</Text>
+        {!loading && <Text style={styles.body}>It may have been removed. Go back and try another.</Text>}
       </View>
     );
   }
+
+  const isOwner = !!userId && farm.ownerId === userId;
+  const canClaim = isBackendConfigured && !farm.isSample && farm.status === 'live' && !farm.ownerId && !!userId;
+  const showReview = role === 'admin' && farm.status === 'pending';
 
   const tz = timezoneForState(farm.state);
   const now = new Date();
@@ -90,6 +100,23 @@ export default function FarmProfileScreen() {
       ) : (
         <View style={styles.noPhoto} accessible accessibilityLabel="No photos yet">
           <Text style={styles.noPhotoText}>No photos yet</Text>
+        </View>
+      )}
+
+      {farm.status && farm.status !== 'live' && (
+        <View style={styles.sample} accessibilityRole="alert">
+          <Text style={styles.sampleText}>
+            {STATUS_LABELS[farm.status]}: {statusAdvice(farm.status, farm.reviewNote)} Only you{role === 'admin' ? ' and reviewers' : ''} can see this.
+          </Text>
+        </View>
+      )}
+
+      {showReview && <ReviewPanel farm={farm} onChanged={reload} />}
+
+      {isOwner && (
+        <View style={styles.actions}>
+          <ActionButton label="Edit my listing" onPress={() => router.push(`/farmer/${farm.id}`)} />
+          {farm.products.length > 0 && <ActionButton label="Update stock and prices" onPress={() => router.push(`/farmer/stock/${farm.id}`)} />}
         </View>
       )}
 
@@ -188,6 +215,13 @@ export default function FarmProfileScreen() {
       )}
 
       <Text style={styles.updated}>Listing last updated {formatDateAu(farm.updatedOn)}</Text>
+
+      {canClaim && (
+        <ActionButton label="Is this your farm? Claim it" onPress={() => router.push(`/claim/${farm.id}`)} />
+      )}
+      {isBackendConfigured && !farm.isSample && farm.status === 'live' && !!userId && (
+        <ActionButton label="Report a problem with this listing" onPress={() => router.push(`/report/${farm.id}`)} />
+      )}
     </ScrollView>
   );
 }

@@ -1,3 +1,4 @@
+import { router } from 'expo-router';
 import { useState } from 'react';
 import { Alert, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 
@@ -110,6 +111,9 @@ export default function AccountScreen() {
           <Text style={styles.label}>Account type</Text>
           <Text style={styles.body}>{role ? ROLE_LABELS[role] : 'Checking…'}</Text>
         </View>
+        <Button label={role === 'farmer' || role === 'admin' ? 'My farm listings' : 'List my farm (free)'} kind="primary" onPress={() => router.push('/farmer')} />
+        <Button label="Suggest a farm or market" onPress={() => router.push('/suggest')} />
+        {role === 'admin' && <Button label="Review queue" onPress={() => router.push('/admin')} />}
         {notice && <Text style={[styles.notice, !notice.ok && styles.noticeError]}>{notice.text}</Text>}
         <Button label="Sign out" onPress={signOut} />
         <Button label="Delete my account" kind="danger" onPress={confirmDelete} />

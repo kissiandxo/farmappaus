@@ -1,4 +1,9 @@
 import {
+  copyDayTo,
+  copyToWeekdays,
+  normaliseRange,
+  setDayRange,
+  stepTime,
   formatMinutes,
   hoursLines,
   localDayAndMinutes,
@@ -7,6 +12,48 @@ import {
   timezoneForState,
 } from '../hours';
 import type { OpeningHours } from '../types';
+
+describe('hours editing helpers', () => {
+  it('steps times by 30 minutes and stays inside the day', () => {
+    expect(stepTime('09:00', 30)).toBe('09:30');
+    expect(stepTime('09:00', -30)).toBe('08:30');
+    expect(stepTime('00:00', -30)).toBe('00:00');
+    expect(stepTime('23:30', 30)).toBe('23:30');
+  });
+
+  it('keeps closing time after opening time', () => {
+    expect(normaliseRange(['09:00', '17:00'])).toEqual(['09:00', '17:00']);
+    expect(normaliseRange(['10:00', '09:00'])).toEqual(['10:00', '10:30']);
+    expect(normaliseRange(['10:00', '10:00'])).toEqual(['10:00', '10:30']);
+    expect(normaliseRange(['23:30', '23:30'])).toEqual(['23:00', '23:30']);
+  });
+
+  it('sets and clears one day without touching the others', () => {
+    const days = { mon: [['09:00', '17:00']] } as const;
+    const withSat = setDayRange({ ...days } as never, 'sat', ['08:00', '12:00']);
+    expect(withSat).toEqual({ mon: [['09:00', '17:00']], sat: [['08:00', '12:00']] });
+    expect(setDayRange(withSat, 'mon', null)).toEqual({ sat: [['08:00', '12:00']] });
+    expect(days).toEqual({ mon: [['09:00', '17:00']] }); // original untouched
+  });
+
+  it('copies one day onto others, or clears them when the source is closed', () => {
+    const days = { mon: [['09:00', '17:00']], wed: [['10:00', '11:00']] } as never;
+    expect(copyDayTo(days, 'mon', ['tue', 'wed'])).toEqual({
+      mon: [['09:00', '17:00']],
+      tue: [['09:00', '17:00']],
+      wed: [['09:00', '17:00']],
+    });
+    expect(copyDayTo(days, 'thu', ['wed'])).toEqual({ mon: [['09:00', '17:00']] });
+  });
+
+  it('copies the first open weekday across Monday to Friday', () => {
+    const result = copyToWeekdays({ tue: [['08:00', '16:00']], sat: [['09:00', '12:00']] } as never);
+    expect(Object.keys(result).sort()).toEqual(['fri', 'mon', 'sat', 'thu', 'tue', 'wed']);
+    expect(result.fri).toEqual([['08:00', '16:00']]);
+    expect(result.sat).toEqual([['09:00', '12:00']]);
+    expect(copyToWeekdays({ sat: [['09:00', '12:00']] } as never)).toEqual({ sat: [['09:00', '12:00']] });
+  });
+});
 
 describe('hoursLines', () => {
   it('lists Monday to Sunday with closed days', () => {

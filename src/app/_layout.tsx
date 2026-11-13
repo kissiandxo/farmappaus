@@ -22,6 +22,13 @@ export default function RootLayout() {
           }}
         >
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen name="farmer/index" options={{ title: 'My listings' }} />
+          <Stack.Screen name="farmer/[id]" options={{ title: 'Your listing' }} />
+          <Stack.Screen name="farmer/stock/[id]" options={{ title: 'Update stock' }} />
+          <Stack.Screen name="claim/[id]" options={{ title: 'Claim this listing' }} />
+          <Stack.Screen name="report/[id]" options={{ title: 'Report a problem' }} />
+          <Stack.Screen name="suggest" options={{ title: 'Suggest a farm' }} />
+          <Stack.Screen name="admin/index" options={{ title: 'Review queue' }} />
         </Stack>
         </SearchProvider>
       </FavouritesProvider>

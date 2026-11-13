@@ -3,7 +3,9 @@ import {
   draftIssues,
   hasRegulatedProducts,
   isValidAbn,
+  isoToAuDate,
   normaliseAuPhone,
+  parseAuDate,
   priceToCents,
   validateEmail,
   validatePassword,
@@ -58,6 +60,28 @@ describe('isValidAbn', () => {
     expect(isValidAbn('51 824 753 557')).toBe(false);
     expect(isValidAbn('1234567890')).toBe(false);
     expect(isValidAbn('abcdefghijk')).toBe(false);
+  });
+});
+
+describe('Australian dates', () => {
+  it('parses day/month/year into ISO', () => {
+    expect(parseAuDate('31/12/2030')).toBe('2030-12-31');
+    expect(parseAuDate('1/2/2027')).toBe('2027-02-01');
+    expect(parseAuDate('29/02/2028')).toBe('2028-02-29');
+    expect(parseAuDate(' 05-06-2027 ')).toBe('2027-06-05');
+  });
+
+  it('rejects impossible or badly written dates', () => {
+    expect(parseAuDate('31/02/2030')).toBeNull();
+    expect(parseAuDate('29/02/2027')).toBeNull();
+    expect(parseAuDate('2030-12-31')).toBeNull();
+    expect(parseAuDate('13/13/2030')).toBeNull();
+    expect(parseAuDate('')).toBeNull();
+  });
+
+  it('shows ISO dates back as day/month/year', () => {
+    expect(isoToAuDate('2030-12-31')).toBe('31/12/2030');
+    expect(isoToAuDate(undefined)).toBe('');
   });
 });
 

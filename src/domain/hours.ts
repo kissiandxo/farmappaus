@@ -1,4 +1,4 @@
-import type { DayKey, OpeningHours, StateCode } from './types';
+import type { DayKey, OpeningHours, StateCode, TimeRange } from './types';
 
 const DAYS: DayKey[] = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
 
@@ -65,7 +65,59 @@ export function formatMinutes(total: number): string {
   return `${h12}:${m.toString().padStart(2, '0')} ${suffix}`;
 }
 
-const WEEK_ORDER: DayKey[] = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
+export const WEEK_ORDER: DayKey[] = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
+const WEEKDAYS: DayKey[] = ['mon', 'tue', 'wed', 'thu', 'fri'];
+
+type WeeklyDays = Partial<Record<DayKey, TimeRange[]>>;
+
+export const DEFAULT_RANGE: TimeRange = ['09:00', '17:00'];
+const LAST_START = 23 * 60 + 30; // latest allowed closing time is 11:30 pm
+
+const toHhmm = (minutes: number) =>
+  `${String(Math.floor(minutes / 60)).padStart(2, '0')}:${String(minutes % 60).padStart(2, '0')}`;
+
+/** Moves a "HH:mm" time by whole minutes, staying between 12:00 am and 11:30 pm. */
+export function stepTime(hhmm: string, deltaMinutes: number): string {
+  return toHhmm(Math.min(LAST_START, Math.max(0, parseMinutes(hhmm) + deltaMinutes)));
+}
+
+/** Makes sure a range closes at least 30 minutes after it opens. */
+export function normaliseRange([open, close]: TimeRange): TimeRange {
+  let o = parseMinutes(open);
+  let c = parseMinutes(close);
+  if (c <= o) c = o + 30;
+  if (c > LAST_START) {
+    c = LAST_START;
+    o = Math.min(o, c - 30);
+  }
+  return [toHhmm(o), toHhmm(c)];
+}
+
+/** Sets (or, with null, clears) one day's single opening range. Returns a new object. */
+export function setDayRange(days: WeeklyDays, day: DayKey, range: TimeRange | null): WeeklyDays {
+  const next: WeeklyDays = { ...days };
+  if (range === null) delete next[day];
+  else next[day] = [normaliseRange(range)];
+  return next;
+}
+
+/** Copies one day's hours onto other days (clearing them if the source day is closed). */
+export function copyDayTo(days: WeeklyDays, from: DayKey, targets: DayKey[]): WeeklyDays {
+  const next: WeeklyDays = { ...days };
+  for (const day of targets) {
+    if (day === from) continue;
+    const source = days[from];
+    if (source) next[day] = source.map(([o, c]) => [o, c] as TimeRange);
+    else delete next[day];
+  }
+  return next;
+}
+
+/** First open weekday (Mon–Fri) to use as the template for "same hours every weekday". */
+export function copyToWeekdays(days: WeeklyDays): WeeklyDays {
+  const source = WEEKDAYS.find((d) => (days[d]?.length ?? 0) > 0);
+  return source ? copyDayTo(days, source, WEEKDAYS) : days;
+}
 
 export interface HoursLine {
   label: string;
