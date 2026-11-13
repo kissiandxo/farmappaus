@@ -11,12 +11,28 @@ All files are in `out/`. "Feed" is 1080x1350 (4:5). "Story" is 1080x1920 (9:16).
 | # | Files | The idea | On the image | Primary text | Headline | Description | Button |
 |---|---|---|---|---|---|---|---|
 | 1 | `01-paddock-not-petri-feed.png`, `01-paddock-not-petri-story.png` | The bold "real, not lab" poster. One witty line, nobody named or blamed. | From a paddock, not a petri dish. / About 40 places across Australia list beef, lamb, pork or chicken. | From a paddock, not a petri dish. About 40 places across Australia list beef, lamb, pork or chicken. Check before you go. (121) | Meat from a paddock, not a petri dish (37) | Free. No account needed. (24) | Install now |
-| 2 | `02-real-meat-tap-feed.png`, `02-real-meat-tap-story.png` | The defiant line, backed by the one button you press: Meat. | Real meat. Real farmers. / Tap Meat for about 40 places listing beef, lamb, pork or chicken. / [Meat button] | Real meat. Real farmers. Tap Meat and see about 40 places listing beef, lamb, pork or chicken. Free, no sign-up. (112) | Tap Meat. Find the farmer. (26) | Beef, lamb, pork and chicken (28) | Install now |
+| 2 | `02-real-meat-tap-feed.png`, `02-real-meat-tap-story.png` | The defiant line, backed by the one button you press: Meat. | Real meat. Real farmers. / Tap Meat for about 40 places listing beef, lamb, pork or chicken. / [Meat button] / [app screenshot: Meat list, "41 places · nearest first", 2 places] | Real meat. Real farmers. Tap Meat and see about 40 places listing beef, lamb, pork or chicken. Free, no sign-up. (112) | Tap Meat. Find the farmer. (26) | Beef, lamb, pork and chicken (28) | Install now |
 | 3 | `03-meat-with-postcode-feed.png`, `03-meat-with-postcode-story.png` | Real meat comes from a real place. Search a town or postcode; ask the farmer the rest. | Meat with a postcode. / Search a town or postcode for meat. Ask the farmer the rest. / BEEF · LAMB · PORK · CHICKEN | Enter a town or postcode to find the nearest of about 40 places listing beef, lamb, pork or chicken. Ask the farmer the rest. (125) | Meat with a postcode (20) | Search by town or postcode (26) | Download |
 | 4 | `04-weekend-meat-run-feed.png`, `04-weekend-meat-run-story.png` | The Saturday market or farm-shop run, planned with the Meat and This weekend filters. | Your weekend meat run, sorted. / SAT, SUN / [Meat] [This weekend] / Nearly 30 places listing meat publish Saturday or Sunday hours. | Plan the weekend meat run: turn on Meat and This weekend, check the published hours, get directions. Free, no account. (118) | Weekend meat run, sorted (24) | Check hours before you go (25) | Download |
-| 5 | `05-pin-drive-buy-feed.png`, `05-pin-drive-buy-story.png` | The map, for road trips and caravans: every place is a pin, tap for hours and directions. | Pin it. Drive there. Buy direct. / About 40 places listing meat, each one pinned on the map. | Driving through? About 40 places listing beef, lamb, pork or chicken, each pinned on the map with hours and directions. (119) | Pin it. Drive there. Buy direct. (32) | Free. No sign-up. (17) | Install now |
+| 5 | `05-pin-drive-buy-feed.png`, `05-pin-drive-buy-story.png` | The map, for road trips and caravans: every place is a pin, tap for hours and directions. | Pin it. Drive there. Buy direct. / About 40 places listing meat, each one pinned on the map. / [app screenshot: map of the NSW coast with pins] | Driving through? About 40 places listing beef, lamb, pork or chicken, each pinned on the map with hours and directions. (119) | Pin it. Drive there. Buy direct. (32) | Free. No sign-up. (17) | Install now |
 
 Numbers in brackets are character counts. Meta's limits we work to: primary text 125, headline 40, description 30. All five are inside them. Every image also carries the footer "Farm Direct / Free for iPhone" with the app icon.
+
+## The app screenshots
+
+Two ads show real iPhone screenshots of the finished app, each inside a plain drawn phone outline (no Apple device artwork). The files are in `shared/screens/` (1320x2868); `shared/screens/README.txt` says how to replace them.
+
+| Ad | Screenshot | What shows on the ad |
+|---|---|---|
+| 2 `02-real-meat-tap` | `02-explore-meat.png` (Explore list, Meat filter on) | Search field, "Sydney NSW 2000", "Filters 1", "41 places · nearest first", the app's "From public sources and not yet confirmed by their owners. Check with the place before you travel." note, and two whole place cards at the same size (Carriageworks Farmers Market and Kiama Farmers' Market). The crop stops before the third card. |
+| 5 `05-pin-drive-buy` | `03-map.png` (map) | The NSW coast with coloured pins and a "2" cluster, and the "Sydney NSW 2000" and "Filters" capsules. Only towns and national parks are named. Cropped at about row 2050 of 2868, above Apple's "Maps" attribution, so no Apple logo appears. |
+
+Ads 1, 3 and 4 use type and simple drawings only. `01-explore.png` (the unfiltered list of all 106 places) is not used in any ad; only the kit's `shared/template.html` uses it.
+
+Two things to know about the screenshots:
+
+- The map in ad 5 is the default map of all places, not a Meat-filtered one, so its pins are not a count of meat places. The ad only says the meat places are each pinned on the map, which is true.
+- The list in ad 2 shows two real businesses by name, at equal size, as part of a list. Neither is the hero and neither has endorsed the ad. If either place leaves the listings or stops listing beef, take a new screenshot.
 
 ## Where each claim comes from
 
@@ -30,6 +46,8 @@ Every number comes from the app's own list of places, `src/data/realListings.jso
 | By meat | beef 28, lamb 23, pork 18, chicken 16 |
 | "Nearly 30 places listing meat publish Saturday or Sunday hours" | 29 of the 41 have weekly hours that include a Saturday or Sunday |
 | "Each one pinned on the map" | All 41 have a map position |
+| "41 places · nearest first" in the ad 2 screenshot | The app's Meat filter count; matches the 41 meat records |
+| Places on the ad 2 screenshot | Carriageworks Farmers Market (Eveleigh, NSW) and Kiama Farmers' Market (Kiama, NSW) are both farmers' markets that list beef |
 | "Search a town or postcode" | All 41 have a postcode; search by name, town, postcode or produce is in `docs/APP_STORE.md` |
 | Meat button, This weekend filter | The labels "Meat" and "This weekend" are in `src/components/FilterPanel.tsx` |
 | Hours and directions | Place pages show hours (or "by appointment"); Directions opens Apple Maps (`docs/APP_STORE.md`) |
@@ -61,11 +79,11 @@ These rules keep the ads honest and inside the Australian Consumer Law and Meta'
 
 - **No claims about how the animals were raised, or about quality, health, price or safety.** No "grass-fed", "free-range", "organic", "hormone-free", "healthier", "cheaper" or "safer". Farm Direct lists places from public sources; it doesn't check any of that. The ads tell people to ask the farmer instead ("Ask the farmer the rest").
 - **"Real, not lab" is positioning, not a claim about anyone else.** "From a paddock, not a petri dish" and "Real meat. Real farmers." say what Farm Direct is about. The ads never say or hint that supermarkets, brands, scientists or the government are selling, hiding or pushing lab-grown meat, and there is no health or safety scare. No lab, scientist or petri dish is drawn.
-- **No named business is the hero, and no endorsement is implied.** The listings are not yet confirmed by their owners, so no farm or market appears by name.
+- **No named business is the hero, and no endorsement is implied.** The listings are not yet confirmed by their owners, so no farm or market is named in the ad text. The only names that appear are two places on the app's own list screen in ad 2, shown together at the same size, with the app's "not yet confirmed by their owners" note above them.
 - **Honest numbers.** "About 40" for 41, "Nearly 30" for 29. Nothing says there is a place in every town or near you.
-- **Apple rules.** No Apple logo, no App Store badge, no picture of an iPhone. "Free for iPhone" is plain text.
+- **Apple rules.** No Apple logo, no App Store badge, no picture of an iPhone. Screenshots sit in a plain drawn outline, and the map is cropped above Apple's "Maps" attribution. "Free for iPhone" is plain text.
 - **Meta rules.** No "Are you...?" lines about the viewer, no shock images, no before/after, no swearing, and all text is at least 34 px so it reads on a phone.
-- **Only original artwork.** No stock photos and no AI photos. Everything is type, colour, simple drawings made for these ads, and the app icon.
+- **Only original artwork.** No stock photos and no AI photos. Everything is type, colour, simple drawings made for these ads, the app icon and real screenshots of the app.
 - **Australian English throughout.**
 
 ## Re-rendering
@@ -80,7 +98,7 @@ node contact-sheet.mjs   # rebuilds out/contact-sheet.png
 
 `render.mjs` prints every file with its size and warns about text outside the safe areas or too small.
 
-**About the app screenshots.** The files in `shared/screens/` are still placeholders (01 to 06 are the same picture). None of the five finished ads shows a screenshot today, so swapping in the real screens changes nothing on its own. Ad 2 is ready to show a phone with the Meat-filtered list: once the real `shared/screens/02-explore-meat.png` is in, check it shows several places (not one business), change `data-phone="off"` to `data-phone="on"` in `02-real-meat-tap/ad.html`, run `node render.mjs`, and look at both PNGs. You can preview it first by opening `02-real-meat-tap/ad.html?size=feed&phone=1` in a browser.
+**If you replace a screenshot**, keep the same file name and size (1320x2868), run `node render.mjs`, and look at ads 2 and 5 again: the ad 2 crop must still end between two cards and show at least two places at equal size, and the ad 5 crop must still stop above Apple's "Maps" attribution.
 
 ## Sizes
 
@@ -109,5 +127,5 @@ Suggested pairings: ad 1 and ad 2 for broad reach; ad 3 for regional households;
 
 1. The app is live on the App Store.
 2. Re-run the count above; change any wording that no longer holds.
-3. `node render.mjs`, then look at all ten PNGs.
+3. `node render.mjs` and `node contact-sheet.mjs`, then look at all ten PNGs, including the screenshots in ads 2 and 5.
 4. Paste the copy from `ads.json` (or the table above) into Meta Ads Manager.

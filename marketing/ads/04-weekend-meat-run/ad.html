@@ -11,7 +11,7 @@
 <style>
   /* Band bottom lands exactly on the divide: tile top = tile-c - tile-h/2; divide = tile top + band. */
   .artboard { --divide: 530px; --tile-w: 330px; --tile-h: 360px; --tile-gap: 40px; --tile-c: 620px; --band: 90px; }
-  .story    { --divide: 740px; --tile-w: 370px; --tile-h: 390px; --tile-c: 835px; --band: 100px; --footer-top: 1450px; }
+  .story    { --divide: 740px; --tile-w: 370px; --tile-h: 390px; --tile-c: 835px; --band: 100px; }
 
   .top { top: 0; height: var(--divide); }
   .headline { position: absolute; left: var(--margin); right: var(--margin); top: 164px; z-index: 2; text-align: center; word-spacing: 0.05em; }
@@ -62,18 +62,20 @@
         <!-- Market awning: scalloped striped canopy over a trestle table with a wrapped parcel -->
         <svg class="art" viewBox="0 0 200 200" aria-hidden="true">
           <!-- Wattle-gold sun tucked behind the canopy's top-left corner: the ad's one warm mark -->
-          <path class="ln gold" d="M28 2 V8 M5 24 H11 M45 24 H51 M12 8 L16 12 M44 8 L40 12 M12 40 L16 36"/>
-          <circle class="gold-fill" cx="28" cy="24" r="10"/>
+          <!-- Top ray at y 24 so the art clears the SAT band like the SUN gate (top y 32) -->
+          <path class="ln gold" d="M36 24 V30 M13 46 H19 M53 46 H59 M20 30 L24 34 M52 30 L48 34 M20 62 L24 58"/>
+          <circle class="gold-fill" cx="36" cy="46" r="10"/>
           <!-- Canopy filled white so it sits in front of the sun -->
-          <path class="ln" style="fill:#fff" d="M34 34 H166 L186 78 H14 Z"/>
-          <path class="ln" d="M14 78 q 14.33 22 28.67 0 q 14.33 22 28.67 0 q 14.33 22 28.67 0 q 14.33 22 28.67 0 q 14.33 22 28.67 0 q 14.33 22 28.67 0"/>
-          <path class="ln" d="M70 34 L63 78 M100 34 V78 M130 34 L137 78"/>
-          <path class="ln" d="M24 92 V186 M176 92 V186"/>
-          <!-- Butcher's-paper parcel tied with string on the trestle -->
-          <path class="ln" d="M68 136 V122 Q68 118 72 118 H128 Q132 118 132 122 V136"/>
-          <path class="ln" d="M86 118 V136 M114 118 V136"/>
-          <path class="ln" d="M38 136 H162"/>
-          <path class="ln" d="M56 136 L86 186 M86 136 L56 186 M114 136 L144 186 M144 136 L114 186"/>
+          <path class="ln" style="fill:#fff" d="M40 52 H164 L184 92 H16 Z"/>
+          <path class="ln" d="M16 92 q 14 20 28 0 q 14 20 28 0 q 14 20 28 0 q 14 20 28 0 q 14 20 28 0 q 14 20 28 0"/>
+          <path class="ln" d="M72 52 L66 92 M101 52 V92 M130 52 L136 92"/>
+          <path class="ln" d="M24 104 V186 M176 104 V186"/>
+          <!-- Butcher's-paper parcel tied with string (cross tie + bow), sitting on the trestle top -->
+          <path class="ln" style="fill:#fff" d="M60 146 V132 Q60 127 65 127 H135 Q140 127 140 132 V146 Z"/>
+          <path class="ln" d="M100 127 V146 M60 137 H140"/>
+          <path class="ln" d="M100 127 C92 117 84 125 100 127 C116 125 108 117 100 127"/>
+          <path class="ln" d="M36 146 H164"/>
+          <path class="ln" d="M56 146 L84 186 M84 146 L56 186 M116 146 L144 186 M144 146 L116 186"/>
         </svg>
       </div>
     </div>

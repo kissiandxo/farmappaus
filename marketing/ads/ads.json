@@ -9,18 +9,54 @@
     "places": 106,
     "placesListingMeat": 41,
     "meatDefinition": "products array contains beef, lamb, pork or chicken",
-    "meatByType": { "farmers_market": 25, "farm_shop": 12, "farm": 3, "farm_gate_stall": 1 },
-    "meatByProduct": { "beef": 28, "lamb": 23, "pork": 18, "chicken": 16 },
-    "meatByState": { "NSW": 13, "VIC": 7, "WA": 7, "SA": 6, "QLD": 5, "ACT": 2, "TAS": 1, "NT": 0 },
+    "meatByType": {
+      "farmers_market": 25,
+      "farm_shop": 12,
+      "farm": 3,
+      "farm_gate_stall": 1
+    },
+    "meatByProduct": {
+      "beef": 28,
+      "lamb": 23,
+      "pork": 18,
+      "chicken": 16
+    },
+    "meatByState": {
+      "NSW": 13,
+      "VIC": 7,
+      "WA": 7,
+      "SA": 6,
+      "QLD": 5,
+      "ACT": 2,
+      "TAS": 1,
+      "NT": 0
+    },
     "meatWithSatOrSunHours": 29,
     "meatWithPostcode": 41,
     "meatWithLatLng": 41
   },
-  "limits": { "primaryText": 125, "headline": 40, "description": 30 },
-  "allowedCtas": ["Install now", "Download", "Learn more"],
+  "limits": {
+    "primaryText": 125,
+    "headline": 40,
+    "description": 30
+  },
+  "allowedCtas": [
+    "Install now",
+    "Download",
+    "Learn more"
+  ],
   "sizes": {
-    "feed": { "width": 1080, "height": 1350, "ratio": "4:5" },
-    "story": { "width": 1080, "height": 1920, "ratio": "9:16", "keepTextOut": "top 250 px and bottom 340 px" }
+    "feed": {
+      "width": 1080,
+      "height": 1350,
+      "ratio": "4:5"
+    },
+    "story": {
+      "width": 1080,
+      "height": 1920,
+      "ratio": "9:16",
+      "keepTextOut": "top 250 px and bottom 340 px"
+    }
   },
   "ads": [
     {
@@ -42,7 +78,11 @@
       "headline": "Meat from a paddock, not a petri dish",
       "description": "Free. No account needed.",
       "cta": "Install now",
-      "lengths": { "primaryText": 121, "headline": 37, "description": 24 },
+      "lengths": {
+        "primaryText": 121,
+        "headline": 37,
+        "description": 24
+      },
       "screenshotUsed": null,
       "claims": [
         "About 40 places list beef, lamb, pork or chicken: 41 of 106 records.",
@@ -65,6 +105,7 @@
         "Real meat. Real farmers.",
         "Tap Meat for about 40 places listing beef, lamb, pork or chicken.",
         "Meat (drawn filter button)",
+        "[real app screenshot in a plain phone outline: Explore, Meat filter on, \"Sydney NSW 2000\", \"Filters 1\", \"41 places · nearest first\", the public-sources note, and two whole place cards at equal size]",
         "Farm Direct",
         "Free for iPhone"
       ],
@@ -72,14 +113,18 @@
       "headline": "Tap Meat. Find the farmer.",
       "description": "Beef, lamb, pork and chicken",
       "cta": "Install now",
-      "lengths": { "primaryText": 112, "headline": 26, "description": 28 },
-      "screenshotUsed": null,
-      "screenshotOptional": "shared/screens/02-explore-meat.png (phone is off by default; turn on with data-phone=\"on\" in ad.html once the real Meat-filtered list screen is in place)",
+      "lengths": {
+        "primaryText": 112,
+        "headline": 26,
+        "description": 28
+      },
+      "screenshotUsed": "shared/screens/02-explore-meat.png (cropped: location row, '41 places · nearest first', the public-sources note and two whole cards, Carriageworks Farmers Market and Kiama Farmers' Market)",
       "claims": [
         "The app has a Meat filter covering beef, lamb, pork and chicken: MEAT_CHIP_LABEL in src/components/FilterPanel.tsx and docs/APP_STORE.md.",
         "About 40 places list beef, lamb, pork or chicken: 41 of 106 records.",
         "Free, no sign-up: docs/APP_STORE.md.",
-        "'Real meat. Real farmers.' is a positioning line, not a claim about any other product."
+        "'Real meat. Real farmers.' is a positioning line, not a claim about any other product.",
+        "The screenshot is the app's real Meat-filtered list: '41 places · nearest first' matches the 41 meat records. It shows two places at equal size as part of a list (both list beef in the data); neither is the hero and neither has endorsed the ad. The app's own note 'From public sources and not yet confirmed by their owners. Check with the place before you travel.' is visible."
       ]
     },
     {
@@ -102,7 +147,11 @@
       "headline": "Meat with a postcode",
       "description": "Search by town or postcode",
       "cta": "Download",
-      "lengths": { "primaryText": 125, "headline": 20, "description": 26 },
+      "lengths": {
+        "primaryText": 125,
+        "headline": 20,
+        "description": 26
+      },
       "screenshotUsed": null,
       "claims": [
         "Search by name, town, postcode or produce, and set any suburb or postcode: docs/APP_STORE.md.",
@@ -134,7 +183,11 @@
       "headline": "Weekend meat run, sorted",
       "description": "Check hours before you go",
       "cta": "Download",
-      "lengths": { "primaryText": 118, "headline": 24, "description": 25 },
+      "lengths": {
+        "primaryText": 118,
+        "headline": 24,
+        "description": 25
+      },
       "screenshotUsed": null,
       "claims": [
         "Meat and This weekend filters exist with those exact labels: src/components/FilterPanel.tsx.",
@@ -156,6 +209,7 @@
       "onImageText": [
         "Pin it. Drive there. Buy direct.",
         "About 40 places listing meat, each one pinned on the map.",
+        "[real app screenshot in a plain phone outline: map of the NSW coast with pins and a \"2\" cluster, \"Sydney NSW 2000\" and \"Filters\" capsules; town and national park labels only, no business names]",
         "Farm Direct",
         "Free for iPhone"
       ],
@@ -163,14 +217,25 @@
       "headline": "Pin it. Drive there. Buy direct.",
       "description": "Free. No sign-up.",
       "cta": "Install now",
-      "lengths": { "primaryText": 119, "headline": 32, "description": 17 },
-      "screenshotUsed": null,
+      "lengths": {
+        "primaryText": 119,
+        "headline": 32,
+        "description": 17
+      },
+      "screenshotUsed": "shared/screens/03-map.png (cropped above Apple's Maps attribution, last visible row about 2050 of 2868)",
       "claims": [
         "The map has a pin for every place: docs/APP_STORE.md; all 41 meat places have a latitude and longitude.",
         "About 40 places list beef, lamb, pork or chicken: 41 of 106 (25 farmers' markets, 12 farm shops, 3 farms, 1 farm-gate stall).",
         "Hours or by-appointment details are recorded for all 41.",
-        "Directions open Apple Maps: docs/APP_STORE.md."
+        "Directions open Apple Maps: docs/APP_STORE.md.",
+        "The map shown is the default, unfiltered map of all places, not a Meat-filtered map, so its pins are not a count of meat places. The on-image claim is only that the about 40 meat places are each pinned on the map, which holds (all 41 have a latitude and longitude). Keep the crop above row 2100 so the Apple Maps attribution never shows."
       ]
     }
-  ]
+  ],
+  "screens": {
+    "note": "Real iPhone screenshots of the finished app, 1320x2868, in shared/screens/. Ads 2 and 5 show one each; ads 1, 3 and 4 use type and drawings only.",
+    "01-explore.png": "Explore list, all 106 places. Not used in any of the five ads (used by shared/template.html only).",
+    "02-explore-meat.png": "Explore list with the Meat filter on: 41 places, nearest first. Used in ad 2.",
+    "03-map.png": "Map of the NSW coast with pins and a cluster. Used in ad 5, cropped above the Apple Maps attribution."
+  }
 }

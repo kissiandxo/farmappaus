@@ -6,21 +6,10 @@
 <!-- Ad 02-real-meat-tap. Ground: app pale grey. Focal point: the oversized
      selected Meat filter pill with a tap ripple and one gold fingertip dot.
 
-     PHONE IS OFF BY DEFAULT (data-phone="off" on the artboard).
-     Every file in shared/screens/ except 07 is currently the same single
-     place page for one named, unclaimed business (01-explore included), so
-     showing it would make one real business the hero (brief rule 4) and
-     would contradict "Tap Meat" (it lists no meat). The ad is complete
-     without the phone.
-
-     To bring the phone back once shared/screens/02-explore-meat.png really
-     is the Explore list with the Meat chip selected (several places):
-       1. open 02-explore-meat.png and confirm it is a LIST of several
-          places, not a place page (never 04-place-meat: a single named
-          business and a "grass-fed" raising claim);
-       2. change data-phone="off" to data-phone="on" below;
-       3. node marketing/ads/render.mjs 02-real-meat-tap and look at both PNGs.
-     Preview without editing: ad.html?size=feed&phone=1 (or size=story).
+     PHONE IS ON (data-phone="on"): shared/screens/02-explore-meat.png is the
+     real Explore list with the Meat filter on ("41 places . nearest first",
+     several place cards). Only this screen belongs here; never 04-place-meat
+     (one named business). data-phone="off" still gives the no-phone layout.
 
      Render: node marketing/ads/render.mjs 02-real-meat-tap -->
 <link rel="stylesheet" href="../shared/kit.css">
@@ -54,24 +43,34 @@
   /* Open band y ~710..1448; pill centred at y 1060. */
   .story .tap      { top: 950px; }
 
-  /* ================= PHONE ON (after the real Meat list arrives) =========
-     Phone: 540 px screen, frame x 452..1020 (80 px right margin, matching
-     the left). Frame cropped by its own bottom edge above the footer, so the
-     footer lockup (text ends ~x 460) never sits beside the frame.
-     Pill 340 x 150 ends at x 472: it overlaps only the 14 px border plus
-     6 px, so it never covers the screen's content. Rings pass behind. */
+  /* ================= PHONE ON (real Meat list, 02-explore-meat.png) =====
+     Screen 480 px wide (scale 480/1320). The screenshot is raised a further
+     110 px (screenshot px) beyond .no-status (280 px hidden in all), which
+     trims the blank band above 'Explore'. The frame moves down by the same
+     40 px and --h shrinks by 40, so every line of screen content stays at
+     the same artboard y and the bottom crop still falls in the grey gap
+     between card 2 (ends y 2044) and card 3 (starts y 2080): the phone shows
+     the location row, "41 places . nearest first", the info note and exactly
+     two whole place cards at equal size.
+     Frame 508 x 681, x 512..1020; bottom aligns with the footer band's
+     bottom (feed 1292, story 1560).
+     The Meat pill (340 x 150, x 80..420) sits clear of the phone in the left
+     column, centred on the screenshot's "41 places" line (tap -> result).
+     Outer ring x 40..460: 52 px of grey before the frame (x 512). The gold
+     fingertip sits fully inside the pill at its right end. */
   .shot { display: none; }
-  [data-phone="on"] .shot { display: block; left: 452px; top: 520px; --w: 540px; --h: 592px; } /* frame y 520..1140 */
-  [data-phone="on"] .tap  { left: 132px; top: 755px; --gap1: 24px; --gap2: 48px; }            /* outer ring x 84 */
-  [data-phone="on"] .chip.pill { width: 340px; height: 150px; font-size: 84px; box-shadow: 0 12px 28px rgba(27,115,53,0.26); }
-  [data-phone="on"] .tap .dot-gold { top: calc(100% - 26px); }
-  /* Story: frame y 800..1408, footer 1448..1560 below it; pill centre y 1080 */
-  .story[data-phone="on"] .shot { top: 800px; --h: 580px; }
-  .story[data-phone="on"] .tap  { top: 1005px; }
+  [data-phone="on"] .shot { display: block; left: 512px; top: 611px; --w: 480px; --h: 653px; }
+  [data-phone="on"] .shot > img { margin-top: calc(var(--w) * -280 / 1320); }
+  [data-phone="on"] .tap  { left: var(--margin); top: 760px; --gap1: 20px; --gap2: 40px; }
+  [data-phone="on"] .chip.pill { width: 340px; height: 150px; font-size: 84px; padding: 0 30px 0 0; box-shadow: 0 12px 28px rgba(27,115,53,0.26); }
+  [data-phone="on"] .tap .dot-gold { left: auto; right: 28px; top: calc(50% - 14px); }
+  /* Story: frame y 879..1560 beside the footer (1448..1560). */
+  .story[data-phone="on"] .shot { top: 879px; }
+  .story[data-phone="on"] .tap  { top: 1028px; }
 </style>
 </head>
 <body>
-<div class="artboard feed bg-grey" data-phone="off">
+<div class="artboard feed bg-grey" data-phone="on">
 
   <h1 class="hl hl-120 headline">
     <span class="line">Real meat.</span>

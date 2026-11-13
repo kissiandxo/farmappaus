@@ -6,30 +6,31 @@
 <!-- Ad 05 pin-drive-buy. Render: node render.mjs 05-pin-drive-buy
      Ground: dark forest (ad 5 only).
 
-     REVISION NOTE (critique round 1): the phone and 03-map.png have been
-     DROPPED on purpose. shared/screens/03-map.png is still a placeholder
-     (byte-identical to 01) that shows one named place page, not the map, and
-     putting it in the phone made a single named business the hero (rule 4).
-     Per the claims critic's fallback, the focal device is now original
-     drawing only: three large pins on one dotted route over faint contour
-     lines, filling the lower half. No screenshot is used, so the render does
-     not change when the real screens arrive.
+     REVISION 2 (real screens arrived): the focal device is now the real app
+     map, shared/screens/03-map.png (Apple map of the NSW coast with the app's
+     coloured pins and a numbered cluster), in the kit's plain CSS phone
+     outline (.frame-light for the dark ground, .no-status). The drawn pins are
+     reduced to one supporting motif: a dotted route with a single pin whose
+     centre is the ad's one wattle-gold mark.
 
-     The ad's one wattle-gold mark is the centre dot of the largest pin. -->
+     APPLE "MAPS" ATTRIBUTION: in the screenshot it sits at about y 2120-2180
+     (of 2868), lower left. Both sizes crop the screen with the frame's bottom
+     edge (--h) ABOVE that line, so no Apple logo appears:
+       feed:  --w 460, --h 655 -> last visible screenshot row = 170 + 655*1320/460 = 2050
+       story: --w 460, --h 655 -> last visible row            = 170 + 655*1320/460 = 2050
+     If you change --w or --h, keep the last visible row under 2100. -->
 <link rel="stylesheet" href="../shared/kit.css">
 <style>
   /* ---------- Feed 1080x1350 ---------- */
-  .headline { position: absolute; left: var(--margin); top: 100px; }
-  .sub      { position: absolute; left: var(--margin); top: 456px; width: 860px; }
+  .headline { position: absolute; left: var(--margin); top: 88px; }
+  .sub      { position: absolute; left: var(--margin); top: 438px; width: 900px; }
 
-  /* Drawing layer, in artboard pixels */
-  .map-art { position: absolute; left: 0; top: 0; z-index: 1; pointer-events: none; }
-  .contour { fill: none; stroke: rgba(205,232,196,0.10); stroke-width: 5px; stroke-linecap: round; stroke-linejoin: round; }
-  .road    { fill: none; stroke: rgba(247,245,239,0.40); stroke-width: 8px; stroke-linecap: round; stroke-dasharray: 0 24; }
-  .pin-body { fill: var(--green); stroke: var(--offwhite); stroke-width: 6px; stroke-linejoin: round;
-              vector-effect: non-scaling-stroke; }
-  .pin-dot  { fill: var(--offwhite); }
-  .pin-dot.gold { fill: var(--gold); }
+  .map-phone { left: 512px; top: 607px; --w: 460px; --h: 655px; }  /* frame 488 x 683: x 512..1000, y 607..1290 (footer band bottom) */
+
+  .motif { position: absolute; left: 0; top: 0; z-index: 1; pointer-events: none; }
+  .road  { fill: none; stroke: rgba(205,232,196,0.45); stroke-width: 8px; stroke-linecap: round; stroke-dasharray: 0 24; }
+  .pin-body { fill: var(--green); stroke: var(--offwhite); stroke-width: 6px; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
+  .pin-dot  { fill: var(--gold); }
   .pin-shadow { fill: rgba(0,0,0,0.38); }
   .pin { filter: drop-shadow(0 16px 22px rgba(0,0,0,0.30)); }
 
@@ -38,8 +39,9 @@
 
   /* ---------- Story 1080x1920 ---------- */
   .story { --footer-top: 1444px; }
-  .story .headline { top: 326px; }
-  .story .sub      { top: 726px; width: 900px; }
+  .story .headline { top: 282px; }
+  .story .sub      { top: 656px; }
+  .story .map-phone { left: 512px; top: 876px; --w: 460px; --h: 655px; }  /* frame 488 x 683: x 512..1000, y 876..1559 (level with brand icon) */
 </style>
 </head>
 <body>
@@ -53,74 +55,38 @@
 
   <p class="support support-42 sub">About 40 places listing meat, each one pinned on the map.</p>
 
-  <!-- Original drawing (not text): faint contour lines suggest a map; one
-       dotted route runs in from the left edge, touches the tip of each pin
-       and leaves past the right edge. Pin = teardrop 100 x 140 units, tip at
-       (50,136); the outline stays 6 px at every scale (non-scaling stroke). -->
-  <svg class="map-art feed-only" width="1080" height="1350" viewBox="0 0 1080 1350" aria-hidden="true">
+  <!-- Focal device: the real app map in the kit's plain CSS phone outline.
+       Cropped by the frame's bottom edge above Apple's "Maps" attribution. -->
+  <div class="phone crop no-status frame-light map-phone">
+    <img src="../shared/screens/03-map.png" alt="">
+  </div>
+
+  <!-- Supporting motif (drawing, not text): a dotted route runs up the left
+       column into the phone, past one pin. Pin = teardrop 100 x 140 units,
+       tip at (50,136). Gold centre = the ad's one warm mark. -->
+  <svg class="motif feed-only" width="1080" height="1350" viewBox="0 0 1080 1350" aria-hidden="true">
     <defs>
       <path id="pin" d="M50 136 C40 116 8 88 8 50 A42 42 0 0 1 92 50 C92 88 60 116 50 136 Z"/>
     </defs>
-    <path class="contour" d="M-20 700 C 180 660, 340 720, 560 690 S 900 640, 1100 680"/>
-    <path class="contour" d="M-20 820 C 160 790, 300 850, 520 820 S 880 760, 1100 800"/>
-    <path class="contour" d="M600 1350 C 640 1250, 760 1210, 900 1230 S 1060 1200, 1100 1150"/>
-    <path class="contour" d="M720 1350 C 760 1290, 860 1270, 960 1290 S 1070 1270, 1100 1250"/>
-
-    <!-- route through the three tips: (240,1040) (520,940) (830,1090) -->
-    <path class="road" d="M-20 1110 C 80 1090, 170 1060, 240 1040 C 330 1012, 420 960, 520 940 C 640 916, 720 1060, 830 1090 C 940 1120, 1020 1110, 1100 1080"/>
-
-    <!-- ground shadows under each tip -->
-    <ellipse class="pin-shadow" cx="240" cy="1042" rx="30" ry="9"/>
-    <ellipse class="pin-shadow" cx="520" cy="942"  rx="38" ry="11"/>
-    <ellipse class="pin-shadow" cx="830" cy="1092" rx="48" ry="14"/>
-
-    <!-- small pin, 150 px tall, tip at (240,1040) -->
-    <g class="pin" transform="translate(240 1040) scale(1.1719) translate(-50 -136)">
+    <path class="road" d="M150 1080 C 170 1020, 260 985, 290 925"/>
+    <path class="road" d="M290 805 C 300 740, 380 712, 490 712"/>
+    <ellipse class="pin-shadow" cx="290" cy="902" rx="27" ry="9"/>
+    <g class="pin" transform="translate(290 900) scale(0.9) translate(-50 -136)">
       <use href="#pin" class="pin-body"/>
       <circle class="pin-dot" cx="50" cy="50" r="15"/>
-    </g>
-    <!-- medium pin, 190 px tall, tip at (520,940) -->
-    <g class="pin" transform="translate(520 940) scale(1.4844) translate(-50 -136)">
-      <use href="#pin" class="pin-body"/>
-      <circle class="pin-dot" cx="50" cy="50" r="15"/>
-    </g>
-    <!-- large pin, 240 px tall, tip at (830,1090); gold centre = the one warm mark -->
-    <g class="pin" transform="translate(830 1090) scale(1.875) translate(-50 -136)">
-      <use href="#pin" class="pin-body"/>
-      <circle class="pin-dot gold" cx="50" cy="50" r="15"/>
     </g>
   </svg>
 
-  <svg class="map-art story-only" width="1080" height="1920" viewBox="0 0 1080 1920" aria-hidden="true">
+  <svg class="motif story-only" width="1080" height="1920" viewBox="0 0 1080 1920" aria-hidden="true">
     <defs>
       <path id="pin-s" d="M50 136 C40 116 8 88 8 50 A42 42 0 0 1 92 50 C92 88 60 116 50 136 Z"/>
     </defs>
-    <path class="contour" d="M-20 960 C 180 920, 340 990, 560 955 S 900 900, 1100 940"/>
-    <path class="contour" d="M-20 1100 C 160 1065, 300 1135, 520 1100 S 880 1035, 1100 1080"/>
-    <path class="contour" d="M560 1580 C 610 1470, 740 1420, 890 1440 S 1060 1410, 1100 1350"/>
-    <path class="contour" d="M700 1600 C 750 1530, 860 1505, 960 1525 S 1070 1500, 1100 1480"/>
-
-    <!-- route through the tips: (240,1320) (520,1200) (830,1370) -->
-    <path class="road" d="M-20 1395 C 80 1372, 170 1340, 240 1320 C 330 1292, 420 1222, 520 1200 C 650 1172, 720 1336, 830 1370 C 940 1404, 1020 1394, 1100 1360"/>
-
-    <ellipse class="pin-shadow" cx="240" cy="1322" rx="33" ry="10"/>
-    <ellipse class="pin-shadow" cx="520" cy="1202" rx="42" ry="12"/>
-    <ellipse class="pin-shadow" cx="830" cy="1372" rx="53" ry="15"/>
-
-    <!-- small pin 165 px, tip (240,1320) -->
-    <g class="pin" transform="translate(240 1320) scale(1.2891) translate(-50 -136)">
+    <path class="road" d="M150 1366 C 170 1306, 260 1271, 290 1211"/>
+    <path class="road" d="M290 1091 C 300 1026, 380 981, 490 981"/>
+    <ellipse class="pin-shadow" cx="290" cy="1188" rx="27" ry="9"/>
+    <g class="pin" transform="translate(290 1186) scale(0.9) translate(-50 -136)">
       <use href="#pin-s" class="pin-body"/>
       <circle class="pin-dot" cx="50" cy="50" r="15"/>
-    </g>
-    <!-- medium pin 210 px, tip (520,1200) -->
-    <g class="pin" transform="translate(520 1200) scale(1.6406) translate(-50 -136)">
-      <use href="#pin-s" class="pin-body"/>
-      <circle class="pin-dot" cx="50" cy="50" r="15"/>
-    </g>
-    <!-- large pin 265 px, tip (830,1370); gold centre -->
-    <g class="pin" transform="translate(830 1370) scale(2.0703) translate(-50 -136)">
-      <use href="#pin-s" class="pin-body"/>
-      <circle class="pin-dot gold" cx="50" cy="50" r="15"/>
     </g>
   </svg>
 
