@@ -1,0 +1,709 @@
+{
+  "researchedOn": "2026-11-13",
+  "region": "NSW/ACT/VIC/TAS (second pass)",
+  "listings": [
+    {
+      "name": "The Central Coast Farmers Market",
+      "type": "farmers_market",
+      "address": "Gosford Showground, Showground Road",
+      "locality": "Gosford",
+      "state": "NSW",
+      "postcode": "2250",
+      "products": [],
+      "otherProducts": "Locally grown farm produce alongside artisan food, bakery stalls and coffee/brew, as described on the market's site.",
+      "tags": [],
+      "hours": {
+        "kind": "weekly",
+        "days": {
+          "sun": [
+            [
+              "07:00",
+              "12:00"
+            ]
+          ]
+        },
+        "note": "Described as an all-weather event, rain or shine."
+      },
+      "hoursAsStated": "Every Sunday, 7am to 12pm.",
+      "website": "https://www.thecentralcoastfarmersmarket.com",
+      "phone": null,
+      "description": "A weekly Sunday market at Gosford Showground selling locally grown farm produce and artisan food.",
+      "sources": [
+        "https://www.thecentralcoastfarmersmarket.com",
+        "https://www.visitnsw.com/destinations/central-coast/gosford-area/gosford/events/the-central-coast-farmers-market"
+      ],
+      "confidence": "high",
+      "caveats": "Own site copyright line says 2025; the Visit NSW listing shows the event running weekly from 15 Nov 2026. Other listings gave older or different domains and a 1pm finish; the market's own 7am-12pm used."
+    },
+    {
+      "name": "Lismore Farmers Market",
+      "type": "farmers_market",
+      "address": "116 Alexandra Parade",
+      "locality": "North Lismore",
+      "state": "NSW",
+      "postcode": "2480",
+      "products": [
+        "eggs",
+        "honey",
+        "pork",
+        "lamb",
+        "fruit",
+        "veg"
+      ],
+      "otherProducts": "Also plants, mulch and compost, nuts, salami, bread, pastries, preserves, ferments and breakfast/coffee.",
+      "tags": [],
+      "hours": {
+        "kind": "weekly",
+        "days": {
+          "sat": [
+            [
+              "07:30",
+              "11:30"
+            ]
+          ]
+        },
+        "note": "The NSW Government event page lists individual Saturday dates; a few Saturdays (for example 23 May 2026) are not listed."
+      },
+      "hoursAsStated": "Saturdays, 7:30am to 11:30am (individual dates listed on the NSW Government events page through December 2026).",
+      "website": "https://www.facebook.com/Lismore.Farmers.Market/",
+      "phone": null,
+      "description": "A Saturday-morning market with fruit and vegetable growers and other local producers, with undercover shopping.",
+      "sources": [
+        "https://www.nsw.gov.au/visiting-and-exploring-nsw/nsw-events/lismore-farmers-market"
+      ],
+      "confidence": "high",
+      "caveats": "Only website given by the official page is a Facebook page. Page says check with organiser for latest times."
+    },
+    {
+      "name": "Mullum Farmers Market",
+      "type": "farmers_market",
+      "address": "Mullumbimby Showgrounds, Main Arm Road",
+      "locality": "Mullumbimby",
+      "state": "NSW",
+      "postcode": "2483",
+      "products": [
+        "honey",
+        "fruit",
+        "veg"
+      ],
+      "otherProducts": "Stallholder categories on the site include vegetables, fruit and herbs, honey, artisan condiments and native bushfoods; the site describes fresh organic produce from local farmers.",
+      "tags": [],
+      "hours": {
+        "kind": "weekly",
+        "days": {
+          "fri": [
+            [
+              "07:00",
+              "11:00"
+            ]
+          ]
+        },
+        "note": "Site notes a change to Wednesday 23 December 2026 (Christmas Day falls on a Friday) and open on Friday 1 January 2027."
+      },
+      "hoursAsStated": "Every Friday from 7am to 11am.",
+      "website": "https://mullumfarmersmarket.org.au/",
+      "phone": null,
+      "description": "A weekly Friday market at the Mullumbimby Showgrounds where local farmers sell fresh produce directly.",
+      "sources": [
+        "https://mullumfarmersmarket.org.au/",
+        "https://mullumfarmersmarket.org.au/meet-the-producers/"
+      ],
+      "confidence": "high",
+      "caveats": "Site announcement was dated 9 Nov 2026. 'Organic' is described generally; no certification per stallholder was verified, so no tags."
+    },
+    {
+      "name": "Torquay Farmers Market",
+      "type": "farmers_market",
+      "address": "1 Merrijig Drive",
+      "locality": "Torquay",
+      "state": "VIC",
+      "postcode": "3228",
+      "products": [
+        "eggs",
+        "honey",
+        "fruit",
+        "veg"
+      ],
+      "otherProducts": "Also meat, artisan cheeses and breads, smoked fish, salami, olive oil, jams, preserves, nuts and coffee. Described as plastic-bag free.",
+      "tags": [],
+      "hours": {
+        "kind": "weekly",
+        "days": {
+          "sat": [
+            [
+              "08:30",
+              "13:00"
+            ]
+          ]
+        },
+        "note": null
+      },
+      "hoursAsStated": "Open 8.30am to 1.00pm every Saturday.",
+      "website": "https://visitgreatoceanroad.org.au/great-ocean-road-adventures/torquay-farmers-market",
+      "phone": null,
+      "description": "A weekly Saturday market selling local fresh produce and artisan foods.",
+      "sources": [
+        "https://visitgreatoceanroad.org.au/great-ocean-road-adventures/torquay-farmers-market",
+        "https://www.otwayharvesttrail.org.au/listing/torquay-farmers-market"
+      ],
+      "confidence": "medium",
+      "caveats": "Market's own website not located; website field is the regional tourism listing. Phone appears only on tourism pages so left blank. Meat type not stated so not tagged."
+    },
+    {
+      "name": "Bendigo Community Farmers Market",
+      "type": "farmers_market",
+      "address": "Bendigo Food Share, 227 Breen Street",
+      "locality": "Golden Square",
+      "state": "VIC",
+      "postcode": "3555",
+      "products": [
+        "eggs",
+        "fruit",
+        "veg"
+      ],
+      "otherProducts": "Also herbs, meat, bread, cheese, wine, olives, baked goods and dumplings.",
+      "tags": [],
+      "hours": {
+        "kind": "weekly",
+        "days": {},
+        "note": "Second Saturday of each month, 9am to 12.30pm (not expressible as weekly days)."
+      },
+      "hoursAsStated": "The second Saturday of each month from 9am - 12.30pm.",
+      "website": "https://www.bendigoregion.com.au/explore-bendigo/local-farmers-market",
+      "phone": null,
+      "description": "A monthly market where regional farmers sell seasonal produce directly.",
+      "sources": [
+        "https://www.bendigoregion.com.au/explore-bendigo/local-farmers-market"
+      ],
+      "confidence": "medium",
+      "caveats": "Other listings place it at the Bendigo Pony Club (Breen St and Belle Vue Rd) 9am-1pm; the official regional tourism page's venue and times used. Days left empty because monthly."
+    },
+    {
+      "name": "The Berry Dairy",
+      "type": "farm",
+      "address": "379 Mewburn Park Road",
+      "locality": "Maffra",
+      "state": "VIC",
+      "postcode": "3860",
+      "products": [
+        "fruit"
+      ],
+      "otherProducts": "Pick-your-own strawberries (described as spray-free), farm cafe with real fruit ice cream, animal farmyard.",
+      "tags": [],
+      "hours": {
+        "kind": "weekly",
+        "days": {
+          "mon": [
+            [
+              "10:00",
+              "16:30"
+            ]
+          ],
+          "thu": [
+            [
+              "10:00",
+              "16:30"
+            ]
+          ],
+          "fri": [
+            [
+              "10:00",
+              "18:00"
+            ]
+          ],
+          "sat": [
+            [
+              "10:00",
+              "16:30"
+            ]
+          ],
+          "sun": [
+            [
+              "10:00",
+              "16:30"
+            ]
+          ]
+        },
+        "note": "Closed Tuesday and Wednesday. Kitchen last orders 3pm; seasonal October to May."
+      },
+      "hoursAsStated": "Open Thursday-Monday, 10am-4.30pm (kitchen last orders 3pm); Fridays open until 6pm; closed Tuesday and Wednesday; seasonal October-May.",
+      "website": "https://theberrydairy.com.au/",
+      "phone": "03 4148 9821",
+      "description": "A family-run pick-your-own strawberry farm and farm cafe in Gippsland, open for the 2026 season.",
+      "sources": [
+        "https://theberrydairy.com.au/",
+        "https://theberrydairy.com.au/plan-your-visit/"
+      ],
+      "confidence": "high",
+      "caveats": "Farm Pass entry applies to picking. Site shows 'now open for the season'."
+    },
+    {
+      "name": "Ripe 'N' Ready Cherry Farm",
+      "type": "farm",
+      "address": "52 Arkwells Lane",
+      "locality": "Red Hill",
+      "state": "VIC",
+      "postcode": "3937",
+      "products": [
+        "eggs",
+        "honey",
+        "fruit"
+      ],
+      "otherProducts": "Pick-your-own cherries; farm shop with cherries, berries, garlic, cherry juice and other seasonal produce.",
+      "tags": [],
+      "hours": {
+        "kind": "weekly",
+        "days": {
+          "sun": [
+            [
+              "09:00",
+              "17:00"
+            ]
+          ],
+          "mon": [
+            [
+              "09:00",
+              "17:00"
+            ]
+          ],
+          "tue": [
+            [
+              "09:00",
+              "17:00"
+            ]
+          ],
+          "wed": [
+            [
+              "09:00",
+              "17:00"
+            ]
+          ],
+          "thu": [
+            [
+              "09:00",
+              "17:00"
+            ]
+          ],
+          "fri": [
+            [
+              "09:00",
+              "17:00"
+            ]
+          ],
+          "sat": [
+            [
+              "09:00",
+              "17:00"
+            ]
+          ]
+        },
+        "note": "Last orchard entry 4pm; closes 4pm on New Year's Eve. Cherry picking opens from mid-November to January, weather and fruit dependent."
+      },
+      "hoursAsStated": "9.00 am - 5.00 pm 7 days a week; pick-your-own cherries open mid-November to January.",
+      "website": "https://ripenreadycherryfarm.com",
+      "phone": null,
+      "description": "A Mornington Peninsula cherry and berry farm with a farm shop and pick-your-own cherries in season.",
+      "sources": [
+        "https://ripenreadycherryfarm.com",
+        "https://ripenreadycherryfarm.com/pick-your-own"
+      ],
+      "confidence": "medium",
+      "caveats": "Page does not carry a dated 2026 notice; picking start is described as mid-November and depends on the fruit. Site copyright runs to 2027."
+    },
+    {
+      "name": "Hillwood Berries (Pick Your Own farm and farmgate cafe)",
+      "type": "farm",
+      "address": "105 Hillwood Road",
+      "locality": "Hillwood",
+      "state": "TAS",
+      "postcode": "7252",
+      "products": [
+        "fruit"
+      ],
+      "otherProducts": "Pick-your-own berries, berry-inspired cafe, fruit wines, vinegars and jams.",
+      "tags": [],
+      "hours": {
+        "kind": "weekly",
+        "days": {
+          "sun": [
+            [
+              "10:00",
+              "16:00"
+            ]
+          ],
+          "mon": [
+            [
+              "10:00",
+              "16:00"
+            ]
+          ],
+          "tue": [
+            [
+              "10:00",
+              "16:00"
+            ]
+          ],
+          "wed": [
+            [
+              "10:00",
+              "16:00"
+            ]
+          ],
+          "thu": [
+            [
+              "10:00",
+              "16:00"
+            ]
+          ],
+          "fri": [
+            [
+              "10:00",
+              "16:00"
+            ]
+          ],
+          "sat": [
+            [
+              "10:00",
+              "16:00"
+            ]
+          ]
+        },
+        "note": "Hours quoted are for the farmgate cafe; the site says to follow Facebook for seasonal opening hours."
+      },
+      "hoursAsStated": "Cafe is open everyday from 10am - 4pm. Follow us on Facebook for frequent updates on our offering and seasonal opening hours.",
+      "website": "https://www.hillwoodberries.com.au",
+      "phone": "03 6394 8180",
+      "description": "A pick-your-own berry farm near Launceston with an on-site farmgate cafe.",
+      "sources": [
+        "https://www.hillwoodberries.com.au/pick-your-own",
+        "https://www.hillwoodberries.com.au"
+      ],
+      "confidence": "medium",
+      "caveats": "Picking hours are not separately stated; the working farm at 139 Hillwood Road is by appointment only."
+    },
+    {
+      "name": "Touchwood Farm Goat Dairy",
+      "type": "farm_shop",
+      "address": "7777 Huon Highway",
+      "locality": "Strathblane",
+      "state": "TAS",
+      "postcode": "7109",
+      "products": [],
+      "otherProducts": "Goat milk soap and lotions, goat cheese and seasonal farm produce, per the Huon Valley Council directory.",
+      "tags": [],
+      "hours": {
+        "kind": "weekly",
+        "days": {
+          "sun": [
+            [
+              "11:00",
+              "16:00"
+            ]
+          ]
+        },
+        "note": "The council directory lists Thursday to Sunday 10am-4pm instead."
+      },
+      "hoursAsStated": "Own site: from 11am to 4pm Sundays. Council directory: Thursdays to Sundays 10am to 4pm.",
+      "website": "https://touchwoodfarm.com",
+      "phone": null,
+      "description": "A goat dairy farm in the Huon Valley selling goat products directly from the farm gate.",
+      "sources": [
+        "https://touchwoodfarm.com",
+        "https://www.huonvalley.tas.gov.au/service/touchwood-farm-goat-dairy/"
+      ],
+      "confidence": "medium",
+      "caveats": "Own site and council differ on hours; own site used. Confirm before visiting."
+    },
+    {
+      "name": "Bowral Honey Farm",
+      "type": "farm",
+      "address": "Retford Park, 1325 Old South Road",
+      "locality": "Bowral",
+      "state": "NSW",
+      "postcode": "",
+      "products": [],
+      "otherProducts": "Working apiary with hands-on tours and honey tastings; the listing does not itemise what is sold.",
+      "tags": [],
+      "hours": {
+        "kind": "weekly",
+        "days": {
+          "sat": [
+            [
+              "10:00",
+              "16:00"
+            ]
+          ],
+          "sun": [
+            [
+              "10:00",
+              "16:00"
+            ]
+          ]
+        },
+        "note": null
+      },
+      "hoursAsStated": "Trading Hours Sat & Sun from 10am to 4pm.",
+      "website": "http://www.bowralhoneyfarm.com",
+      "phone": null,
+      "description": "A working apiary at Retford Park open weekends for tours and honey tastings.",
+      "sources": [
+        "https://www.visitsouthernhighlands.com.au/operator/bowral-honey-farm"
+      ],
+      "confidence": "medium",
+      "caveats": "Own domain did not load; hours are from the Visit Southern Highlands operator listing. Sale of honey for takeaway is not itemised there, so products left empty. Postcode not on the opened page."
+    },
+    {
+      "name": "Meredith Farm Produce Store and Cafe",
+      "type": "farm_shop",
+      "address": "30 Staughton Street",
+      "locality": "Meredith",
+      "state": "VIC",
+      "postcode": "3333",
+      "products": [
+        "honey"
+      ],
+      "otherProducts": "Cheese, yoghurts, meats, preserves and drinks from the Meredith Dairy farm, plus a cafe.",
+      "tags": [],
+      "hours": {
+        "kind": "weekly",
+        "days": {
+          "wed": [
+            [
+              "08:30",
+              "15:30"
+            ]
+          ],
+          "thu": [
+            [
+              "08:30",
+              "15:30"
+            ]
+          ],
+          "fri": [
+            [
+              "08:30",
+              "15:30"
+            ]
+          ],
+          "sat": [
+            [
+              "08:30",
+              "15:30"
+            ]
+          ],
+          "sun": [
+            [
+              "08:30",
+              "15:30"
+            ]
+          ]
+        },
+        "note": "Closed Monday and Tuesday."
+      },
+      "hoursAsStated": "Closed Monday and Tuesday; Wednesday to Sunday 8:30am to 3:30pm.",
+      "website": "https://www.meredithfarmproduce.com.au",
+      "phone": null,
+      "description": "A shop and cafe selling food from the Meredith Dairy farm.",
+      "sources": [
+        "https://www.visitgeelongbellarine.com.au/products/meredith-farm-produce-store-and-cafe",
+        "https://timesnewsgroup.com.au/goldenplains/news/from-farm-to-plate-with-produce-store"
+      ],
+      "confidence": "high",
+      "caveats": "A 2024 local news article gave 9am start; the current tourism listing's 8:30am used. Phone is on tourism page only."
+    },
+    {
+      "name": "Myrtlebank Roaming Farms Farmgate (The Chook House)",
+      "type": "farm_gate_stall",
+      "address": "1030 Maffra-Sale Road",
+      "locality": "Myrtlebank",
+      "state": "VIC",
+      "postcode": "3851",
+      "products": [
+        "eggs",
+        "beef"
+      ],
+      "otherProducts": "Online shop lists ready-to-eat meals, baked goods, fresh produce, pantry items and vegetables as well.",
+      "tags": [],
+      "hours": {
+        "kind": "always",
+        "days": {},
+        "note": "Own site: open daily, 7.30am to 7.30pm. Wellington Shire tourism page lists 7am-8pm."
+      },
+      "hoursAsStated": "Open 365 days a year, from 7.30am to 7.30pm.",
+      "website": "https://www.myrtlebankfarm.com",
+      "phone": null,
+      "description": "A farm shop selling eggs from the farm's free-range hens and grass-fed Black Angus beef.",
+      "sources": [
+        "https://www.myrtlebankfarm.com",
+        "https://themiddleofeverywhere.com.au/en/profiles/myrtlebank-roaming-farms-farmgate"
+      ],
+      "confidence": "high",
+      "caveats": "Wellington Shire page shows 7am-8pm; own site's hours used."
+    },
+    {
+      "name": "Bilpin Fruit Bowl",
+      "type": "farm_shop",
+      "address": "2093 Bells Line of Road",
+      "locality": "Bilpin",
+      "state": "NSW",
+      "postcode": "2758",
+      "products": [
+        "honey",
+        "fruit"
+      ],
+      "otherProducts": "Shop stocks local honey, homemade jams, souvenirs and fresh seasonal fruit; pick-your-own when fruit is available.",
+      "tags": [],
+      "hours": {
+        "kind": "weekly",
+        "days": {
+          "sun": [
+            [
+              "08:00",
+              "17:00"
+            ]
+          ],
+          "mon": [
+            [
+              "08:00",
+              "17:00"
+            ]
+          ],
+          "tue": [
+            [
+              "08:00",
+              "17:00"
+            ]
+          ],
+          "wed": [
+            [
+              "08:00",
+              "17:00"
+            ]
+          ],
+          "thu": [
+            [
+              "08:00",
+              "17:00"
+            ]
+          ],
+          "fri": [
+            [
+              "08:00",
+              "17:00"
+            ]
+          ],
+          "sat": [
+            [
+              "08:00",
+              "17:00"
+            ]
+          ]
+        },
+        "note": "Farm picking 10am-3pm when fruit is available; the site says to call ahead."
+      },
+      "hoursAsStated": "Cafe and shop open 7 days, 8:00am-5:00pm. Farm 10:00am-3:00pm when fruit is available for picking.",
+      "website": "https://bilpinfruitbowl.com.au/",
+      "phone": "02 4567 1152",
+      "description": "A roadside fruit shop and orchard on Bells Line of Road with pick-your-own fruit in season.",
+      "sources": [
+        "https://bilpinfruitbowl.com.au/",
+        "https://bilpinfruitbowl.com.au/?p=147"
+      ],
+      "confidence": "high",
+      "caveats": "Older page said it closes only on Christmas Day; picking depends on seasonal fruit."
+    }
+  ],
+  "unverified": [
+    {
+      "name": "SAGE Farmers Market Moruya",
+      "locality": "Moruya",
+      "state": "NSW",
+      "why": "Own site and NSW Government page confirm every Tuesday afternoon from 3pm at Riverside Park, Moruya NSW 2537, but no finish time is stated.",
+      "leadUrl": "https://www.sageproject.org.au/pages/sage-farmers-market"
+    },
+    {
+      "name": "Mudgee Farmers' Market",
+      "locality": "Mudgee",
+      "state": "NSW",
+      "why": "Visit Mudgee Region confirms Robertson Park, Market Street, with 21 Nov and 19 Dec 2026 dates, but still shows no opening hours.",
+      "leadUrl": "https://www.visitmudgeeregion.com.au/products/mudgee-farmers-market"
+    },
+    {
+      "name": "Coal Creek Farmers Market",
+      "locality": "Korumburra",
+      "state": "VIC",
+      "why": "Visit Gippsland confirms second Saturday monthly (14 Nov, 12 Dec 2026) at 12 Silkstone Rd, Korumburra 3950, but no hours on the page.",
+      "leadUrl": "https://www.visitgippsland.com.au/products/coal-creek-farmers-market"
+    },
+    {
+      "name": "Metung Farmers Market",
+      "locality": "Metung",
+      "state": "VIC",
+      "why": "Visit Gippsland shows second Saturday monthly (14 Nov, 12 Dec 2026) at 60 Metung Road, but no hours on the page.",
+      "leadUrl": "https://www.visitgippsland.com.au/products/metung-market"
+    },
+    {
+      "name": "Blackheath Growers Market",
+      "locality": "Blackheath",
+      "state": "NSW",
+      "why": "NSW Government page: mornings until noon, second Sunday monthly Feb-Dec, corner Gardiner Crescent and Great Western Highway; no start time.",
+      "leadUrl": "https://www.nsw.gov.au/visiting-and-exploring-nsw/nsw-events/blackheath-growers-market"
+    },
+    {
+      "name": "Springwood Growers Market",
+      "locality": "Springwood",
+      "state": "NSW",
+      "why": "Visit NSW lists monthly at Blue Mountains Theatre and Community Hub, 106-108 Macquarie Road; no hours on the page.",
+      "leadUrl": "https://www.visitnsw.com/destinations/blue-mountains/katoomba-area/springwood/events/springwood-growers-market"
+    },
+    {
+      "name": "Bob's Gardenfarm Shop",
+      "locality": "Hiawatha",
+      "state": "VIC",
+      "why": "Wellington Shire page describes the farmgate (28 Dessents Rd) but its hours display was ambiguous and its own site gave no hours.",
+      "leadUrl": "https://themiddleofeverywhere.com.au/en/profiles/bobs-gardenfarm-shop-farmgate"
+    },
+    {
+      "name": "Wilbert's Veggies & Cackleberries",
+      "locality": "Myrtlebank",
+      "state": "VIC",
+      "why": "Council page lists eggs and vegetables at 224 Myrtlebank Rd, but hours looked like a template default (identical to another listing).",
+      "leadUrl": "https://themiddleofeverywhere.com.au/en/profiles/wilberts-veggies-cackleberries-farmgate"
+    },
+    {
+      "name": "Bega Produce Market",
+      "locality": "Bega",
+      "state": "NSW",
+      "why": "Sapphire Coast page still returns 'page not found'.",
+      "leadUrl": "https://www.sapphirecoast.com.au/attraction/bega-produce-market"
+    },
+    {
+      "name": "Burnie City Market",
+      "locality": "Burnie",
+      "state": "TAS",
+      "why": "Council pages returned no readable content.",
+      "leadUrl": "https://www.burnie.tas.gov.au/Community/Whats-On-Events/2026/Burnie-City-Market"
+    },
+    {
+      "name": "Ballarat Farmers Market",
+      "locality": "Ballarat",
+      "state": "VIC",
+      "why": "visitballarat.com.au pages returned no content; only third-party listings.",
+      "leadUrl": "https://visitballarat.com.au/whats-on/ballarat-farmers-market"
+    },
+    {
+      "name": "Glen Huon Dairy farm shop",
+      "locality": "Glen Huon",
+      "state": "TAS",
+      "why": "Only a search snippet; page did not load.",
+      "leadUrl": "https://huonvalleytas.com/local/glen-huon-dairy-tour-farmgate"
+    },
+    {
+      "name": "Lismore, Devonport, Deloraine, Collingwood Children's Farm, South Geelong, Daylesford, Shields/Pine Crest/Huntley, Arden Farm Produce, Riverview Produce",
+      "locality": "various",
+      "state": "NSW/VIC/TAS",
+      "why": "Not resolved this pass: no readable official page with current hours.",
+      "leadUrl": ""
+    }
+  ]
+}
