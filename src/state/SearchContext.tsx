@@ -10,8 +10,21 @@ import {
 } from 'react';
 
 import { DEFAULT_FILTERS, searchFarms, type FarmFilters, type FarmResult } from '../domain/filters';
+import { parseFarmCache, serialiseFarmCache } from '../data/mappers';
+import { fetchLiveFarms } from '../data/repository';
 import { SAMPLE_FARMS } from '../data/sampleFarms';
 import type { Farm } from '../domain/types';
+import { isBackendConfigured } from '../lib/supabase';
+
+/** Where the listings on screen came from. */
+export type DataStatus =
+  | { kind: 'sample' }
+  | { kind: 'loading' }
+  | { kind: 'live'; at: string }
+  | { kind: 'cached'; at: string; failed: boolean }
+  | { kind: 'error' };
+
+const FARMS_CACHE_KEY = 'farmdirect.farms.v1';
 
 export interface UserLocation {
   /** Shown to the user, e.g. "Toowoomba QLD 4350". */
@@ -34,6 +47,10 @@ const STORAGE_KEY = 'farmdirect.location.v1';
 interface SearchState {
   /** All listings currently available (sample data until the backend is connected). */
   farms: Farm[];
+  dataStatus: DataStatus;
+  /** Reloads listings from the server (pull-to-refresh). */
+  refresh: () => Promise<void>;
+  refreshing: boolean;
   location: UserLocation;
   setLocation: (location: UserLocation) => void;
   filters: FarmFilters;
@@ -74,7 +91,54 @@ export function SearchProvider({ children }: { children: ReactNode }) {
     AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(next)).catch(() => {});
   }, []);
 
-  const farms = SAMPLE_FARMS;
+  const [farms, setFarms] = useState<Farm[]>(isBackendConfigured ? [] : SAMPLE_FARMS);
+  const [dataStatus, setDataStatus] = useState<DataStatus>(
+    isBackendConfigured ? { kind: 'loading' } : { kind: 'sample' },
+  );
+  const [refreshing, setRefreshing] = useState(false);
+
+  const refresh = useCallback(async () => {
+    if (!isBackendConfigured) return;
+    setRefreshing(true);
+    try {
+      const live = await fetchLiveFarms();
+      const now = new Date();
+      setFarms(live);
+      setDataStatus({ kind: 'live', at: now.toISOString() });
+      AsyncStorage.setItem(FARMS_CACHE_KEY, serialiseFarmCache(live, now)).catch(() => {});
+    } catch {
+      // Keep whatever we already have on screen; only say "error" if we have nothing.
+      setDataStatus((prev) =>
+        prev.kind === 'cached'
+          ? { ...prev, failed: true }
+          : prev.kind === 'live'
+            ? { kind: 'cached', at: prev.at, failed: true }
+            : { kind: 'error' },
+      );
+    } finally {
+      setRefreshing(false);
+    }
+  }, []);
+
+  // Show saved listings immediately (works with no reception), then refresh in the background.
+  useEffect(() => {
+    if (!isBackendConfigured) return;
+    let cancelled = false;
+    AsyncStorage.getItem(FARMS_CACHE_KEY)
+      .then((raw) => {
+        const cache = parseFarmCache(raw);
+        if (!cache || cancelled) return;
+        setFarms((prev) => (prev.length > 0 ? prev : cache.farms));
+        setDataStatus((prev) => (prev.kind === 'live' ? prev : { kind: 'cached', at: cache.savedAt, failed: false }));
+      })
+      .catch(() => {})
+      .finally(() => {
+        if (!cancelled) refresh();
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [refresh]);
 
   const results = useMemo(
     () => searchFarms(farms, filters, location, new Date()),
@@ -82,8 +146,8 @@ export function SearchProvider({ children }: { children: ReactNode }) {
   );
 
   const value = useMemo(
-    () => ({ farms, location, setLocation, filters, setFilters, results }),
-    [farms, location, setLocation, filters, results],
+    () => ({ farms, dataStatus, refresh, refreshing, location, setLocation, filters, setFilters, results }),
+    [farms, dataStatus, refresh, refreshing, location, setLocation, filters, results],
   );
 
   return <SearchContext.Provider value={value}>{children}</SearchContext.Provider>;

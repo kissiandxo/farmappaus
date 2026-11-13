@@ -3,9 +3,14 @@
 An iOS app for Australians to find and buy food directly from local farmers, so more of the money goes to the farmer. Built with Expo (React Native + TypeScript) so it can be developed, tested and shipped to TestFlight without a Mac.
 
 - Plan and milestones: [`docs/PLAN.md`](docs/PLAN.md)
+- Connecting the backend (Supabase), first admin, and how reviews work: [`docs/BACKEND.md`](docs/BACKEND.md)
 - Food-safety rules and the licence field: [`docs/COMPLIANCE.md`](docs/COMPLIANCE.md)
 
 ## Status
+
+**Milestone 4 – backend and accounts.** The app can now run against a Supabase project: live listings load from the server and are saved on the phone, so the last-seen listings still show with no reception (with a clear "saved listings" notice). Accounts (email and password), favourites that follow your account, in-app account deletion, and the database rules for farmers, reviews, claims and suggestions are in place and tested (`npm run test:sql`). With no Supabase keys the app runs on clearly labelled sample data. Set-up: [`docs/BACKEND.md`](docs/BACKEND.md).
+
+**Milestone 3 – farm profiles and favourites.** Each place has a full profile (photos, story, products and prices, hours, pick-up/delivery, payment types, licences, call, website, Apple Maps directions) and you can save favourites.
 
 **Milestone 2 – location and map.** On top of M1's list and filters (product, distance, "open now", tags), you can now:
 
@@ -44,7 +49,8 @@ Core logic in `src/domain` has no React or network code, so it is fast to test a
 
 ```bash
 npm install
-npm test            # Jest unit tests
+npm test            # Jest unit tests (app logic)
+npm run test:sql    # database schema and security rules, run in a local Postgres
 npm run typecheck   # TypeScript
 npm start           # Expo dev server (needs a computer or tunnel; see below)
 ```

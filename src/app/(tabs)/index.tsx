@@ -2,6 +2,7 @@ import { router } from 'expo-router';
 import { useState } from 'react';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
 
+import { DataBanner } from '../../components/DataBanner';
 import { FarmCard } from '../../components/FarmCard';
 import { FiltersModal } from '../../components/FiltersModal';
 import { LocationBar } from '../../components/LocationBar';
@@ -12,7 +13,7 @@ import { colors, font, radius, space } from '../../theme';
 import { Pressable } from 'react-native';
 
 export default function FarmListScreen() {
-  const { results, setFilters } = useSearch();
+  const { results, setFilters, refresh, refreshing, dataStatus } = useSearch();
   const [locationOpen, setLocationOpen] = useState(false);
   const [filtersOpen, setFiltersOpen] = useState(false);
 
@@ -30,12 +31,7 @@ export default function FarmListScreen() {
               onChangeLocation={() => setLocationOpen(true)}
               onOpenFilters={() => setFiltersOpen(true)}
             />
-            <View style={styles.banner} accessible accessibilityRole="alert">
-              <Text style={styles.bannerTitle}>Sample data</Text>
-              <Text style={styles.bannerText}>
-                These listings are made up so we can test the app. No real farms are shown yet.
-              </Text>
-            </View>
+            <DataBanner />
           </View>
         }
         ListEmptyComponent={
@@ -47,6 +43,8 @@ export default function FarmListScreen() {
             </Pressable>
           </View>
         }
+        refreshing={refreshing}
+        onRefresh={dataStatus.kind === 'sample' ? undefined : refresh}
         contentContainerStyle={styles.list}
         ItemSeparatorComponent={() => <View style={{ height: space.md }} />}
         keyboardShouldPersistTaps="handled"

@@ -1,14 +1,16 @@
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 
+import { AuthProvider } from '../state/AuthContext';
 import { FavouritesProvider } from '../state/FavouritesContext';
 import { SearchProvider } from '../state/SearchContext';
 import { colors } from '../theme';
 
 export default function RootLayout() {
   return (
-    <FavouritesProvider>
-      <SearchProvider>
+    <AuthProvider>
+      <FavouritesProvider>
+        <SearchProvider>
         <StatusBar style="light" />
         <Stack
           screenOptions={{
@@ -21,7 +23,8 @@ export default function RootLayout() {
         >
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         </Stack>
-      </SearchProvider>
-    </FavouritesProvider>
+        </SearchProvider>
+      </FavouritesProvider>
+    </AuthProvider>
   );
 }

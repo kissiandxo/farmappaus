@@ -9,7 +9,7 @@ No in-app payments in v1: the app connects people, the sale happens at the farm 
 |---|---|
 | App | Expo (React Native + TypeScript), Expo Router |
 | Build/ship | EAS Build + EAS Submit to TestFlight; EAS Update for phone previews in Expo Go |
-| Backend | Supabase (Postgres + PostGIS, Auth, Storage), Sydney region |
+| Backend | Supabase (Postgres, Auth, Storage), Sydney region. Plain lat/lng instead of PostGIS for v1: distances are computed on the phone, which the offline cache needs anyway. PostGIS can be added later (see `docs/BACKEND.md`). |
 | Maps | Apple Maps via `react-native-maps` (no API key) |
 | Offline | TanStack Query persisted cache + last-viewed farms stored on device |
 | Tests | Jest for core logic (distance, open-now, filters, validation, postcode lookup) |

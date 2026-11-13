@@ -107,6 +107,8 @@ export const LICENCE_LABELS: Record<LicenceCategory, string> = {
 };
 
 export interface Product {
+  /** Database id; absent for products not saved yet. */
+  id?: string;
   category: ProductCategory;
   name: string;
   /** Price in Australian cents (AUD). */
@@ -120,7 +122,11 @@ export interface Product {
 
 export type LicenceCategory = 'dairy' | 'eggs' | 'meat' | 'poultry' | 'other';
 
+export type ListingStatus = 'draft' | 'pending' | 'live' | 'rejected';
+
 export interface Licence {
+  /** Database id; absent for licences not saved yet. */
+  id?: string;
   category: LicenceCategory;
   regulator: string;
   licenceNumber: string;
@@ -153,4 +159,9 @@ export interface Farm {
   isSample: boolean;
   /** ISO date, YYYY-MM-DD. */
   updatedOn: string;
+  /** Review state. Public lists only ever contain "live"; owners and admins see the rest. */
+  status?: ListingStatus;
+  ownerId?: string | null;
+  /** Message from the reviewer when changes were requested or the listing was rejected. */
+  reviewNote?: string | null;
 }

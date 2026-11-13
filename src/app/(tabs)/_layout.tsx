@@ -35,6 +35,7 @@ export default function TabsLayout() {
       <Tabs.Screen name="index" options={{ title: 'List', tabBarIcon: icon('☰') }} />
       <Tabs.Screen name="map" options={{ title: 'Map', tabBarIcon: icon('⌖') }} />
       <Tabs.Screen name="saved" options={{ title: 'Saved', tabBarIcon: icon('♥') }} />
+      <Tabs.Screen name="account" options={{ title: 'Account', tabBarIcon: icon('☺') }} />
     </Tabs>
   );
 }
