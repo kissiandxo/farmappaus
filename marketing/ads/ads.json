@@ -1,0 +1,176 @@
+{
+  "campaign": "Farm Direct: real meat, real farmers",
+  "market": "Australia",
+  "language": "en-AU",
+  "status": "Ready, but do not run until Farm Direct is live on the App Store",
+  "countsCheckedOn": "2026-11-13",
+  "countsSource": "src/data/realListings.json",
+  "counts": {
+    "places": 106,
+    "placesListingMeat": 41,
+    "meatDefinition": "products array contains beef, lamb, pork or chicken",
+    "meatByType": { "farmers_market": 25, "farm_shop": 12, "farm": 3, "farm_gate_stall": 1 },
+    "meatByProduct": { "beef": 28, "lamb": 23, "pork": 18, "chicken": 16 },
+    "meatByState": { "NSW": 13, "VIC": 7, "WA": 7, "SA": 6, "QLD": 5, "ACT": 2, "TAS": 1, "NT": 0 },
+    "meatWithSatOrSunHours": 29,
+    "meatWithPostcode": 41,
+    "meatWithLatLng": 41
+  },
+  "limits": { "primaryText": 125, "headline": 40, "description": 30 },
+  "allowedCtas": ["Install now", "Download", "Learn more"],
+  "sizes": {
+    "feed": { "width": 1080, "height": 1350, "ratio": "4:5" },
+    "story": { "width": 1080, "height": 1920, "ratio": "9:16", "keepTextOut": "top 250 px and bottom 340 px" }
+  },
+  "ads": [
+    {
+      "id": "01-paddock-not-petri",
+      "name": "From a Paddock, Not a Petri Dish",
+      "idea": "The bold 'real, not lab' poster: one witty positioning line puts Farm Direct on the paddock side, with nobody else named or blamed.",
+      "files": {
+        "source": "01-paddock-not-petri/ad.html",
+        "feed": "out/01-paddock-not-petri-feed.png",
+        "story": "out/01-paddock-not-petri-story.png"
+      },
+      "onImageText": [
+        "From a paddock, not a petri dish.",
+        "About 40 places across Australia list beef, lamb, pork or chicken.",
+        "Farm Direct",
+        "Free for iPhone"
+      ],
+      "primaryText": "From a paddock, not a petri dish. About 40 places across Australia list beef, lamb, pork or chicken. Check before you go.",
+      "headline": "Meat from a paddock, not a petri dish",
+      "description": "Free. No account needed.",
+      "cta": "Install now",
+      "lengths": { "primaryText": 121, "headline": 37, "description": 24 },
+      "screenshotUsed": null,
+      "claims": [
+        "About 40 places list beef, lamb, pork or chicken: 41 of 106 records.",
+        "Across Australia: NSW, VIC, WA, SA, QLD, ACT and TAS (none in the NT), so never say 'every state'.",
+        "Free, no account: docs/APP_STORE.md.",
+        "'From a paddock, not a petri dish' is a positioning line about Farm Direct, not a claim about anyone else."
+      ],
+      "recheck": "If the meat count falls below about 38, change 'About 40' to 'Dozens of places'."
+    },
+    {
+      "id": "02-real-meat-tap",
+      "name": "Real Meat. Real Farmers. One Tap.",
+      "idea": "The defiant line, backed straight away by the one button a shopper presses: the Meat filter.",
+      "files": {
+        "source": "02-real-meat-tap/ad.html",
+        "feed": "out/02-real-meat-tap-feed.png",
+        "story": "out/02-real-meat-tap-story.png"
+      },
+      "onImageText": [
+        "Real meat. Real farmers.",
+        "Tap Meat for about 40 places listing beef, lamb, pork or chicken.",
+        "Meat (drawn filter button)",
+        "Farm Direct",
+        "Free for iPhone"
+      ],
+      "primaryText": "Real meat. Real farmers. Tap Meat and see about 40 places listing beef, lamb, pork or chicken. Free, no sign-up.",
+      "headline": "Tap Meat. Find the farmer.",
+      "description": "Beef, lamb, pork and chicken",
+      "cta": "Install now",
+      "lengths": { "primaryText": 112, "headline": 26, "description": 28 },
+      "screenshotUsed": null,
+      "screenshotOptional": "shared/screens/02-explore-meat.png (phone is off by default; turn on with data-phone=\"on\" in ad.html once the real Meat-filtered list screen is in place)",
+      "claims": [
+        "The app has a Meat filter covering beef, lamb, pork and chicken: MEAT_CHIP_LABEL in src/components/FilterPanel.tsx and docs/APP_STORE.md.",
+        "About 40 places list beef, lamb, pork or chicken: 41 of 106 records.",
+        "Free, no sign-up: docs/APP_STORE.md.",
+        "'Real meat. Real farmers.' is a positioning line, not a claim about any other product."
+      ]
+    },
+    {
+      "id": "03-meat-with-postcode",
+      "name": "Meat with a Postcode",
+      "idea": "Real meat comes from a real place: search a town or postcode, find the nearest places, and ask the farmer the rest.",
+      "files": {
+        "source": "03-meat-with-postcode/ad.html",
+        "feed": "out/03-meat-with-postcode-feed.png",
+        "story": "out/03-meat-with-postcode-story.png"
+      },
+      "onImageText": [
+        "Meat with a postcode.",
+        "Search a town or postcode for meat. Ask the farmer the rest.",
+        "BEEF · LAMB · PORK · CHICKEN",
+        "Farm Direct",
+        "Free for iPhone"
+      ],
+      "primaryText": "Enter a town or postcode to find the nearest of about 40 places listing beef, lamb, pork or chicken. Ask the farmer the rest.",
+      "headline": "Meat with a postcode",
+      "description": "Search by town or postcode",
+      "cta": "Download",
+      "lengths": { "primaryText": 125, "headline": 20, "description": 26 },
+      "screenshotUsed": null,
+      "claims": [
+        "Search by name, town, postcode or produce, and set any suburb or postcode: docs/APP_STORE.md.",
+        "Places are sorted by distance, so the app shows the nearest; the copy never says a place is near the viewer.",
+        "About 40 places list beef, lamb, pork or chicken: 41 of 106; all 41 have a postcode on record.",
+        "'Ask the farmer the rest' invites the shopper to ask; it claims nothing about any farm."
+      ]
+    },
+    {
+      "id": "04-weekend-meat-run",
+      "name": "Your Weekend Meat Run, Sorted",
+      "idea": "Turn the Saturday market or farm-shop run into a plan with the real Meat and This weekend filters and an honest, specific number.",
+      "files": {
+        "source": "04-weekend-meat-run/ad.html",
+        "feed": "out/04-weekend-meat-run-feed.png",
+        "story": "out/04-weekend-meat-run-story.png"
+      },
+      "onImageText": [
+        "Your weekend meat run, sorted.",
+        "SAT",
+        "SUN",
+        "Meat (drawn chip)",
+        "This weekend (drawn chip)",
+        "Nearly 30 places listing meat publish Saturday or Sunday hours.",
+        "Farm Direct",
+        "Free for iPhone"
+      ],
+      "primaryText": "Plan the weekend meat run: turn on Meat and This weekend, check the published hours, get directions. Free, no account.",
+      "headline": "Weekend meat run, sorted",
+      "description": "Check hours before you go",
+      "cta": "Download",
+      "lengths": { "primaryText": 118, "headline": 24, "description": 25 },
+      "screenshotUsed": null,
+      "claims": [
+        "Meat and This weekend filters exist with those exact labels: src/components/FilterPanel.tsx.",
+        "With This weekend on, each place shows this weekend's published times: docs/APP_STORE.md.",
+        "Nearly 30: 29 of the 41 meat places have weekly hours with a Saturday or Sunday slot.",
+        "Directions open Apple Maps (Apple Maps is not named on the image)."
+      ],
+      "recheck": "If the weekend count falls below 28, change 'Nearly 30' to 'About 30' (or recount and reword)."
+    },
+    {
+      "id": "05-pin-drive-buy",
+      "name": "Pin It. Drive There. Buy Direct.",
+      "idea": "The map makes it physical, for road-trippers and caravanners: every place is a pin; tap it for hours and directions, then buy from the farmer.",
+      "files": {
+        "source": "05-pin-drive-buy/ad.html",
+        "feed": "out/05-pin-drive-buy-feed.png",
+        "story": "out/05-pin-drive-buy-story.png"
+      },
+      "onImageText": [
+        "Pin it. Drive there. Buy direct.",
+        "About 40 places listing meat, each one pinned on the map.",
+        "Farm Direct",
+        "Free for iPhone"
+      ],
+      "primaryText": "Driving through? About 40 places listing beef, lamb, pork or chicken, each pinned on the map with hours and directions.",
+      "headline": "Pin it. Drive there. Buy direct.",
+      "description": "Free. No sign-up.",
+      "cta": "Install now",
+      "lengths": { "primaryText": 119, "headline": 32, "description": 17 },
+      "screenshotUsed": null,
+      "claims": [
+        "The map has a pin for every place: docs/APP_STORE.md; all 41 meat places have a latitude and longitude.",
+        "About 40 places list beef, lamb, pork or chicken: 41 of 106 (25 farmers' markets, 12 farm shops, 3 farms, 1 farm-gate stall).",
+        "Hours or by-appointment details are recorded for all 41.",
+        "Directions open Apple Maps: docs/APP_STORE.md."
+      ]
+    }
+  ]
+}

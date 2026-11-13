@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<title>Farm Direct ad 04: weekend meat run</title>
+<!-- Ad 04 "Your weekend meat run, sorted". Ground: deep green top over warm
+     off-white (family rule for ad 4). Focal device: two calendar tiles
+     straddling the divide, then the app's filter row (Meat + This weekend).
+     No screenshot, no named place, no times. Render: node render.mjs 04-weekend-meat-run -->
+<link rel="stylesheet" href="../shared/kit.css">
+<style>
+  /* Band bottom lands exactly on the divide: tile top = tile-c - tile-h/2; divide = tile top + band. */
+  .artboard { --divide: 530px; --tile-w: 330px; --tile-h: 360px; --tile-gap: 40px; --tile-c: 620px; --band: 90px; }
+  .story    { --divide: 740px; --tile-w: 370px; --tile-h: 390px; --tile-c: 835px; --band: 100px; --footer-top: 1450px; }
+
+  .top { top: 0; height: var(--divide); }
+  .headline { position: absolute; left: var(--margin); right: var(--margin); top: 164px; z-index: 2; text-align: center; word-spacing: 0.05em; }
+  .story .headline { top: 262px; }
+
+  /* Calendar tiles */
+  .tiles {
+    position: absolute; left: 0; right: 0;
+    top: calc(var(--tile-c) - var(--tile-h) / 2);
+    display: flex; justify-content: center; gap: var(--tile-gap); z-index: 3;
+  }
+  .tile { width: var(--tile-w); height: var(--tile-h); display: flex; flex-direction: column;
+          box-shadow: 0 18px 36px rgba(0,0,0,0.12), 0 2px 6px rgba(0,0,0,0.05); }
+  .tile__head {
+    height: var(--band); flex: none; background: #145A29; /* darker than the ground so the tile top reads */ color: var(--offwhite);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-display); font-weight: 700; font-size: calc(52px * var(--s));
+    letter-spacing: 0.04em;
+  }
+  .tile__body { flex: 1; display: flex; align-items: center; justify-content: center; color: var(--green); }
+  .tile__body svg { width: 76%; height: auto; }
+  .story .tile__body svg { width: 72%; }
+
+  /* Filter row */
+  .filters { position: absolute; left: 0; right: 0; top: 856px; display: flex; justify-content: center; z-index: 3; }
+  .story .filters { top: 1090px; }
+  .story .filters .chip { height: 92px; padding: 0 44px; font-size: 44px; }
+
+  .sub { position: absolute; left: var(--margin); right: var(--margin); top: 1034px; max-width: none; text-align: center; }
+  .story .sub { top: 1284px; }
+</style>
+</head>
+<body>
+<div class="artboard feed bg-offwhite">
+
+  <div class="block bg-green top"></div>
+
+  <h1 class="hl hl-104 headline on-dark">
+    <span class="line">Your weekend</span>
+    <span class="line">meat run, sorted.</span>
+  </h1>
+
+  <!-- Focal point: SAT and SUN calendar tiles -->
+  <div class="tiles">
+    <div class="card tile">
+      <div class="tile__head">SAT</div>
+      <div class="tile__body">
+        <!-- Market awning: scalloped striped canopy over a trestle table with a wrapped parcel -->
+        <svg class="art" viewBox="0 0 200 200" aria-hidden="true">
+          <!-- Wattle-gold sun tucked behind the canopy's top-left corner: the ad's one warm mark -->
+          <path class="ln gold" d="M28 2 V8 M5 24 H11 M45 24 H51 M12 8 L16 12 M44 8 L40 12 M12 40 L16 36"/>
+          <circle class="gold-fill" cx="28" cy="24" r="10"/>
+          <!-- Canopy filled white so it sits in front of the sun -->
+          <path class="ln" style="fill:#fff" d="M34 34 H166 L186 78 H14 Z"/>
+          <path class="ln" d="M14 78 q 14.33 22 28.67 0 q 14.33 22 28.67 0 q 14.33 22 28.67 0 q 14.33 22 28.67 0 q 14.33 22 28.67 0 q 14.33 22 28.67 0"/>
+          <path class="ln" d="M70 34 L63 78 M100 34 V78 M130 34 L137 78"/>
+          <path class="ln" d="M24 92 V186 M176 92 V186"/>
+          <!-- Butcher's-paper parcel tied with string on the trestle -->
+          <path class="ln" d="M68 136 V122 Q68 118 72 118 H128 Q132 118 132 122 V136"/>
+          <path class="ln" d="M86 118 V136 M114 118 V136"/>
+          <path class="ln" d="M38 136 H162"/>
+          <path class="ln" d="M56 136 L86 186 M86 136 L56 186 M114 136 L144 186 M144 136 L114 186"/>
+        </svg>
+      </div>
+    </div>
+    <div class="card tile">
+      <div class="tile__head">SUN</div>
+      <div class="tile__body">
+        <!-- Five-bar farm gate between two posts, with diagonal brace -->
+        <svg class="art" viewBox="0 0 200 200" aria-hidden="true">
+          <path class="ln" d="M14 32 H30 V186 H14 Z M170 32 H186 V186 H170 Z"/>
+          <path class="ln" d="M42 52 H160 M42 82 H160 M42 112 H160 M42 142 H160 M42 172 H160"/>
+          <path class="ln" d="M42 44 V180 M160 44 V180"/>
+          <path class="ln" d="M42 172 L160 52"/>
+          <path class="ln" d="M30 60 H42 M30 164 H42"/>
+          <path class="ln" d="M14 192 H186"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- The app's filter row: the two real filters this ad is about -->
+  <div class="filters">
+    <div class="chip-bar"><span class="chip">Meat</span><span class="chip">This weekend</span></div>
+  </div>
+
+  <p class="support support-42 sub">Nearly 30 places listing meat publish Saturday or Sunday hours.</p>
+
+  <div class="footer">
+    <div class="brand">
+      <img class="brand__icon" src="../shared/icon.png" alt="">
+      <div class="brand__text">
+        <span class="brand__name">Farm Direct</span>
+        <span class="brand__cta">Free for iPhone</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+<script src="../shared/kit.js"></script>
+</body>
+</html>

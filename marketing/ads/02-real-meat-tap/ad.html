@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<title>Farm Direct ad 02: Real Meat. Real Farmers. One Tap.</title>
+<!-- Ad 02-real-meat-tap. Ground: app pale grey. Focal point: the oversized
+     selected Meat filter pill with a tap ripple and one gold fingertip dot.
+
+     PHONE IS OFF BY DEFAULT (data-phone="off" on the artboard).
+     Every file in shared/screens/ except 07 is currently the same single
+     place page for one named, unclaimed business (01-explore included), so
+     showing it would make one real business the hero (brief rule 4) and
+     would contradict "Tap Meat" (it lists no meat). The ad is complete
+     without the phone.
+
+     To bring the phone back once shared/screens/02-explore-meat.png really
+     is the Explore list with the Meat chip selected (several places):
+       1. open 02-explore-meat.png and confirm it is a LIST of several
+          places, not a place page (never 04-place-meat: a single named
+          business and a "grass-fed" raising claim);
+       2. change data-phone="off" to data-phone="on" below;
+       3. node marketing/ads/render.mjs 02-real-meat-tap and look at both PNGs.
+     Preview without editing: ad.html?size=feed&phone=1 (or size=story).
+
+     Render: node marketing/ads/render.mjs 02-real-meat-tap -->
+<link rel="stylesheet" href="../shared/kit.css">
+<style>
+  /* ================= DEFAULT: NO PHONE ================= */
+  /* ---------- FEED 1080x1350 ---------- */
+  .headline { position: absolute; left: var(--margin); top: 104px; }
+  .sub      { position: absolute; left: var(--margin); top: 376px; width: 860px; }
+
+  /* Focal pill 560 x 220, centred on the artboard (x 540) and in the open
+     band between the support line (ends ~y 480) and the footer (y 1180):
+     centre y 838. Outer ring 712 x 372 -> x 184..896, inside the margins. */
+  .tap {
+    position: absolute; left: 260px; top: 728px;
+    --gap1: 34px; --gap2: 76px;
+  }
+  .chip.pill {
+    width: 560px; height: 220px; padding: 0;      /* symmetric: 'Meat' centred */
+    font-size: 120px; letter-spacing: -0.01em;
+    box-shadow: 0 14px 32px rgba(27,115,53,0.26);
+  }
+  /* Fingertip: the one wattle-gold mark. About 70% across, low on the
+     pill, just kissing its bottom edge, no halo: reads as the tap point
+     at the centre of the rings, not a switch knob. */
+  .tap .dot-gold { left: calc(70% - 14px); top: calc(100% - 22px); }
+
+  /* ---------- STORY 1080x1920 ---------- */
+  .story { --footer-top: 1448px; }
+  .story .headline { top: 300px; }
+  .story .sub      { top: 596px; width: 900px; }
+  /* Open band y ~710..1448; pill centred at y 1060. */
+  .story .tap      { top: 950px; }
+
+  /* ================= PHONE ON (after the real Meat list arrives) =========
+     Phone: 540 px screen, frame x 452..1020 (80 px right margin, matching
+     the left). Frame cropped by its own bottom edge above the footer, so the
+     footer lockup (text ends ~x 460) never sits beside the frame.
+     Pill 340 x 150 ends at x 472: it overlaps only the 14 px border plus
+     6 px, so it never covers the screen's content. Rings pass behind. */
+  .shot { display: none; }
+  [data-phone="on"] .shot { display: block; left: 452px; top: 520px; --w: 540px; --h: 592px; } /* frame y 520..1140 */
+  [data-phone="on"] .tap  { left: 132px; top: 755px; --gap1: 24px; --gap2: 48px; }            /* outer ring x 84 */
+  [data-phone="on"] .chip.pill { width: 340px; height: 150px; font-size: 84px; box-shadow: 0 12px 28px rgba(27,115,53,0.26); }
+  [data-phone="on"] .tap .dot-gold { top: calc(100% - 26px); }
+  /* Story: frame y 800..1408, footer 1448..1560 below it; pill centre y 1080 */
+  .story[data-phone="on"] .shot { top: 800px; --h: 580px; }
+  .story[data-phone="on"] .tap  { top: 1005px; }
+</style>
+</head>
+<body>
+<div class="artboard feed bg-grey" data-phone="off">
+
+  <h1 class="hl hl-120 headline">
+    <span class="line">Real meat.</span>
+    <span class="line alt">Real farmers.</span>
+  </h1>
+
+  <p class="support support-42 sub">Tap Meat for about 40 places listing beef, lamb, pork or chicken.</p>
+
+  <div class="phone crop no-status shot" id="shot"></div>
+
+  <div class="tap ripple">
+    <span class="chip chip-xl pill">Meat</span>
+    <span class="dot-gold"></span>
+  </div>
+
+  <div class="footer">
+    <div class="brand">
+      <img class="brand__icon" src="../shared/icon.png" alt="">
+      <div class="brand__text">
+        <span class="brand__name">Farm Direct</span>
+        <span class="brand__cta">Free for iPhone</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+<script>
+  /* Load the screenshot only when the phone is on, so a placeholder never
+     ships by accident. Only 02-explore-meat.png (the Meat list) belongs here. */
+  (function () {
+    var board = document.querySelector('.artboard');
+    if (new URLSearchParams(location.search).get('phone') === '1') board.dataset.phone = 'on';
+    if (board.dataset.phone === 'on') {
+      var img = document.createElement('img');
+      img.alt = '';
+      img.src = '../shared/screens/02-explore-meat.png';
+      document.getElementById('shot').appendChild(img);
+    }
+  })();
+</script>
+<script src="../shared/kit.js"></script>
+</body>
+</html>

@@ -1,0 +1,330 @@
+/* =====================================================================
+   Farm Direct ad kit: shared tokens and components for the meat campaign.
+   Artboards: feed 1080x1350, story 1080x1920. Read KIT.md before use.
+   Everything is in real artboard pixels (render at deviceScaleFactor 1).
+   ===================================================================== */
+
+/* ---------- Fonts ----------------------------------------------------
+   Declared with @font-face (system file first, installed file as
+   fallback) so the renderer can wait for them and detect a fallback. */
+@font-face { font-family: "Inter"; font-weight: 400; src: local("Inter Regular"), local("Inter-Regular"), url("file:///usr/share/fonts/opentype/inter/Inter-Regular.otf"); }
+@font-face { font-family: "Inter"; font-weight: 500; src: local("Inter Medium"), local("Inter-Medium"), url("file:///usr/share/fonts/opentype/inter/Inter-Medium.otf"); }
+@font-face { font-family: "Inter"; font-weight: 600; src: local("Inter SemiBold"), local("Inter-SemiBold"), url("file:///usr/share/fonts/opentype/inter/Inter-SemiBold.otf"); }
+@font-face { font-family: "Inter"; font-weight: 700; src: local("Inter Bold"), local("Inter-Bold"), url("file:///usr/share/fonts/opentype/inter/Inter-Bold.otf"); }
+@font-face { font-family: "Inter Display"; font-weight: 700; src: local("Inter Display Bold"), local("InterDisplay-Bold"), url("file:///usr/share/fonts/opentype/inter/InterDisplay-Bold.otf"); }
+@font-face { font-family: "Inter Display"; font-weight: 800; src: local("Inter Display ExtraBold"), local("InterDisplay-ExtraBold"), url("file:///usr/share/fonts/opentype/inter/InterDisplay-ExtraBold.otf"); }
+@font-face { font-family: "Inter Display"; font-weight: 900; src: local("Inter Display Black"), local("InterDisplay-Black"), url("file:///usr/share/fonts/opentype/inter/InterDisplay-Black.otf"); }
+
+/* ---------- Tokens --------------------------------------------------- */
+:root {
+  /* Family palette (creative lead) */
+  --green: #1B7335;          /* deep green: primary, the app accent (light mode) */
+  --forest: #0F3D1D;         /* dark forest: darkest ground, ad 5 only */
+  --sprout: #CDE8C4;         /* pale sprout: second-tone type and line art on green */
+  --offwhite: #F7F5EF;       /* warm off-white: light ground, type on green */
+  --grey-bg: #F2F2F7;        /* app pale grey: ad 2 ground */
+  --white: #FFFFFF;          /* cards, tiles, chips */
+  --ink: #111111;            /* near-black type on light */
+  --ink-2: #1C1C1E;          /* near-black alt; phone border on light */
+  --ink-sub: #3C3C43;        /* secondary grey: support lines on light */
+  --gold: #E9B44C;           /* wattle gold: ONE small mark per ad, never type */
+  --app-green-dark: #30D158; /* app accent in dark mode (only for dark screenshots) */
+
+  /* Sampled from shared/icon.png (reference only; do not use as grounds,
+     they are what the icon is made of and the icon sits on every ad):  */
+  --icon-ground: #3E5C2A;    /* icon background */
+  --icon-disc: #4C6F35;      /* icon circle */
+  --icon-cream: #F7F1E5;     /* sprout stem and left leaf */
+  --icon-leaf: #E3BC62;      /* right leaf (wattle gold sits beside it) */
+
+  /* Type */
+  --font-display: "Inter Display", "Inter", system-ui, sans-serif;
+  --font-text: "Inter", system-ui, sans-serif;
+
+  /* Grid */
+  --margin: 80px;            /* side margins; live width 920 px */
+  --live: 920px;
+  --s: 1;                    /* type scale multiplier (story sets 1.1) */
+
+  /* Line art */
+  --stroke: 6px;             /* feed stroke; 5 px minimum */
+}
+
+/* ---------- Reset ---------------------------------------------------- */
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: #888; }
+body { -webkit-font-smoothing: antialiased; text-rendering: geometricPrecision; font-kerning: normal; }
+img, svg { display: block; }
+h1, h2, h3, p { margin: 0; }
+
+/* ---------- Artboard -------------------------------------------------
+   .artboard.feed  1080x1350   live area x 80..1000, footer y 1180..1292
+   .artboard.story 1080x1920   safe area y 250..1580 (nothing important
+                               above 250 or below 1580)
+   The artboard is position:relative, so children can be placed with
+   absolute top/left in artboard pixels. --safe-top / --safe-bottom are
+   the y limits for the current size; --footer-top places the footer. */
+.artboard {
+  position: relative;
+  overflow: hidden;
+  width: 1080px;
+  height: 1350px;
+  padding: 0 var(--margin);
+  font-family: var(--font-text);
+  color: var(--fg, var(--ink));
+  background: var(--bg, var(--offwhite));
+  --safe-top: 0px;
+  --safe-bottom: 1350px;
+  --footer-top: 1180px;
+}
+.artboard.feed  { height: 1350px; --s: 1;   --safe-top: 0px;   --safe-bottom: 1350px; --footer-top: 1180px; }
+.artboard.story { height: 1920px; --s: 1.1; --safe-top: 250px; --safe-bottom: 1580px; --footer-top: 1448px; }
+
+/* Grounds (set background and default type colours together) */
+.bg-green   { --bg: var(--green);    background: var(--green);    --fg: var(--offwhite); --fg-2: var(--sprout);  --fg-sub: rgba(247,245,239,0.92); --cta: var(--offwhite); --ring: none; }
+.bg-forest  { --bg: var(--forest);   background: var(--forest);   --fg: var(--offwhite); --fg-2: var(--sprout);  --fg-sub: rgba(247,245,239,0.90); --cta: var(--offwhite); --ring: none; }
+.bg-offwhite{ --bg: var(--offwhite); background: var(--offwhite); --fg: var(--ink-2);    --fg-2: var(--green);   --fg-sub: var(--ink-sub); --cta: var(--green); --ring: 0 0 0 1px rgba(0,0,0,0.08); }
+.bg-grey    { --bg: var(--grey-bg);  background: var(--grey-bg);  --fg: var(--ink);      --fg-2: var(--green);   --fg-sub: var(--ink-sub); --cta: var(--green); --ring: 0 0 0 1px rgba(0,0,0,0.08); }
+/* Theme without background: for a footer or text sitting on a colour block */
+.on-dark  { --fg: var(--offwhite); --fg-2: var(--sprout); --fg-sub: rgba(247,245,239,0.92); --cta: var(--offwhite); --ring: none; color: var(--fg); }
+.on-light { --fg: var(--ink-2);    --fg-2: var(--green);  --fg-sub: var(--ink-sub);         --cta: var(--green); --ring: 0 0 0 1px rgba(0,0,0,0.08); color: var(--fg); }
+
+/* Full-bleed colour block (e.g. ad 3 green lower block, ad 4 green top).
+   Give it top/height inline: <div class="block bg-green" style="top:760px;bottom:0"> */
+.block { position: absolute; left: 0; right: 0; }
+
+/* Absolute placement helper inside the 920 px live column */
+.at { position: absolute; left: var(--margin); right: var(--margin); }
+
+/* ---------- Type scale ----------------------------------------------
+   Headlines: Inter Display Black, line-height 0.96, tracking -0.02em.
+   Sizes are feed sizes; story multiplies by --s (1.1) automatically. */
+.hl {
+  font-family: var(--font-display);
+  font-weight: 900;
+  line-height: 0.96;
+  letter-spacing: -0.02em;
+  color: var(--fg);
+  font-size: calc(140px * var(--s));
+  font-feature-settings: "ss01" 0, "cv11" 0;
+}
+.hl-200 { font-size: calc(200px * var(--s)); }
+.hl-190 { font-size: calc(190px * var(--s)); }
+.hl-150 { font-size: calc(150px * var(--s)); }
+.hl-140 { font-size: calc(140px * var(--s)); }
+.hl-120 { font-size: calc(120px * var(--s)); }
+.hl-112 { font-size: calc(112px * var(--s)); }
+.hl-104 { font-size: calc(104px * var(--s)); }
+.hl-96  { font-size: calc(96px  * var(--s)); }
+.hl .line { display: block; white-space: nowrap; }  /* one span per line: no surprise wraps */
+.hl .alt  { color: var(--fg-2); }                   /* second tone: sprout on green, deep green on light */
+.hl .big  { font-size: 1.3em; }                     /* emphasised word, about 30% larger */
+
+/* Support line: Inter Medium/Semibold 42-56 px, line-height 1.2, max two lines */
+.support {
+  font-family: var(--font-text);
+  font-weight: 500;
+  font-size: calc(44px * var(--s));
+  line-height: 1.2;
+  letter-spacing: -0.005em;
+  color: var(--fg-sub, var(--ink-sub));
+  max-width: var(--live);
+  text-wrap: balance;
+}
+.support.semibold { font-weight: 600; }
+.support-42 { font-size: calc(42px * var(--s)); }
+.support-48 { font-size: calc(48px * var(--s)); }
+.support-56 { font-size: calc(56px * var(--s)); }
+
+/* Labels and small caps rows (34 px minimum anywhere) */
+.label {
+  font-family: var(--font-text);
+  font-weight: 600;
+  font-size: 36px;
+  line-height: 1.15;
+  color: var(--fg);
+}
+.label-34 { font-size: 34px; }
+.label-40 { font-size: 40px; }
+.caps { text-transform: uppercase; letter-spacing: 0.04em; }
+
+/* ---------- Footer band (identical in all five ads) -----------------
+   Icon 112 px, 25 px radius, 24 px gap, 'Farm Direct' Inter Bold 40,
+   CTA Inter Regular 34. Feed: y 1180..1292. Story: y 1448..1560.
+   Override position per ad with --footer-top on the artboard. */
+.footer {
+  position: absolute;
+  left: var(--margin);
+  top: var(--footer-top);
+  height: 112px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  z-index: 5;
+}
+
+/* .brand lockup: usable on its own (e.g. a top-left lockup) or in .footer */
+.brand { display: flex; align-items: center; gap: 24px; }
+.brand__icon {
+  width: 112px; height: 112px;
+  border-radius: 25px;
+  flex: none;
+  object-fit: cover;
+  box-shadow: var(--ring, none);  /* 1 px hairline on light grounds, set by the theme */
+}
+.brand__text { display: flex; flex-direction: column; gap: 4px; }
+.brand__name {
+  font-family: var(--font-text);
+  font-weight: 700;
+  font-size: 40px;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  color: var(--fg);
+  white-space: nowrap;
+}
+.brand__cta {
+  font-family: var(--font-text);
+  font-weight: 400;
+  font-size: 34px;
+  line-height: 1.15;
+  color: var(--cta, var(--fg));  /* deep green on light grounds, off-white on dark */
+  white-space: nowrap;
+}
+
+/* ---------- CTA pill (plain text only; never badge artwork) --------- */
+.cta {
+  display: inline-flex; align-items: center; justify-content: center;
+  height: 88px; padding: 0 44px;
+  border-radius: 999px;
+  font-family: var(--font-text); font-weight: 600; font-size: 38px;
+  letter-spacing: -0.005em; white-space: nowrap;
+  background: var(--green); color: var(--white);
+}
+.cta.light   { background: var(--offwhite); color: var(--green); }
+.cta.outline { background: transparent; color: var(--fg); box-shadow: inset 0 0 0 4px currentColor; }
+
+/* ---------- App filter chip (copies the app's selected chip) -------- */
+.chip {
+  display: inline-flex; align-items: center; justify-content: center;
+  height: 84px; padding: 0 40px;
+  border-radius: 999px;
+  font-family: var(--font-text); font-weight: 600; font-size: 40px;
+  white-space: nowrap;
+  background: var(--green); color: var(--white);
+}
+.chip.chip-xl { height: 160px; padding: 0 80px; font-size: 92px; box-shadow: 0 18px 40px rgba(27,115,53,0.28); }
+.chip.off { background: var(--white); color: var(--ink); box-shadow: inset 0 0 0 2px rgba(60,60,67,0.18); }
+.chip-bar {                   /* white rounded bar like the app's filter row */
+  display: inline-flex; gap: 20px; padding: 20px;
+  background: var(--white); border-radius: 999px;
+  box-shadow: 0 16px 40px rgba(0,0,0,0.10);
+}
+
+/* Tap ripple: two concentric rounded rings (35% and 12% opacity, 6 px
+   strokes) hugging whatever the .ripple wrapper contains.
+     <div class="ripple" style="position:absolute; left:..; top:..">
+       <span class="chip chip-xl">Meat</span>
+     </div>
+   The wrapper must NOT get a z-index or transform: the rings sit at
+   z-index 1 (under a .phone, which is z-index 2) and the content at
+   z-index 3 (over the phone), so a chip can overlap a phone while its
+   rings pass behind it. Ring colour: --ripple (default deep green). */
+.ripple { position: relative; display: inline-flex; --ripple: var(--green); --gap1: 30px; --gap2: 66px; }
+.ripple::before, .ripple::after {
+  content: ""; position: absolute; border-radius: 999px; pointer-events: none; z-index: 1;
+  border: var(--stroke) solid var(--ripple);
+}
+.ripple::before { inset: calc(-1 * var(--gap1)); opacity: 0.35; }
+.ripple::after  { inset: calc(-1 * var(--gap2)); opacity: 0.12; }
+.ripple > * { position: relative; z-index: 3; }
+.ripple > .dot-gold { position: absolute; z-index: 4; }
+
+/* ---------- White card / tile --------------------------------------- */
+.card {
+  background: var(--white);
+  border-radius: 28px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.14), 0 2px 6px rgba(0,0,0,0.06);
+  overflow: hidden;
+}
+
+/* ---------- Phone outline -------------------------------------------
+   A plain CSS rounded rectangle around a 1320x2868 screenshot.
+   No notch, island, camera or buttons (family rule).
+   Markup:
+     <div class="phone" style="--w:560px; --h:760px; left:..; top:..">
+       <img src="../shared/screens/02-explore-meat.png" alt="">
+     </div>
+   --w  screen width (the frame adds 2 x 14 px border)
+   --h  visible screen height; default is the full screen (w x 2868/1320).
+        A smaller --h crops the screenshot at the frame's bottom edge only;
+        the top of the screen always shows. */
+.phone {
+  --w: 560px;
+  --bw: 14px;
+  --r: 56px;
+  --screen-h: 2868;  /* screenshot height in its own pixels (width 1320) */
+  --h: calc(var(--w) * var(--screen-h) / 1320);
+  --tilt: 0deg;
+  --frame: var(--ink-2);
+  position: absolute;
+  width: calc(var(--w) + 2 * var(--bw));
+  height: calc(var(--h) + 2 * var(--bw));
+  border: var(--bw) solid var(--frame);
+  border-radius: var(--r);
+  background: var(--frame);
+  overflow: hidden;
+  transform: rotate(var(--tilt));
+  transform-origin: 50% 0;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.12);
+  z-index: 2;
+}
+.phone > img {
+  width: 100%;
+  height: auto;
+  border-radius: calc(var(--r) - var(--bw));
+}
+/* When --h is shorter than the screen, square off the screen's lower corners
+   so the crop reads as the frame edge, not a second rounded screen. */
+.phone.crop > img { border-bottom-left-radius: 0; border-bottom-right-radius: 0; }
+/* No status bar: shifts the screenshot up by its status-bar strip (the
+   clock and the camera cut-out drawn in the screenshot, 170 of 2868 px),
+   so the frame never reads as a particular phone. Recommended for every ad. */
+.phone.no-status { --screen-h: 2698; }
+.phone.no-status > img { margin-top: calc(var(--w) * -170 / 1320); border-radius: 0; }
+/* On dark grounds: off-white frame, deeper shadow */
+.phone.frame-light {
+  --frame: var(--offwhite);
+  box-shadow: 0 30px 70px rgba(0,0,0,0.35);
+}
+/* Sizes (screen widths) */
+.phone.w-540 { --w: 540px; }
+.phone.w-560 { --w: 560px; }
+.phone.w-600 { --w: 600px; }
+.phone.w-620 { --w: 620px; }
+/* Tilt */
+.phone.tilt-r { --tilt: 4deg; }
+.phone.tilt-l { --tilt: -4deg; }
+/* Bleed: the frame runs off the artboard's bottom edge (decoration zone).
+   Set --h tall enough to pass the artboard edge; nothing important
+   may sit below the safe area. */
+.phone.bleed { border-bottom-left-radius: var(--r); border-bottom-right-radius: var(--r); }
+
+/* ---------- Line art ------------------------------------------------- */
+.art { overflow: visible; }
+.art * { vector-effect: non-scaling-stroke; }
+.art .ln { fill: none; stroke: currentColor; stroke-width: var(--stroke); stroke-linecap: round; stroke-linejoin: round; }
+.art .gold { stroke: var(--gold); }
+.art .gold-fill { fill: var(--gold); stroke: none; }
+.dot-gold { display: inline-block; width: 28px; height: 28px; border-radius: 50%; background: var(--gold); }
+
+/* ---------- Guides (open ad.html?guides=1 in a browser) ------------- */
+.guides .artboard::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 99;
+  background:
+    linear-gradient(to right, rgba(255,0,80,0.18) 0 80px, transparent 80px calc(100% - 80px), rgba(255,0,80,0.18) calc(100% - 80px)),
+    linear-gradient(to bottom, rgba(255,0,80,0.25) 0 var(--safe-top), transparent var(--safe-top) var(--safe-bottom), rgba(255,0,80,0.25) var(--safe-bottom));
+}
+.guides .artboard.feed::before {
+  content: ""; position: absolute; left: 0; right: 0; top: 1180px; height: 112px; z-index: 98;
+  outline: 2px dashed rgba(0,120,255,0.7); pointer-events: none;
+}

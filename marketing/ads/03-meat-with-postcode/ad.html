@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<title>Farm Direct ad 03: Meat with a postcode</title>
+<!-- Ad 03 "Meat with a postcode". Off-white top over a deep green block.
+     One device: four empty postcode boxes from an Australian envelope,
+     with a wattle-gold cursor in the first (the ad's one warm mark).
+     No screenshot. Render: node render.mjs 03-meat-with-postcode -->
+<link rel="stylesheet" href="../shared/kit.css">
+<style>
+  /* ---- Geometry (feed values first, story overrides below) ---------- */
+  .artboard { --split: 760px; --box: 170px; --gutter: 28px; --boxes-cy: 914px; --meat-cy: 1056px; }
+  .artboard.story { --split: 1000px; --box: 180px; --gutter: 30px; --boxes-cy: 1170px; --meat-cy: 1322px; --footer-top: 1460px; }
+
+  .lower { top: var(--split); bottom: 0; }
+
+  .headline { position: absolute; left: var(--margin); top: 172px; }
+  .headline .line + .line { margin-top: 2px; }
+  .sub { position: absolute; left: var(--margin); top: 516px; width: 920px; text-wrap: wrap; }
+
+  .story .headline { top: 330px; font-size: 160px; } /* a touch under the kit's 165 so 'Meat with a' clears the right margin */
+  .story .sub      { top: 712px; }
+
+  /* Postcode boxes: drawn in CSS, centred on the frame */
+  .boxes {
+    position: absolute;
+    left: 50%;
+    top: calc(var(--boxes-cy) - var(--box) / 2);
+    transform: translateX(-50%);
+    display: flex;
+    gap: var(--gutter);
+    z-index: 2;
+  }
+  .box {
+    position: relative;
+    width: var(--box);
+    height: var(--box);
+    border: 8px solid var(--offwhite);
+    border-radius: 6px;
+  }
+  /* Wattle-gold text cursor in the first box: the ad's one warm mark */
+  .cursor {
+    position: absolute;
+    left: calc(50% - 5px);
+    top: 22%;
+    width: 10px;
+    height: 56%;
+    border-radius: 2px;
+    background: var(--gold);
+  }
+
+  /* Meat row: the only letter-spaced capitals in the campaign */
+  .meat {
+    position: absolute;
+    left: var(--margin); right: var(--margin);
+    top: calc(var(--meat-cy) - 20px);
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    font-size: 34px;
+    color: var(--sprout);
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+  }
+  /* Family fix: the olive icon tile fights the deep green block, so give it
+     a soft 2 px off-white ring (55%, so it does not read as a fifth postcode box) when the footer sits on green. */
+  .footer.on-dark .brand__icon { box-shadow: 0 0 0 2px rgba(247,245,239,.55); }
+
+  .meat .sep { padding: 0 0.35em; opacity: 0.75; }
+</style>
+</head>
+<body>
+<div class="artboard feed bg-offwhite">
+
+  <!-- Deep green lower block: the bold contrast element -->
+  <div class="block bg-green lower"></div>
+
+  <h1 class="hl hl-150 headline">
+    <span class="line">Meat with a</span>
+    <span class="line alt">postcode.</span>
+  </h1>
+
+  <p class="support support-42 sub">Search a town or postcode for meat.<br>Ask the farmer the rest.</p>
+
+  <!-- Focal device: four empty postcode boxes (no real postcode) -->
+  <div class="boxes" aria-hidden="true">
+    <div class="box"><span class="cursor"></span></div>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+  </div>
+
+  <p class="label caps meat">Beef<span class="sep">·</span>Lamb<span class="sep">·</span>Pork<span class="sep">·</span>Chicken</p>
+
+  <div class="footer on-dark">
+    <div class="brand">
+      <img class="brand__icon" src="../shared/icon.png" alt="">
+      <div class="brand__text">
+        <span class="brand__name">Farm Direct</span>
+        <span class="brand__cta">Free for iPhone</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+<script src="../shared/kit.js"></script>
+</body>
+</html>
