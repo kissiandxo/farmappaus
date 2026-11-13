@@ -1,0 +1,785 @@
+{
+  "researchedOn": "2026-11-13",
+  "region": "SA/WA",
+  "listings": [
+    {
+      "name": "Adelaide Showground Farmers' Market",
+      "type": "farmers_market",
+      "address": "Adelaide Showground, Rose Terrace",
+      "locality": "Wayville",
+      "state": "SA",
+      "postcode": "5034",
+      "products": [],
+      "otherProducts": "Fresh produce and food from stallholders; specific product lines not recorded",
+      "tags": [],
+      "hours": {
+        "kind": "weekly",
+        "days": {
+          "sun": [
+            [
+              "08:30",
+              "12:30"
+            ]
+          ]
+        },
+        "note": null
+      },
+      "hoursAsStated": "Open every Sunday 8.30am - 12.30pm, free entry, no dogs.",
+      "website": "https://www.adelaidefarmersmarket.com.au/",
+      "phone": null,
+      "description": "Weekly Sunday farmers market held at the Adelaide Showground.",
+      "sources": [
+        "https://www.adelaidefarmersmarket.com.au/"
+      ],
+      "confidence": "high",
+      "caveats": "Product categories not itemised from the page opened; check the site's food and produce pages before tagging products. Official site opened via curl (WebFetch could not resolve it)."
+    },
+    {
+      "name": "Barossa Farmers Market",
+      "type": "farmers_market",
+      "address": "740 Stockwell Road",
+      "locality": "Angaston",
+      "state": "SA",
+      "postcode": "5353",
+      "products": [
+        "veg",
+        "fruit"
+      ],
+      "otherProducts": "Meats, breads, cheeses, oils, preserves, pastries and prepared food from Barossa and regional SA stallholders",
+      "tags": [],
+      "hours": {
+        "kind": "weekly",
+        "days": {
+          "sat": [
+            [
+              "07:30",
+              "11:30"
+            ]
+          ]
+        },
+        "note": null
+      },
+      "hoursAsStated": "Every Saturday morning 7.30am to 11.30am, in the Vintners Shed behind Vintners Restaurant.",
+      "website": "https://barossafarmersmarket.com/",
+      "phone": "0402 026 882",
+      "description": "Saturday morning market of Barossa and regional South Australian growers and makers in a historic winery shed.",
+      "sources": [
+        "https://barossafarmersmarket.com/",
+        "https://southaustralia.com/products/barossa/food-and-drink/barossa-farmers-market"
+      ],
+      "confidence": "high",
+      "caveats": "Phone is the mobile number the market's own site lists under 'Get in touch'."
+    },
+    {
+      "name": "Willunga Farmers Market",
+      "type": "farmers_market",
+      "address": "Willunga High School, Main Road",
+      "locality": "Willunga",
+      "state": "SA",
+      "postcode": "5172",
+      "products": [],
+      "otherProducts": "Producer stalls; product lines not recorded from the page opened",
+      "tags": [],
+      "hours": {
+        "kind": "weekly",
+        "days": {
+          "sat": [
+            [
+              "08:00",
+              "12:00"
+            ]
+          ]
+        },
+        "note": null
+      },
+      "hoursAsStated": "Open every Saturday, 8am until 12 noon.",
+      "website": "https://willungafarmersmarket.com.au/",
+      "phone": null,
+      "description": "Weekly Saturday farmers market in the McLaren Vale and Fleurieu region.",
+      "sources": [
+        "https://willungafarmersmarket.com.au/"
+      ],
+      "confidence": "high",
+      "caveats": "Street number not given; the venue is the high school grounds on Main Road. Search snippets mention holiday closures (Christmas Day, New Year's Day) not confirmed on the page."
+    },
+    {
+      "name": "Adelaide Hills Farmers Market",
+      "type": "farmers_market",
+      "address": "23 Mann Street",
+      "locality": "Mount Barker",
+      "state": "SA",
+      "postcode": "5251",
+      "products": [],
+      "otherProducts": "Fresh Adelaide Hills produce and hot food; specific lines not recorded",
+      "tags": [],
+      "hours": {
+        "kind": "weekly",
+        "days": {
+          "sat": [
+            [
+              "08:30",
+              "12:30"
+            ]
+          ]
+        },
+        "note": null
+      },
+      "hoursAsStated": "Open every Saturday 8:30am to 12:30pm.",
+      "website": "https://ahfm.org.au/",
+      "phone": null,
+      "description": "Weekly Saturday farmers market under elm trees in Mount Barker; dogs are welcome per the site.",
+      "sources": [
+        "https://ahfm.org.au/"
+      ],
+      "confidence": "high",
+      "caveats": "Postcode 5251 is the standard Mount Barker postcode but was not printed on the page opened. A search snippet mentioned a winter gym venue; not confirmed."
+    },
+    {
+      "name": "Beerenberg Farm",
+      "type": "farm_shop",
+      "address": "Mount Barker Road",
+      "locality": "Hahndorf",
+      "state": "SA",
+      "postcode": "5245",
+      "products": [
+        "fruit"
+      ],
+      "otherProducts": "Own jams, chutneys, relishes and sauces; strawberry picking (November to April per Visit Adelaide Hills); farm cafe",
+      "tags": [],
+      "hours": {
+        "kind": "weekly",
+        "days": {
+          "sun": [
+            [
+              "09:00",
+              "17:00"
+            ]
+          ],
+          "mon": [
+            [
+              "09:00",
+              "17:00"
+            ]
+          ],
+          "tue": [
+            [
+              "09:00",
+              "17:00"
+            ]
+          ],
+          "wed": [
+            [
+              "09:00",
+              "17:00"
+            ]
+          ],
+          "thu": [
+            [
+              "09:00",
+              "17:00"
+            ]
+          ],
+          "fri": [
+            [
+              "09:00",
+              "17:00"
+            ]
+          ],
+          "sat": [
+            [
+              "09:00",
+              "17:00"
+            ]
+          ]
+        },
+        "note": "Closed Christmas Day. Strawberry patch hours/availability vary and the site says to check on the day."
+      },
+      "hoursAsStated": "Farm shop open 9am to 5pm every day except Christmas Day.",
+      "website": "https://www.beerenberg.com.au/",
+      "phone": null,
+      "description": "Family farm at the eastern end of Hahndorf with a farm shop and a pick-your-own strawberry patch.",
+      "sources": [
+        "https://www.beerenberg.com.au/pages/farm-shop",
+        "https://www.visitadelaidehills.com.au/fruit-picking"
+      ],
+      "confidence": "high",
+      "caveats": "No street number published on the pages opened. Most farm-shop stock is processed products, not raw farm produce; strawberries are seasonal pick-your-own."
+    },
+    {
+      "name": "Margaret River Farmers Market",
+      "type": "farmers_market",
+      "address": "Margaret River Education Campus, Lot 272 Bussell Highway",
+      "locality": "Margaret River",
+      "state": "WA",
+      "postcode": "6285",
+      "products": [],
+      "otherProducts": "Local producer stalls; specific lines not recorded",
+      "tags": [],
+      "hours": {
+        "kind": "weekly",
+        "days": {
+          "sat": [
+            [
+              "07:30",
+              "11:30"
+            ]
+          ]
+        },
+        "note": null
+      },
+      "hoursAsStated": "Every Saturday all year round, 7:30am - 11:30am. No dogs.",
+      "website": "https://margaretriverfarmersmarket.com.au/",
+      "phone": null,
+      "description": "Year-round Saturday farmers market at the Margaret River Education Campus.",
+      "sources": [
+        "https://margaretriverfarmersmarket.com.au/"
+      ],
+      "confidence": "high",
+      "caveats": "Several third-party sites say 8am-12pm or a seasonal split; the market's own site says 7:30-11:30 all year, which is used here. Postcode 6285 is the standard Margaret River postcode, not printed on the page. Site lists a coordinator mobile; omitted as a personal contact."
+    },
+    {
+      "name": "Subi Farmers Market",
+      "type": "farmers_market",
+      "address": "Subiaco Primary School, 271 Bagot Road",
+      "locality": "Subiaco",
+      "state": "WA",
+      "postcode": "6008",
+      "products": [
+        "fruit",
+        "veg",
+        "eggs",
+        "milk"
+      ],
+      "otherProducts": "Meat, seafood, flowers, coffee and prepared food (site title lists these)",
+      "tags": [],
+      "hours": {
+        "kind": "weekly",
+        "days": {
+          "sat": [
+            [
+              "08:00",
+              "12:00"
+            ]
+          ]
+        },
+        "note": null
+      },
+      "hoursAsStated": "8:00am-noon every Saturday.",
+      "website": "https://subifarmersmarket.com.au/",
+      "phone": null,
+      "description": "Long-running not-for-profit Saturday farmers market held at Subiaco Primary School.",
+      "sources": [
+        "https://subifarmersmarket.com.au/"
+      ],
+      "confidence": "high",
+      "caveats": "Postcode 6008 not printed on the page (standard Subiaco postcode). Products inferred from the site's page title, not a stallholder list. Site contains old news items; hours are on the current header."
+    },
+    {
+      "name": "Perth City Farm Farmers Market",
+      "type": "farmers_market",
+      "address": "1 City Farm Place",
+      "locality": "East Perth",
+      "state": "WA",
+      "postcode": "6004",
+      "products": [],
+      "otherProducts": "Artisan goods, ethical and sustainable products; Perth City Farm organic stall",
+      "tags": [
+        "organic",
+        "spray_free"
+      ],
+      "hours": {
+        "kind": "weekly",
+        "days": {
+          "sat": [
+            [
+              "08:00",
+              "12:00"
+            ]
+          ]
+        },
+        "note": "Summer hours Dec-Mar 7:30-11:30am; April-November 8am-12 noon (this entry uses the Apr-Nov hours, which apply now)."
+      },
+      "hoursAsStated": "Every Saturday: 7.30-11.30am (Dec-Mar), 8am-12 noon (Apr-Nov).",
+      "website": "https://www.perthcityfarm.org.au/",
+      "phone": null,
+      "description": "Saturday farmers market in the courtyard of an urban community farm, focused on organic, biodynamic and spray-free WA produce.",
+      "sources": [
+        "https://www.perthcityfarm.org.au/farmers-market"
+      ],
+      "confidence": "high",
+      "caveats": "Organic/spray-free tags reflect the market's stated focus, not per-stall certification. The hours change on 1 December."
+    },
+    {
+      "name": "Albany Farmers Market",
+      "type": "farmers_market",
+      "address": "Collie Street",
+      "locality": "Albany",
+      "state": "WA",
+      "postcode": "6330",
+      "products": [
+        "veg",
+        "fruit",
+        "milk",
+        "eggs",
+        "honey"
+      ],
+      "otherProducts": "Bread, olive oil, fish, meat as available, preserves, macadamias, seedlings, coffee",
+      "tags": [],
+      "hours": {
+        "kind": "weekly",
+        "days": {
+          "sat": [
+            [
+              "08:00",
+              "12:00"
+            ]
+          ]
+        },
+        "note": null
+      },
+      "hoursAsStated": "Fresh produce every Saturday 8am - 12pm, Collie Street Albany.",
+      "website": "https://www.albanyfarmersmarket.com.au/",
+      "phone": null,
+      "description": "Saturday growers' market in Albany's historic centre, running since 2002.",
+      "sources": [
+        "https://www.albanyfarmersmarket.com.au/"
+      ],
+      "confidence": "high",
+      "caveats": "No street number; postcode 6330 is the standard Albany postcode, not printed on page. Items listed depend on season."
+    },
+    {
+      "name": "Freo Farmers Market",
+      "type": "farmers_market",
+      "address": "Bruce Lee Reserve",
+      "locality": "Beaconsfield",
+      "state": "WA",
+      "postcode": "6162",
+      "products": [],
+      "otherProducts": "Ready-to-eat food, fresh produce, clothing and artisan gifts; stated to be plastic-free",
+      "tags": [],
+      "hours": {
+        "kind": "weekly",
+        "days": {
+          "sun": [
+            [
+              "08:00",
+              "12:00"
+            ]
+          ]
+        },
+        "note": null
+      },
+      "hoursAsStated": "Held every Sunday from 8am to 12pm.",
+      "website": "http://www.freofarmersmarket.com.au/",
+      "phone": null,
+      "description": "Sunday farmers market at Bruce Lee Reserve, Beaconsfield, relocated there from Fremantle College in 2023.",
+      "sources": [
+        "https://www.fremantle.wa.gov.au/?p=14829"
+      ],
+      "confidence": "medium",
+      "caveats": "Source is a City of Fremantle media release (Dec 2025), not the market's own site (could not be opened). Postcode 6162 and street not on the release; an unverified listing gave 5 Caesar St. Older guides still show Fremantle College, which is outdated."
+    },
+    {
+      "name": "The House of Honey & Sticky Spoon Cafe",
+      "type": "farm_shop",
+      "address": "867 Great Northern Highway",
+      "locality": "Herne Hill",
+      "state": "WA",
+      "postcode": "6056",
+      "products": [
+        "honey"
+      ],
+      "otherProducts": "Meads and liqueurs, bee products, cafe",
+      "tags": [],
+      "hours": {
+        "kind": "weekly",
+        "days": {
+          "sun": [
+            [
+              "10:00",
+              "17:00"
+            ]
+          ],
+          "mon": [
+            [
+              "10:00",
+              "17:00"
+            ]
+          ],
+          "tue": [
+            [
+              "10:00",
+              "17:00"
+            ]
+          ],
+          "wed": [
+            [
+              "10:00",
+              "17:00"
+            ]
+          ],
+          "thu": [
+            [
+              "10:00",
+              "17:00"
+            ]
+          ],
+          "fri": [
+            [
+              "10:00",
+              "17:00"
+            ]
+          ],
+          "sat": [
+            [
+              "10:00",
+              "17:00"
+            ]
+          ]
+        },
+        "note": "Cafe closes 4.30pm; closed Good Friday, Christmas Day, Boxing Day; open most other public holidays (call to confirm)."
+      },
+      "hoursAsStated": "Open 10:00-17:00 daily per the Swan Valley listing.",
+      "website": null,
+      "phone": null,
+      "description": "Swan Valley beekeeper's shop selling unpasteurised WA honeys, with a cafe and bee display.",
+      "sources": [
+        "https://www.swanvalley.com.au/products/the-house-of-honey-sticky-spoon-cafe"
+      ],
+      "confidence": "medium",
+      "caveats": "Source is the regional tourism site, not the business's own site. Business website not recorded."
+    },
+    {
+      "name": "Baba & Dida's Marketplace",
+      "type": "farm_gate_stall",
+      "address": "2540 West Swan Road",
+      "locality": "Caversham",
+      "state": "WA",
+      "postcode": "6055",
+      "products": [
+        "fruit",
+        "veg",
+        "eggs",
+        "honey"
+      ],
+      "otherProducts": "Olive oil, jams, wine vinegar, garlic, bakery and coffee",
+      "tags": [],
+      "hours": {
+        "kind": "weekly",
+        "days": {
+          "fri": [
+            [
+              "07:00",
+              "13:00"
+            ]
+          ],
+          "sat": [
+            [
+              "07:00",
+              "13:00"
+            ]
+          ],
+          "sun": [
+            [
+              "07:00",
+              "13:00"
+            ]
+          ]
+        },
+        "note": "Closing time depends on produce available; closed Christmas Day, Boxing Day, New Year's Day."
+      },
+      "hoursAsStated": "07:00-13:00 Friday to Sunday (listing).",
+      "website": null,
+      "phone": null,
+      "description": "Family roadside produce market in the Swan Valley selling Valley-grown fruit, vegetables, eggs and honey.",
+      "sources": [
+        "https://www.swanvalley.com.au/products/baba-and-didas-marketplace"
+      ],
+      "confidence": "medium",
+      "caveats": "Regional tourism listing only; verify hours on the business's Facebook page. Source states the fruit is in season only."
+    },
+    {
+      "name": "Keller's Farm",
+      "type": "farm_gate_stall",
+      "address": "104 Victoria Road",
+      "locality": "Dayton",
+      "state": "WA",
+      "postcode": "6055",
+      "products": [
+        "eggs"
+      ],
+      "otherProducts": "Sourdough and Swiss baking, jams, quince paste, muesli; seasonal citrus, figs, potatoes, garlic and greens",
+      "tags": [
+        "free_range"
+      ],
+      "hours": {
+        "kind": "weekly",
+        "days": {
+          "sat": [
+            [
+              "08:00",
+              "16:00"
+            ]
+          ],
+          "sun": [
+            [
+              "08:00",
+              "16:00"
+            ]
+          ]
+        },
+        "note": "Open some public holidays (call/Facebook); closed Christmas Day, Boxing Day, New Year's Day."
+      },
+      "hoursAsStated": "Street market open each weekend, 08:00-16:00 per the listing.",
+      "website": null,
+      "phone": null,
+      "description": "Family roadside stall in the Swan Valley selling free-range eggs, baking and seasonal produce on weekends.",
+      "sources": [
+        "https://www.swanvalley.com.au/products/kellers-farm"
+      ],
+      "confidence": "medium",
+      "caveats": "Tourism listing only. Free range claim is the listing's wording."
+    },
+    {
+      "name": "Windarra Honey",
+      "type": "farm_shop",
+      "address": "5 George Street",
+      "locality": "West Swan",
+      "state": "WA",
+      "postcode": "6055",
+      "products": [
+        "honey"
+      ],
+      "otherProducts": "Creamed honey, bee products, honey drinks",
+      "tags": [],
+      "hours": {
+        "kind": "weekly",
+        "days": {
+          "sun": [
+            [
+              "09:00",
+              "17:30"
+            ]
+          ],
+          "mon": [
+            [
+              "09:00",
+              "17:30"
+            ]
+          ],
+          "tue": [
+            [
+              "09:00",
+              "17:30"
+            ]
+          ],
+          "wed": [
+            [
+              "09:00",
+              "17:30"
+            ]
+          ],
+          "thu": [
+            [
+              "09:00",
+              "17:30"
+            ]
+          ],
+          "fri": [
+            [
+              "09:00",
+              "17:30"
+            ]
+          ],
+          "sat": [
+            [
+              "09:00",
+              "17:30"
+            ]
+          ]
+        },
+        "note": "Open some public holidays; call or check Facebook."
+      },
+      "hoursAsStated": "09:00-17:30 daily per the listing.",
+      "website": null,
+      "phone": null,
+      "description": "Family beekeeping business in the Swan Valley with honey tastings and sales.",
+      "sources": [
+        "https://www.swanvalley.com.au/products/windarra-honey"
+      ],
+      "confidence": "medium",
+      "caveats": "Tourism listing only; business website not recorded."
+    },
+    {
+      "name": "West Road Farm",
+      "type": "farm_gate_stall",
+      "address": "8931 West Swan Road",
+      "locality": "Henley Brook",
+      "state": "WA",
+      "postcode": "6055",
+      "products": [
+        "veg"
+      ],
+      "otherProducts": "Seasonal farm produce (changes with season)",
+      "tags": [],
+      "hours": {
+        "kind": "weekly",
+        "days": {
+          "sat": [
+            [
+              "08:00",
+              "13:00"
+            ]
+          ],
+          "sun": [
+            [
+              "08:00",
+              "13:00"
+            ]
+          ]
+        },
+        "note": "Stall may close early if produce sells out."
+      },
+      "hoursAsStated": "Farm stall (back of an old tractor) open every weekend 08:00-13:00.",
+      "website": null,
+      "phone": null,
+      "description": "Swan Valley farm selling seasonal fresh produce from a weekend farm stall.",
+      "sources": [
+        "https://www.swanvalley.com.au/products/west-road-farm"
+      ],
+      "confidence": "medium",
+      "caveats": "Listing says the farm grows using organic and biodynamic principles; no certification claimed, so no organic tag. 'veg' is inferred from 'fresh produce' wording; confirm. Listing is from the Swan Valley tourism site."
+    },
+    {
+      "name": "Baudin's Macadamias",
+      "type": "farm_gate_stall",
+      "address": "85 Memorial Avenue",
+      "locality": "Baskerville",
+      "state": "WA",
+      "postcode": "6056",
+      "products": [],
+      "otherProducts": "Macadamia nuts, honesty-box farm gate stall",
+      "tags": [],
+      "hours": {
+        "kind": "always",
+        "days": {},
+        "note": "Seasonal: nuts on sale from late May until stocks run out, approx. May-November; orchard tours by appointment."
+      },
+      "hoursAsStated": "Farm gate stall, leave money in the box; approx. May to November.",
+      "website": null,
+      "phone": null,
+      "description": "Swan Valley macadamia orchard selling nuts from an honesty-box stall in the cooler months.",
+      "sources": [
+        "https://www.swanvalley.com.au/products/baudins-macadamias"
+      ],
+      "confidence": "medium",
+      "caveats": "Season may already be ending (stocks run out before Christmas) - confirm before listing. No opening hours published."
+    },
+    {
+      "name": "Bickley Valley Fresh",
+      "type": "farm_gate_stall",
+      "address": "95 Glenisla Road",
+      "locality": "Bickley",
+      "state": "WA",
+      "postcode": "6076",
+      "products": [
+        "fruit",
+        "veg",
+        "eggs",
+        "honey"
+      ],
+      "otherProducts": "Baked goods, jams, preserves, pickles",
+      "tags": [],
+      "hours": {
+        "kind": "weekly",
+        "days": {
+          "fri": [],
+          "sat": [],
+          "sun": []
+        },
+        "note": "Open Friday to Sunday; closed public holidays. Opening times of day not published on page opened."
+      },
+      "hoursAsStated": "Open Friday to Sunday (closed on public holidays).",
+      "website": null,
+      "phone": null,
+      "description": "Perth Hills orchard shop selling fresh seasonal fruit, vegetables, eggs and honey.",
+      "sources": [
+        "https://experienceperthhills.com.au/?p=5124"
+      ],
+      "confidence": "medium",
+      "caveats": "Source is Experience Perth Hills tourism listing only; no times of day. Business website not confirmed (the 'website' field points to the tourism listing); postcode 6076 is not on the page (standard Bickley postcode). A search snippet suggested times but was not verified."
+    }
+  ],
+  "unverified": [
+    {
+      "name": "Riverland Farmers Market",
+      "locality": "Berri",
+      "state": "SA",
+      "why": "Only seen in third-party listings (Senior Citizens Hall, Crawford Tce, Saturday mornings); no official page opened.",
+      "leadUrl": "https://sacommunity.org/org/194632"
+    },
+    {
+      "name": "Wildhand Farm",
+      "locality": "Fleurieu/Willunga Hill area",
+      "state": "SA",
+      "why": "Weekend farm stand with eggs and honey per Glam Adelaide, but sources disagree on location and no official page opened.",
+      "leadUrl": "https://glamadelaide.com.au/new-craft-chocolate-workshops-and-fluffy-fleurieu-farm-animals-make-this-destination-the-perfect-weekend-day-trip/"
+    },
+    {
+      "name": "Lessismore Farm Shop",
+      "locality": "Myponga Beach",
+      "state": "SA",
+      "why": "Listing says lamb/pork farm shop at 388 Forktree Road; official site returned 403 and shop hours not confirmed.",
+      "leadUrl": "https://fleurieupeninsula.com.au/products/fleurieu-peninsula/food-and-drink/lessismore-farm-shop"
+    },
+    {
+      "name": "Kalamunda Farmers Market",
+      "locality": "Kalamunda",
+      "state": "WA",
+      "why": "Snippets say Sundays 8am-noon at Central Mall; official sites would not load.",
+      "leadUrl": "https://kalamunda.wa.gov.au/recreation-tourism/visit-kalamunda/kalamunda-markets/external-resources/kalamunda-farmers-market"
+    },
+    {
+      "name": "Maggie Beer's Farm Shop",
+      "locality": "Nuriootpa",
+      "state": "SA",
+      "why": "Snippets only; sources disagree on hours; official page not found.",
+      "leadUrl": "https://barossa.com/listing/maggie-beers-farmshop-experiences"
+    },
+    {
+      "name": "Adelaide Hills cherry and apple orchards (e.g. @Lenswood, Plummers)",
+      "locality": "Lenswood/Forest Range",
+      "state": "SA",
+      "why": "Seasonal pick-your-own; snippets only, hours not confirmed.",
+      "leadUrl": "https://www.visitadelaidehills.com.au/fruit-picking"
+    },
+    {
+      "name": "Swanville Citrus",
+      "locality": "Upper Swan",
+      "state": "WA",
+      "why": "Official Swan Valley page says closed for the 2026 season (reopens end of May 2027).",
+      "leadUrl": "https://www.swanvalley.com.au/products/swanville-citrus"
+    },
+    {
+      "name": "Swan Valley Fresh Fruit / Padbury Pickings",
+      "locality": "Swan Valley",
+      "state": "WA",
+      "why": "Seasonal; listings show closed for 2026 season (Dec-Mar / Jan-Feb).",
+      "leadUrl": "https://www.swanvalley.com.au/products/swan-valley-fresh-fruit"
+    },
+    {
+      "name": "Bunbury Farmers Market",
+      "locality": "Vasse/Bunbury",
+      "state": "WA",
+      "why": "Snippets only; unclear if a farm market or a store.",
+      "leadUrl": "https://buggybuddys.com.au/bunbury-farmers-market-vasse-village/"
+    },
+    {
+      "name": "Busselton Community Garden Markets",
+      "locality": "Busselton",
+      "state": "WA",
+      "why": "City of Busselton lists 2nd and 4th Saturday 8am-12pm at 50 Strelly St, but it is a general community market, not confirmed as producers.",
+      "leadUrl": "https://busselton.wa.gov.au/discover/events/markets.aspx"
+    }
+  ]
+}
