@@ -48,7 +48,7 @@ export default function FarmListScreen() {
         onRefresh={dataStatus.kind === 'sample' ? undefined : refresh}
         contentInsetAdjustmentBehavior="automatic"
         contentContainerStyle={styles.list}
-        ItemSeparatorComponent={() => <View style={styles.gap} />}
+        ItemSeparatorComponent={ItemSeparator}
         keyboardShouldPersistTaps="handled"
       />
       <LocationModal visible={locationOpen} onClose={() => setLocationOpen(false)} />
@@ -64,3 +64,6 @@ const styles = StyleSheet.create({
   gap: { height: space.md },
   empty: { flexGrow: 0, flexShrink: 0, flexBasis: 'auto', paddingVertical: space.xxl },
 });
+
+/** Module-level so FlatList keeps the same component between renders (no remounts). */
+const ItemSeparator = () => <View style={styles.gap} />;

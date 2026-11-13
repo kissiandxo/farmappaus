@@ -148,6 +148,8 @@ export default function EditListingScreen() {
       style={styles.screen}
       contentContainerStyle={styles.content}
       keyboardShouldPersistTaps="handled"
+      keyboardDismissMode="interactive"
+      automaticallyAdjustKeyboardInsets
       contentInsetAdjustmentBehavior="automatic"
     >
       {farm.id ? (

@@ -1,4 +1,5 @@
 import { Modal, ScrollView, StyleSheet, View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { useSearch } from '../state/SearchContext';
 import { colors, space } from '../theme';
@@ -15,6 +16,7 @@ interface FiltersModalProps {
 export function FiltersModal({ visible, onClose }: FiltersModalProps) {
   const { filters, setFilters, results } = useSearch();
   const count = results.length === 1 ? 'Show 1 place' : `Show ${results.length} places`;
+  const insets = useSafeAreaInsets();
 
   return (
     <Modal visible={visible} animationType="slide" presentationStyle="pageSheet" onRequestClose={onClose}>
@@ -23,7 +25,7 @@ export function FiltersModal({ visible, onClose }: FiltersModalProps) {
         <ScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
           <FilterPanel filters={filters} onChange={setFilters} />
         </ScrollView>
-        <View style={styles.footer}>
+        <View style={[styles.footer, { paddingBottom: space.lg + insets.bottom }]}>
           <Button label={count} onPress={onClose} />
         </View>
       </View>

@@ -134,7 +134,7 @@ export default function AdminQueueScreen() {
               <Pad style={styles.actions}>
                 <Button label="Approve – make them the owner" onPress={() => run(() => reviewClaim(claim.id, true))} />
                 <Button label="Reject" variant="tinted" role="destructive" onPress={() => run(() => reviewClaim(claim.id, false))} />
-                <Button label="Look at the listing" variant="plain" onPress={() => router.push(`/farm/${claim.farm_id}`)} />
+                <Button label="Look at the listing" variant="tinted" onPress={() => router.push(`/farm/${claim.farm_id}`)} />
               </Pad>
             </Section>
           ))}

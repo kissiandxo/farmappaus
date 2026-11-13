@@ -90,7 +90,13 @@ export default function SuggestScreen() {
   };
 
   return (
-    <ScrollView contentInsetAdjustmentBehavior="automatic" contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
+    <ScrollView
+      contentInsetAdjustmentBehavior="automatic"
+      contentContainerStyle={styles.content}
+      keyboardShouldPersistTaps="handled"
+      keyboardDismissMode="interactive"
+      automaticallyAdjustKeyboardInsets
+    >
       <Section footer="Know a farm, farm-gate stall, farm shop or farmers’ market that should be here? Tell us about it. We check every suggestion before it goes live.">
         <View style={styles.field}>
           <Field label="Name of the place" value={name} onChangeText={setName} maxLength={100} />

@@ -11,7 +11,6 @@ export default function ExploreLayout() {
   return (
     <Stack
       screenOptions={{
-        headerTintColor: colors.tint,
         headerShadowVisible: false,
         headerLargeTitleShadowVisible: false,
         contentStyle: { backgroundColor: colors.groupedBackground },

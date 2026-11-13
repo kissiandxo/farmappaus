@@ -108,6 +108,8 @@ export default function StockScreen() {
       style={styles.screen}
       contentContainerStyle={styles.content}
       keyboardShouldPersistTaps="handled"
+      keyboardDismissMode="interactive"
+      automaticallyAdjustKeyboardInsets
       contentInsetAdjustmentBehavior="automatic"
     >
       <Stack.Screen options={{ headerLargeTitle: true }} />

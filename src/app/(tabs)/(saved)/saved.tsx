@@ -26,7 +26,7 @@ export default function SavedScreen() {
       renderItem={({ item }) => (
         <FarmCard result={item} onPress={() => router.push(`/farm/${item.farm.id}`)} />
       )}
-      ItemSeparatorComponent={() => <View style={styles.gap} />}
+      ItemSeparatorComponent={ItemSeparator}
       contentInsetAdjustmentBehavior="automatic"
       contentContainerStyle={styles.list}
       ListHeaderComponent={
@@ -38,7 +38,7 @@ export default function SavedScreen() {
         <EmptyState
           icon="heart"
           title="No saved places yet"
-          message="Open any farm, stall or market and tap “Save this place” to keep it here for next time."
+          message="Open any farm, stall or market and tap “Save” to keep it here for next time."
           action={{ label: 'Explore farms', onPress: () => router.navigate('/(tabs)/(explore)') }}
           style={styles.empty}
         />
@@ -54,3 +54,6 @@ const styles = StyleSheet.create({
   count: { ...type.subheadline, color: colors.secondaryLabel, paddingBottom: space.md, paddingHorizontal: space.xs },
   empty: { flex: 1, paddingVertical: space.xxl },
 });
+
+/** Module-level so FlatList keeps the same component between renders (no remounts). */
+const ItemSeparator = () => <View style={styles.gap} />;

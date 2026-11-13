@@ -1,6 +1,6 @@
 import { Image } from 'expo-image';
 import { router, Stack, useLocalSearchParams } from 'expo-router';
-import { Linking, Pressable, ScrollView, StyleSheet, Text, useWindowDimensions, View, type ColorValue } from 'react-native';
+import { Alert, Linking, Pressable, ScrollView, StyleSheet, Text, useWindowDimensions, View, type ColorValue } from 'react-native';
 
 import { ReviewPanel } from '../../components/ReviewPanel';
 import { Notice } from '../../components/FormBits';
@@ -31,33 +31,53 @@ import { colors, MIN_TAP, radius, space, type } from '../../theme';
 /** Hero photo height (pt). Edge to edge, under the navigation bar. */
 const HERO_HEIGHT = 240;
 
-/** Equal-width action tile, like the Apple Maps place card: symbol above a footnote label. */
+/** Opens an external link; shows an alert instead of an unhandled rejection if no app can open it. */
+async function openLink(url: string) {
+  try {
+    await Linking.openURL(url);
+  } catch {
+    Alert.alert('Couldn’t open that', 'Check that the app for this link is installed, then try again.');
+  }
+}
+
+/**
+ * Equal-width action tile, like the Apple Maps place card: symbol above a footnote label.
+ * `filled` is the one primary action (Directions); `tinted` is the quiet default.
+ */
 function ActionTile({
   icon,
   label,
   onPress,
   accessibilityLabel,
+  variant = 'tinted',
   color,
+  fill,
   selected,
 }: {
   icon: SFSymbol;
   label: string;
   onPress: () => void;
   accessibilityLabel?: string;
+  variant?: 'filled' | 'tinted';
+  /** Tinted only: symbol and label colour. Default tint. */
   color?: ColorValue;
+  /** Tinted only: background colour. Default tintFill. */
+  fill?: ColorValue;
   selected?: boolean;
 }) {
-  const tone = color ?? colors.tint;
+  const filled = variant === 'filled';
+  const fg = filled ? colors.onTint : (color ?? colors.tint);
+  const bg = filled ? colors.tint : (fill ?? colors.tintFill);
   return (
     <Pressable
       onPress={onPress}
       accessibilityRole="button"
       accessibilityLabel={accessibilityLabel ?? label}
       accessibilityState={selected !== undefined ? { selected } : undefined}
-      style={({ pressed }) => [styles.tile, pressed && styles.tilePressed]}
+      style={({ pressed }) => [styles.tile, { backgroundColor: bg }, pressed && styles.tilePressed]}
     >
-      <Icon name={icon} size={24} color={tone} />
-      <Text style={[type.footnote, styles.tileLabel, { color: tone }]}>{label}</Text>
+      <Icon name={icon} size={24} color={fg} />
+      <Text style={[type.footnote, styles.tileLabel, { color: fg }]}>{label}</Text>
     </Pressable>
   );
 }
@@ -115,12 +135,20 @@ export default function FarmProfileScreen() {
   const photos = farm.photos ?? [];
   const meta = `${VENUE_LABELS[farm.type]} · ${farm.locality}, ${STATE_NAMES[farm.state]} ${farm.postcode}`;
 
-  return (
-    <ScrollView contentInsetAdjustmentBehavior="never" contentContainerStyle={styles.content}>
-      {/* Like an Apple Maps place card: the photo runs to the top edge under a clear bar; the name sits below it. */}
-      <Stack.Screen options={{ title: '', headerTransparent: true }} />
+  const hasPhotos = photos.length > 0;
 
-      {photos.length > 0 ? (
+  return (
+    <ScrollView
+      contentInsetAdjustmentBehavior={hasPhotos ? 'never' : 'automatic'}
+      contentContainerStyle={styles.content}
+      automaticallyAdjustKeyboardInsets
+      keyboardDismissMode="interactive"
+    >
+      {/* With photos: like an Apple Maps place card, the photo runs to the top edge under a clear bar.
+          Without photos: a normal opaque system bar and no hero; the content starts with the name. */}
+      <Stack.Screen options={{ title: '', headerTransparent: hasPhotos, headerBackButtonDisplayMode: 'minimal' }} />
+
+      {hasPhotos ? (
         <ScrollView horizontal pagingEnabled showsHorizontalScrollIndicator={false} style={{ height: HERO_HEIGHT }}>
           {photos.map((uri) => (
             <Image
@@ -133,12 +161,7 @@ export default function FarmProfileScreen() {
             />
           ))}
         </ScrollView>
-      ) : (
-        <View style={[styles.noPhoto, { width, height: HERO_HEIGHT }]} accessible accessibilityLabel="No photos yet">
-          <Icon name="leaf" size={56} color={colors.tertiaryLabel} weight="light" />
-          <Text style={[type.body, { color: colors.secondaryLabel }]}>No photos yet</Text>
-        </View>
-      )}
+      ) : null}
 
       {farm.status && farm.status !== 'live' && (
         <View style={styles.pad}>
@@ -174,7 +197,7 @@ export default function FarmProfileScreen() {
       )}
 
       <View style={styles.header}>
-        <Text style={[type.title1, { color: colors.label }]} accessibilityRole="header">
+        <Text style={[type.title1, styles.name, { color: colors.label }]} accessibilityRole="header">
           {farm.name}
         </Text>
         <Text style={[type.subheadline, { color: colors.secondaryLabel }]}>{`${meta} · ${distance} from ${location.label}`}</Text>
@@ -195,16 +218,22 @@ export default function FarmProfileScreen() {
       </View>
 
       <View style={styles.actions}>
-        <ActionTile icon="arrow.triangle.turn.up.right.circle.fill" label="Directions" onPress={() => Linking.openURL(directionsUrl(farm))} />
+        <ActionTile
+          variant="filled"
+          icon="arrow.triangle.turn.up.right.circle.fill"
+          label="Directions"
+          onPress={() => openLink(directionsUrl(farm))}
+        />
         {tel && (
-          <ActionTile icon="phone.fill" label="Call" accessibilityLabel={`Call ${farm.phone}`} onPress={() => Linking.openURL(tel)} />
+          <ActionTile icon="phone.fill" label="Call" accessibilityLabel={`Call ${farm.phone}`} onPress={() => openLink(tel)} />
         )}
-        {web && <ActionTile icon="safari" label="Website" accessibilityLabel="Visit website" onPress={() => Linking.openURL(web)} />}
+        {web && <ActionTile icon="safari" label="Website" accessibilityLabel="Visit website" onPress={() => openLink(web)} />}
         <ActionTile
           icon={saved ? 'heart.fill' : 'heart'}
           label={saved ? 'Saved' : 'Save'}
           accessibilityLabel={saved ? 'Saved – tap to remove' : 'Save this place'}
           color={saved ? colors.red : undefined}
+          fill={saved ? colors.redFill : undefined}
           selected={saved}
           onPress={() => {
             tapLight();
@@ -219,18 +248,20 @@ export default function FarmProfileScreen() {
         </View>
       </Section>
 
-      <Section header="Produce and prices">
-        {farm.products.map((p) => (
-          <Row
-            key={`${p.category}-${p.name}`}
-            title={p.name}
-            subtitle={[`${PRODUCT_LABELS[p.category]}${p.pasteurised ? ' · pasteurised' : ''}`, p.inStock ? null : 'Out of stock']
-              .filter(Boolean)
-              .join(' · ')}
-            value={p.priceCents !== undefined ? formatPrice(p.priceCents, p.unit) : 'Ask for price'}
-          />
-        ))}
-      </Section>
+      {farm.products.length > 0 && (
+        <Section header="Produce and prices">
+          {farm.products.map((p) => (
+            <Row
+              key={`${p.category}-${p.name}`}
+              title={p.name}
+              subtitle={[`${PRODUCT_LABELS[p.category]}${p.pasteurised ? ' · pasteurised' : ''}`, p.inStock ? null : 'Out of stock']
+                .filter(Boolean)
+                .join(' · ')}
+              value={p.priceCents !== undefined ? formatPrice(p.priceCents, p.unit) : 'Ask for price'}
+            />
+          ))}
+        </Section>
+      )}
 
       <Section
         header="Opening hours"
@@ -304,7 +335,6 @@ export default function FarmProfileScreen() {
 const styles = StyleSheet.create({
   content: { paddingBottom: space.xxl },
   missing: { flex: 1, backgroundColor: colors.groupedBackground },
-  noPhoto: { alignItems: 'center', justifyContent: 'center', gap: space.sm, backgroundColor: colors.fill },
   pad: { paddingHorizontal: space.lg, marginTop: space.md },
   header: { paddingHorizontal: space.lg, paddingTop: space.lg, paddingBottom: space.md, gap: space.xs },
   statusLine: { flexDirection: 'row', alignItems: 'center', gap: space.sm, marginTop: space.xs },
@@ -321,10 +351,10 @@ const styles = StyleSheet.create({
     paddingVertical: space.md,
     borderRadius: radius.group,
     borderCurve: 'continuous',
-    backgroundColor: colors.cell,
   },
-  tilePressed: { backgroundColor: colors.fill },
+  tilePressed: { opacity: 0.6 },
   tileLabel: { fontWeight: '500' },
+  name: { fontWeight: '600' },
   paragraph: { paddingHorizontal: ROW_PADDING, paddingVertical: space.md },
   hoursRow: {
     minHeight: MIN_TAP,

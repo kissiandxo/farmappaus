@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { licenceBadge } from '../domain/compliance';
@@ -12,8 +13,10 @@ import { Badge, Icon } from './ui';
 /** Produce badges shown before the rest collapse into "+N". */
 const MAX_PRODUCE_BADGES = 5;
 
-/** White grouped card for a farm in a list. Name, distance, meta, status, produce and licence. */
-export function FarmCard({ result, onPress }: { result: FarmResult; onPress?: () => void }) {
+/** White grouped card for a farm in a list. Name, distance, meta, status, produce and licence. Memoised for long lists. */
+export const FarmCard = memo(FarmCardView);
+
+function FarmCardView({ result, onPress }: { result: FarmResult; onPress?: () => void }) {
   const { farm, distanceKm, status } = result;
   const { isFavourite } = useFavourites();
   const saved = isFavourite(farm.id);
@@ -32,7 +35,7 @@ export function FarmCard({ result, onPress }: { result: FarmResult; onPress?: ()
       style={({ pressed }) => [styles.card, pressed && styles.pressed]}
       accessibilityLabel={`${farm.name}. ${VENUE_LABELS[farm.type]} in ${farm.locality}, ${farm.state}. ${distance} away. ${status.label}.${saved ? ' Saved.' : ''}${farm.isSample ? ' Sample listing.' : ''}`}
     >
-      {farm.isSample && <Badge label="SAMPLE – not a real farm" tone="orange" />}
+      {farm.isSample && <Badge label="Sample" tone="orange" />}
 
       <View style={styles.titleRow}>
         <Text style={styles.name} numberOfLines={2}>
