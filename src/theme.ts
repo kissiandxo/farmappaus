@@ -48,6 +48,14 @@ export interface Palette {
   orangeFill: string;
   /** Red at ~15% (badge / notice background). */
   redFill: string;
+  /** Map pin: shop. AA as a fill under `onPin` glyphs and as text on cell. */
+  blue: string;
+  /** Map pin: market. AA as a fill under `onPin` glyphs and as text on cell. */
+  purple: string;
+  /** Glyph on a pin fill (`green`, `orange`, `blue`, `purple`). */
+  onPin: string;
+  /** Shadow colour for things floating over a map. Black in both modes (never a white glow). */
+  shadow: string;
 }
 
 export const lightPalette: Palette = {
@@ -69,6 +77,10 @@ export const lightPalette: Palette = {
   greenFill: '#1B733526',
   orangeFill: '#9C4A0026',
   redFill: '#C4001226',
+  blue: '#0A5AC8',
+  purple: '#8944AB',
+  onPin: '#FFFFFF',
+  shadow: '#000000',
 };
 
 export const darkPalette: Palette = {
@@ -91,6 +103,11 @@ export const darkPalette: Palette = {
   greenFill: '#30D15838',
   orangeFill: '#FF9F0A38',
   redFill: '#FF696126',
+  blue: '#409CFF',
+  purple: '#BF5AF2',
+  // Bright dark-mode pin fills need dark glyphs, as with `onTint`.
+  onPin: '#000000',
+  shadow: '#000000',
 };
 
 /** True when native iOS dynamic colours can be used (not web, Android or Jest). */
@@ -121,6 +138,10 @@ const base = {
   greenFill: dyn('greenFill'),
   orangeFill: dyn('orangeFill'),
   redFill: dyn('redFill'),
+  blue: dyn('blue'),
+  purple: dyn('purple'),
+  onPin: dyn('onPin'),
+  shadow: dyn('shadow'),
 };
 
 /**
@@ -129,32 +150,6 @@ const base = {
  */
 export const colors = {
   ...base,
-
-  // ---- TEMPORARY COMPATIBILITY: old names used by not-yet-restyled screens ----
-  /** @deprecated Use `groupedBackground` (lists) or `background`. */
-  surface: base.cell,
-  /** @deprecated Use `label`. */
-  text: base.label,
-  /** @deprecated Use `secondaryLabel`. */
-  textMuted: base.secondaryLabel,
-  /** @deprecated Use `tint`. */
-  primary: base.tint,
-  /** @deprecated Use `onTint`. */
-  onPrimary: base.onTint,
-  /** @deprecated Use `tint`. */
-  accent: base.tint,
-  /** @deprecated Use `separator`. */
-  border: base.separator,
-  /** @deprecated Use `fill`. */
-  chip: base.fill,
-  /** @deprecated Use `green`. */
-  open: base.green,
-  /** @deprecated Closed is `secondaryLabel`; errors are `red`. */
-  closed: base.red,
-  /** @deprecated Use `orangeFill`. */
-  sampleBackground: base.orangeFill,
-  /** @deprecated Use `orange`. */
-  sampleText: base.orange,
 };
 
 /** Apple text styles as ready-to-spread style objects: `<Text style={type.headline} />`. */
@@ -171,15 +166,6 @@ export const type = {
   caption: { fontSize: 12, lineHeight: 16, fontWeight: '400' },
 } satisfies Record<string, TextStyle>;
 
-/** @deprecated Use the `type` text styles. */
-export const font = {
-  small: 15,
-  body: 17,
-  large: 20,
-  title: 22,
-  heading: 28,
-} as const;
-
 /** 4 pt grid. */
 export const space = { xs: 4, sm: 8, md: 12, lg: 16, xl: 24, xxl: 32 } as const;
 
@@ -194,8 +180,6 @@ export const radius = {
   hero: 22,
   /** Pills / chips / badges. */
   capsule: 999,
-  /** @deprecated Use `capsule`. */
-  chip: 999,
 } as const;
 
 /** Minimum touch target (Apple HIG: 44 pt). */

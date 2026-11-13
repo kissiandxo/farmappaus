@@ -1,8 +1,8 @@
-import * as Location from 'expo-location';
 import { useMemo, useState } from 'react';
 import { ActivityIndicator, Linking, Modal, ScrollView, StyleSheet, Text, View } from 'react-native';
 
-import { formatPlace, nearestPlace, searchPlaces, type Place } from '../domain/places';
+import { formatPlace, searchPlaces, type Place } from '../domain/places';
+import { locateMe } from '../lib/locate';
 import { useSearch } from '../state/SearchContext';
 import { colors, space, type } from '../theme';
 import { SearchField } from './SearchField';
@@ -36,35 +36,14 @@ export function LocationModal({ visible, onClose }: LocationModalProps) {
     if (busy) return;
     setBusy(true);
     setProblem(null);
-    try {
-      const permission = await Location.requestForegroundPermissionsAsync();
-      if (permission.status !== 'granted') {
-        setProblem({
-          text: 'Location is switched off for this app. You can turn it on in Settings, or search by suburb or postcode instead.',
-          canOpenSettings: !permission.canAskAgain,
-        });
-        return;
-      }
-      const position =
-        (await Location.getLastKnownPositionAsync()) ??
-        (await Location.getCurrentPositionAsync({ accuracy: Location.Accuracy.Balanced }));
-      const { latitude, longitude } = position.coords;
-      const near = nearestPlace({ lat: latitude, lng: longitude });
-      setLocation({
-        label: near ? `${near.locality} ${near.state}` : 'Your location',
-        lat: latitude,
-        lng: longitude,
-        source: 'gps',
-      });
-      onClose();
-    } catch {
-      setProblem({
-        text: 'We could not find your location. Check that Location Services is on, or search by suburb or postcode.',
-        canOpenSettings: false,
-      });
-    } finally {
-      setBusy(false);
+    const result = await locateMe();
+    setBusy(false);
+    if (!result.ok) {
+      setProblem({ text: result.message, canOpenSettings: result.canOpenSettings });
+      return;
     }
+    setLocation(result.location);
+    onClose();
   };
 
   const noMatch = query.trim().length >= 2 && matches.length === 0;
@@ -74,7 +53,12 @@ export function LocationModal({ visible, onClose }: LocationModalProps) {
       <View style={styles.sheet}>
         <SheetHeader title="Where are you?" onDone={onClose} />
 
-        <ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={styles.content}>
+        <ScrollView
+          keyboardShouldPersistTaps="handled"
+          keyboardDismissMode="interactive"
+          automaticallyAdjustKeyboardInsets
+          contentContainerStyle={styles.content}
+        >
           <Section>
             <Row
               icon="location.fill"

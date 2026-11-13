@@ -56,6 +56,11 @@ const TEXT_PAIRS: Pair[] = [
   ['red on cell (destructive)', 'red', 'cell', 'cell'],
   ['red on groupedBackground', 'red', 'groupedBackground', 'groupedBackground'],
   ['red on redFill', 'red', 'redFill', 'cell'],
+  ['onPin on green (farm pin)', 'onPin', 'green', 'cell'],
+  ['onPin on orange (stall pin)', 'onPin', 'orange', 'cell'],
+  ['onPin on blue (shop pin)', 'onPin', 'blue', 'cell'],
+  ['onPin on purple (market pin)', 'onPin', 'purple', 'cell'],
+  ['blue on cell', 'blue', 'cell', 'cell'],
 ];
 
 describe.each([

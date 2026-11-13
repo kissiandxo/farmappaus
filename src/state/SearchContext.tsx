@@ -8,6 +8,7 @@ import {
   useState,
   type ReactNode,
 } from 'react';
+import { AppState } from 'react-native';
 
 import { DEFAULT_FILTERS, searchFarms, type FarmFilters, type FarmResult } from '../domain/filters';
 import { parseFarmCache, serialiseFarmCache } from '../data/mappers';
@@ -57,6 +58,13 @@ interface SearchState {
   filters: FarmFilters;
   setFilters: (filters: FarmFilters) => void;
   results: FarmResult[];
+  /**
+   * Every listing that passes the product, tag and open-now filters, nearest first, ignoring the
+   * distance filter. The map pins these.
+   */
+  mapResults: FarmResult[];
+  /** The clock used for "open now". Ticks every minute and when the app returns to the foreground. */
+  now: Date;
 }
 
 const SearchContext = createContext<SearchState | null>(null);
@@ -142,14 +150,33 @@ export function SearchProvider({ children }: { children: ReactNode }) {
     };
   }, [refresh]);
 
+  // Keep "open now" honest: re-evaluate every minute and whenever the app comes back to the foreground.
+  const [now, setNow] = useState(() => new Date());
+  useEffect(() => {
+    const tick = () => setNow(new Date());
+    const timer = setInterval(tick, 60_000);
+    const sub = AppState.addEventListener('change', (state) => {
+      if (state === 'active') tick();
+    });
+    return () => {
+      clearInterval(timer);
+      sub.remove();
+    };
+  }, []);
+
   const results = useMemo(
-    () => searchFarms(farms, filters, location, new Date()),
-    [farms, filters, location],
+    () => searchFarms(farms, filters, location, now),
+    [farms, filters, location, now],
+  );
+
+  const mapResults = useMemo(
+    () => searchFarms(farms, { ...filters, maxKm: null }, location, now),
+    [farms, filters, location, now],
   );
 
   const value = useMemo(
-    () => ({ farms, dataStatus, refresh, refreshing, location, setLocation, filters, setFilters, results }),
-    [farms, dataStatus, refresh, refreshing, location, setLocation, filters, results],
+    () => ({ farms, dataStatus, refresh, refreshing, location, setLocation, filters, setFilters, results, mapResults, now }),
+    [farms, dataStatus, refresh, refreshing, location, setLocation, filters, results, mapResults, now],
   );
 
   return <SearchContext.Provider value={value}>{children}</SearchContext.Provider>;
