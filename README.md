@@ -7,7 +7,13 @@ An iOS app for Australians to find and buy food directly from local farmers, so 
 
 ## Status
 
-**Milestone 1 – browse list with sample data (offline).** The app shows a list of sample farms, farm-gate stalls, farm shops and farmers' markets, sorted by distance, with filters for product, distance, "open now" and tags (free-range, grass-fed, organic, pasture-raised, spray-free). Distances are measured from a state capital you pick; real GPS and postcode search arrive in M2.
+**Milestone 2 – location and map.** On top of M1's list and filters (product, distance, "open now", tags), you can now:
+
+- tap **Set my location** → **Use my current location** (GPS, asks permission only when tapped), or search any Australian **suburb or postcode** (works offline, from a bundled list of about 17,800 localities);
+- switch between a **List** tab and a **Map** tab (Apple Maps on iPhone, no API key). Pins are green when open and terracotta when closed;
+- reopen the app with your last location remembered, even with no reception.
+
+If location permission is denied, the app explains how to turn it on in Settings and offers suburb/postcode search instead. The map is iPhone-only; the browser preview shows a placeholder.
 
 > All listings are **sample data** (invented names, labelled "SAMPLE" in the app). No real farms are shown. See `src/data/sampleFarms.ts`.
 
@@ -23,11 +29,13 @@ An iOS app for Australians to find and buy food directly from local farmers, so 
 ## Project layout
 
 ```
-src/app/          Screens (Expo Router)
-src/components/   Chip, FilterPanel, FarmCard
-src/domain/       Pure logic: types, geo, hours, filters, compliance, formatting
-src/data/         Sample farms and stand-in start points
-docs/             Plan and compliance notes
+src/app/(tabs)/   List and Map screens (Expo Router)
+src/components/   Chip, FilterPanel, FarmCard, FarmMap, location and filter sheets
+src/state/        Search state (location, filters, results) and saved location
+src/domain/       Pure logic: types, geo, places, hours, filters, compliance, formatting
+src/data/         Sample farms and the offline suburb/postcode list
+scripts/          build-postcodes.mjs (regenerates the suburb list)
+docs/             Plan, compliance notes, data sources and licence caveats
 ```
 
 Core logic in `src/domain` has no React or network code, so it is fast to test and reusable when the backend arrives.

@@ -24,6 +24,14 @@
           "image": "./assets/images/splash-icon.png",
           "imageWidth": 120
         }
+      ],
+      [
+        "expo-location",
+        {
+          "locationWhenInUsePermission": "Farm Direct uses your location to show farms, stalls and markets near you. It is only used while the app is open.",
+          "locationAlwaysAndWhenInUsePermission": "Farm Direct uses your location to show farms, stalls and markets near you.",
+          "motionUsagePermission": false
+        }
       ]
     ],
     "experiments": {

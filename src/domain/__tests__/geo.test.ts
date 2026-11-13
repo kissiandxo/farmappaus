@@ -1,4 +1,20 @@
-import { formatDistance, haversineKm } from '../geo';
+import { boundingRegion, formatDistance, haversineKm } from '../geo';
+
+describe('boundingRegion', () => {
+  it('centres on the points and pads them', () => {
+    const r = boundingRegion([{ lat: -34, lng: 150 }, { lat: -32, lng: 152 }]);
+    expect(r.latitude).toBeCloseTo(-33);
+    expect(r.longitude).toBeCloseTo(151);
+    expect(r.latitudeDelta).toBeCloseTo(2.8);
+    expect(r.longitudeDelta).toBeCloseTo(2.8);
+  });
+
+  it('never zooms in closer than the minimum, even for a single point', () => {
+    const r = boundingRegion([{ lat: -27.5, lng: 152 }], 0.3);
+    expect(r.latitudeDelta).toBe(0.3);
+    expect(r.longitudeDelta).toBe(0.3);
+  });
+});
 
 const SYDNEY = { lat: -33.8688, lng: 151.2093 };
 const MELBOURNE = { lat: -37.8136, lng: 144.9631 };

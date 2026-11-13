@@ -17,6 +17,29 @@ export function haversineKm(a: LatLng, b: LatLng): number {
   return 2 * EARTH_RADIUS_KM * Math.asin(Math.min(1, Math.sqrt(h)));
 }
 
+export interface MapRegion {
+  latitude: number;
+  longitude: number;
+  latitudeDelta: number;
+  longitudeDelta: number;
+}
+
+/** Smallest map region containing all points, with 40% padding and a minimum zoom-out. */
+export function boundingRegion(points: LatLng[], minDelta = 0.2): MapRegion {
+  const lats = points.map((p) => p.lat);
+  const lngs = points.map((p) => p.lng);
+  const minLat = Math.min(...lats);
+  const maxLat = Math.max(...lats);
+  const minLng = Math.min(...lngs);
+  const maxLng = Math.max(...lngs);
+  return {
+    latitude: (minLat + maxLat) / 2,
+    longitude: (minLng + maxLng) / 2,
+    latitudeDelta: Math.max((maxLat - minLat) * 1.4, minDelta),
+    longitudeDelta: Math.max((maxLng - minLng) * 1.4, minDelta),
+  };
+}
+
 /** "850 m" under 1 km, "3.4 km" under 10 km, then whole kilometres. */
 export function formatDistance(km: number): string {
   if (km < 1) {

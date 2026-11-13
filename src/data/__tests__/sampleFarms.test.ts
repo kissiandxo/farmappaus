@@ -1,7 +1,6 @@
 import { validateListing } from '../../domain/compliance';
 import { parseMinutes } from '../../domain/hours';
 import { PRODUCT_CATEGORIES, type StateCode } from '../../domain/types';
-import { CAPITAL_ORIGINS } from '../origins';
 import { SAMPLE_FARMS } from '../sampleFarms';
 
 const NOW = new Date('2026-11-13T00:00:00Z');
@@ -53,9 +52,5 @@ describe('sample data', () => {
         }
       }
     }
-  });
-
-  it('has one starting point per state and territory capital', () => {
-    expect(CAPITAL_ORIGINS).toHaveLength(8);
   });
 });

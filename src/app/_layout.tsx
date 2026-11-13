@@ -1,11 +1,12 @@
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 
+import { SearchProvider } from '../state/SearchContext';
 import { colors } from '../theme';
 
 export default function RootLayout() {
   return (
-    <>
+    <SearchProvider>
       <StatusBar style="light" />
       <Stack
         screenOptions={{
@@ -15,8 +16,8 @@ export default function RootLayout() {
           contentStyle: { backgroundColor: colors.background },
         }}
       >
-        <Stack.Screen name="index" options={{ title: 'Farm Direct' }} />
+        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
       </Stack>
-    </>
+    </SearchProvider>
   );
 }
