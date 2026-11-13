@@ -120,11 +120,11 @@ Before you submit, check that no build variable turns on a backend: leave `EXPO_
 |---|---|
 | `01-explore` | Explore, location set, no filters |
 | `02-explore-meat` | Explore with the Meat filter on (beef, lamb, pork and chicken) |
-| `03-map` | Map with pins |
-| `04-place-meat` | Torello Farm (Dromana VIC): a farm shop selling its own grass-fed beef and lamb, open 7 days |
-| `05-place-market` | Barossa Farmers Market (Angaston SA): a weekly Saturday market listing chicken and lamb |
-| `06-saved` | Saved, with Torello Farm, Barossa Farmers Market and Beerenberg Farm |
-| `07-explore-dark` | Explore again, no filters, in dark appearance |
+| `03-place-meat` | Torello Farm (Dromana VIC): a farm shop selling its own grass-fed beef and lamb, open 7 days |
+| `04-place-market` | Barossa Farmers Market (Angaston SA): a weekly Saturday market listing chicken and lamb |
+| `05-saved` | Saved, with Torello Farm, Barossa Farmers Market and Beerenberg Farm |
+| `06-map` | Map with pins |
+| `07-map-dark` | The same map in dark appearance |
 
 Look at every image before you upload it. Every place has no photos, so no screenshot should expect one. Do not upload a screenshot that shows a contact row unless the build had the real support email.
 

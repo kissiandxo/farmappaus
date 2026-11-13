@@ -42,10 +42,11 @@ export const SCREENSHOT_SAVED_IDS: readonly string[] = [
 export const SCREENSHOT_SCENES: readonly ScreenshotScene[] = [
   { shot: '01-explore', href: '/', filters: 'none', query: '' },
   { shot: '02-explore-meat', href: '/', filters: 'meat', query: '' },
-  { shot: '03-map', href: '/map', filters: 'none', query: '' },
-  { shot: '04-place-meat', href: '/farm/real-vic-torello-farm' },
-  { shot: '05-place-market', href: '/farm/real-sa-barossa-farmers-market' },
-  { shot: '06-saved', href: '/saved' },
-  // Taken after the workflow switches the simulator to dark appearance.
-  { shot: '07-explore-dark', href: '/', filters: 'none', query: '' },
+  { shot: '03-place-meat', href: '/farm/real-vic-torello-farm', filters: 'none', query: '' },
+  { shot: '04-place-market', href: '/farm/real-sa-barossa-farmers-market' },
+  { shot: '05-saved', href: '/saved' },
+  // The map comes LAST: with the map on screen the simulator is too slow to notice appearance
+  // changes, so the tour cannot step past it. The workflow then takes one more shot of this same
+  // scene in dark appearance (07-map-dark), which needs no step.
+  { shot: '06-map', href: '/map', filters: 'none', query: '' },
 ];

@@ -78,25 +78,25 @@ jobs:
           shot() { limit 60 xcrun simctl io "$UDID" screenshot "shots/$1.png" || echo "::warning::Screenshot $1 failed or timed out"; }
           # The app (screenshot mode) moves on ONE scene each time the appearance goes from dark back to light
           # (SCREENSHOT_SCENES in src/config.ts; no timers). `next N` ticks once, then waits N seconds to settle.
-          next() { sim ui "$UDID" appearance dark; sleep 4; sim ui "$UDID" appearance light; sleep "$1"; }
+          next() { sim ui "$UDID" appearance dark; sleep 10; sim ui "$UDID" appearance light; sleep "$1"; }
           sim launch "$UDID" au.farmdirect.app
           sleep 45
           shot 01-explore
-          next 15
+          next 20
           shot 02-explore-meat
-          next 30
-          shot 03-map
-          next 15
-          shot 04-place-meat
-          next 15
-          shot 05-place-market
-          next 15
-          shot 06-saved
-          # Last scene: Explore with no filters, taken in dark appearance.
-          next 10
+          next 20
+          shot 03-place-meat
+          next 20
+          shot 04-place-market
+          next 20
+          shot 05-saved
+          # The map is the last scene (the tour cannot step past it; see SCREENSHOT_SCENES).
+          next 40
+          shot 06-map
+          # Same scene in dark appearance: no step needed, just time for the map to redraw.
           sim ui "$UDID" appearance dark
-          sleep 10
-          shot 07-explore-dark
+          sleep 30
+          shot 07-map-dark
           ls shots/*.png >/dev/null 2>&1 && limit 60 sips -g pixelWidth -g pixelHeight shots/*.png
           exit 0
       - uses: actions/upload-artifact@v4

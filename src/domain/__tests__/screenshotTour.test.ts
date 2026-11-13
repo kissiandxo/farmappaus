@@ -37,8 +37,9 @@ describe('screenshot tour', () => {
 
   it('the scene list and the workflow take the same shots in the same order', () => {
     const shots = workflowShots();
-    expect(shots).toHaveLength(SCREENSHOT_SCENES.length);
-    expect(shots).toEqual(SCREENSHOT_SCENES.map((s) => s.shot));
+    // One shot per scene, then the last scene (the map) again in dark appearance.
+    expect(shots).toEqual([...SCREENSHOT_SCENES.map((s) => s.shot), '07-map-dark']);
+    expect(SCREENSHOT_SCENES[SCREENSHOT_SCENES.length - 1].href).toBe('/map');
   });
 
   it('the workflow ticks once between each pair of shots', () => {
@@ -64,7 +65,7 @@ describe('screenshot tour', () => {
   });
 
   it('the meat place is a farm shop, stall or farm with a street address and weekly hours, and is pre-saved', () => {
-    const scene = SCREENSHOT_SCENES.find((s) => s.shot === '04-place-meat')!;
+    const scene = SCREENSHOT_SCENES.find((s) => s.shot === '03-place-meat')!;
     const farm = farmFor(scene.href)!;
     expect(farm.type).not.toBe('farmers_market');
     expect(farm.products.some((p) => p.category === 'beef' || p.category === 'lamb')).toBe(true);
@@ -75,7 +76,7 @@ describe('screenshot tour', () => {
   });
 
   it('the market scene is a weekly farmers market that lists meat', () => {
-    const scene = SCREENSHOT_SCENES.find((s) => s.shot === '05-place-market')!;
+    const scene = SCREENSHOT_SCENES.find((s) => s.shot === '04-place-market')!;
     const farm = farmFor(scene.href)!;
     expect(farm.type).toBe('farmers_market');
     expect(farm.hours.kind).toBe('weekly');
