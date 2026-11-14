@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<title>Farm Direct video 02: Meat With a Postcode</title>
+<!-- Video 02 "Meat with a postcode" (13.5 s). Hook: drawn luggage tag on off-white.
+     Proof: search a town or postcode, Filters, Meat (106 -> 41), then the map with a pin per place.
+     Render: node marketing/videos/render.mjs 02-meat-postcode-map
+     Preview: video.html?cta=soon&guides=1&t=0.9 -->
+<link rel="stylesheet" href="../shared/engine.css">
+<style>
+  .tag-art { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; overflow: visible; }
+  .tag-art .tag { filter: drop-shadow(0 16px 30px rgba(0,0,0,0.10)); }
+  .side-pill {
+    position: absolute; left: 696px; width: 240px; height: 76px; margin-top: -38px;
+    border-radius: 38px; background: #FFFFFF; color: #1B7335;
+    font-family: "Inter", system-ui, sans-serif; font-weight: 600; font-size: 40px; letter-spacing: -0.005em;
+    display: flex; align-items: center; justify-content: center; padding: 0 20px; white-space: nowrap; line-height: 1;
+    border: 1.5px solid rgba(0,0,0,0.07); box-sizing: border-box;
+    box-shadow: 0 10px 26px rgba(0,0,0,0.13), 0 1px 3px rgba(0,0,0,0.08);
+    z-index: 30;
+  }
+  /* Counter: each digit column is clipped to exactly 1 em with a soft top/bottom mask,
+     so no neighbouring digit from the strip ever shows above or below the active one. */
+  .odo2 { display: inline-flex; vertical-align: -0.135em; font-variant-numeric: tabular-nums; font-feature-settings: "tnum" 1; }
+  .odo2-col { display: block; position: relative; overflow: hidden; height: 1em;
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 11%, #000 89%, transparent 100%);
+            mask-image: linear-gradient(to bottom, transparent 0, #000 11%, #000 89%, transparent 100%); }
+  .odo2-strip { display: flex; flex-direction: column; }
+  .odo2-strip > span, .odo2-fixed { display: block; height: 1em; line-height: 1em; text-align: center; }
+  /* sea-coloured patch hiding the half-cut locate / fit buttons at the map's right edge */
+  .map-patch { position: absolute; background-repeat: no-repeat; background-size: 1320px 2868px;
+    -webkit-mask-image: linear-gradient(to right, transparent 0, #000 30%);
+            mask-image: linear-gradient(to right, transparent 0, #000 30%); }
+</style>
+</head>
+<body>
+<div class="fd-stage"></div>
+<script src="../shared/engine.js"></script>
+<script src="../shared/preview.js"></script>
+<script>
+FD.video({
+  duration: 13.5,
+  ground: FD.C.offwhite,
+  setup(FD) {
+    const { C, UI, E } = Object.assign({ E: FD.ease }, FD);
+
+    // ---------------------------------------------------------------
+    // 0.00-1.20 HOOK: an original drawn luggage tag slams onto off-white.
+    // Tag 820x520 at x 95-915, y 640-1160, notched (chamfered) left end,
+    // dashed green inner border, gold eyelet ring, green string out of frame.
+    // ---------------------------------------------------------------
+    const hook = FD.layer(
+      '<svg class="tag-art" viewBox="0 0 1080 1920" xmlns="http://www.w3.org/2000/svg">' +
+        '<path class="tag" d="M178,640 H893 Q915,640 915,662 V1138 Q915,1160 893,1160 H178 L95,1077 V723 Z" fill="#FFFFFF"/>' +
+        '<path d="M187,662 H875 Q893,662 893,680 V1120 Q893,1138 875,1138 H187 L117,1068 V732 Z" fill="none" stroke="#1B7335" stroke-width="5" stroke-dasharray="20 13" stroke-linejoin="round"/>' +
+        '<path d="M160,900 C128,812 70,700 -60,560" fill="none" stroke="#1B7335" stroke-width="6" stroke-linecap="round"/>' +
+        '<circle cx="160" cy="900" r="15" fill="#F7F5EF" stroke="#E9B44C" stroke-width="7"/>' +
+        '<path class="uline" d="M236,1084 C372,1072 590,1096 776,1074" fill="none" stroke="#1B7335" stroke-width="9" stroke-linecap="round"/>' +
+      '</svg>', { z: 20 });
+    hook.style.transformOrigin = '505px 900px';
+
+    // slam from y -600 in 0.25 s with back-out overshoot, then a 2-frame 8 px shake
+    const slamY = (t) => -600 * (1 - E.enter(FD.progress(t, 0.00, 0.25)));
+    FD.onFrame((t) => {
+      const a = FD.T(hook);
+      a.y += slamY(t);
+      a.blurY = Math.max(a.blurY, FD.velBlur(slamY, t, 0.25, 14));
+    });
+    FD.shake(hook, 0.25, { px: 8, frames: 2 });
+
+    FD.typeLine('Meat', 0.30, { y: 762, size: 120, tone: 'light', parent: hook });
+    FD.typeLine('with a', 0.5667, { y: 888, size: 120, tone: 'light', parent: hook });
+    FD.typeLine('*postcode.*', 0.80, { y: 1012, size: 120, tone: 'light', parent: hook });
+    FD.draw(hook.querySelector('.uline'), 0.8667, 1.0667, 'outCubic');
+
+    // 1.20-1.50 the tag scales 1.0 -> 2.6 and leaves upward (ease-in); ground wipes to app grey
+    const outY = (t) => -1750 * E.exit(FD.progress(t, 1.20, 1.50));
+    FD.onFrame((t) => {
+      const a = FD.T(hook);
+      if (t >= 1.50 - 1e-6) { a.hidden = true; return; }
+      a.y += outY(t);
+      a.scale *= FD.lerp(1, 2.6, E.exit(FD.progress(t, 1.20, 1.50)));
+      a.blurY = Math.max(a.blurY, FD.velBlur(outY, t, 0.25, 30));
+    });
+    FD.wipe(1.20, C.grey);
+
+    // ---------------------------------------------------------------
+    // 1.20-1.60 the CSS phone rises (scales later about its top-left corner)
+    // ---------------------------------------------------------------
+    const phone = FD.phone({ origin: [70, 420] })
+      .screen('all', '01-explore.png', 'list')
+      .screen('meat', '02-explore-meat.png', 'list')
+      .screen('map', '06-map.png', 'map')
+      .enter(1.20, { tilt: [4, 2] });
+
+    // 1.60-2.80 SEARCH: outline draws around the real search field
+    phone.outline('all', 1.60, { box: UI.searchBox, mode: 'draw', dur: 0.4, t1: 2.80 });
+    FD.caption('Search a *town*', 1.60, 2.20);
+    FD.caption('or *postcode.*', 2.20, 2.80);
+
+    // 2.80-3.30 TAP FILTERS (tap and caption on the same frame)
+    phone.tap(2.80, { at: UI.filtersTap, dim: UI.filtersBox });
+    FD.caption('*Filters.*', 2.80, 3.30);
+
+    // 3.30 MEAT: pill caption + flash cut to the Meat list, phone bumps
+    FD.caption([{ pill: 'Meat.', size: 80 }], 3.30, 3.55);
+    phone.cut(3.30, 'meat', { flash: 2 }).bump(3.30);
+
+    // 3.55 COUNTER 106 -> 41 places. Ones roll 6 -> 1 from 3.55, tens 0 -> 4 one frame later
+    // (0.35 s each, settled by 3.93); the hundreds '1' fades and its column collapses
+    // instead of rolling through a blank slot. '41 places' then holds still to 4.37.
+    const odo = document.createElement('span');
+    odo.className = 'odo2';
+    const mkCol = (digits) => {
+      const col = document.createElement('span'); col.className = 'odo2-col';
+      const strip = document.createElement('span'); strip.className = 'odo2-strip';
+      digits.forEach((d) => { const s = document.createElement('span'); s.textContent = d; strip.appendChild(s); });
+      col.appendChild(strip); odo.appendChild(col);
+      return { col, strip };
+    };
+    const hund = mkCol(['1']);
+    const tens = mkCol(['0', '1', '2', '3', '4']);                 // rolls up 0 -> 4
+    const ones = mkCol(['1', '2', '3', '4', '5', '6']);            // rolls down 6 -> 1
+    let digitW = null;
+    FD.onFrame((t) => {
+      if (digitW == null) {
+        const probe = document.createElement('span'); probe.textContent = '0';
+        odo.appendChild(probe);
+        digitW = probe.offsetWidth / (parseFloat(getComputedStyle(probe).fontSize) || 120);
+        odo.removeChild(probe);
+        [hund, tens, ones].forEach((c) => { c.col.style.width = digitW.toFixed(4) + 'em'; });
+      }
+      const q1 = E.move(FD.progress(t, 3.55, 3.90));
+      const q2 = E.move(FD.progress(t, 3.55 + FD.f(1), 3.90 + FD.f(1)));
+      ones.strip.style.transform = 'translateY(' + (-(5 - 5 * q1)).toFixed(4) + 'em)';
+      tens.strip.style.transform = 'translateY(' + (-(4 * q2)).toFixed(4) + 'em)';
+      // soft motion blur while a column rolls, so mid-roll stills never read as a number
+      const bl = (a, b) => { const p = FD.progress(t, a, b); return p > 0 && p < 1 ? 16 * Math.sin(Math.PI * p) : 0; };
+      const b1 = bl(3.55, 3.90), b2 = bl(3.55 + FD.f(1), 3.90 + FD.f(1));
+      ones.strip.style.filter = b1 > 0.4 ? 'blur(' + b1.toFixed(2) + 'px)' : '';
+      tens.strip.style.filter = b2 > 0.4 ? 'blur(' + b2.toFixed(2) + 'px)' : '';
+      const qh = E.move(FD.progress(t, 3.55, 3.80));
+      hund.col.style.opacity = (1 - E.outCubic(FD.progress(t, 3.55, 3.70))).toFixed(3);
+      hund.col.style.width = (digitW * (1 - qh)).toFixed(4) + 'em';
+    });
+    const counter = FD.caption([{ node: odo, accent: true }, { text: 'places', size: 96 }],
+                               3.55, 4.4333, { size: 120, stagger: 0, exitFrames: 2 });
+    FD.caption('list *meat.*', 4.4333, 4.80);
+
+    // 4.6667 WHIP TO THE MAP inside the screen window; the phone kicks 1 deg.
+    // 'Or the map.': the map is its own view of all places, not the Meat result.
+    phone.slide(4.6667, 'map', { dir: 'left', dur: 0.35 }).kick(4.6667, 1);
+    FD.caption('Or the *map.*', 4.80, 5.30);
+
+    // 5.00-7.80 EVERY PLACE HAS A PIN: pan down to source row 520 (column 360 pinned left).
+    // Starts at row 345, just below the 'Sydney NSW 2000' / 'Filters' capsules (source rows
+    // about 212-340): with column 360 pinned they would show as a clipped 'SW 2000' chip.
+    phone.pan('map', -1, -1, { y: [345, 345] });
+    phone.pan('map', 5.00, 7.80, { y: [345, 520] });
+    // pins measured on 06-map.png (source px); each pulses once, staggered 0.15 s
+    const pins = [[1131, 861], [947, 1139], [577, 1191], [877, 1411]];
+    pins.forEach((p, i) => phone.pulse('map', 5.20 + i * 0.15, { src: p, r: 44 }));
+    phone.pulse('map', 7.20, { src: [497, 1780], r: 46 });      // the green '2' cluster, as it rises into view
+    FD.caption('Every place', 5.30, 5.9333);
+    const hasPin = FD.caption('has a *pin.*', 5.9333, 7.80);
+    FD.punch(hasPin.words[2].el, 7.20, { peak: 1.10, frames: 6 });   // in time with the cluster pulse
+
+    // Hide the white locate / fit buttons (source x 1140-1272, y 2138-2428): with column 360
+    // pinned only their left 25 px would show, as two half-moons on the bezel. Cover the
+    // window's right strip there with plain sea copied from 60 px to the left, soft left edge.
+    {
+      const p = document.createElement('div'); p.className = 'map-patch';
+      const px = 1110, py = 2110, pw = 80, ph = 350, off = 70;
+      Object.assign(p.style, { left: px + 'px', top: py + 'px', width: pw + 'px', height: ph + 'px',
+        backgroundImage: 'url("' + phone.screens.map.url + '")', backgroundPosition: -(px - off) + 'px ' + -py + 'px' });
+      phone.screens.map.src.appendChild(p);
+    }
+
+    // 7.80-9.40 TAP, THEN GO: tap the blue pin near Lithgow, phone shrinks to x 70-660
+    phone.tap(7.80, { src: [577, 1191] });
+    FD.caption('Tap *one.*', 7.80, 8.60);
+    // A white ring on the pin's own white ring reads as a highlight, not a press: this tap
+    // gets a deep-green ripple, and the pin answers with a 2-frame press-down then a pulse.
+    phone.pulse('map', 7.80, { src: [577, 1191], r: 44, peak: 0.86, frames: 4 });
+    phone.pulse('map', 7.9333, { src: [577, 1191], r: 44 });
+    {
+      const taps = document.querySelectorAll('.fd-tap');
+      const t2 = taps[taps.length - 1];
+      Object.assign(t2.querySelector('.fd-tap-ring').style, { borderColor: '#1B7335', borderWidth: '5px',
+        boxShadow: '0 0 0 1px rgba(255,255,255,0.6), 0 4px 14px rgba(0,0,0,0.18)' });
+      Object.assign(t2.querySelector('.fd-tap-dot').style, { background: 'rgba(27,115,53,0.38)', borderColor: '#1B7335',
+        boxShadow: '0 0 0 2px rgba(255,255,255,0.7), 0 6px 18px rgba(0,0,0,0.25)' });
+    }
+    phone.zoom(8.10, 8.40, 1.00, 0.82);
+
+    // pills sit under the phone (z 5 < phone z 10) so they slide out from behind its edge
+    const pillLayer = FD.layer('', { z: 5 });
+    const pills = ['Hours', 'Directions', 'Save'].map((label, i) => {
+      const d = document.createElement('div');
+      d.className = 'side-pill';
+      d.textContent = label;
+      d.style.top = (900 + i * 100) + 'px';
+      pillLayer.appendChild(d);
+      const t0 = 8.20 + i * 0.15;
+      const sx = (t) => -90 * (1 - E.enter(FD.progress(t, t0, t0 + FD.f(10))));
+      FD.onFrame((t) => {
+        const a = FD.T(d);
+        if (t < t0 - 1e-6) { a.hidden = true; return; }
+        a.x += sx(t);
+        a.opacity *= FD.progress(t + FD.f(1), t0, t0 + FD.f(4));
+      });
+      return d;
+    });
+    FD.caption('Then *go.*', 8.60, 9.40);
+
+    // 9.40-9.80 EXIT: phone and pills drop out the bottom; wipe to forest
+    phone.exit(9.40);
+    const dropY = (t) => E.exit(FD.progress(t, 9.40, 9.75)) * 2100;
+    FD.onFrame((t) => {
+      const a = FD.T(pillLayer);
+      if (t >= 9.75 - 1e-6) { a.hidden = true; return; }
+      if (t < 9.40) return;
+      a.y += dropY(t);
+      a.blurY = Math.max(a.blurY, FD.velBlur(dropY, t, 0.3));
+    });
+    FD.wipe(9.40, C.forest);
+
+    // 9.80-11.40 THE LINE
+    const l1 = FD.typeLine('Real meat.', 9.90, { y: 800, size: 120 });
+    const l2 = FD.typeLine([{ text: 'Real farmers.', accent: true }], 10.40, { y: 940, size: 120 });
+
+    // 11.40-13.50 END CARD (last 2.1 s)
+    // lines settle 80 px lower than the default (640/760) so they sit closer to the lockup
+    FD.endCard(11.40, { lines: [l1, l2], lineYs: [640, 760] });
+  },
+});
+</script>
+</body>
+</html>

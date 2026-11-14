@@ -1,0 +1,149 @@
+/* =====================================================================
+   Farm Direct video engine: styles for a 1080x1920 (9:16) artboard.
+   Read ENGINE.md first. Every animated value is written inline by
+   engine.js from the current time; there are NO CSS transitions or
+   animations here (they would break frame-exact rendering).
+   ===================================================================== */
+
+/* ---------- Fonts (same declarations as marketing/ads/shared/kit.css) */
+@font-face { font-family: "Inter"; font-weight: 400; src: local("Inter Regular"), local("Inter-Regular"), url("file:///usr/share/fonts/opentype/inter/Inter-Regular.otf"); }
+@font-face { font-family: "Inter"; font-weight: 500; src: local("Inter Medium"), local("Inter-Medium"), url("file:///usr/share/fonts/opentype/inter/Inter-Medium.otf"); }
+@font-face { font-family: "Inter"; font-weight: 600; src: local("Inter SemiBold"), local("Inter-SemiBold"), url("file:///usr/share/fonts/opentype/inter/Inter-SemiBold.otf"); }
+@font-face { font-family: "Inter"; font-weight: 700; src: local("Inter Bold"), local("Inter-Bold"), url("file:///usr/share/fonts/opentype/inter/Inter-Bold.otf"); }
+@font-face { font-family: "Inter Display"; font-weight: 700; src: local("Inter Display Bold"), local("InterDisplay-Bold"), url("file:///usr/share/fonts/opentype/inter/InterDisplay-Bold.otf"); }
+@font-face { font-family: "Inter Display"; font-weight: 800; src: local("Inter Display ExtraBold"), local("InterDisplay-ExtraBold"), url("file:///usr/share/fonts/opentype/inter/InterDisplay-ExtraBold.otf"); }
+@font-face { font-family: "Inter Display"; font-weight: 900; src: local("Inter Display Black"), local("InterDisplay-Black"), url("file:///usr/share/fonts/opentype/inter/InterDisplay-Black.otf"); }
+
+/* ---------- Tokens (family palette; no other colours) ---------------- */
+:root {
+  --forest: #0F3D1D;    /* type beats, end card */
+  --grey-bg: #F2F2F7;   /* behind light screenshots */
+  --offwhite: #F7F5EF;  /* hook grounds (videos 2, 3); type on forest */
+  --green: #1B7335;     /* accent on light grounds, pills, outlines */
+  --sprout: #CDE8C4;    /* accent on forest */
+  --ink: #111111;       /* type on light */
+  --graphite: #1C1C1E;  /* phone bezel */
+  --white: #FFFFFF;
+  --gold: #E9B44C;      /* ONE small drawn mark per video, never type */
+
+  --font-display: "Inter Display", "Inter", system-ui, sans-serif;
+  --font-text: "Inter", system-ui, sans-serif;
+
+  /* Safe area (Instagram UI). Live column x 60..950, centre x 505. */
+  --safe-top: 220px;
+  --safe-bottom: 1540px;  /* 1920 - 380 */
+  --safe-right: 950px;    /* 1080 - 130 */
+  --cx: 505px;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: #000; overflow: hidden; }
+body { -webkit-font-smoothing: antialiased; text-rendering: geometricPrecision; font-kerning: normal; }
+img, svg { display: block; }
+
+/* ---------- Stage ---------------------------------------------------- */
+.fd-stage {
+  position: relative; overflow: hidden;
+  width: 1080px; height: 1920px;
+  font-family: var(--font-text); color: var(--ink);
+  contain: strict;
+}
+.fd-ground, .fd-ground > div { position: absolute; inset: 0; }
+.fd-ground { z-index: 0; }
+.fd-layer { position: absolute; inset: 0; z-index: 2; }  /* a scene group you can whip/cut */
+.fd-abs { position: absolute; }
+.fd-flash { position: absolute; inset: 0; background: #fff; opacity: 0; z-index: 80; pointer-events: none; }
+
+/* ---------- Type ----------------------------------------------------- */
+.fd-type {
+  font-family: var(--font-display); font-weight: 900;
+  line-height: 1.0; letter-spacing: -0.01em;
+  white-space: nowrap;
+  font-feature-settings: "ss01" 0, "cv11" 0;
+}
+/* A line of type positioned by its vertical centre (top = y) and centred on x 505 */
+.fd-line {
+  position: absolute; left: 60px; width: 890px; height: 0;
+  display: flex; align-items: center; justify-content: center;
+  overflow: visible;
+}
+.fd-line > .fd-inner { display: inline-block; white-space: nowrap; transform-origin: 50% 50%; will-change: transform, opacity; }
+.fd-word { display: inline-block; margin: 0 0.035em; white-space: pre; transform-origin: 50% 60%; will-change: transform, opacity; }
+
+/* Pills drawn in the caption band (never on a screenshot) */
+.fd-pill {
+  display: inline-flex; align-items: center; justify-content: center;
+  font-family: var(--font-text); font-weight: 700; letter-spacing: -0.005em;
+  background: var(--green); color: var(--white);
+  border-radius: 44px; white-space: nowrap; line-height: 1;
+}
+.fd-pill.light { background: var(--white); color: var(--green); }
+
+/* Odometer counter */
+.fd-odo { display: inline-flex; overflow: hidden; vertical-align: baseline; font-variant-numeric: tabular-nums; font-feature-settings: "tnum" 1; }
+.fd-odo-col { display: inline-block; overflow: hidden; height: 1.1em; position: relative; vertical-align: top; }
+.fd-odo-strip { display: flex; flex-direction: column; will-change: transform; }
+.fd-odo-strip > span { display: block; height: 1.1em; line-height: 1.1em; text-align: center; }
+
+/* ---------- Phone ---------------------------------------------------- */
+.fd-phone {
+  position: absolute; left: 70px; top: 420px;
+  width: 720px; height: 1720px;      /* runs off the frame bottom like a hand-held phone */
+  border-radius: 76px;
+  background: var(--graphite);
+  padding: 18px;
+  box-shadow: 0 30px 70px rgba(0,0,0,0.18), 0 4px 12px rgba(0,0,0,0.08);
+  z-index: 10;
+  will-change: transform;
+}
+.fd-phone.on-dark { box-shadow: 0 30px 80px rgba(0,0,0,0.45); }
+.fd-window {
+  position: relative; width: 684px; height: 1684px;
+  border-radius: 60px; overflow: hidden;
+  background: var(--grey-bg);
+  isolation: isolate;
+}
+.fd-screen { position: absolute; left: 0; top: 0; width: 684px; height: 100%; overflow: hidden; will-change: transform; }
+.fd-src { position: absolute; left: 0; top: 0; width: 1320px; height: 2868px; transform-origin: 0 0; }
+.fd-src > img { position: absolute; left: 0; top: 0; width: 1320px; height: 2868px; }
+.fd-spot { position: absolute; border-radius: 50%; background-repeat: no-repeat; background-size: 1320px 2868px; transform-origin: 50% 50%; }
+.fd-dim { position: absolute; background: rgba(0,0,0,0.10); opacity: 0; }
+.fd-outline { position: absolute; overflow: visible; pointer-events: none; }
+.fd-overlay { position: absolute; inset: 0; pointer-events: none; z-index: 5; }
+.fd-window .fd-flash { z-index: 6; }
+
+/* ---------- Tap indicator ------------------------------------------- */
+.fd-tap { position: absolute; width: 0; height: 0; opacity: 0; }
+.fd-tap-dot, .fd-tap-ring { position: absolute; border-radius: 50%; left: 0; top: 0; }
+.fd-tap-dot {
+  width: 64px; height: 64px; margin: -32px 0 0 -32px;
+  background: rgba(255,255,255,0.35);
+  border: 3px solid #fff;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.20);
+}
+.fd-tap-ring { border: 3px solid #fff; }
+
+/* ---------- End card ------------------------------------------------- */
+.fd-end { position: absolute; inset: 0; z-index: 60; pointer-events: none; }
+.fd-end-icon {
+  position: absolute; left: 405px; top: 1060px; width: 200px; height: 200px;
+  border-radius: 44px; object-fit: cover;
+}
+.fd-end-name, .fd-end-cta { position: absolute; left: 60px; width: 890px; text-align: center; white-space: nowrap; line-height: 1; }
+.fd-end-name { font-family: var(--font-display); font-weight: 700; font-size: 84px; letter-spacing: -0.01em; color: var(--offwhite); }
+.fd-end-cta  { font-family: var(--font-text); font-weight: 500; font-size: 52px; color: var(--sprout); }
+
+/* ---------- Line art (draw-on with stroke-dashoffset) --------------- */
+.fd-art { position: absolute; overflow: visible; }
+.fd-art .ln { fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; }
+
+/* ---------- Safe-zone guides (?guides=1) ----------------------------- */
+.fd-guides { position: absolute; inset: 0; z-index: 999; pointer-events: none; }
+.fd-guides > div { position: absolute; background: rgba(255,0,80,0.28); }
+.fd-guides .g-top { left: 0; right: 0; top: 0; height: 220px; }
+.fd-guides .g-bottom { left: 0; right: 0; bottom: 0; height: 380px; }
+.fd-guides .g-right { top: 220px; bottom: 380px; right: 0; width: 130px; }
+.fd-guides .g-end { left: 0; right: 130px; top: 1540px; height: 80px; background: rgba(0,120,255,0.22); }  /* end-card lockup allowance to y 1620 */
+.fd-guides .g-cx { top: 0; bottom: 0; left: 504px; width: 2px; background: rgba(0,120,255,0.55); }
+.fd-guides .g-band { left: 60px; width: 890px; top: 240px; height: 160px; background: transparent; outline: 2px dashed rgba(0,120,255,0.7); }
+.fd-guides .g-time { left: 20px; top: 20px; background: rgba(0,0,0,0.6); color: #fff; font: 600 32px/1 var(--font-text); padding: 10px 14px; border-radius: 10px; }
