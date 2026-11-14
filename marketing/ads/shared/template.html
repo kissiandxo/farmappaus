@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<title>Farm Direct ad template</title>
+<!-- Copy this file to marketing/ads/NN-slug/ad.html. Paths below are written
+     so that they work from both shared/ and NN-slug/ (both are one level
+     below marketing/ads/). Render: node render.mjs NN-slug -->
+<link rel="stylesheet" href="../shared/kit.css">
+<style>
+  /* Ad-specific layout. Positions are artboard pixels; write the feed
+     value first, then override under .story. */
+  .headline { position: absolute; left: var(--margin); top: 110px; }
+  .sub      { position: absolute; left: var(--margin); top: 382px; width: 900px; }
+  .shot     { right: 60px; top: 560px; --h: 702px; }      /* frame bottom at y 1290 */
+  .tap      { position: absolute; left: 146px; top: 790px; }   /* no z-index: see .ripple in kit.css */
+  .tap .dot-gold { right: 26px; top: calc(50% - 14px); }
+
+  .story .headline { top: 300px; }
+  .story .sub      { top: 600px; }
+  .story .shot     { top: 860px; --h: 692px; }            /* frame bottom at y 1580 */
+  .story .tap      { top: 1030px; }
+</style>
+</head>
+<body>
+<div class="artboard feed bg-grey">
+
+  <h1 class="hl hl-120 headline">
+    <span class="line">Buy it from</span>
+    <span class="line alt">the farmer.</span>
+  </h1>
+
+  <p class="support sub">About 40 places across Australia list beef, lamb, pork or chicken.</p>
+
+  <!-- Focal point: the app's selected filter chip with a tap ripple -->
+  <div class="tap ripple">
+    <span class="chip chip-xl">Meat</span>
+    <span class="dot-gold"></span>
+  </div>
+
+  <div class="phone crop no-status shot" style="--w:500px">
+    <img src="../shared/screens/01-explore.png" alt="">
+  </div>
+
+  <div class="footer">
+    <div class="brand">
+      <img class="brand__icon" src="../shared/icon.png" alt="">
+      <div class="brand__text">
+        <span class="brand__name">Farm Direct</span>
+        <span class="brand__cta">Free for iPhone</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+<script src="../shared/kit.js"></script>
+</body>
+</html>

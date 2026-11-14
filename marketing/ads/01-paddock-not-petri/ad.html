@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<title>Farm Direct ad 01: From a paddock, not a petri dish</title>
+<!-- Ad 01 "From a Paddock, Not a Petri Dish". Typography poster on full deep
+     green. No screenshot, no phone. The contrast lives only in the words:
+     nothing is drawn but a post-and-rail fence, a hill and a rising sun.
+     Render: cd marketing/ads && node render.mjs 01-paddock-not-petri -->
+<link rel="stylesheet" href="../shared/kit.css">
+<style>
+  /* ---- Headline: three lines, 'paddock,' about 1.36x the others ---- */
+  .headline {
+    position: absolute; left: var(--margin); top: 146px;
+    font-size: 128px;               /* 'not a petri dish.' = 7.12 em = 911 px at 128 */
+    line-height: 0.98;
+    color: var(--offwhite);
+  }
+  .headline .big   { font-size: 184px; line-height: 0.98; margin: 4px 0 9px; }  /* 808 px; extra air above the punchline */
+  .headline .punch { color: var(--sprout); }   /* full contrast, Black weight */
+
+  /* ---- Fence, hill and sun: original line art, 920 px wide ---- */
+  .scene { position: absolute; left: var(--margin); top: 652px; color: var(--sprout); }
+
+  /* ---- Support line ---- */
+  .sub {
+    position: absolute; left: var(--margin); top: 982px; width: 920px;
+    color: var(--offwhite);
+  }
+
+  /* ---- Story: same stack, centred in y 250..1580 ----
+     The kit scales .hl by 1.1 in story, but 'not a petri dish.' is
+     already 911 of the 920 px column at 128 px, so the two outer lines stay
+     at 128 px and 'paddock,' takes the full 10% (202 px, 887 px wide). */
+  .story .headline { top: 346px; font-size: 128px; }
+  .story .headline .big { font-size: 202px; margin: 6px 0 11px; }
+  .story .scene { top: 902px; }
+  .story .sub   { top: 1218px; }
+  /* story footer stays at the kit default, y 1448..1560 */
+</style>
+</head>
+<body>
+<div class="artboard feed bg-green">
+
+  <h1 class="hl headline">
+    <span class="line">From a</span>
+    <span class="line big">paddock,</span>
+    <span class="line punch">not a petri dish.</span>
+  </h1>
+
+  <!-- Original SVG drawing: a low rolling hill behind a three-rail
+       post-and-rail fence standing on a ground line, with a half sun rising
+       on the right-hand crest (the ad's one wattle-gold mark). The hill dips
+       behind the fence: it is masked off just above the top rail and broken
+       where a post stands in front of it, so the posts set the depth.
+       6 px strokes, round caps and joins, no fills. Drawn at 1:1. -->
+  <svg class="art scene" width="920" height="264" viewBox="0 0 920 264" aria-hidden="true">
+    <defs>
+      <!-- Sky: everything above the hill line. The sun is clipped to it, so
+           it reads as rising from behind the right-hand crest. -->
+      <clipPath id="sky">
+        <path d="M-20 -40 L940 -40 L940 130 L917 130 C 895 110, 860 98, 800 98 C 730 98, 710 156, 575 156 C 400 156, 360 74, 260 74 C 170 74, 90 96, 3 130 L-20 130 Z"/>
+      </clipPath>
+      <!-- Hill mask: cut a gap where each post crosses in front, and hide
+           the dip between the two middle posts, where it sinks below the
+           top rail (the hill is behind the fence there). -->
+      <mask id="behind" maskUnits="userSpaceOnUse" x="-20" y="-40" width="960" height="320">
+        <rect x="-20" y="-40" width="960" height="320" fill="#fff"/>
+        <g fill="#000">
+          <rect x="-20" y="100" width="34" height="60"/>
+          <rect x="222.5" y="100" width="18" height="60"/>
+          <rect x="451" y="100" width="246.5" height="80"/>
+          <rect x="906" y="100" width="34" height="60"/>
+        </g>
+      </mask>
+    </defs>
+
+    <!-- sun: a half circle sitting on the right-hand crest -->
+    <circle class="ln gold" cx="800" cy="102" r="58" clip-path="url(#sky)"/>
+    <!-- hill: its dip (x 445..689) runs behind the fence under the top rail,
+         going in behind one post and coming out behind the next -->
+    <path class="ln" mask="url(#behind)" d="M3 130 C 90 96, 170 74, 260 74 C 360 74, 400 156, 575 156 C 710 156, 730 98, 800 98 C 860 98, 895 110, 917 130"/>
+
+    <!-- ground the fence stands on -->
+    <path class="ln" d="M3 254 H 917"/>
+    <!-- fence posts: five, evenly spaced, rising 34 px above the top rail
+         and running down to the ground -->
+    <path class="ln" d="M3 112 V 254 M231.5 112 V 254 M460 112 V 254 M688.5 112 V 254 M917 112 V 254"/>
+    <!-- three rails, 40 px apart -->
+    <path class="ln" d="M3 146 H 917 M3 186 H 917 M3 226 H 917"/>
+  </svg>
+
+  <p class="support semibold sub">About 40 places across Australia list beef, lamb, pork or chicken.</p>
+
+  <div class="footer">
+    <div class="brand">
+      <img class="brand__icon" src="../shared/icon.png" alt="">
+      <div class="brand__text">
+        <span class="brand__name">Farm Direct</span>
+        <span class="brand__cta">Free for iPhone</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+<script src="../shared/kit.js"></script>
+</body>
+</html>

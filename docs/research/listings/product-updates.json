@@ -1,0 +1,221 @@
+{
+  "researchedOn": "2026-11-13",
+  "note": "Products confirmed on each place's own or official page; add to the named existing listing and add evidenceUrl to its sources.",
+  "updates": [
+    {
+      "name": "Orange Farmers Market",
+      "state": "NSW",
+      "addProducts": [
+        "lamb",
+        "beef",
+        "pork",
+        "chicken",
+        "eggs"
+      ],
+      "evidenceUrl": "https://orangefarmersmarket.org.au/stallholders/",
+      "evidence": "The market's own stallholders page says it offers a wide range of meats, naming lamb, beef, pork and bacon, duck, chicken and goat, along with eggs. Named stallholders include a lamb producer, a bacon and pork producer and two egg farms."
+    },
+    {
+      "name": "Byron Farmers Market",
+      "state": "NSW",
+      "addProducts": [
+        "beef",
+        "pork",
+        "lamb",
+        "chicken"
+      ],
+      "evidenceUrl": "https://byronfarmersmarket.com.au/farmers/",
+      "evidence": "The market's 'Our Farmers' page tags each farmer with the market(s) they attend. Farmers tagged Byron Bay list free-range pork and beef, Dorper lamb, certified organic free-range chicken, and pasture-raised chicken."
+    },
+    {
+      "name": "Bangalow Farmers Market",
+      "state": "NSW",
+      "addProducts": [
+        "beef",
+        "pork",
+        "lamb",
+        "chicken"
+      ],
+      "evidenceUrl": "https://byronfarmersmarket.com.au/farmers/",
+      "evidence": "On the same Byron Farmers Market 'Our Farmers' page, farmers tagged Bangalow include a free-range pork and beef producer, a Dorper lamb producer and a certified organic free-range chicken grower."
+    },
+    {
+      "name": "Capital Region Farmers Market",
+      "state": "ACT",
+      "addProducts": [
+        "lamb",
+        "beef",
+        "pork"
+      ],
+      "evidenceUrl": "https://capitalregionfarmersmarket.com.au/category/meat-seafood/",
+      "evidence": "The market's Meat & Seafood stallholder category lists several lamb producers. Its stallholder listing pages (/listing/boxgum-grazing/, /listing/martins-ridge-farm/, /listing/minto-galloways/) describe grass-fed beef, free-range pastured pork, fresh pork and beef cuts, and Galloway beef sold at the market."
+    },
+    {
+      "name": "Carriageworks Farmers Market",
+      "state": "NSW",
+      "addProducts": [
+        "beef",
+        "eggs",
+        "milk"
+      ],
+      "evidenceUrl": "https://carriageworks.com.au/journal/carriageworks-farmers-market-stallholder-list/",
+      "evidence": "The official stallholder list for the market on Sat 14 Nov 2026 includes a biodynamic beef stall, another stall selling beef and poultry, a free-range pastured egg stall, and a dairy selling Jersey milk, cream, yoghurt and cheese."
+    },
+    {
+      "name": "Bellingen Growers Market",
+      "state": "NSW",
+      "addProducts": [
+        "chicken"
+      ],
+      "evidenceUrl": "https://www.bellingengrowersmarket.com.au/our-stallholders",
+      "evidence": "The market's stallholders page lists an organic farm selling organic chicken cuts and vegetables. The homepage also mentions a certified organic chicken and vegetable stall."
+    },
+    {
+      "name": "Bermagui Growers and Makers Market",
+      "state": "NSW",
+      "addProducts": [
+        "eggs"
+      ],
+      "evidenceUrl": "https://www.bermimarket.au/our-stallholders",
+      "evidence": "The market's stallholders page lists a hilltop farm stall marked as selling eggs."
+    },
+    {
+      "name": "Noosa Farmers Market",
+      "state": "QLD",
+      "addProducts": [
+        "beef"
+      ],
+      "evidenceUrl": "https://noosafarmersmarket.com.au/pages/stall-holders-1",
+      "evidence": "The market's current stallholder list names a beef producer stall (Barambah Creek Beef) among its regular stalls."
+    },
+    {
+      "name": "Adelaide Showground Farmers' Market",
+      "state": "SA",
+      "addProducts": [
+        "beef",
+        "pork",
+        "chicken",
+        "eggs"
+      ],
+      "evidenceUrl": "https://adelaidefarmersmarket.com.au/stallholders/find-product/",
+      "evidence": "The market's find-a-product stallholder directory lists Meat & Poultry stalls including a heritage pork producer, a beef producer and a pastured chicken producer, plus several egg producers under the Eggs category."
+    },
+    {
+      "name": "Barossa Farmers Market",
+      "state": "SA",
+      "addProducts": [
+        "chicken",
+        "lamb"
+      ],
+      "evidenceUrl": "https://www.barossafarmersmarket.com/stallholders/abelsway-farm/",
+      "evidence": "Stallholder page for Abelsway Farm (Fresh Meat category) says they bring fresh chicken (whole and pieces) and fresh lamb to the market every Saturday; attendance weekly."
+    },
+    {
+      "name": "Willunga Farmers Market",
+      "state": "SA",
+      "addProducts": [
+        "chicken",
+        "beef",
+        "lamb"
+      ],
+      "evidenceUrl": "https://willungafarmersmarket.com.au/producers/nomad-farms/",
+      "evidence": "Producer page (Meat & Poultry) for Nomad Farms says they raise pasture-raised chickens and grass-fed beef and lamb."
+    },
+    {
+      "name": "Adelaide Hills Farmers Market",
+      "state": "SA",
+      "addProducts": [
+        "pork",
+        "lamb"
+      ],
+      "evidenceUrl": "https://ahfm.org.au/stall/illa-langi-pastoral-co-2/",
+      "evidence": "Producer stall page for Illa Langi Pastoral Co (Sherlock SA) lists free-range pork and lamb products such as mince, sausages, roasts, chops and bacon."
+    },
+    {
+      "name": "Margaret River Farmers Market",
+      "state": "WA",
+      "addProducts": [
+        "eggs"
+      ],
+      "evidenceUrl": "https://margaretriverfarmersmarket.com.au/localproducers",
+      "evidence": "The market's Local Producers page lists a free-range egg producer (Margaret River Free Range Eggs) among its producers."
+    },
+    {
+      "name": "Perth City Farm Farmers Market",
+      "state": "WA",
+      "addProducts": [
+        "milk"
+      ],
+      "evidenceUrl": "https://www.perthcityfarm.org.au/farmers-market",
+      "evidence": "The market page says shoppers typically find dairy products including organic cheese, milk and yoghurt."
+    },
+    {
+      "name": "Bickley Valley Fresh",
+      "state": "WA",
+      "addProducts": [
+        "eggs"
+      ],
+      "evidenceUrl": "https://experienceperthhills.com.au/?p=5124",
+      "evidence": "NOTE: eggs already recorded for this listing; included only for confirmation, do not add. The Perth Hills tourism page lists fruit, veg, baked goods, eggs, honey and preserves, open Friday to Sunday."
+    },
+    {
+      "name": "Mullum Farmers Market",
+      "state": "NSW",
+      "addProducts": [
+        "beef",
+        "pork"
+      ],
+      "evidenceUrl": "https://mullumfarmersmarket.org.au/portfolio-items/hayters-hill-farm/",
+      "evidence": "The market's own producer profile for Hayters Hill Farm, listed under its Meat category, says the stall sells aged beef, corned beef, hams, bacon and sausages, from cattle and pigs raised on their own farm. Its produce line reads beef products and smallgoods."
+    },
+    {
+      "name": "Torquay Farmers Market",
+      "state": "VIC",
+      "addProducts": [
+        "beef",
+        "lamb"
+      ],
+      "evidenceUrl": "https://www.otwayharvesttrail.org.au/listing/torquay-farmers-market",
+      "evidence": "The Otway Harvest Trail listing (already a recorded source) says the market covers the week's basics, including lamb, beef, venison, fish, vegetables and eggs."
+    },
+    {
+      "name": "The Central Coast Farmers Market",
+      "state": "NSW",
+      "addProducts": [
+        "eggs"
+      ],
+      "evidenceUrl": "https://www.thecentralcoastfarmersmarket.com/about-3",
+      "evidence": "The market's own about page lists its fresh produce stallholders, and one of them is an egg stall named Totally Free Range Eggs. The same list has a butcher stall, but the page does not name any meat species."
+    },
+    {
+      "name": "Mount Claremont Farmers' Market",
+      "state": "WA",
+      "addProducts": [
+        "chicken",
+        "pork",
+        "lamb"
+      ],
+      "evidenceUrl": "https://mtclaremontfarmersmarket.com.au/farmstalls",
+      "evidence": "The market's own farm stalls page lists Allington Family Farm as attending weekly. It says the family farms free-range chicken, pork and lamb near Greenbushes."
+    },
+    {
+      "name": "Stirling Farmers Market",
+      "state": "WA",
+      "addProducts": [
+        "chicken"
+      ],
+      "evidenceUrl": "https://www.stirlingfarmersmarket.com.au/stalls",
+      "evidence": "The market's own stalls page lists Kojonup's Perfect Poultry, which it describes as selling very large free-range chickens."
+    },
+    {
+      "name": "Victor Harbor Farmers Market",
+      "state": "SA",
+      "addProducts": [
+        "beef",
+        "milk"
+      ],
+      "evidenceUrl": "https://victorharborfarmersmarket.com.au/22-stalls-one-saturday-morning-think-you-can-fit-it-all-in/",
+      "evidence": "A post on the market's own site dated 2026-11-12 lists this Saturday's 22 stallholders. The list includes a beef stall named Bimbadeen Hills Beef and a stall named Fleurieu Milk Company."
+    }
+  ]
+}

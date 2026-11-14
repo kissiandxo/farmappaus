@@ -1,0 +1,736 @@
+{
+  "researchedOn": "2026-11-14",
+  "region": "VIC/TAS butchers",
+  "listings": [
+    {
+      "name": "Hardwicks of Kyneton",
+      "type": "butcher",
+      "address": "180 Mollison St",
+      "locality": "Kyneton",
+      "state": "VIC",
+      "postcode": "3444",
+      "products": [
+        "beef",
+        "lamb",
+        "pork",
+        "chicken"
+      ],
+      "otherProducts": null,
+      "tags": [],
+      "hours": {
+        "kind": "weekly",
+        "days": {
+          "mon": [
+            [
+              "08:30",
+              "17:30"
+            ]
+          ],
+          "tue": [
+            [
+              "08:30",
+              "17:30"
+            ]
+          ],
+          "wed": [
+            [
+              "08:30",
+              "17:30"
+            ]
+          ],
+          "thu": [
+            [
+              "08:30",
+              "17:30"
+            ]
+          ],
+          "fri": [
+            [
+              "08:30",
+              "17:30"
+            ]
+          ],
+          "sat": [
+            [
+              "08:30",
+              "15:00"
+            ]
+          ],
+          "sun": [
+            [
+              "09:00",
+              "15:00"
+            ]
+          ]
+        },
+        "note": null
+      },
+      "hoursAsStated": "Monday to Friday 8:30am-5:30pm, Saturday 8:30am-3pm, Sunday 9am-3pm",
+      "website": "https://www.hardwicksofkyneton.com.au/",
+      "phone": "(03) 5422 3851",
+      "description": "Family-owned retail butcher on Mollison Street in Kyneton selling lamb, beef, pork and chicken direct to the public.",
+      "sources": [
+        "https://www.hardwicksofkyneton.com.au/",
+        "https://rdfnl.com.au/sponsors-directory/43-hardwick-s-of-kyneton"
+      ],
+      "confidence": "high",
+      "caveats": "Business describes itself as also processing and supplying meat; the retail shop is open to the public. Public holiday hours not checked."
+    },
+    {
+      "name": "Strath Hill Butcher",
+      "type": "butcher",
+      "address": "Cnr Condon St & Edwards Rd",
+      "locality": "Bendigo",
+      "state": "VIC",
+      "postcode": "",
+      "products": [
+        "beef",
+        "lamb",
+        "pork",
+        "chicken"
+      ],
+      "otherProducts": "Burgers, sausages, seafood and meat packs",
+      "tags": [],
+      "hours": {
+        "kind": "weekly",
+        "days": {
+          "mon": [
+            [
+              "07:30",
+              "17:30"
+            ]
+          ],
+          "tue": [
+            [
+              "07:30",
+              "17:30"
+            ]
+          ],
+          "wed": [
+            [
+              "07:30",
+              "17:30"
+            ]
+          ],
+          "thu": [
+            [
+              "07:30",
+              "17:30"
+            ]
+          ],
+          "fri": [
+            [
+              "07:30",
+              "17:30"
+            ]
+          ],
+          "sat": [
+            [
+              "07:30",
+              "12:00"
+            ]
+          ]
+        },
+        "note": null
+      },
+      "hoursAsStated": "Monday to Friday 7:30am-5:30pm, Saturday 7:30am-12pm, Sunday closed",
+      "website": "https://www.strathhillbutcher.com.au/",
+      "phone": "(03) 5443 4467",
+      "description": "Family-owned butcher shop at the corner of Condon Street and Edwards Road in Bendigo selling beef, lamb, pork and poultry.",
+      "sources": [
+        "https://www.strathhillbutcher.com.au/",
+        "https://bebendigo.com.au/member-directory/strath-hill-butcher/"
+      ],
+      "confidence": "high",
+      "caveats": "Site gives the locality only as 'Bendigo' with no postcode; the exact suburb for the corner address should be confirmed before geocoding. Site lists poultry, recorded here as chicken."
+    },
+    {
+      "name": "Bertie's Butcher",
+      "type": "butcher",
+      "address": "218 Swan St",
+      "locality": "Cremorne",
+      "state": "VIC",
+      "postcode": "3121",
+      "products": [
+        "beef",
+        "lamb",
+        "pork",
+        "chicken"
+      ],
+      "otherProducts": "Sausages; small on-site smoker and grill counter",
+      "tags": [],
+      "hours": {
+        "kind": "weekly",
+        "days": {
+          "mon": [
+            [
+              "08:00",
+              "19:00"
+            ]
+          ],
+          "tue": [
+            [
+              "08:00",
+              "19:00"
+            ]
+          ],
+          "wed": [
+            [
+              "08:00",
+              "19:00"
+            ]
+          ],
+          "thu": [
+            [
+              "08:00",
+              "19:00"
+            ]
+          ],
+          "fri": [
+            [
+              "08:00",
+              "19:00"
+            ]
+          ],
+          "sat": [
+            [
+              "08:00",
+              "17:00"
+            ]
+          ],
+          "sun": [
+            [
+              "10:00",
+              "16:00"
+            ]
+          ]
+        },
+        "note": null
+      },
+      "hoursAsStated": "Store open Monday to Friday 8am-7pm, Saturday 8am-5pm, Sunday 10am-4pm",
+      "website": "https://www.bertiesbutcher.com.au/",
+      "phone": "(03) 9428 2655",
+      "description": "Butcher shop on Swan Street in Cremorne with an attached smoker and grill counter.",
+      "sources": [
+        "https://www.bertiesbutcher.com.au/",
+        "https://www.bertiesbutcher.com.au/pages/contact",
+        "https://www.broadsheet.com.au/melbourne/shops/berties-butcher"
+      ],
+      "confidence": "high",
+      "caveats": "Older third-party coverage places the shop in Richmond; the shop's own site gives Cremorne 3121. Separate shorter hours on the site apply to the grill counter, not the butcher."
+    },
+    {
+      "name": "The Daylesford Meat Co.",
+      "type": "butcher",
+      "address": "37 Vincent Street",
+      "locality": "Daylesford",
+      "state": "VIC",
+      "postcode": "3460",
+      "products": [
+        "beef",
+        "lamb",
+        "pork",
+        "chicken"
+      ],
+      "otherProducts": "Smallgoods; seasonal duck and turkey",
+      "tags": [],
+      "hours": {
+        "kind": "weekly",
+        "days": {
+          "mon": [
+            [
+              "07:00",
+              "17:30"
+            ]
+          ],
+          "tue": [
+            [
+              "07:00",
+              "17:30"
+            ]
+          ],
+          "wed": [
+            [
+              "07:00",
+              "17:30"
+            ]
+          ],
+          "thu": [
+            [
+              "07:00",
+              "17:30"
+            ]
+          ],
+          "fri": [
+            [
+              "07:00",
+              "18:00"
+            ]
+          ],
+          "sat": [
+            [
+              "07:00",
+              "13:00"
+            ]
+          ],
+          "sun": [
+            [
+              "10:00",
+              "15:00"
+            ]
+          ]
+        },
+        "note": null
+      },
+      "hoursAsStated": "Shop trading hours Monday to Thursday 7am-5:30pm, Friday 7am-6pm, Saturday 7am-1pm, Sunday 10am-3pm",
+      "website": "https://daylesfordmeatco.com.au/",
+      "phone": "03 5348 2094",
+      "description": "Traditional butcher shop on Vincent Street in Daylesford selling beef, lamb, pork and chicken.",
+      "sources": [
+        "https://daylesfordmeatco.com.au/",
+        "https://daylesford-meat-co.squarespace.com/contact",
+        "https://daylesford-meat-co.squarespace.com/about-us"
+      ],
+      "confidence": "high",
+      "caveats": "Also delivers and supplies wholesale customers; the Vincent Street shop is open to the public."
+    },
+    {
+      "name": "Meat @ Beany's",
+      "type": "butcher",
+      "address": "120 Commercial Rd",
+      "locality": "Koroit",
+      "state": "VIC",
+      "postcode": "3282",
+      "products": [
+        "beef",
+        "lamb",
+        "pork"
+      ],
+      "otherProducts": "Local produce and hampers",
+      "tags": [],
+      "hours": {
+        "kind": "weekly",
+        "days": {
+          "mon": [
+            [
+              "07:00",
+              "18:00"
+            ]
+          ],
+          "tue": [
+            [
+              "07:00",
+              "18:00"
+            ]
+          ],
+          "wed": [
+            [
+              "07:00",
+              "18:00"
+            ]
+          ],
+          "thu": [
+            [
+              "07:00",
+              "18:00"
+            ]
+          ],
+          "fri": [
+            [
+              "07:00",
+              "18:00"
+            ]
+          ],
+          "sat": [
+            [
+              "07:00",
+              "14:00"
+            ]
+          ]
+        },
+        "note": null
+      },
+      "hoursAsStated": "Monday to Friday 7am-6pm, Saturday 7am-2pm, Sunday closed",
+      "website": "https://www.meatatbeanysbutcher.com.au/",
+      "phone": "(03) 5565 8282",
+      "description": "Family-owned and operated butcher shop on Commercial Road in Koroit.",
+      "sources": [
+        "https://www.meatatbeanysbutcher.com.au/",
+        "https://www.meatatbeanysbutcher.com.au/shop-our-meat",
+        "https://visitgreatoceanroad.org.au/restaurants/meat-beanys/"
+      ],
+      "confidence": "high",
+      "caveats": null
+    },
+    {
+      "name": "Brendan Bouchier's Mortlake Butchers",
+      "type": "butcher",
+      "address": "105 Dunlop St",
+      "locality": "Mortlake",
+      "state": "VIC",
+      "postcode": "3272",
+      "products": [
+        "beef",
+        "lamb",
+        "pork"
+      ],
+      "otherProducts": "Smallgoods and Christmas hams",
+      "tags": [],
+      "hours": {
+        "kind": "weekly",
+        "days": {
+          "mon": [
+            [
+              "09:00",
+              "17:00"
+            ]
+          ],
+          "tue": [
+            [
+              "09:00",
+              "17:00"
+            ]
+          ],
+          "wed": [
+            [
+              "09:00",
+              "17:00"
+            ]
+          ],
+          "thu": [
+            [
+              "09:00",
+              "17:00"
+            ]
+          ],
+          "fri": [
+            [
+              "09:00",
+              "17:00"
+            ]
+          ]
+        },
+        "note": null
+      },
+      "hoursAsStated": "Business hours Monday to Friday 9am-5pm, Saturday and Sunday closed",
+      "website": "https://www.bouchiers.com.au/",
+      "phone": "(03) 5599 2024",
+      "description": "Butcher shop on Dunlop Street in Mortlake selling beef, lamb, pork and house-made smallgoods.",
+      "sources": [
+        "https://www.bouchiers.com.au/",
+        "https://www.bouchiers.com.au/contact",
+        "https://www.bouchiers.com.au/our-products"
+      ],
+      "confidence": "medium",
+      "caveats": "Contact page labels these 'Business Hours'; no Saturday trading is unusual for a country butcher, so confirm they are the shop's counter hours. The same owner runs a separate Timboon shop (see unverified)."
+    },
+    {
+      "name": "Gippsland Butchers Block",
+      "type": "butcher",
+      "address": "Shop 1/102 York St",
+      "locality": "Sale",
+      "state": "VIC",
+      "postcode": "3850",
+      "products": [
+        "beef",
+        "lamb",
+        "pork"
+      ],
+      "otherProducts": "Seafood, pet food, condiments and meat packs",
+      "tags": [],
+      "hours": {
+        "kind": "weekly",
+        "days": {
+          "mon": [
+            [
+              "08:00",
+              "18:00"
+            ]
+          ],
+          "tue": [
+            [
+              "08:00",
+              "18:00"
+            ]
+          ],
+          "wed": [
+            [
+              "08:00",
+              "18:00"
+            ]
+          ],
+          "thu": [
+            [
+              "08:00",
+              "18:00"
+            ]
+          ],
+          "fri": [
+            [
+              "08:00",
+              "18:00"
+            ]
+          ],
+          "sat": [
+            [
+              "08:00",
+              "13:00"
+            ]
+          ]
+        },
+        "note": null
+      },
+      "hoursAsStated": "Trading hours Monday to Friday 8am-6pm, Saturday 8am-1pm",
+      "website": "https://gippslandbutchersblock.com.au/",
+      "phone": "(03) 5143 3020",
+      "description": "Locally owned, family-operated butcher shop on York Street in Sale.",
+      "sources": [
+        "https://gippslandbutchersblock.com.au/",
+        "https://gippslandbutchersblock.com.au/pages/contact",
+        "https://themiddleofeverywhere.com.au/en/profiles/gippsland-butchers-block"
+      ],
+      "confidence": "medium",
+      "caveats": "Hours conflict: the shop's own contact page says weekdays 8am-6pm, while the Wellington Shire tourism page says weekdays 8am-4:30pm (Saturday 8am-1pm on both). Own site recorded. The homepage refers to 'our stores' but only the York St shop is listed. Also has a wholesale arm."
+    },
+    {
+      "name": "Casalinga Gourmet Meats",
+      "type": "butcher",
+      "address": "Shop 2, 205 Charles St",
+      "locality": "Launceston",
+      "state": "TAS",
+      "postcode": "7250",
+      "products": [
+        "beef",
+        "lamb",
+        "pork"
+      ],
+      "otherProducts": "Smallgoods, charcuterie, sausages and game meats",
+      "tags": [],
+      "hours": {
+        "kind": "weekly",
+        "days": {
+          "tue": [
+            [
+              "07:00",
+              "18:00"
+            ]
+          ],
+          "wed": [
+            [
+              "07:00",
+              "18:00"
+            ]
+          ],
+          "thu": [
+            [
+              "07:00",
+              "18:00"
+            ]
+          ],
+          "fri": [
+            [
+              "07:00",
+              "18:00"
+            ]
+          ]
+        },
+        "note": null
+      },
+      "hoursAsStated": "Tuesday to Friday 7am-6pm; closed Saturday to Monday",
+      "website": "https://www.casalingagourmetmeats.com/",
+      "phone": "(03) 6334 9899",
+      "description": "Family-owned corner butcher on Charles Street in central Launceston that also makes its own smallgoods.",
+      "sources": [
+        "https://www.casalingagourmetmeats.com/",
+        "https://www.casalingagourmetmeats.com/traditional-meats",
+        "https://northerntasmania.com.au/eat-and-drink/casalinga-gourmet-meats"
+      ],
+      "confidence": "high",
+      "caveats": "Closed on weekends and Mondays."
+    },
+    {
+      "name": "Vermey's Quality Meats",
+      "type": "butcher",
+      "address": "180 Sandy Bay Road",
+      "locality": "Sandy Bay",
+      "state": "TAS",
+      "postcode": "7005",
+      "products": [
+        "beef",
+        "lamb",
+        "pork",
+        "chicken",
+        "eggs",
+        "milk"
+      ],
+      "otherProducts": "Veal, game, deli items and sausages",
+      "tags": [],
+      "hours": {
+        "kind": "weekly",
+        "days": {
+          "mon": [
+            [
+              "07:00",
+              "18:00"
+            ]
+          ],
+          "tue": [
+            [
+              "07:00",
+              "18:00"
+            ]
+          ],
+          "wed": [
+            [
+              "07:00",
+              "18:00"
+            ]
+          ],
+          "thu": [
+            [
+              "07:00",
+              "18:00"
+            ]
+          ],
+          "fri": [
+            [
+              "07:00",
+              "18:00"
+            ]
+          ],
+          "sat": [
+            [
+              "07:00",
+              "16:00"
+            ]
+          ]
+        },
+        "note": null
+      },
+      "hoursAsStated": "Monday to Friday 7am-6pm, Saturday 7am-4pm (homepage); contact page gives 6am opening",
+      "website": "https://www.vermeys.com.au/",
+      "phone": "(03) 6223 6378",
+      "description": "Family butcher shop on Sandy Bay Road in Hobart's Sandy Bay with a walk-in shop and local delivery.",
+      "sources": [
+        "https://www.vermeys.com.au/",
+        "https://www.vermeys.com.au/pages/contact-us"
+      ],
+      "confidence": "medium",
+      "caveats": "Opening time conflicts on the shop's own site: homepage says 7am, contact page says 6am (closing times agree). Later 7am recorded. Site lists poultry, recorded here as chicken; milk and eggs are sold via online orders, confirm they are stocked in-store."
+    }
+  ],
+  "unverified": [
+    {
+      "name": "Sinclair Meats",
+      "locality": "Delacombe (Ballarat)",
+      "state": "VIC",
+      "why": "Own site gives 828 La Trobe St, Delacombe and lists beef, lamb and pork, but no opening hours; Commerce Ballarat page only says 'Open 7 Days'.",
+      "leadUrl": "https://www.sinclairmeats.com.au/"
+    },
+    {
+      "name": "Kitchen & Butcher",
+      "locality": "Healesville",
+      "state": "VIC",
+      "why": "Own site confirms 258 Maroondah Hwy and hours, but names no specific meat (only 'free range butcher'); also a deli, so may not count as a butcher shop.",
+      "leadUrl": "https://kitchenandbutcher.com.au/"
+    },
+    {
+      "name": "Ranford's Family Butchers",
+      "locality": "Sale",
+      "state": "VIC",
+      "why": "Wellington Shire tourism page gives 312 Raymond St and hours, but no meat is named and no own website was found.",
+      "leadUrl": "https://middleofeverywhere.themiddleofeverywhere.com.au/en/profiles/ranfords-family-butchers"
+    },
+    {
+      "name": "Fehst on Meats",
+      "locality": "Maffra",
+      "state": "VIC",
+      "why": "Wellington Shire tourism page lists hours and meats, but gives two different street numbers (112 and 122 Johnson St).",
+      "leadUrl": "https://themiddleofeverywhere.com.au/en/profiles/fehst-on-meats"
+    },
+    {
+      "name": "Brendan Bouchier's Timboon Butcher",
+      "locality": "Timboon",
+      "state": "VIC",
+      "why": "Great Ocean Road tourism page gives 12 Main Street but no hours; the linked website only covers the Mortlake shop.",
+      "leadUrl": "https://visitgreatoceanroad.org.au/restaurants/brendan-bouchiers-timboon-butcher/"
+    },
+    {
+      "name": "Meatsmith",
+      "locality": "Fitzroy, St Kilda, Brighton, Balwyn",
+      "state": "VIC",
+      "why": "Own site lists four shop addresses and names beef, lamb, pork and chicken, but no store hours could be found on the site.",
+      "leadUrl": "https://www.meatsmith.com.au/pages/locations"
+    },
+    {
+      "name": "Alpine Butchery",
+      "locality": "Mansfield",
+      "state": "VIC",
+      "why": "No own website found; only third-party pages with hours 'refer to Facebook', and the business was advertised for sale in 2025.",
+      "leadUrl": "https://www.snownews.com.au/alpine-butchery"
+    },
+    {
+      "name": "Black Forest Meats",
+      "locality": "Macedon Ranges",
+      "state": "VIC",
+      "why": "Visit Macedon Ranges listing describes a family butcher but shows no address or hours in the page text.",
+      "leadUrl": "https://www.visitmacedonranges.com/tourism-listing/black-forest-meats/"
+    },
+    {
+      "name": "Farm to Fork Butchery",
+      "locality": "Mount Beauty",
+      "state": "VIC",
+      "why": "Only lead is a regional listing that returned HTTP 403 when opened; no own website found.",
+      "leadUrl": "https://highcountryonline.com.au/farm-to-fork-butchery-mt-beauty/"
+    },
+    {
+      "name": "Peter Bouchier",
+      "locality": "Toorak / Melbourne",
+      "state": "VIC",
+      "why": "Own site names beef, lamb, chicken and pork but store addresses and hours could not be read from the pages opened.",
+      "leadUrl": "https://www.peterbouchier.com.au/"
+    },
+    {
+      "name": "M&D Butchery Port Cygnet",
+      "locality": "Cygnet",
+      "state": "TAS",
+      "why": "Huon Valley Council directory gives weekday hours (Mon-Fri 7am-5:30pm) but no shop street address and no named meat; own domain did not load.",
+      "leadUrl": "https://www.huonvalley.tas.gov.au/service/md-butchery-port-cygnet/"
+    },
+    {
+      "name": "Wursthaus Kitchen",
+      "locality": "Battery Point (Hobart)",
+      "state": "TAS",
+      "why": "Own site gives 1 Montpelier Retreat and hours (Sunday hours conflict between two blocks), but names no meat and presents as a deli/food store rather than a butcher.",
+      "leadUrl": "https://www.wursthauskitchen.com.au/"
+    },
+    {
+      "name": "Mark on Macquarie",
+      "locality": "South Hobart",
+      "state": "TAS",
+      "why": "Butcher at 373 Macquarie St per third-party listings; no own website or official page with hours found.",
+      "leadUrl": "https://www.tastafe.tas.edu.au/news-folder/mark-henshaw-claims-the-sausage-king-of-tasmania-titlewith-some-help-from-the-3-tastafe-learners-in-his-butchers-shop"
+    },
+    {
+      "name": "Blatchy's",
+      "locality": "Hobart CBD",
+      "state": "TAS",
+      "why": "Only a news article about the opening; no website, address or hours confirmed.",
+      "leadUrl": "https://pulsetasmania.com.au/news/blatchys-family-owned-butcher-opens-in-hobart-cbd-serving-local-meat/"
+    },
+    {
+      "name": "Landfall Farm Fresh",
+      "locality": "Launceston",
+      "state": "TAS",
+      "why": "Own website shows 'Website Expired'; may have closed. Do not list without confirmation.",
+      "leadUrl": "https://www.headsuplaunceston.com/listings/landfall-farm-fresh"
+    },
+    {
+      "name": "Leven Gourmet Meats / King's Feast",
+      "locality": "Ulverstone",
+      "state": "TAS",
+      "why": "Only directory snapshots found (27 Reibey St; 24B King Edward St); no own website or official page with hours.",
+      "leadUrl": "https://directory.centralcoast.tas.gov.au/?s=butcher"
+    }
+  ]
+}

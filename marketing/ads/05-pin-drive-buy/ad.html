@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<title>Farm Direct ad 05: Pin it. Drive there. Buy direct.</title>
+<!-- Ad 05 pin-drive-buy. Render: node render.mjs 05-pin-drive-buy
+     Ground: dark forest (ad 5 only).
+
+     REVISION 2 (real screens arrived): the focal device is now the real app
+     map, shared/screens/03-map.png (Apple map of the NSW coast with the app's
+     coloured pins and a numbered cluster), in the kit's plain CSS phone
+     outline (.frame-light for the dark ground, .no-status). The drawn pins are
+     reduced to one supporting motif: a dotted route with a single pin whose
+     centre is the ad's one wattle-gold mark.
+
+     APPLE "MAPS" ATTRIBUTION: in the screenshot it sits at about y 2120-2180
+     (of 2868), lower left. Both sizes crop the screen with the frame's bottom
+     edge (--h) ABOVE that line, so no Apple logo appears:
+       feed:  --w 460, --h 655 -> last visible screenshot row = 170 + 655*1320/460 = 2050
+       story: --w 460, --h 655 -> last visible row            = 170 + 655*1320/460 = 2050
+     If you change --w or --h, keep the last visible row under 2100. -->
+<link rel="stylesheet" href="../shared/kit.css">
+<style>
+  /* ---------- Feed 1080x1350 ---------- */
+  .headline { position: absolute; left: var(--margin); top: 88px; }
+  .sub      { position: absolute; left: var(--margin); top: 438px; width: 900px; }
+
+  .map-phone { left: 512px; top: 607px; --w: 460px; --h: 655px; }  /* frame 488 x 683: x 512..1000, y 607..1290 (footer band bottom) */
+
+  .motif { position: absolute; left: 0; top: 0; z-index: 1; pointer-events: none; }
+  .road  { fill: none; stroke: rgba(205,232,196,0.45); stroke-width: 8px; stroke-linecap: round; stroke-dasharray: 0 24; }
+  .pin-body { fill: var(--green); stroke: var(--offwhite); stroke-width: 6px; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
+  .pin-dot  { fill: var(--gold); }
+  .pin-shadow { fill: rgba(0,0,0,0.38); }
+  .pin { filter: drop-shadow(0 16px 22px rgba(0,0,0,0.30)); }
+
+  .feed  .story-only { display: none; }
+  .story .feed-only  { display: none; }
+
+  /* ---------- Story 1080x1920 ---------- */
+  .story { --footer-top: 1444px; }
+  .story .headline { top: 282px; }
+  .story .sub      { top: 656px; }
+  .story .map-phone { left: 512px; top: 876px; --w: 460px; --h: 655px; }  /* frame 488 x 683: x 512..1000, y 876..1559 (level with brand icon) */
+</style>
+</head>
+<body>
+<div class="artboard feed bg-forest">
+
+  <h1 class="hl hl-112 headline">
+    <span class="line">Pin it.</span>
+    <span class="line">Drive there.</span>
+    <span class="line alt">Buy direct.</span>
+  </h1>
+
+  <p class="support support-42 sub">About 40 places listing meat, each one pinned on the map.</p>
+
+  <!-- Focal device: the real app map in the kit's plain CSS phone outline.
+       Cropped by the frame's bottom edge above Apple's "Maps" attribution. -->
+  <div class="phone crop no-status frame-light map-phone">
+    <img src="../shared/screens/03-map.png" alt="">
+  </div>
+
+  <!-- Supporting motif (drawing, not text): a dotted route runs up the left
+       column into the phone, past one pin. Pin = teardrop 100 x 140 units,
+       tip at (50,136). Gold centre = the ad's one warm mark. -->
+  <svg class="motif feed-only" width="1080" height="1350" viewBox="0 0 1080 1350" aria-hidden="true">
+    <defs>
+      <path id="pin" d="M50 136 C40 116 8 88 8 50 A42 42 0 0 1 92 50 C92 88 60 116 50 136 Z"/>
+    </defs>
+    <path class="road" d="M150 1080 C 170 1020, 260 985, 290 925"/>
+    <path class="road" d="M290 805 C 300 740, 380 712, 490 712"/>
+    <ellipse class="pin-shadow" cx="290" cy="902" rx="27" ry="9"/>
+    <g class="pin" transform="translate(290 900) scale(0.9) translate(-50 -136)">
+      <use href="#pin" class="pin-body"/>
+      <circle class="pin-dot" cx="50" cy="50" r="15"/>
+    </g>
+  </svg>
+
+  <svg class="motif story-only" width="1080" height="1920" viewBox="0 0 1080 1920" aria-hidden="true">
+    <defs>
+      <path id="pin-s" d="M50 136 C40 116 8 88 8 50 A42 42 0 0 1 92 50 C92 88 60 116 50 136 Z"/>
+    </defs>
+    <path class="road" d="M150 1366 C 170 1306, 260 1271, 290 1211"/>
+    <path class="road" d="M290 1091 C 300 1026, 380 981, 490 981"/>
+    <ellipse class="pin-shadow" cx="290" cy="1188" rx="27" ry="9"/>
+    <g class="pin" transform="translate(290 1186) scale(0.9) translate(-50 -136)">
+      <use href="#pin-s" class="pin-body"/>
+      <circle class="pin-dot" cx="50" cy="50" r="15"/>
+    </g>
+  </svg>
+
+  <div class="footer">
+    <div class="brand">
+      <img class="brand__icon" src="../shared/icon.png" alt="">
+      <div class="brand__text">
+        <span class="brand__name">Farm Direct</span>
+        <span class="brand__cta">Free for iPhone</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+<script src="../shared/kit.js"></script>
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<title>Farm Direct video: engine template</title>
+<!-- Engine example (7 s). Copy to marketing/videos/NN-slug/video.html.
+     Render:  node marketing/videos/render.mjs shared/template.html
+     Preview: open template.html?cta=soon&guides=1&t=2.4 in a browser
+              (t= freezes one frame; add &play=1 to scrub in real time). -->
+<link rel="stylesheet" href="../shared/engine.css">
+</head>
+<body>
+<div class="fd-stage"></div>
+<script src="../shared/engine.js"></script>
+<script src="../shared/preview.js"></script>
+<script>
+FD.video({
+  duration: 7.0,
+  ground: FD.C.forest,
+  setup(FD) {
+    const { C, UI } = FD;
+
+    // 0.00-0.90 HOOK: type on forest. Lines live in a layer so the whip moves them together.
+    const hook = FD.layer();
+    FD.typeLine('Meat from', 0.00, { y: 780, size: 120, parent: hook });
+    FD.typeLine('a *farmer.*', 0.30, { y: 910, size: 120, parent: hook });
+
+    // 0.90 WHIP to app grey; the phone rises in.
+    FD.whip(0.90, hook, null, { ground: C.grey });
+    const phone = FD.phone()
+      .screen('all', '01-explore.png', 'list')
+      .screen('meat', '02-explore-meat.png', 'list')
+      .enter(0.95, { tilt: [4, 1.5] })
+      .zoom(1.35, 2.35, 1.00, 1.03);           // slow 3% push-in
+
+    FD.caption('*106* places', 1.30, 1.85);
+
+    // 1.85 TAP FILTERS: tap and caption land on the same frame.
+    phone.tap(1.85, { at: UI.filtersTap, dim: UI.filtersBox });
+    FD.caption('Tap *Filters.*', 1.85, 2.35);
+
+    // 2.35 MEAT: hard cut inside the phone with a 2-frame white flash, phone bumps.
+    phone.cut(2.35, 'meat', { flash: 2 }).bump(2.35);
+    FD.caption(['Pick', { pill: 'Meat', size: 72 }], 2.35, 2.75);
+
+    // 2.75 COUNTER: 106 rolls to 41; the real '41 places' line gets one outline pulse.
+    FD.caption([{ odometer: { from: '106', to: '41', at: 2.80, dur: 0.5 }, accent: true },
+                { text: 'places', size: 96 }], 2.75, 3.40, { size: 120, stagger: 0 });
+    phone.outline('meat', 3.20, { box: UI.placesLine, mode: 'pulse', hold: 0.6 });
+
+    // 3.40 SCROLL: list moves up 200 source rows; at least two whole cards stay on screen.
+    FD.caption('list *meat.*', 3.40, 4.20);
+    phone.pan('meat', 3.40, 4.20, { y: [0, 200] });
+
+    // 4.20 EXIT: phone drops, ground wipes bottom-to-top into forest.
+    phone.exit(4.20);
+    FD.wipe(4.20, C.forest);
+
+    // 4.55 CLOSING LINE (after the drop has cleared), then the END CARD in the last 2.1 s.
+    const l1 = FD.typeLine('Real meat.', 4.55, { y: 800 });
+    const l2 = FD.typeLine([{ text: 'Real farmers.', accent: true }], 4.70, { y: 930 });
+    FD.endCard(4.90, { lines: [l1, l2] });
+  },
+});
+</script>
+</body>
+</html>

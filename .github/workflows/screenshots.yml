@@ -1,0 +1,107 @@
+name: App Store screenshots (simulator)
+
+# Builds the app for the iPhone simulator and takes the App Store screenshots.
+# Uses only Apple's own tools (simctl). Run by hand, or push a commit whose
+# message contains [screenshots].
+on:
+  workflow_dispatch: {}
+  push:
+    branches: ["claude/**", "main"]
+
+jobs:
+  screenshots:
+    if: github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '[screenshots]')
+    runs-on: macos-26
+    timeout-minutes: 90
+    env:
+      EXPO_PUBLIC_SUPPORT_EMAIL: ${{ vars.SUPPORT_EMAIL }}
+      EXPO_PUBLIC_OPERATOR_NAME: ${{ vars.OPERATOR_NAME }}
+      # Skips the first-launch welcome and pre-saves three places. Simulator build only.
+      EXPO_PUBLIC_SCREENSHOT_MODE: "1"
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check the contact and operator variables
+        run: |
+          # Warn, don't fail: the screenshots still work, but About shows no contact address.
+          if [ -z "$EXPO_PUBLIC_SUPPORT_EMAIL" ]; then
+            echo "::warning::Set the SUPPORT_EMAIL repository variable. These screenshots show no contact address."
+          fi
+          if [ -z "$EXPO_PUBLIC_OPERATOR_NAME" ]; then
+            echo "::warning::Set the OPERATOR_NAME repository variable."
+          fi
+      - name: Use the newest released Xcode on the machine
+        run: |
+          XCODE=$(ls -d /Applications/Xcode_*.app | grep -viE 'beta|rc|candidate' | sort -V | tail -1 || true)
+          MAJOR=0
+          if [ -n "$XCODE" ]; then
+            VERSION=$(basename "$XCODE" .app | sed -E 's/^Xcode_//')
+            MAJOR=$(echo "$VERSION" | grep -oE '^[0-9]+' || echo 0)
+          fi
+          if [ -z "$XCODE" ] || [ "$MAJOR" -lt 26 ]; then
+            FALLBACK=$(ls -d /Applications/Xcode_*.app | sort -V | tail -1)
+            echo "::warning::No released Xcode 26 or newer found (best released: ${XCODE:-none}). Falling back to $FALLBACK."
+            XCODE=$FALLBACK
+          fi
+          sudo xcode-select -s "$XCODE"
+          xcodebuild -version
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Generate the native iOS project
+        run: npx expo prebuild --platform ios --clean --no-install
+      - name: Install CocoaPods
+        run: cd ios && pod install
+      - name: Build for the simulator
+        run: |
+          xcodebuild -workspace ios/FarmDirect.xcworkspace -scheme FarmDirect -configuration Release \
+            -sdk iphonesimulator -derivedDataPath build CODE_SIGNING_ALLOWED=NO -quiet
+      - name: Boot a 6.9-inch iPhone simulator
+        run: |
+          xcrun simctl list devices available | grep -i "Pro Max" || true
+          UDID=$(xcrun simctl list devices available | grep -i "Pro Max" | tail -1 | grep -oE '[0-9A-F-]{36}')
+          echo "UDID=$UDID" >> "$GITHUB_ENV"
+          xcrun simctl boot "$UDID"
+          xcrun simctl bootstatus "$UDID" -b
+          xcrun simctl ui "$UDID" appearance light
+          xcrun simctl status_bar "$UDID" override --time "9:41" --batteryState charged --batteryLevel 100 --cellularBars 4 --wifiBars 3
+          xcrun simctl install "$UDID" build/Build/Products/Release-iphonesimulator/FarmDirect.app
+      - name: Take screenshots
+        timeout-minutes: 40
+        run: |
+          set +e
+          mkdir -p shots
+          # macOS has no `timeout`: run a command, killing it after N seconds.
+          limit() { local secs=$1; shift; perl -e 'alarm shift; exec @ARGV' "$secs" "$@"; }
+          sim() { limit 60 xcrun simctl "$@" || echo "::warning::simctl $* failed or timed out"; }
+          shot() { limit 60 xcrun simctl io "$UDID" screenshot "shots/$1.png" || echo "::warning::Screenshot $1 failed or timed out"; }
+          # The app (screenshot mode) moves on ONE scene each time the appearance goes from dark back to light
+          # (SCREENSHOT_SCENES in src/config.ts; no timers). `next N` ticks once, then waits N seconds to settle.
+          next() { sim ui "$UDID" appearance dark; sleep 10; sim ui "$UDID" appearance light; sleep "$1"; }
+          sim launch "$UDID" au.farmdirect.app
+          sleep 45
+          shot 01-explore
+          next 20
+          shot 02-explore-meat
+          next 20
+          shot 03-place-meat
+          next 20
+          shot 04-place-market
+          next 20
+          shot 05-saved
+          # The map is the last scene (the tour cannot step past it; see SCREENSHOT_SCENES).
+          next 40
+          shot 06-map
+          # Same scene in dark appearance: no step needed, just time for the map to redraw.
+          sim ui "$UDID" appearance dark
+          sleep 30
+          shot 07-map-dark
+          ls shots/*.png >/dev/null 2>&1 && limit 60 sips -g pixelWidth -g pixelHeight shots/*.png
+          exit 0
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: app-store-screenshots
+          path: shots/*.png
+          if-no-files-found: warn

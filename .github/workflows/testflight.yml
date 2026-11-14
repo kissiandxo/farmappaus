@@ -1,0 +1,92 @@
+name: TestFlight (GitHub Mac build)
+
+# The one release pipeline for Farm Direct: GitHub's Mac runner builds, signs and uploads
+# with fastlane (fastlane/Fastfile). See docs/RELEASE.md.
+#
+# Runs when you push a commit whose message contains [testflight],
+# or by hand: GitHub → Actions → this workflow → Run workflow.
+on:
+  workflow_dispatch:
+    inputs:
+      with_backend:
+        description: "Build the accounts version (needs the Supabase secrets). Leave off for 1.0."
+        type: boolean
+        default: false
+  push:
+    branches: ["claude/**", "main"]
+
+# One build at a time: each run needs Apple's single spare distribution-certificate slot.
+# Never cancel a running build, or its temporary certificate would be left behind.
+concurrency:
+  group: testflight
+  cancel-in-progress: false
+
+jobs:
+  ios:
+    if: github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '[testflight]')
+    # Expo SDK 58's Swift packages need Swift 6.2, i.e. Xcode 26 or newer.
+    runs-on: macos-26
+    timeout-minutes: 60
+    env:
+      ASC_KEY_ID: RLG22BW6CR
+      ASC_ISSUER_ID: a8d1088f-f4d4-4d6f-ba48-88aee1bc2623
+      ASC_KEY_P8: ${{ secrets.ASC_KEY_P8 }}
+      BUILD_NUMBER: ${{ github.run_number }}
+      # On a push there are no inputs, so this is empty and the backend guard applies.
+      WITH_BACKEND: ${{ inputs.with_backend }}
+      EXPO_PUBLIC_SUPABASE_URL: ${{ secrets.EXPO_PUBLIC_SUPABASE_URL }}
+      EXPO_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.EXPO_PUBLIC_SUPABASE_ANON_KEY }}
+      EXPO_PUBLIC_SUPPORT_EMAIL: ${{ vars.SUPPORT_EMAIL }}
+      EXPO_PUBLIC_OPERATOR_NAME: ${{ vars.OPERATOR_NAME }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check the Apple key secret is set
+        run: |
+          if [ -z "$ASC_KEY_P8" ]; then
+            echo "::error::Add the ASC_KEY_P8 secret (Settings → Secrets and variables → Actions)."; exit 1
+          fi
+      - name: Check screenshot mode is off
+        run: |
+          if [ -n "$EXPO_PUBLIC_SCREENSHOT_MODE" ]; then
+            echo "::error::EXPO_PUBLIC_SCREENSHOT_MODE is set: screenshot mode is for simulator builds only and must never reach TestFlight."; exit 1
+          fi
+      - name: Check this build matches the App Store listing (no backend)
+        run: |
+          if [ -n "$EXPO_PUBLIC_SUPABASE_URL" ] && [ "$WITH_BACKEND" != "true" ]; then
+            echo "::error::Supabase is set: this would build the accounts version, which does not match the App Store listing or privacy answers."; exit 1
+          fi
+      - name: Check the contact and operator variables
+        run: |
+          # Warn, don't fail, so test builds still run before these are supplied.
+          if [ -z "$EXPO_PUBLIC_SUPPORT_EMAIL" ]; then
+            echo "::warning::Set the SUPPORT_EMAIL repository variable. This build has no contact address and must NOT be submitted to the App Store."
+          fi
+          if [ -z "$EXPO_PUBLIC_OPERATOR_NAME" ]; then
+            echo "::warning::Set the OPERATOR_NAME repository variable. The privacy policy in this build does not say who runs Farm Direct."
+          fi
+      - name: Use the newest released Xcode on the machine
+        run: |
+          XCODE=$(ls -d /Applications/Xcode_*.app | grep -viE 'beta|rc|candidate' | sort -V | tail -1 || true)
+          MAJOR=0
+          if [ -n "$XCODE" ]; then
+            VERSION=$(basename "$XCODE" .app | sed -E 's/^Xcode_//')
+            MAJOR=$(echo "$VERSION" | grep -oE '^[0-9]+' || echo 0)
+          fi
+          if [ -z "$XCODE" ] || [ "$MAJOR" -lt 26 ]; then
+            FALLBACK=$(ls -d /Applications/Xcode_*.app | sort -V | tail -1)
+            echo "::warning::No released Xcode 26 or newer found (best released: ${XCODE:-none}). Falling back to $FALLBACK."
+            XCODE=$FALLBACK
+          fi
+          sudo xcode-select -s "$XCODE"
+          xcodebuild -version
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Generate the native iOS project
+        run: npx expo prebuild --platform ios --clean --no-install
+      - name: Install CocoaPods
+        run: cd ios && pod install
+      - name: Build, sign and upload to TestFlight
+        run: fastlane ios beta
