@@ -1,7 +1,7 @@
-name: Recover verified iPhone media
+name: Recover original weekend screenshot
 on:
   push:
-    branches: ["capture/recover-native-45682505713"]
+    branches: ["capture/native-weekend-frame"]
 permissions:
   actions: read
   contents: write
@@ -20,19 +20,11 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          find footage -type f | head -100 || true
-          command -v ffmpeg >/dev/null || { sudo apt-get update -qq && sudo apt-get install -qq -y ffmpeg; }
-          dest=marketing/launch-film/source
-          ffmpeg -y -loglevel error -i footage/gestures.mp4 -an -vf "fps=30,scale=1080:-2" -c:v libx264 -threads 4 -crf 18 "$dest/gestures.mp4"
-          for shot in 09-welcome 10-tour 11-meat-filter 12-butcher 13-explore 14-butcher-browse 15-weekend 16-market-dates; do
-            image=$(find footage -name "$shot.png" -print -quit)
-            if [ -n "$image" ]; then cp "$image" "$dest/$shot.png"; fi
-          done
-          mkdir -p capture-debug
-          find footage/test-results -type f \( -name '*.json' -o -iname '*fail*.png' -o -name '*.xml' \) -size -5M -exec cp '{}' capture-debug/ \;
-          git add capture-debug/
+          shot=$(find footage/test-results -type f -name 'step-038-assertCondition-*.png' -print -quit)
+          test -s "$shot"
+          cp "$shot" marketing/launch-film/source/15-weekend.png
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add "$dest"
+          git add marketing/launch-film/source/15-weekend.png
           git commit -m 'Recover the original iPhone interaction recording and native screenshots'
-          git push origin HEAD:refs/heads/capture/iphone-45682505713
+          git push origin HEAD:refs/heads/capture/weekend-frame-45682505713
