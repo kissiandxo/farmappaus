@@ -32,7 +32,11 @@ jobs:
                   print('Complete screenshots:',sum(s['attributes']['assetDeliveryState']['state']=='COMPLETE' for s in shots))
           for group in child(loc,'appPreviewSets'):
               if group['attributes']['previewType']=='IPHONE_67':
-                  print('Ready previews:',sum(p['attributes'].get('videoDeliveryState',{}).get('state')=='COMPLETE' for p in child(group,'appPreviews')))
+                  previews=child(group,'appPreviews')
+                  print('Ready previews:',sum((p['attributes'].get('videoDeliveryState') or {}).get('state')=='COMPLETE' for p in previews))
+                  for preview in previews:
+                      attrs=preview['attributes']
+                      print('Preview delivery:',attrs['fileName'],attrs['assetDeliveryState']['state'],(attrs.get('videoDeliveryState') or {}).get('state'))
           detail=child(b,'buildBetaDetail')
           print('External beta build:',detail['attributes']['externalBuildState'])
           groups=child(app,'betaGroups')
