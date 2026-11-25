@@ -1,7 +1,8 @@
-import { Link, router } from 'expo-router';
+import { router } from 'expo-router';
 import { memo, useCallback, useMemo, useState } from 'react';
 import {
   AccessibilityInfo,
+  ActionSheetIOS,
   Alert,
   FlatList,
   Platform,
@@ -10,12 +11,11 @@ import {
   StyleSheet,
   Text,
   View,
-  type AccessibilityActionEvent,
   type ListRenderItem,
 } from 'react-native';
 
 import { Button, EmptyState, selection, tapLight } from '../../../components/ui';
-import { FarmCard, farmCardLabel } from '../../../components/FarmCard';
+import { FarmCard } from '../../../components/FarmCard';
 import { DEFAULT_FILTERS, searchFarms, type FarmResult } from '../../../domain/filters';
 import { directionsUrl } from '../../../domain/links';
 import { shareStops, shareText } from '../../../domain/share';
@@ -23,11 +23,6 @@ import { openLink } from '../../../lib/openLink';
 import { useFavourites } from '../../../state/FavouritesContext';
 import { useSearch } from '../../../state/SearchContext';
 import { colors, MIN_TAP, radius, space, type } from '../../../theme';
-
-const ACCESSIBILITY_ACTIONS = [
-  { name: 'activate' as const },
-  { name: 'remove', label: 'Remove from Saved' },
-];
 
 /** "3 saved places · nearest first". Before a location is chosen the list is A to Z, so "nearest first" is left off. */
 function savedCountLabel(n: number, isDefaultLocation: boolean): string {
@@ -49,55 +44,25 @@ interface SavedItemProps {
  */
 const SavedItem = memo(function SavedItem({ result, onOpen, onRemove, showUnclaimedBadge, distanceFromDefault }: SavedItemProps) {
   const { farm } = result;
-  const onAccessibilityAction = (e: AccessibilityActionEvent) => {
-    if (e.nativeEvent.actionName === 'remove') onRemove(result);
-    else if (e.nativeEvent.actionName === 'activate') onOpen(farm.id);
+  const remove = () => onRemove(result);
+  const showOptions = () => {
+    tapLight();
+    ActionSheetIOS.showActionSheetWithOptions({
+      title: farm.name,
+      options: ['Directions', 'Share', 'Remove from Saved', 'Cancel'],
+      destructiveButtonIndex: 2,
+      cancelButtonIndex: 3,
+    }, index => {
+      if (index === 0) openLink(directionsUrl(farm));
+      if (index === 1) Share.share({ message: shareText(farm) }).catch(() => {});
+      if (index === 2) remove();
+    });
   };
 
-  const card = (
-    <View
-      accessible
-      accessibilityRole="button"
-      accessibilityLabel={farmCardLabel(result, { saved: true, distanceFromDefault })}
-      accessibilityHint="Opens details"
-      accessibilityActions={ACCESSIBILITY_ACTIONS}
-      onAccessibilityAction={onAccessibilityAction}
-    >
-      <FarmCard
-        result={result}
-        saved
-        onPress={onOpen}
-        distanceFromDefault={distanceFromDefault}
-        showUnclaimedBadge={showUnclaimedBadge}
-      />
-    </View>
-  );
-
-  // Context menus are iOS only. The outer View takes the Link's props (and ignores its press); the card's own
-  // Pressable opens the place, so a tap is handled exactly once.
-  if (Platform.OS !== 'ios') return card;
   return (
-    <Link href={`/farm/${farm.id}`} asChild>
-      <Link.Trigger>
-        <View style={styles.trigger}>{card}</View>
-      </Link.Trigger>
-      <Link.Menu>
-        <Link.MenuAction icon="heart.slash" destructive onPress={() => onRemove(result)}>
-          Remove from Saved
-        </Link.MenuAction>
-        <Link.MenuAction icon="arrow.triangle.turn.up.right.diamond" onPress={() => openLink(directionsUrl(farm))}>
-          Directions
-        </Link.MenuAction>
-        <Link.MenuAction
-          icon="square.and.arrow.up"
-          onPress={() => {
-            Share.share({ message: shareText(farm) }).catch(() => {});
-          }}
-        >
-          Share
-        </Link.MenuAction>
-      </Link.Menu>
-    </Link>
+    <FarmCard result={result} saved onPress={onOpen} onRemove={remove}
+      onLongPress={Platform.OS === 'ios' ? showOptions : undefined}
+      distanceFromDefault={distanceFromDefault} showUnclaimedBadge={showUnclaimedBadge} />
   );
 });
 
@@ -203,7 +168,6 @@ const styles = StyleSheet.create({
   summary: { flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', columnGap: space.sm },
   count: { ...type.subheadline, color: colors.secondaryLabel, paddingHorizontal: space.xs },
   empty: { flex: 1, paddingVertical: space.xxl },
-  trigger: { borderRadius: radius.card, borderCurve: 'continuous' },
 });
 
 /** Module-level so FlatList keeps the same component between renders (no remounts). */

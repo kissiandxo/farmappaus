@@ -24,6 +24,8 @@ export interface FarmCardProps {
   onPress: (id: string) => void;
   saved: boolean;
   onToggleSave?: (id: string) => void;
+  onLongPress?: () => void;
+  onRemove?: () => void;
   /** Show the "Unclaimed" capsule. Explore passes `dataStatus.kind !== 'public'` (with no backend every place is unclaimed). */
   showUnclaimedBadge?: boolean;
   /** True while distances are measured from the default (Sydney) location: the distance is then hidden. */
@@ -103,6 +105,8 @@ export function farmCardPropsEqual(prev: FarmCardProps, next: FarmCardProps): bo
     (prev.showUnclaimedBadge ?? false) === (next.showUnclaimedBadge ?? false) &&
     (prev.distanceFromDefault ?? false) === (next.distanceFromDefault ?? false) &&
     prev.onToggleSave === next.onToggleSave &&
+    prev.onLongPress === next.onLongPress &&
+    prev.onRemove === next.onRemove &&
     prev.onPress === next.onPress
   );
 }
@@ -110,7 +114,7 @@ export function farmCardPropsEqual(prev: FarmCardProps, next: FarmCardProps): bo
 /** White grouped card for a place in a list: name, distance, meta, status, produce and licence. Memoised for long lists. */
 export const FarmCard = memo(FarmCardView, farmCardPropsEqual);
 
-function FarmCardView({ result, onPress, saved, onToggleSave, showUnclaimedBadge = false, distanceFromDefault = false }: FarmCardProps) {
+function FarmCardView({ result, onPress, saved, onToggleSave, onLongPress, onRemove, showUnclaimedBadge = false, distanceFromDefault = false }: FarmCardProps) {
   const { farm, distanceKm, status, weekend } = result;
   const venue = pinStyle(farm.type);
   const now = new Date();
@@ -127,6 +131,12 @@ function FarmCardView({ result, onPress, saved, onToggleSave, showUnclaimedBadge
     <View>
       <Pressable
         onPress={() => onPress(farm.id)}
+        onLongPress={onLongPress}
+        accessibilityActions={onRemove ? [{ name: 'activate' }, { name: 'remove', label: 'Remove from Saved' }] : undefined}
+        onAccessibilityAction={onRemove ? ({ nativeEvent }) => {
+          if (nativeEvent.actionName === 'remove') onRemove();
+          if (nativeEvent.actionName === 'activate') onPress(farm.id);
+        } : undefined}
         accessibilityRole="button"
         accessibilityHint="Opens details"
         style={({ pressed }) => [styles.card, pressed && styles.pressed]}
