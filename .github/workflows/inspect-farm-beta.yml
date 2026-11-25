@@ -1,7 +1,7 @@
-name: Update Farm Direct store copy
+name: Check the existing TestFlight directory
 on:
   push:
-    branches: ['capture/store-copy-ready']
+    branches: ['capture/team-testflight-lookup']
 permissions:
   contents: read
 jobs:
@@ -19,19 +19,7 @@ jobs:
           python - <<'PY'
           import runpy
           g=runpy.run_path('scripts/app-store-release.py')
-          api,child,write,rel=(g[name] for name in ('api','child','write','rel'))
-          target=g['app']('au.farmdirect.app')
-          version=next(v for v in child(target,'appStoreVersions',params={'filter[platform]':'IOS'}) if v['attributes']['versionString'] in ('1.0','1.0.0'))
-          if g['already_submitted'](version,None): raise SystemExit(0)
-          locale=target['attributes']['primaryLocale']
-          loc=g['localization'](version,'appStoreVersionLocalizations',locale)
-          description=g['section']('Description').split('\nThe "Report')[0].strip()
-          write(loc['type'],{'description':description,'promotionalText':g['section']('Promotional text')},id=loc['id'])
-          assert api('GET','/v1/appStoreVersionLocalizations/'+loc['id'])['attributes']['description']==description
-          g['review_details'](version)
-          print('Verified the market-date and weekend-shopping description and saved the reviewer walkthrough.')
-          builds=api('GET','/v1/builds',params={'filter[app]':target['id'],'filter[version]':'62','filter[preReleaseVersion.version]':'1.0.0'})
-          if builds and builds[0]['attributes']['processingState']=='VALID':
-              write(version['type'],relations={'build':rel('builds',builds[0]['id'])},id=version['id'])
-              print('Processed build selected in the unsubmitted draft:',child(version,'build')['attributes']['version'])
+          rows=g['api']('GET','/v1/betaTesters',params={'filter[firstName]':'Emma','limit':200})
+          matches=[r for r in rows if (r['attributes'].get('firstName') or '').strip().lower()=='emma' and r['attributes'].get('email')]
+          print('Existing TestFlight testers named Emma with an email address:',len(matches))
           PY
