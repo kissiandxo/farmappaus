@@ -1,0 +1,79 @@
+name: Capture a real three-place weekend shortlist
+on:
+  push:
+    branches: ["capture/weekend-shortlist-63"]
+permissions:
+  actions: read
+  contents: write
+jobs:
+  capture:
+    runs-on: macos-26
+    timeout-minutes: 50
+    env:
+      EXPO_PUBLIC_SCREENSHOT_MODE: '0'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: iphone-simulator-build
+          run-id: 45684599952
+          github-token: ${{ github.token }}
+          path: /tmp/farm-sim-app
+      - name: Restore the compiled release simulator app
+        run: ditto -x -k /tmp/farm-sim-app/farm-iphone-build.zip /tmp/farm-sim-app
+      - name: Use the newest released Xcode on the machine
+        run: |
+          XCODE=$(ls -d /Applications/Xcode_*.app | grep -viE 'beta|rc|candidate' | sort -V | tail -1 || true)
+          MAJOR=0
+          if [ -n "$XCODE" ]; then
+            VERSION=$(basename "$XCODE" .app | sed -E 's/^Xcode_//')
+            MAJOR=$(echo "$VERSION" | grep -oE '^[0-9]+' || echo 0)
+          fi
+          if [ -z "$XCODE" ] || [ "$MAJOR" -lt 26 ]; then
+            FALLBACK=$(ls -d /Applications/Xcode_*.app | sort -V | tail -1)
+            echo "::warning::No released Xcode 26 or newer found (best released: ${XCODE:-none}). Falling back to $FALLBACK."
+            XCODE=$FALLBACK
+          fi
+          sudo xcode-select -s "$XCODE"
+          xcodebuild -version
+      - name: Boot a 6.9-inch iPhone simulator
+        run: |
+          xcrun simctl list devices available | grep -i "Pro Max" || true
+          UDID=$(xcrun simctl list devices available | grep -i "Pro Max" | tail -1 | grep -oE '[0-9A-F-]{36}')
+          echo "UDID=$UDID" >> "$GITHUB_ENV"
+          xcrun simctl boot "$UDID"
+          xcrun simctl bootstatus "$UDID" -b
+          xcrun simctl ui "$UDID" appearance light
+          xcrun simctl status_bar "$UDID" override --time "9:41" --batteryState charged --batteryLevel 100 --cellularBars 4 --wifiBars 3
+          xcrun simctl install "$UDID" /tmp/farm-sim-app/FarmDirect.app
+      - name: Exercise the release onboarding and record real taps
+        if: env.EXPO_PUBLIC_SCREENSHOT_MODE == '0'
+        timeout-minutes: 35
+        env:
+          MAESTRO_CLI_NO_ANALYTICS: 1
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/farm-release-capture
+          curl -fsSL --retry 3 https://github.com/mobile-dev-inc/maestro/releases/download/cli-2.12.1/maestro.zip -o /tmp/farm-maestro.zip
+          echo '54dbb0716425626604973cbb374c585ca30272375d9ce15177a1152765ddd9d7  /tmp/farm-maestro.zip' | shasum -a 256 -c -
+          unzip -q /tmp/farm-maestro.zip -d /tmp/farm-maestro
+          export JAVA_HOME=$(/usr/libexec/java_home -v 21)
+          /tmp/farm-maestro/maestro/bin/maestro --device "$UDID" test --test-output-dir /tmp/farm-release-capture/test-results marketing/launch-film/shortlist.yaml
+      - name: Save the verified interaction recording
+        if: env.EXPO_PUBLIC_SCREENSHOT_MODE == '0'
+        run: |
+          set -euo pipefail
+          image=$(find /tmp/farm-release-capture/test-results -name '18-weekend-shortlist.png' -print -quit)
+          test -s "$image"
+          mkdir -p marketing/launch-film/source
+          cp "$image" marketing/launch-film/source/
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add marketing/launch-film/source/
+          git commit -m 'Capture three user-saved weekend stops on iPhone'
+          git push origin HEAD:"refs/heads/capture/iphone-$GITHUB_RUN_ID"
+      - uses: actions/upload-artifact@v4
+        if: always() && env.EXPO_PUBLIC_SCREENSHOT_MODE == '0'
+        with:
+          name: interaction-capture
+          path: /tmp/farm-release-capture
