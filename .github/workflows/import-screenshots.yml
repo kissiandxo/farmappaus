@@ -1,0 +1,27 @@
+name: Import store screenshots
+on:
+  push:
+    branches: ["claude/farm-to-consumer-ios-app-v8uy52"]
+jobs:
+  import:
+    if: contains(github.event.head_commit.message, '[import-screenshots]')
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          run-id: 45593955101
+          name: app-store-screenshots
+          github-token: ${{ github.token }}
+          path: captures
+      - name: Save new simulator captures for inspection
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          cp captures/{01-explore,02-explore-meat,08-place-butcher}.png marketing/app-store-screenshots/
+          git add marketing/app-store-screenshots
+          git commit -m "Save simulator captures of Explore, Meat and an independent butcher"
+          git push origin HEAD:"$GITHUB_REF_NAME"
