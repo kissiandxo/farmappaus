@@ -11,7 +11,7 @@ Text for App Store Connect, in Australian English. Version 1.0.0 is a **free dir
 | Field | Text | Count / limit |
 |---|---|---|
 | Name | Farm Direct (check it is free when you create the record) | 11 / 30 |
-| Subtitle | Local farms, stalls & markets | 29 / 30 |
+| Subtitle | Farm shops, markets & butchers | 30 / 30 |
 | Category | Food & Drink (primary), Lifestyle (secondary) | |
 | Price | Free, no in-app purchases | |
 | Copyright | *Owner to supply*, e.g. "2026 Your Name or Company" | |
@@ -19,9 +19,9 @@ Text for App Store Connect, in Australian English. Version 1.0.0 is a **free dir
 | Marketing URL | Optional, leave blank | |
 | Privacy policy URL | *Owner to supply* (host `docs/PRIVACY.md`) | |
 
-## Promotional text (167 / 170)
+## Promotional text (154 / 170)
 
-Find farmers’ markets, farm shops, farm-gate stalls, farms and independent butchers near you, including 86 places that list meat. Check the hours, then get directions.
+Find independent butchers, farm shops and farmers’ markets across Australia. Search for beef, lamb or fresh fruit, check weekend hours and get directions.
 
 ## Keywords (90 / 100)
 

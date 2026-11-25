@@ -85,6 +85,8 @@ jobs:
           next 20
           shot 02-explore-meat
           next 20
+          shot 08-place-butcher
+          next 20
           shot 03-place-meat
           next 20
           shot 04-place-market

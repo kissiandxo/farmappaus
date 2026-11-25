@@ -238,7 +238,7 @@ def main():
                 ("PREPARE_FOR_SUBMISSION", "DEVELOPER_REJECTED", "REJECTED", "METADATA_REJECTED"))
     info_loc = localization(info, "appInfoLocalizations", locale)
     loc = localization(version, "appStoreVersionLocalizations", locale)
-    write(info_loc["type"], {"subtitle": "Local farms, stalls & markets", "privacyPolicyUrl": PUBLIC + "PRIVACY-1.0.md"}, id=info_loc["id"])
+    write(info_loc["type"], {"subtitle": "Farm shops, markets & butchers", "privacyPolicyUrl": PUBLIC + "PRIVACY-1.0.md"}, id=info_loc["id"])
     write(info["type"], relations={"primaryCategory": rel("appCategories", "FOOD_AND_DRINK"),
           "secondaryCategory": rel("appCategories", "LIFESTYLE")}, id=info["id"])
     write(version["type"], {"copyright": "2026 Phoenix Jennings", "releaseType": "AFTER_APPROVAL"}, id=version["id"])
