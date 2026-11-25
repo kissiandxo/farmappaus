@@ -1,0 +1,35 @@
+name: FarmDirectQA
+options:
+  deploymentTarget:
+    iOS: '17.0'
+settings:
+  base:
+    GENERATE_INFOPLIST_FILE: YES
+    CODE_SIGNING_ALLOWED: NO
+    SWIFT_VERSION: '5.0'
+targets:
+  TestHost:
+    type: application
+    platform: iOS
+    sources: [Host]
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: au.farmdirect.testhost
+  FarmDirectUITests:
+    type: bundle.ui-testing
+    platform: iOS
+    sources: [Tests]
+    dependencies:
+      - target: TestHost
+    settings:
+      base:
+        TEST_TARGET_NAME: TestHost
+        PRODUCT_BUNDLE_IDENTIFIER: au.farmdirect.uitests
+schemes:
+  FarmDirectQA:
+    build:
+      targets:
+        TestHost: all
+        FarmDirectUITests: [test]
+    test:
+      targets: [FarmDirectUITests]

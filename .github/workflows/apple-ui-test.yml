@@ -1,0 +1,98 @@
+name: Verify Farm Direct with Apple UI tests
+on:
+  push:
+    branches: ["capture/apple-uitest-63"]
+permissions:
+  actions: read
+  contents: write
+jobs:
+  wait-for-app:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - name: Wait for the compiled Farm Direct simulator app
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          for attempt in {1..75}; do
+            if gh api repos/${{ github.repository }}/actions/runs/45690245419/artifacts --jq '.artifacts[].name' | grep -qx iphone-simulator-build; then exit 0; fi
+            sleep 25
+          done
+          exit 1
+  capture:
+    needs: wait-for-app
+    runs-on: macos-26
+    timeout-minutes: 50
+    env:
+      EXPO_PUBLIC_SCREENSHOT_MODE: '0'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: iphone-simulator-build
+          run-id: 45690245419
+          github-token: ${{ github.token }}
+          path: /tmp/farm-sim-app
+      - name: Restore the compiled release simulator app
+        run: ditto -x -k /tmp/farm-sim-app/farm-iphone-build.zip /tmp/farm-sim-app
+      - name: Use the newest released Xcode on the machine
+        run: |
+          XCODE=$(ls -d /Applications/Xcode_*.app | grep -viE 'beta|rc|candidate' | sort -V | tail -1 || true)
+          MAJOR=0
+          if [ -n "$XCODE" ]; then
+            VERSION=$(basename "$XCODE" .app | sed -E 's/^Xcode_//')
+            MAJOR=$(echo "$VERSION" | grep -oE '^[0-9]+' || echo 0)
+          fi
+          if [ -z "$XCODE" ] || [ "$MAJOR" -lt 26 ]; then
+            FALLBACK=$(ls -d /Applications/Xcode_*.app | sort -V | tail -1)
+            echo "::warning::No released Xcode 26 or newer found (best released: ${XCODE:-none}). Falling back to $FALLBACK."
+            XCODE=$FALLBACK
+          fi
+          sudo xcode-select -s "$XCODE"
+          xcodebuild -version
+      - name: Boot a 6.9-inch iPhone simulator
+        run: |
+          xcrun simctl list devices available | grep -i "Pro Max" || true
+          UDID=$(xcrun simctl list devices available | grep -i "Pro Max" | tail -1 | grep -oE '[0-9A-F-]{36}')
+          echo "UDID=$UDID" >> "$GITHUB_ENV"
+          xcrun simctl boot "$UDID"
+          xcrun simctl bootstatus "$UDID" -b
+          xcrun simctl ui "$UDID" appearance light
+          xcrun simctl status_bar "$UDID" override --time "9:41" --batteryState charged --batteryLevel 100 --cellularBars 4 --wifiBars 3
+          xcrun simctl install "$UDID" /tmp/farm-sim-app/FarmDirect.app
+      - name: Compile and run first-party iPhone UI tests and record real interactions
+        timeout-minutes: 30
+        run: |
+          set -euo pipefail
+          command -v xcodegen >/dev/null || brew install xcodegen
+          cd tooling/apple-qa
+          xcodegen generate
+          mkdir -p /tmp/apple-qa
+          xcrun simctl io "$UDID" recordVideo --force --codec=h264 /tmp/apple-qa/gestures.mp4 >/tmp/apple-qa/record.log 2>&1 &
+          recorder=$!
+          trap 'kill -INT "$recorder" 2>/dev/null || true; wait "$recorder" || true' EXIT
+          xcodebuild test -project FarmDirectQA.xcodeproj -scheme FarmDirectQA -destination "platform=iOS Simulator,id=$UDID" -parallel-testing-enabled NO -resultBundlePath /tmp/apple-qa/result.xcresult -derivedDataPath /tmp/apple-qa/build CODE_SIGNING_ALLOWED=NO
+      - name: Export original screenshots and film
+        if: always() && env.UDID != ''
+        run: |
+          set -euo pipefail
+          dest=marketing/launch-film/source
+          mkdir -p "$dest" /tmp/apple-qa/attachments
+          xcrun xcresulttool export attachments --path /tmp/apple-qa/result.xcresult --output-path /tmp/apple-qa/attachments || true
+          directory="$HOME/Library/Developer/CoreSimulator/Devices/$UDID/data/Containers"
+          for name in 09-welcome 10-tour 11-meat-filter 12-butcher 13-explore 14-butcher-browse 15-weekend 16-market-dates 18-weekend-shortlist; do
+            file=$(find "$directory" -name "$name.png" -print -quit)
+            if test -n "$file"; then cp "$file" "$dest/$name.png"; fi
+          done
+          command -v ffmpeg >/dev/null || brew install ffmpeg
+          ffmpeg -nostdin -y -loglevel error -i /tmp/apple-qa/gestures.mp4 -vf 'fps=30,scale=1080:-2' -c:v libx264 -preset fast -crf 19 -an -movflags +faststart "$dest/gestures.mp4"
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add "$dest"
+          git commit -m 'Preserve genuine iPhone UI-test recordings and screenshots'
+          git push origin HEAD:"refs/heads/capture/iphone-$GITHUB_RUN_ID"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: apple-ui-evidence
+          path: /tmp/apple-qa/attachments
