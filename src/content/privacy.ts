@@ -23,7 +23,7 @@ export interface PrivacyOptions {
   legacyAppleProfile?: boolean;
 }
 
-export const PRIVACY_UPDATED = '13 November 2026';
+export const PRIVACY_UPDATED = '25 November 2026';
 
 /** Written into docs/PRIVACY.md where the support address or operator name has not been supplied yet. */
 export const PRIVACY_PLACEHOLDER = '(to be added before publishing)';
@@ -55,9 +55,9 @@ export function privacySections(opts: PrivacyOptions = {}): PrivacySection[] {
         ]
       : []),
     {
-      title: 'Farm Direct 1.0: no accounts',
+      title: 'Farm Direct 1.0 on your iPhone',
       paragraphs: [
-        'Farm Direct 1.0 has no accounts and no sign-in. Nothing you do in the app is sent to Farm Direct: not your location, your searches and filters, or the places you save.',
+        'You can explore as a guest or create an optional Apple profile on this iPhone. Nothing you do in the app is sent to Farm Direct: not your location, your searches and filters, or the places you save.',
         'The places you save, the last location you chose and a few app settings are kept on your phone only, so the app still works without reception. Deleting the app deletes them.',
         'The places in the app are built into it. They come from public sources, such as each place’s own website and council or tourism pages, and their owners have not confirmed them.',
         'If you choose to email us (for example to suggest a place, report a problem or claim a listing), your email app sends the message. We receive your email address and whatever you write. We use it only to reply and to look into your request, and we handle it as ordinary email.',
@@ -96,10 +96,10 @@ export function privacySections(opts: PrivacyOptions = {}): PrivacySection[] {
       ],
     },
     {
-      title: 'If you tried a test version with Sign in with Apple',
+      title: 'Your optional Apple profile',
       legacyProfileOnly: true,
       paragraphs: [
-        'If you tried a test version that let you sign in with Apple, your name, email address and Apple user ID are kept on your phone only. They are not sent to our servers. We do not keep Apple’s sign-in token. “Remove from this iPhone” on the About tab deletes them. If you revoke Farm Direct in your Apple ID settings, the app removes them the next time it opens.',
+        'If you continue with Apple, your Apple user ID and any name you share are kept on your phone only. An email shared with an older test version also stays on your phone. They are not sent to our servers. We do not keep Apple’s sign-in token. “Remove from this iPhone” on the About tab deletes them. If you revoke Farm Direct in your Apple ID settings, the app removes them the next time it opens.',
       ],
     },
     {
@@ -127,7 +127,7 @@ export function privacySections(opts: PrivacyOptions = {}): PrivacySection[] {
     },
     {
       title: 'Who we share it with',
-      paragraphs: ['We do not sell your information. Farm Direct 1.0 uses Apple (the App Store, TestFlight and Apple Maps).'],
+      paragraphs: ['We do not sell your information. Farm Direct 1.0 uses Apple (the App Store, TestFlight, Sign in with Apple and Apple Maps).'],
     },
     {
       title: 'Storage and sign-in provider (only when accounts are available)',

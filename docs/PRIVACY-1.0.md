@@ -1,6 +1,6 @@
 # Farm Direct privacy policy
 
-Last updated 13 November 2026
+Last updated 25 November 2026
 
 ## The short version
 
@@ -10,9 +10,9 @@ Farm Direct helps you find farmers’ markets, farm shops, farm-gate stalls, far
 
 Farm Direct is run by Phoenix Jennings. “We” and “us” in this policy means them.
 
-## Farm Direct 1.0: no accounts
+## Farm Direct 1.0 on your iPhone
 
-Farm Direct 1.0 has no accounts and no sign-in. Nothing you do in the app is sent to Farm Direct: not your location, your searches and filters, or the places you save.
+You can explore as a guest or create an optional Apple profile on this iPhone. Nothing you do in the app is sent to Farm Direct: not your location, your searches and filters, or the places you save.
 
 The places you save, the last location you chose and a few app settings are kept on your phone only, so the app still works without reception. Deleting the app deletes them.
 
@@ -34,9 +34,13 @@ The Map tab and directions use Apple Maps, which is Apple’s service. Apple rec
 
 Place locations were found using OpenStreetMap data. Map locations © OpenStreetMap contributors.
 
+## Your optional Apple profile
+
+If you continue with Apple, your Apple user ID and any name you share are kept on your phone only. An email shared with an older test version also stays on your phone. They are not sent to our servers. We do not keep Apple’s sign-in token. “Remove from this iPhone” on the About tab deletes them. If you revoke Farm Direct in your Apple ID settings, the app removes them the next time it opens.
+
 ## Who we share it with
 
-We do not sell your information. Farm Direct 1.0 uses Apple (the App Store, TestFlight and Apple Maps).
+We do not sell your information. Farm Direct 1.0 uses Apple (the App Store, TestFlight, Sign in with Apple and Apple Maps).
 
 ## Your choices
 
@@ -54,4 +58,4 @@ Email us at support@visera.vision, or use “Contact us” on the About tab.
 
 ## Changes
 
-We may update this policy. The date it was last changed is at the top (currently 13 November 2026). We will tell you in the app about changes that matter.
+We may update this policy. The date it was last changed is at the top (currently 25 November 2026). We will tell you in the app about changes that matter.

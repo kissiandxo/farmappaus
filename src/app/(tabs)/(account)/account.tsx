@@ -83,7 +83,10 @@ export default function AccountScreen() {
             <Row title="Stored on this iPhone" icon="iphone" />
             <Row title="Remove from this iPhone" destructive onPress={confirmRemoveProfile} />
           </Section>
+        ) : appleAvailable ? (
+          <Section><Row title="Create your iPhone profile" icon="person.circle" accessory="chevron" onPress={openWelcome} /></Section>
         ) : null}
+        <Section><Row title="Take the quick tour" icon="map" accessory="chevron" onPress={() => router.navigate({ pathname: '/', params: { quickTour: '1' } })} /></Section>
         <AboutContent />
       </ScrollView>
     );

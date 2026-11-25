@@ -154,7 +154,11 @@ function ScreenshotTour({ ready }: { ready: boolean }) {
       const deps = tourDeps.current;
       if (scene.filters) deps.setFilters(presetFilters(scene.filters, deps.farms));
       if (scene.query !== undefined) deps.setQuery(scene.query);
-      router.navigate(scene.href as Parameters<typeof router.navigate>[0]);
+      if (scene.href === '/?quickTour=1') {
+        router.dismissTo({ pathname: '/', params: { quickTour: '1' } });
+      } else {
+        router.navigate(scene.href as Parameters<typeof router.navigate>[0]);
+      }
     });
     return () => subscription.remove();
   }, [ready, router]);

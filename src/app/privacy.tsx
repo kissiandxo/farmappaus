@@ -4,12 +4,11 @@ import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { OPERATOR_NAME, SUPPORT_EMAIL } from '../config';
 import { privacySections, PRIVACY_UPDATED } from '../content/privacy';
 import { isBackendConfigured } from '../lib/supabase';
-import { useAuth } from '../state/AuthContext';
 import { colors, space, type } from '../theme';
 
 /** The privacy policy, shown as a sheet with "Done" (registered in the root layout). */
 export default function PrivacyScreen() {
-  const hasLocalProfile = !!useAuth().localProfile;
+
   // Without a backend the app has no accounts, so the account-only sections (and the note about them) are left
   // out. The Sign in with Apple test-build section is shown only to someone who still has that profile.
   const SECTIONS = useMemo(
@@ -18,9 +17,9 @@ export default function PrivacyScreen() {
         email: SUPPORT_EMAIL,
         operator: OPERATOR_NAME,
         accounts: isBackendConfigured,
-        legacyAppleProfile: hasLocalProfile,
+        legacyAppleProfile: true,
       }),
-    [hasLocalProfile],
+    [],
   );
 
   return (

@@ -41,6 +41,8 @@ export const SCREENSHOT_SAVED_IDS: readonly string[] = [
  */
 export const SCREENSHOT_SCENES: readonly ScreenshotScene[] = [
   { shot: '01-explore', href: '/', filters: 'none', query: '' },
+  { shot: '09-welcome', href: '/(auth)/welcome' },
+  { shot: '10-tour', href: '/?quickTour=1' },
   { shot: '02-explore-meat', href: '/', filters: 'meat', query: '' },
   { shot: '08-place-butcher', href: '/farm/real-nsw-feather-and-bone', filters: 'none', query: '' },
   { shot: '03-place-meat', href: '/farm/real-vic-torello-farm', filters: 'none', query: '' },

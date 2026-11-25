@@ -41,7 +41,7 @@ interface AuthState {
   signIn: (email: string, password: string) => Promise<AuthResult>;
   signUp: (email: string, password: string) => Promise<AuthResult>;
   signOut: () => Promise<void>;
-  /** Apple profile saved on this phone by an earlier version, or not yet linked to an account. Shown and removable; never created without a backend. */
+  /** Apple profile saved on this phone by an earlier version, or not yet linked to an account. Shown and removable; stored only on the device without a backend. */
   localProfile: LocalProfile | null;
   /** True when Sign in with Apple can run on this device (iOS, not web or Jest). */
   appleAvailable: boolean;
@@ -185,17 +185,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const signInWithApple = useCallback<AuthState['signInWithApple']>(async () => {
     const failed = { ok: false, message: 'Apple sign-in didn’t work. Please try again.' };
-    // Without a backend there is nothing to sign in to, and no profile is ever created on the phone.
-    if (!supabase) return { ok: false, message: UNAVAILABLE };
     try {
       // The nonce only matters when Supabase checks the token. Apple gets the hash, Supabase the raw value.
       const rawNonce = randomNonce();
       const hashedNonce = await Crypto.digestStringAsync(Crypto.CryptoDigestAlgorithm.SHA256, rawNonce);
       const credential = await AppleAuthentication.signInAsync({
-        requestedScopes: [
+        requestedScopes: supabase ? [
           AppleAuthentication.AppleAuthenticationScope.FULL_NAME,
           AppleAuthentication.AppleAuthenticationScope.EMAIL,
-        ],
+        ] : [AppleAuthentication.AppleAuthenticationScope.FULL_NAME],
         nonce: hashedNonce,
       });
       const merged = mergeAppleProfile(localProfile, {
@@ -205,6 +203,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         email: credential.email,
       });
 
+      if (!supabase) {
+        await AsyncStorage.setItem(PROFILE_KEY, JSON.stringify(merged));
+        setLocalProfile(merged);
+        return { ok: true, message: 'Your profile is ready on this iPhone.' };
+      }
       if (!credential.identityToken) return failed;
       const { error } = await supabase.auth.signInWithIdToken({
         provider: 'apple',

@@ -1,3 +1,4 @@
+import type { RefObject } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { activeFilterCount } from '../domain/filters';
@@ -7,6 +8,8 @@ import { Icon } from './ui';
 import { countAnnouncement, useAnnounceCount } from './useAnnounceCount';
 
 interface LocationBarProps {
+  locationAnchor?: RefObject<React.ComponentRef<typeof View> | null>;
+  filterAnchor?: RefObject<React.ComponentRef<typeof View> | null>;
   onChangeLocation: () => void;
   onOpenFilters: () => void;
   /** Speak count changes on iOS. Explore turns this off while the Filters sheet (which announces itself) is open. */
@@ -37,7 +40,7 @@ export function filtersLabel(count: number): string {
  * Compact row above the Explore list: pin + suburb (tint, opens the location sheet) on the left,
  * a small Filters capsule with the active count on the right, then the result count underneath.
  */
-export function LocationBar({ onChangeLocation, onOpenFilters, announce = true }: LocationBarProps) {
+export function LocationBar({ onChangeLocation, onOpenFilters, locationAnchor, filterAnchor, announce = true }: LocationBarProps) {
   const { location, filters, results, query, isDefaultLocation } = useSearch();
   const filterCount = activeFilterCount(filters);
   useAnnounceCount(results.length, announce);
@@ -46,6 +49,8 @@ export function LocationBar({ onChangeLocation, onOpenFilters, announce = true }
     <View style={styles.bar}>
       <View style={styles.row}>
         <Pressable
+          ref={locationAnchor}
+          collapsable={false}
           onPress={onChangeLocation}
           accessibilityRole="button"
           accessibilityLabel={isDefaultLocation ? 'Location not set, showing Sydney' : `Location, ${location.label}`}
@@ -61,6 +66,8 @@ export function LocationBar({ onChangeLocation, onOpenFilters, announce = true }
         </Pressable>
 
         <Pressable
+          ref={filterAnchor}
+          collapsable={false}
           onPress={onOpenFilters}
           accessibilityRole="button"
           accessibilityLabel={filtersLabel(filterCount)}

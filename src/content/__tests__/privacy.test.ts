@@ -26,10 +26,10 @@ describe('privacy policy', () => {
   });
 
   it('says plainly that version 1.0 has no accounts and sends nothing to Farm Direct', () => {
-    const first = PRIVACY_SECTIONS.find((s) => /no accounts/i.test(s.title));
+    const first = PRIVACY_SECTIONS.find((s) => /on your iPhone/i.test(s.title));
     expect(first).toBeDefined();
     const text = first!.paragraphs.join(' ');
-    expect(text).toMatch(/no accounts and no sign-in/);
+    expect(text).toMatch(/optional Apple profile on this iPhone/);
     expect(text).toMatch(/Nothing you do in the app is sent to Farm Direct/);
     expect(text).toMatch(/ordinary email/);
     expect(text).toMatch(/public sources/);
@@ -67,7 +67,7 @@ describe('privacy policy', () => {
     expect(text).not.toMatch(/Supabase/);
     expect(text).not.toMatch(/Delete my account/);
     // What 1.0 does is still all there.
-    expect(text).toMatch(/no accounts and no sign-in/);
+    expect(text).toMatch(/optional Apple profile on this iPhone/);
     expect(text).toMatch(/Remove from this iPhone/);
     expect(text).toMatch(/Apple’s geocoding service/);
     expect(text).toMatch(/do not sell your information/);
@@ -75,9 +75,9 @@ describe('privacy policy', () => {
 
   it('says only what 1.0 uses, with no mention of Expo updates', () => {
     const text = PRIVACY_SECTIONS.flatMap((s) => s.paragraphs).join(' ');
-    expect(text).toMatch(/Farm Direct 1\.0 uses Apple \(the App Store, TestFlight and Apple Maps\)\./);
+    expect(text).toMatch(/Farm Direct 1\.0 uses Apple \(the App Store, TestFlight, Sign in with Apple and Apple Maps\)\./);
     expect(text).not.toMatch(/Expo/);
-    expect(text).toMatch(/If you tried a test version that let you sign in with Apple/);
+    expect(text).toMatch(/Apple user ID and any name you share/);
     expect(text).not.toMatch(/signed in with Apple in an earlier version/);
   });
 
@@ -102,7 +102,7 @@ describe('privacy policy', () => {
 
   it('leaves out the Sign in with Apple test-build section when there is no such profile', () => {
     const text = privacySections({ accounts: false, legacyAppleProfile: false }).flatMap((s) => s.paragraphs).join(' ');
-    expect(text).not.toMatch(/Sign in with Apple|Remove from this iPhone/);
+    expect(text).not.toMatch(/Remove from this iPhone/);
     const withProfile = privacySections({ accounts: false, legacyAppleProfile: true }).flatMap((s) => s.paragraphs).join(' ');
     expect(withProfile).toContain('Remove from this iPhone');
   });

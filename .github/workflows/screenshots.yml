@@ -14,8 +14,8 @@ jobs:
     runs-on: macos-26
     timeout-minutes: 90
     env:
-      EXPO_PUBLIC_SUPPORT_EMAIL: ${{ vars.SUPPORT_EMAIL }}
-      EXPO_PUBLIC_OPERATOR_NAME: ${{ vars.OPERATOR_NAME }}
+      EXPO_PUBLIC_SUPPORT_EMAIL: ${{ vars.SUPPORT_EMAIL || 'support@visera.vision' }}
+      EXPO_PUBLIC_OPERATOR_NAME: ${{ vars.OPERATOR_NAME || 'Phoenix Jennings' }}
       # Skips the first-launch welcome and pre-saves three places. Simulator build only.
       EXPO_PUBLIC_SCREENSHOT_MODE: "1"
     steps:
@@ -82,12 +82,22 @@ jobs:
           sim launch "$UDID" au.farmdirect.app
           sleep 45
           shot 01-explore
+          mkdir -p media
+          xcrun simctl io "$UDID" recordVideo --codec=h264 --force media/simulator.mp4 >media/capture.log 2>&1 &
+          RECORDER=$!
+          next 12
+          shot 09-welcome
+          next 5
+          shot 10-tour
+          sleep 26
           next 20
           shot 02-explore-meat
           next 20
           shot 08-place-butcher
           next 20
           shot 03-place-meat
+          kill -INT "$RECORDER"
+          wait "$RECORDER"
           next 20
           shot 04-place-market
           next 20
@@ -107,3 +117,13 @@ jobs:
           name: app-store-screenshots
           path: shots/*.png
           if-no-files-found: warn
+
+      - name: Compress the iPhone screen recording for editing
+        run: |
+          command -v ffmpeg >/dev/null || brew install ffmpeg
+          ffmpeg -hide_banner -loglevel error -y -i media/simulator.mp4 -vf "fps=30,scale=1080:-2" -an -c:v libx264 -preset fast -crf 20 -movflags +faststart media/simulator-edit.mp4
+      - uses: actions/upload-artifact@v4
+        with:
+          name: simulator-footage
+          path: media/simulator-edit.mp4
+          if-no-files-found: error

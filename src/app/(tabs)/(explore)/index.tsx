@@ -3,6 +3,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { FlatList, Platform, StyleSheet, View, type ListRenderItem } from 'react-native';
 import type { SearchBarCommands } from 'react-native-screens';
 
+import { ExploreWalkthrough } from '../../../components/ExploreWalkthrough';
 import { DataBanner } from '../../../components/DataBanner';
 import { FarmCard } from '../../../components/FarmCard';
 import { explainNoResults, type NoResultsFix } from '../../../components/FilterPanel';
@@ -33,7 +34,24 @@ export default function FarmListScreen() {
   const nativeText = useRef('');
 
   // The welcome screen's "Choose a suburb" lands here with ?chooseLocation=1.
-  const { chooseLocation } = useLocalSearchParams<{ chooseLocation?: string }>();
+  const { chooseLocation, quickTour } = useLocalSearchParams<{ chooseLocation?: string; quickTour?: string }>();
+  const locationAnchor = useRef<React.ComponentRef<typeof View>>(null);
+  const filterAnchor = useRef<React.ComponentRef<typeof View>>(null);
+  const list = useRef<FlatList<FarmResult>>(null);
+  const [tourVisible, setTourVisible] = useState(false);
+  const [filtersAfterTour, setFiltersAfterTour] = useState(false);
+  const closeTour = useCallback(() => setTourVisible(false), []);
+  useEffect(() => {
+    if (quickTour !== '1' || !focused) return;
+    list.current?.scrollToOffset({ offset: 0, animated: false });
+    setTourVisible(true);
+    router.setParams({ quickTour: undefined });
+  }, [quickTour, focused]);
+  useEffect(() => {
+    if (!filtersAfterTour || tourVisible) return;
+    const timer = setTimeout(() => { setFiltersAfterTour(false); setFiltersOpen(true); }, 300);
+    return () => clearTimeout(timer);
+  }, [filtersAfterTour, tourVisible]);
   useEffect(() => {
     if (chooseLocation === '1') {
       setLocationOpen(true);
@@ -112,6 +130,7 @@ export default function FarmListScreen() {
     <View style={styles.screen}>
       <Stack.Screen options={searchBarOptions} />
       <FlatList
+        ref={list}
         style={styles.screen}
         data={results}
         extraData={favourites}
@@ -132,6 +151,8 @@ export default function FarmListScreen() {
               />
             )}
             <LocationBar
+              locationAnchor={locationAnchor}
+              filterAnchor={filterAnchor}
               onChangeLocation={() => setLocationOpen(true)}
               onOpenFilters={() => setFiltersOpen(true)}
               announce={focused && !filtersOpen}
@@ -160,6 +181,8 @@ export default function FarmListScreen() {
         keyboardShouldPersistTaps="handled"
         keyboardDismissMode="on-drag"
       />
+      {tourVisible && focused ? <ExploreWalkthrough location={locationAnchor} filters={filterAnchor} onClose={closeTour}
+        onFilters={() => { closeTour(); setFiltersAfterTour(true); }} /> : null}
       <LocationModal visible={locationOpen} onClose={() => setLocationOpen(false)} />
       <FiltersModal visible={filtersOpen} onClose={() => setFiltersOpen(false)} />
     </View>

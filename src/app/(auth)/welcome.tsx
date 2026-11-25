@@ -2,16 +2,14 @@ import * as AppleAuthentication from 'expo-apple-authentication';
 import { Image } from 'expo-image';
 import { router } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
-import { useEffect, useState } from 'react';
-import { Linking, ScrollView, StyleSheet, Text, useColorScheme, View } from 'react-native';
+import { useCallback, useEffect, useState } from 'react';
+import { ScrollView, StyleSheet, Text, useColorScheme, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { FeatureRow } from '../../components/auth/FeatureRow';
 import { Notice } from '../../components/FormBits';
 import { Button, success } from '../../components/ui';
-import { locateMe } from '../../lib/locate';
 import { useAuth } from '../../state/AuthContext';
-import { useSearch } from '../../state/SearchContext';
 import { colors, radius, space, type } from '../../theme';
 
 const APP_ICON = require('../../../assets/images/icon.png');
@@ -36,19 +34,17 @@ export default function WelcomeScreen() {
   const scheme = useColorScheme();
   const insets = useSafeAreaInsets();
   const { available, appleAvailable, session, localProfile, signInWithApple, markWelcomeSeen } = useAuth();
-  const { setLocation } = useSearch();
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [locating, setLocating] = useState(false);
-  const [locationError, setLocationError] = useState<{ message: string; canOpenSettings: boolean } | null>(null);
   const signedIn = !!session || !!localProfile;
-
-  // Signing in (Apple or email) finishes the welcome screen.
-  useEffect(() => {
-    if (!signedIn) return;
+  const finish = useCallback(() => {
     markWelcomeSeen();
-    router.dismiss();
-  }, [signedIn, markWelcomeSeen]);
+    router.dismissTo({ pathname: '/', params: { quickTour: '1' } });
+  }, [markWelcomeSeen]);
+
+  useEffect(() => {
+    if (signedIn) finish();
+  }, [signedIn, finish]);
 
   const apple = async () => {
     setBusy(true);
@@ -56,34 +52,6 @@ export default function WelcomeScreen() {
     const result = await signInWithApple();
     setBusy(false);
     if (!result.ok && result.message) setError(result.message);
-  };
-
-  // Closes the welcome screen ("Not now" without a backend, "Continue without an account" with one).
-  const finish = () => {
-    markWelcomeSeen();
-    router.dismiss();
-  };
-
-  // Asks for location only when tapped. On success the places are sorted from there; on failure the reason is
-  // shown here and "Continue" still closes the screen.
-  const locate = async () => {
-    setLocating(true);
-    setLocationError(null);
-    const result = await locateMe();
-    setLocating(false);
-    if (result.ok) {
-      setLocation(result.location);
-      success();
-      finish();
-    } else {
-      setLocationError({ message: result.message, canOpenSettings: result.canOpenSettings });
-    }
-  };
-
-  // Explore opens its location sheet when it sees ?chooseLocation=1.
-  const chooseSuburb = () => {
-    finish();
-    router.navigate({ pathname: '/', params: { chooseLocation: '1' } });
   };
 
   return (
@@ -99,66 +67,32 @@ export default function WelcomeScreen() {
           Farm Direct
         </Text>
         <Text style={[type.body, styles.tagline]}>
-          Farmers’ markets, farm shops, farm-gate stalls, farms and independent butchers near you.
+          Find a farmers’ market, a farm shop or an independent butcher for your next stop.
         </Text>
 
         <View style={styles.features}>
-          <FeatureRow icon="map" title="Find places near you" message="Farms, stalls, shops, markets and butchers on one map." />
-          <FeatureRow icon="clock" title="Check before you go" message="See opening hours and what’s on offer." />
+          <FeatureRow icon="map" title="Pick your starting point" message="Search your suburb or use your current location." />
+          <FeatureRow icon="clock" title="Plan a market morning" message="Filter by produce and weekend opening hours." />
           <FeatureRow icon="heart" title="Save your favourites" message="Keep the places you love in one list." />
         </View>
       </View>
 
       <View style={styles.bottom}>
-        {available ? (
-          <>
-            {error ? <Notice kind="error">{error}</Notice> : null}
-
-            {appleAvailable ? (
-              <AppleAuthentication.AppleAuthenticationButton
-                buttonType={AppleAuthentication.AppleAuthenticationButtonType.SIGN_IN}
-                buttonStyle={
-                  scheme === 'dark'
-                    ? AppleAuthentication.AppleAuthenticationButtonStyle.WHITE
-                    : AppleAuthentication.AppleAuthenticationButtonStyle.BLACK
-                }
-                cornerRadius={APPLE_BUTTON_RADIUS}
-                style={[styles.appleButton, busy && styles.busy]}
-                onPress={busy ? () => {} : apple}
-              />
-            ) : null}
-
-            <Button variant="tinted" label="Continue with email" onPress={() => router.push('/(auth)/email')} />
-            <Button variant="plain" label="Continue without an account" onPress={finish} />
-          </>
-        ) : (
-          <>
-            {locationError ? (
-              <Notice kind="error">
-                <View style={styles.noticeBody}>
-                  <Text style={[type.callout, styles.noticeText]}>{locationError.message}</Text>
-                  {locationError.canOpenSettings ? (
-                    <Button label="Open Settings" variant="plain" size="small" onPress={() => Linking.openSettings()} />
-                  ) : null}
-                </View>
-              </Notice>
-            ) : null}
-            <Button
-              label="Use my location"
-              icon="location.fill"
-              loading={locating}
-              onPress={locate}
-              accessibilityHint="Sorts places by how far they are from you"
-            />
-            <Button variant="tinted" label="Choose a suburb" onPress={chooseSuburb} disabled={locating} />
-            <Button variant="plain" label={locationError ? 'Continue' : 'Not now'} onPress={finish} disabled={locating} />
-          </>
-        )}
-
+        {error ? <Notice kind="error">{error}</Notice> : null}
+        {appleAvailable ? (
+          <AppleAuthentication.AppleAuthenticationButton
+            accessibilityLabel="Continue with Apple"
+            buttonType={AppleAuthentication.AppleAuthenticationButtonType.CONTINUE}
+            buttonStyle={scheme === 'dark' ? AppleAuthentication.AppleAuthenticationButtonStyle.WHITE : AppleAuthentication.AppleAuthenticationButtonStyle.BLACK}
+            cornerRadius={APPLE_BUTTON_RADIUS}
+            style={[styles.appleButton, busy && styles.busy]}
+            onPress={busy ? () => {} : apple}
+          />
+        ) : null}
+        {available ? <Button variant="tinted" label="Continue with email" onPress={() => router.push('/(auth)/email')} /> : null}
+        <Button variant={appleAvailable || available ? 'tinted' : 'filled'} label="Explore as a guest" onPress={finish} disabled={busy} />
         <Text style={[type.footnote, styles.footnote]}>
-          {available
-            ? 'Signing in is optional.'
-            : 'Farm Direct only uses your location while the app is open, to sort places by distance. It is never sent to us.'}
+          {available ? 'Signing in is optional.' : 'Your Apple profile stays on this iPhone. You can explore every place as a guest.'}
         </Text>
         <Button variant="plain" size="small" label="Privacy policy" onPress={openPrivacy} style={styles.privacy} />
       </View>
