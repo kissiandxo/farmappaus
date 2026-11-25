@@ -1,0 +1,34 @@
+name: Recover verified iPhone media
+on:
+  push:
+    branches: ["capture/recover-native-45609367849"]
+permissions:
+  actions: read
+  contents: write
+jobs:
+  media:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          run-id: 45609367849
+          github-token: ${{ github.token }}
+          name: interaction-capture
+          path: footage
+      - name: Collect the original screen recording and screenshots
+        shell: bash
+        run: |
+          set -euo pipefail
+          find footage -type f | head -100
+          dest=marketing/launch-film/source
+          cp footage/gestures.mp4 "$dest/gestures.mp4"
+          for shot in 09-welcome 10-tour 11-meat-filter 12-butcher; do
+            image=$(find footage -name "$shot.png" -print -quit)
+            if [ -n "$image" ]; then cp "$image" "$dest/$shot.png"; fi
+          done
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add "$dest"
+          git commit -m 'Recover the original iPhone interaction recording and native screenshots'
+          git push origin HEAD:capture/iphone-45609367849
