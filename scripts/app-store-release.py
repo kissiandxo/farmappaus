@@ -79,14 +79,19 @@ def review_details(version):
     fields = ["contactFirstName", "contactLastName", "contactPhone", "contactEmail"]
     attrs = (detail or {}).get("attributes", {})
     if not all(attrs.get(k) for k in fields):
-        versions = child(app("com.visera.Visera"), "appStoreVersions", params={"filter[platform]": "IOS"})
+        visera = app("com.visera.Visera")
+        versions = child(visera, "appStoreVersions", params={"filter[platform]": "IOS", "limit": 200})
         for row in versions:
             saved = child(row, "appStoreReviewDetail", optional=True)
             attrs = (saved or {}).get("attributes", {})
             if all(attrs.get(k) for k in fields):
                 break
         else:
-            raise RuntimeError("Visera has no complete saved App Review contact accessible to this key")
+            beta = child(visera, "betaAppReviewDetail", optional=True)
+            attrs = (beta or {}).get("attributes", {})
+            if not all(attrs.get(k) for k in fields):
+                missing = [k for k in fields if not attrs.get(k)]
+                raise RuntimeError("Visera review contact fields missing: " + ", ".join(missing))
     notes = section("Notes for App Review").split("> **Contact:**")[0]
     notes = re.sub(r"^> ?", "", notes, flags=re.M).replace("**", "").strip()
     values = {k: attrs[k] for k in fields}
@@ -127,7 +132,7 @@ def screenshots(loc):
 def pricing(target):
     schedule = child(target, "appPriceSchedule", optional=True)
     if schedule:
-        manual = child(schedule, "manualPrices", params={"include": "appPricePoint"})
+        manual = child(schedule, "manualPrices", params={"include": "appPricePoint"}, optional=True) or []
         for price in manual:
             point = child(price, "appPricePoint") if price["type"] != "appPrices" else api(
                 "GET", "/v3/appPricePoints/" + price["relationships"]["appPricePoint"]["data"]["id"])
@@ -154,10 +159,16 @@ def availability(target):
         if au:
             write("territoryAvailabilities", {"available": True}, id=au["id"])
             return
-    local = ref("territoryAvailabilities", "${australia}")
+    territories = api("GET", "/v1/territories", params={"limit": 200})
+    rows = []
+    for territory in territories:
+        code = territory["id"]
+        rows.append({**ref("territoryAvailabilities", "${" + code + "}"),
+                     "attributes": {"available": code == "AUS"},
+                     "relationships": {"territory": rel("territories", code)}})
     write("appAvailabilities", {"availableInNewTerritories": False}, {"app": rel("apps", target["id"]),
-          "territoryAvailabilities": {"data": [local]}}, included=[{**local, "attributes": {"available": True},
-          "relationships": {"territory": rel("territories", "AUS")}}], version="v2")
+          "territoryAvailabilities": {"data": [ref(row["type"], row["id"]) for row in rows]}},
+          included=rows, version="v2")
 
 
 def main():
