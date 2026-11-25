@@ -6,7 +6,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import { SUPPORT_EMAIL } from '../config';
 import { LISTINGS_CHECKED_ON } from '../data/realFarms';
 import { contactMailto, listMailto, suggestMailto, versionLabel } from '../domain/support';
-import { openEmail } from '../lib/openLink';
+import { openEmail, openLink } from '../lib/openLink';
 import { colors, radius, space, type } from '../theme';
 import { Row, Section } from './ui';
 
@@ -21,9 +21,18 @@ function monthYear(isoDate: string): string {
   return Number.isNaN(date.getTime()) ? '' : date.toLocaleDateString('en-AU', { month: 'long', year: 'numeric' });
 }
 
-/** Credit required for the place locations, which were found with OpenStreetMap's Nominatim (ODbL). */
 export function Attribution() {
-  return <Text style={[type.footnote, styles.attribution]}>Map locations © OpenStreetMap contributors</Text>;
+  return (
+    <Text style={[type.footnote, styles.attribution]}>
+      Map locations © OpenStreetMap contributors{'\n'}
+      Suburbs and postcodes adapted from{' '}
+      <Text accessibilityRole="link" onPress={() => openLink('https://www.geonames.org/')}>GeoNames</Text>
+      {' · '}
+      <Text accessibilityRole="link" onPress={() => openLink('https://creativecommons.org/licenses/by/4.0/')}>
+        CC BY 4.0
+      </Text>
+    </Text>
+  );
 }
 
 /**

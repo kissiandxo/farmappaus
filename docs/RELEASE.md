@@ -67,6 +67,6 @@ The camera, photo-library and Sign in with Apple settings are already in `app.js
 - [ ] `SUPPORT_EMAIL` and `OPERATOR_NAME` set, and the build you submit was made after they were set (check the run shows no warnings).
 - [ ] The Supabase secrets are **not** set.
 - [ ] Privacy policy reviewed and hosted at a public URL (`docs/PRIVACY.md`), and its address entered in App Store Connect.
-- [ ] Postcode data licence confirmed or replaced (`docs/DATA.md`).
+- [x] Postcode data replaced with the credited GeoNames extract (`docs/DATA.md`).
 - [ ] Listings checked against `docs/REAL_LISTINGS.md`.
 - [ ] The support address or page entered as the App Store "Support URL".

@@ -29,7 +29,7 @@ Find farmers’ markets, farm shops, farm-gate stalls, farms and independent but
 
 Comma-separated, no spaces after commas. There is no "organic", "free range" or "grass fed" here because the places carry no such labels in the app (some descriptions mention them, but the app has no tag data for unclaimed places), and none of them would be true of the butcher shops.
 
-## Description (2219 / 4000)
+## Description (2202 / 4000)
 
 Farm Direct is a free directory of farmers’ markets, farm shops, farms, farm-gate stalls and independent butchers across Australia. Find good food near you, check when a place is open, and get there.
 
@@ -48,7 +48,7 @@ The app starts with 151 real places in every state and territory: 67 farmers’ 
 • Works without reception: the places are built into the app, so the list and your saved places are always there (maps need a connection)
 • Large text that follows your iPhone’s text size setting, with light and dark appearance
 
-No account, no sign-in and no ads. Farm Direct doesn’t collect your information: your location and saved places stay on your iPhone.
+No account, no sign-in and no ads. Your saved places stay on your iPhone. Farm Direct never receives your location.
 
 Details can change, so check before you travel. See something wrong? Tap “Report a problem” on any place to send us an email.
 
@@ -83,7 +83,7 @@ Answer Apple's questionnaire honestly. Expect **4+**.
 |---|---|
 | Do you or third parties collect data from this app? | **No** (Data Not Collected) |
 | Tracking | **No.** No ads, no analytics, no tracking SDKs |
-| Location | Used on the iPhone only, to measure distances, and never sent to us. Not collected |
+| Location | Used for distances and optional area lookup through Apple, never sent to Farm Direct. Not collected |
 | Saved places, last location and whether the location prompt was dismissed | Stored on the iPhone only. Not collected |
 | Search text and filters | Kept in memory on the iPhone only, never stored or sent. Not collected |
 | Contact info | Not collected. Emails people choose to send us are written in their own mail app and are ordinary email, not data collected by the app |
@@ -108,7 +108,7 @@ Before you submit, check that no build variable turns on a backend: leave `EXPO_
 > 5. **Saved** tab: places you saved, stored on the device only. Touch and hold a place to remove it, get directions or share it.
 > 6. **About** tab: what the app is, **Suggest a place**, **Contact us**, **List or claim your place** (each opens a pre-filled email), **Privacy policy**, the OpenStreetMap credit and the app version.
 >
-> **Location:** used only when you tap "Use my location" on the welcome screen, "Use my current location" in the location sheet, or the locate button on the map, and only while the app is in use, to show nearby places. The app works fully without it: you can search any suburb or postcode instead. Location is never sent anywhere.
+> **Location:** used only when you tap "Use my location" on the welcome screen, "Use my current location" in the location sheet, or the locate button on the map, and only while the app is in use, to show nearby places. The app works fully without it: you can search any suburb or postcode instead. Distances are calculated on the device. If no nearby suburb is found offline, Apple’s geocoding service can receive coordinates to identify the area.
 >
 > **Email rows** open the Mail app (or another mail app). If none is set up, the app shows the address with a Share button instead.
 >
@@ -138,7 +138,7 @@ Look at every image before you upload it. Every place has no photos, so no scree
 - [ ] **Privacy policy URL.** Host `docs/PRIVACY.md` (regenerate it with `npm run build:privacy` and the two variables set) at a public address. Have it reviewed by an Australian privacy lawyer.
 - [ ] **App Review contact:** first and last name, phone number (with country code) and email.
 - [ ] **Copyright line**, for example "2026 Your Name".
-- [ ] **Postcode data licence.** Check the licence of the bundled suburb and postcode list (`docs/DATA.md`) allows use in a published app, and add any credit it requires.
+- [x] GeoNames postcode data licensed and credited (see `docs/DATA.md`).
 - [ ] **App ID.** `au.farmdirect.app` is registered with the Sign in with Apple capability (see `docs/RELEASE.md`), and the app name "Farm Direct" is free in App Store Connect (otherwise choose another and change `name` in `app.json`).
 - [ ] Screenshots uploaded, age rating questionnaire answered, App Privacy set to **Data Not Collected**, price set to Free.
 - [ ] Export compliance: the app only uses Apple's standard encryption, already declared with `ITSAppUsesNonExemptEncryption: false`.

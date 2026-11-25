@@ -4,17 +4,13 @@
 
 Used for suburb/postcode search and to name a GPS fix, with no network needed (works on patchy regional reception).
 
-- **Rows:** `[postcode, locality, state, lat, lng]`, about 18,000 localities, coordinates to 3 decimal places (~100 m).
-- **Source:** built by `scripts/build-postcodes.mjs` from the npm package [`aus-postcode-suburbs`](https://www.npmjs.com/package/aus-postcode-suburbs) (ISC licence), which republishes [Matthew Proctor's Australian Postcodes](https://www.matthewproctor.com/australian_postcodes).
-- **Regenerate:**
-  ```bash
-  npm pack aus-postcode-suburbs && tar xzf aus-postcode-suburbs-*.tgz
-  node scripts/build-postcodes.mjs package/lib/resources/aus_postcodes.json
-  ```
+Locality and postcode pairs come from the [GeoNames Australian postal code extract](https://download.geonames.org/export/zip/AU.zip). GeoNames publishes the postal code files under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/), as recorded in its [distribution readme](https://download.geonames.org/export/zip/readme.txt). The About tab credits GeoNames. The build filters facility suffixes, removes duplicate locality/postcode/state combinations and rounds estimated coordinates to three decimals.
 
-### Licence to confirm before public launch
-
-The upstream list is derived from Australia Post postcode information and Australian Bureau of Statistics data. The npm package is ISC-licensed, but I could not confirm that the underlying postcode data may be redistributed inside a commercial app. Before the App Store launch, either confirm the terms on the source page, or swap in a dataset with a clear open licence (for example ABS postal areas/localities under CC BY 4.0). The app only reads this file through `src/domain/places.ts`, so replacing it is a one-file change.
+```bash
+curl -fsSL https://download.geonames.org/export/zip/AU.zip -o /tmp/AU.zip
+unzip -p /tmp/AU.zip AU.txt > /tmp/AU.txt
+node scripts/build-postcodes.mjs /tmp/AU.txt
+```
 
 ## Real places (`src/data/realListings.json`, `src/data/realFarms.ts`)
 
