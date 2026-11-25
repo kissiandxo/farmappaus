@@ -37,8 +37,14 @@ export interface OpenStatus {
   opensToday?: boolean;
 }
 
-/** Current weekday and minutes since midnight in the given IANA time zone. */
-export function localDayAndMinutes(now: Date, timeZone: string): { day: DayKey; minutes: number } {
+type LocalTime = Readonly<{ day: DayKey; minutes: number }>;
+const zoneMinutes = new Map<string, { epochMinute: number; value: LocalTime }>();
+
+/** Listings in the same zone share one local-clock calculation per minute. */
+export function localDayAndMinutes(now: Date, timeZone: string): LocalTime {
+  const epochMinute = Math.floor(now.getTime() / 60_000);
+  const cached = zoneMinutes.get(timeZone);
+  if (cached?.epochMinute === epochMinute) return cached.value;
   const parts = new Intl.DateTimeFormat('en-US', {
     timeZone,
     weekday: 'short',
@@ -50,7 +56,9 @@ export function localDayAndMinutes(now: Date, timeZone: string): { day: DayKey; 
   const day = get('weekday').slice(0, 3).toLowerCase() as DayKey;
   const hour = Number(get('hour')) % 24;
   const minute = Number(get('minute'));
-  return { day, minutes: hour * 60 + minute };
+  const value = { day, minutes: hour * 60 + minute };
+  zoneMinutes.set(timeZone, { epochMinute, value });
+  return value;
 }
 
 export function parseMinutes(hhmm: string): number {

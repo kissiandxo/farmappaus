@@ -106,6 +106,15 @@ describe('time helpers', () => {
     expect(localDayAndMinutes(instant, 'Australia/Perth')).toEqual({ day: 'sat', minutes: 7 * 60 });
   });
 
+  it('reuses the venue clock within a minute and advances across a daylight-saving jump', () => {
+    const zone = 'Australia/Sydney';
+    const before = localDayAndMinutes(new Date('2026-10-03T15:59:00Z'), zone);
+    expect(before).toEqual({ day: 'sun', minutes: 119 });
+    expect(localDayAndMinutes(new Date('2026-10-03T15:59:59Z'), zone)).toBe(before);
+    expect(localDayAndMinutes(new Date('2026-10-03T16:00:00Z'), zone)).toEqual({ day: 'sun', minutes: 180 });
+    expect(localDayAndMinutes(new Date('2026-10-03T15:59:00Z'), zone)).toEqual(before);
+  });
+
   it('maps every state to a time zone', () => {
     expect(timezoneForState('QLD')).toBe('Australia/Brisbane');
     expect(timezoneForState('ACT')).toBe('Australia/Sydney');
