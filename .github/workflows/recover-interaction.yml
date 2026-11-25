@@ -31,4 +31,4 @@ jobs:
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add "$dest"
           git commit -m 'Recover the original iPhone interaction recording and native screenshots'
-          git push origin HEAD:capture/iphone-45609367849
+          git push origin HEAD:refs/heads/capture/iphone-45609367849
