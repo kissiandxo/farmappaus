@@ -1,0 +1,30 @@
+appId: au.farmdirect.app
+---
+- launchApp:
+    clearState: true
+- extendedWaitUntil:
+    visible: "Explore as a guest"
+    timeout: 60000
+- tapOn: "Explore as a guest"
+- tapOn: "Skip tour"
+- scrollUntilVisible:
+    element:
+      text: "Save Carriageworks Farmers Market"
+    direction: DOWN
+- tapOn: "Save Carriageworks Farmers Market"
+- scrollUntilVisible:
+    element:
+      text: "Save Feather and Bone"
+    direction: DOWN
+- tapOn: "Save Feather and Bone"
+- scrollUntilVisible:
+    element:
+      text: "Save Bilpin Fruit Bowl"
+    direction: DOWN
+- tapOn: "Save Bilpin Fruit Bowl"
+- tapOn: "Saved"
+- tapOn: "This weekend"
+- assertVisible: "3 saved places"
+- takeScreenshot: 18-weekend-shortlist
+- tapOn: "Share stops"
+- assertVisible: "Copy"

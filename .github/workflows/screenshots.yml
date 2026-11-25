@@ -83,6 +83,7 @@ jobs:
         timeout-minutes: 35
         env:
           MAESTRO_CLI_NO_ANALYTICS: 1
+          MAESTRO_DRIVER_STARTUP_TIMEOUT: "360000"
         run: |
           set -euo pipefail
           mkdir -p /tmp/farm-release-capture

@@ -5,10 +5,14 @@ from render import SCREEN, font
 
 
 COVERS = [
-    ("01-explore.png", "store-01-explore.png", "Find good food\nnear you.",
+    ("13-explore.png", "store-01-discover.png", "Find good food\nnear you.",
      "151 markets, butchers, farm shops and more.", "#F4F0E3", "#183C2E", "#B1C2AB"),
-    ("08-place-butcher.png", "store-02-butcher.png", "Find your\nlocal butcher.",
+    ("14-butcher-browse.png", "store-02-butchers.png", "Find your\nlocal butcher.",
      "Look up 45 independent shops across Australia.", "#173C31", "#FFF5E4", "#86A68B"),
+    ("16-market-dates.png", "store-03-market-dates.png", "When’s the\nnext market?",
+     "Check published dates and special market days.", "#F4DECC", "#422C24", "#BA9B82"),
+    ("18-weekend-shortlist.png", "store-05-weekend.png", "Share your\nweekend stops.",
+     "Save favourites and check their weekend hours.", "#E7EBD8", "#203B2A", "#A4B08D"),
     ("04-place-market.png", "store-03-market.png", "Plan a market\nmorning.",
      "Check published hours before heading out.", "#F5DDC6", "#462B24", "#B79174"),
 ]

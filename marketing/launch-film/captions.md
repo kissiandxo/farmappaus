@@ -14,8 +14,8 @@ Heading down the Mornington Peninsula? Torello Farm in Dromana lists fruit, vege
 
 ## Farmers’ markets
 
-Saturday in the Barossa? Look up Barossa Farmers Market in Angaston. Farm Direct lists 67 farmers’ markets across Australia. Check the market’s published times before heading out and share the stop with whoever’s coming along.
+Which weekend is market weekend? Browse 67 farmers’ markets across Australia, or tap Market dates for featured calendars in NSW, WA and Tasmania. Check the organiser’s dates before heading out.
 
-#BarossaFarmersMarket #Angaston #AustralianFood
+#FarmersMarket #WeekendMarkets #AustralianFood
 
 Before the app is available, end a caption with “Follow for the iPhone launch.” After release, use “Download Farm Direct free for iPhone” and link to the [Australian App Store page](https://apps.apple.com/au/app/id6834272915).

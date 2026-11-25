@@ -145,15 +145,16 @@ def transfer_asset(row, payload):
 def app_preview(loc):
     asset = ROOT / "marketing/launch-film/farm-direct-hero.mp4"
     payload = asset.read_bytes()
+    upload_name = "farm-direct-hero-" + hashlib.md5(payload).hexdigest()[:12] + ".mp4"
     preview_sets = child(loc, "appPreviewSets")
     group = next((item for item in preview_sets if item["attributes"]["previewType"] == "IPHONE_67"), None)
     if not group:
         group = write("appPreviewSets", {"previewType": "IPHONE_67"},
                       {"appStoreVersionLocalization": rel(loc["type"], loc["id"])})
     previews = child(group, "appPreviews")
-    preview = next((item for item in previews if item["attributes"]["fileName"] == asset.name), None)
+    preview = next((item for item in previews if item["attributes"]["fileName"] == upload_name), None)
     if not preview:
-        preview = write("appPreviews", {"fileName": asset.name, "fileSize": len(payload), "mimeType": "video/mp4",
+        preview = write("appPreviews", {"fileName": upload_name, "fileSize": len(payload), "mimeType": "video/mp4",
                         "previewFrameTimeCode": "00:00:02:00"}, {"appPreviewSet": rel(group["type"], group["id"])})
     transfer_asset(preview, payload)
     for _ in range(120):
@@ -163,6 +164,11 @@ def app_preview(loc):
         if "FAILED" in (delivery["state"], video.get("state")):
             raise RuntimeError("Preview processing failed: " + str(delivery.get("errors") or video.get("errors")))
         if video.get("state") == "COMPLETE":
+            for previous in previews:
+                old = previous["attributes"]
+                if (old["fileName"] == "farm-direct-hero.mp4"
+                        and old.get("sourceFileChecksum") == "4885903fc2b92e6cbfa6bc58e116638a"):
+                    api("DELETE", "/v1/appPreviews/" + previous["id"])
             return
         time.sleep(10)
     raise RuntimeError("The uploaded app preview is still processing at Apple")
@@ -176,40 +182,48 @@ def screenshots(loc):
         group = write("appScreenshotSets", {"screenshotDisplayType": kind},
                       {"appStoreVersionLocalization": rel(loc["type"], loc["id"])})
     existing = {x["attributes"]["fileName"]: x for x in child(group, "appScreenshots")}
-    names = (
-        "store-01-explore.png", "store-02-butcher.png", "store-03-market.png",
-        "03-place-farm-shop.png", "05-saved.png", "09-welcome.png", "10-tour.png",
-    )
-    for name in names:
-        image = (ROOT / "marketing/app-store-screenshots" / name).read_bytes()
+    directory = ROOT / "marketing/app-store-screenshots"
+    # Keep the previous native images locally. Replace one at a time so the
+    # gallery fits Apple's ten-image limit even on a retry after a partial upload.
+    replacements = {
+        "store-01-discover.png": "store-01-explore.png",
+        "store-02-butchers.png": "store-02-butcher.png",
+        "store-03-market-dates.png": None,
+        "03-place-farm-shop.png": None,
+        "store-05-weekend.png": "05-saved.png",
+        "store-03-market.png": None,
+        "09-market-welcome.png": "09-welcome.png",
+        "10-browse-tour.png": "10-tour.png",
+    }
+    names = list(replacements)
+    processed = {}
+    # Free the slots occupied by old versions before adding the new market calendar.
+    for name, old_name in sorted(replacements.items(), key=lambda pair: pair[1] is None):
+        image = (directory / name).read_bytes()
         row = existing.get(name)
         if not row:
             row = write("appScreenshots", {"fileName": name, "fileSize": len(image)},
                         {"appScreenshotSet": rel(group["type"], group["id"])})
         transfer_asset(row, image)
-
-    # Apple displays these in relationship order, independently of their file names.
-    for _ in range(30):
-        rows = child(group, "appScreenshots")
-        by_name = {row["attributes"]["fileName"]: row for row in rows}
-        if all(name in by_name and by_name[name]["attributes"]["assetDeliveryState"]["state"] == "COMPLETE"
-               for name in names):
-            break
-        time.sleep(5)
-    else:
-        raise RuntimeError("Apple has yet to finish processing the requested screenshots")
-    # Each cover preserves the same native frame. Retire only our exact, backed-up
-    # originals once Apple has processed every replacement, preserving other artwork.
-    originals = ("01-explore.png", "08-place-butcher.png", "04-place-market.png")
-    for name in originals:
-        row = by_name.get(name)
-        if not row:
-            continue
-        local = (ROOT / "marketing/app-store-screenshots" / name).read_bytes()
-        if row["attributes"].get("sourceFileChecksum") == hashlib.md5(local).hexdigest():
-            api("DELETE", "/v1/appScreenshots/" + row["id"])
+        for _ in range(30):
+            row = api("GET", "/v1/appScreenshots/" + row["id"])
+            state = row["attributes"]["assetDeliveryState"]["state"]
+            if state == "COMPLETE":
+                checksum = row["attributes"].get("sourceFileChecksum")
+                if checksum and checksum.lower() != hashlib.md5(image).hexdigest():
+                    raise RuntimeError("Apple has different image contents for " + name)
+                break
+            if state == "FAILED":
+                raise RuntimeError("Apple rejected screenshot " + name)
+            time.sleep(5)
+        else:
+            raise RuntimeError("Apple is still processing screenshot " + name)
+        processed[name] = row
+        old = existing.get(old_name)
+        if old and old["attributes"].get("sourceFileChecksum") == hashlib.md5((directory / old_name).read_bytes()).hexdigest():
+            api("DELETE", "/v1/appScreenshots/" + old["id"])
     rows = child(group, "appScreenshots")
-    ordered = [by_name[name] for name in names]
+    ordered = [processed[name] for name in names]
     ordered.extend(row for row in rows if row["attributes"]["fileName"] not in names)
     if [row["id"] for row in ordered] != [row["id"] for row in rows]:
         api("PATCH", f"/v1/appScreenshotSets/{group['id']}/relationships/appScreenshots",

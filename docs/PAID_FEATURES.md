@@ -2,7 +2,7 @@
 
 ## First candidate: Weekend Planner
 
-Offer a one-time **A$4.99** unlock when someone wants to organise a second multi-stop outing. Treat the price as a launch hypothesis. Let everyone create one complete outing first. A planner would group saved stops, let shoppers reorder them, show published opening hours together and open each leg in Maps. The ordinary directory, meat and produce filters, opening hours, directions and favourites would stay free.
+Offer a one-time **A$4.99** unlock when someone wants to organise a second multi-stop outing. Treat the price as a launch hypothesis. Let everyone create one complete outing first. Saved already shows which favourites have published weekend hours and shares them with addresses and Maps links. A paid planner would add named outings, manual stop ordering and directions for each leg. The ordinary directory, meat and produce filters, opening hours, directions and favourites would stay free.
 
 Use a StoreKit non-consumable for the unlock. Show Apple's localised price, support Restore Purchases, and keep trips usable offline. Repeated usage of the free outing is the signal to test before building paid features. A voluntary in-app prompt or opt-in tester feedback can supply that evidence without adding tracking to the release.
 

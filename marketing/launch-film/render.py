@@ -180,7 +180,7 @@ def render(film):
            HERE/(film.name+".mp4"))
 
 
-def films(tour_time, butcher_time, explore_time, shop_time, filter_time, interaction):
+def films(tour_time, butcher_time, explore_time, shop_time, filter_time, interaction, market_time):
     simulator = "iphone-simulator.mp4"
     meat = Shot("Choose what to buy", "Filter for meat, fruit, eggs and more.", "02-explore-meat.png", 4)
     if filter_time is not None:
@@ -191,22 +191,22 @@ def films(tour_time, butcher_time, explore_time, shop_time, filter_time, interac
             Shot("Start in your suburb", "Set your area or use your location.", interaction,4,tour_time),
             meat,
             Shot("Meet your local butcher", "See the shop’s address and published hours.", interaction,5,butcher_time),
-            Shot("Keep your next stop", "Save places for your next market morning.", "05-saved.png",4),
+            Shot("Share your weekend stops", "Save favourites and share a list with friends.", "18-weekend-shortlist.png",4),
         ],"#F5F1E6","#153E2D","#B8C3AD",True),
         Film("reel-butcher", [
-            Shot("A butcher for\nthe weekend", "45 independent butcher shops across Australia.", "01-explore.png",3.5),
+            Shot("A butcher for\nthe weekend", "45 independent butcher shops across Australia.", "14-butcher-browse.png",3.5),
             Shot("Look up the shop", "Feather and Bone · Marrickville, NSW", interaction,4,butcher_time),
             Shot("Check before\nyou go", "Find hours, directions and a number to call.", "08-place-butcher.png",4,focus="detail"),
         ],"#183F32","#FFF7E6","#87AA8F"),
         Film("reel-farm-shop", [
             Shot("Fruit from\na farm shop", "Explore farm shops and farm-gate stalls.", "03-place-farm-shop.png",3.5,focus="produce"),
             Shot("A stop in\nDromana", "Torello Farm · Mornington Peninsula", simulator,4,shop_time,focus="detail"),
-            Shot("Save it for later", "Your saved list stays on your iPhone.", "05-saved.png",3.5),
+            Shot("Save it for later", "Your saved list stays on your iPhone.", "03-place-farm-shop.png",3.5,focus="detail"),
         ],"#F7E4CC","#442F26","#B69A7E"),
         Film("reel-market", [
-            Shot("Where’s the\nmarket?", "Explore 67 farmers’ markets around Australia.", "04-place-market.png",3.5),
-            Shot("Choose your area", "Start with a suburb or postcode.", interaction,3.5,tour_time),
-            Shot("Plan Saturday\nmorning", "Check the market’s published hours before you go.", "04-place-market.png",4,focus="detail"),
+            Shot("When’s market\nday?", "See dates published by selected markets.", "16-market-dates.png",3.5),
+            Shot("Find a market\nnearby", "Explore 67 farmers’ markets around Australia.", interaction,3.5,market_time),
+            Shot("Plan a market\nmorning", "Check published hours before heading out.", "04-place-market.png",4,focus="detail"),
         ],"#E7EBD8","#243E28","#A4B08D"),
     ]
 
@@ -219,9 +219,10 @@ if __name__ == "__main__":
     parser.add_argument("--explore-time", type=float, required=True)
     parser.add_argument("--shop-time", type=float, required=True)
     parser.add_argument("--filter-time", type=float)
+    parser.add_argument("--market-time", type=float, required=True)
     parser.add_argument("--interaction", default="iphone-simulator.mp4")
     parser.add_argument("--only")
     args = parser.parse_args()
-    for film in films(args.tour_time, args.butcher_time, args.explore_time, args.shop_time, args.filter_time, args.interaction):
+    for film in films(args.tour_time, args.butcher_time, args.explore_time, args.shop_time, args.filter_time, args.interaction, args.market_time):
         if not args.only or args.only == film.name:
             render(film)
