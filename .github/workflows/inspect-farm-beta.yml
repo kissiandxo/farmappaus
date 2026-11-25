@@ -33,10 +33,18 @@ jobs:
           for group in child(loc,'appPreviewSets'):
               if group['attributes']['previewType']=='IPHONE_67':
                   print('Ready previews:',sum(p['attributes'].get('videoDeliveryState',{}).get('state')=='COMPLETE' for p in child(group,'appPreviews')))
-          print('External beta build:',child(b,'buildBetaDetail')['attributes']['externalBuildState'])
+          detail=child(b,'buildBetaDetail')
+          print('External beta build:',detail['attributes']['externalBuildState'])
           groups=child(app,'betaGroups')
           for group in groups:
               if group['attributes']['name']=='Farm Direct Testers':
                   members=child(group,'betaTesters')
-                  print('Emma listed in private TestFlight group:',any((m['attributes'].get('firstName') or '').lower()=='emma' for m in members))
+                  matched=any((m['attributes'].get('firstName') or '').lower()=='emma' for m in members)
+                  print('Emma listed in private TestFlight group:',matched)
+                  external=[row for row in groups if not row['attributes']['isInternalGroup']]
+                  if (matched and len(members)==1 and len(external)==1 and not group['attributes'].get('publicLinkEnabled')
+                          and detail['attributes']['externalBuildState'] in ('WAITING_FOR_BETA_REVIEW','IN_BETA_REVIEW')
+                          and not detail['attributes'].get('autoNotifyEnabled')):
+                      g['write'](detail['type'],{'autoNotifyEnabled':True},id=detail['id'])
+                  print('Apple beta availability notification enabled:',child(b,'buildBetaDetail')['attributes'].get('autoNotifyEnabled'))
           PY
