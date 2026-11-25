@@ -1,12 +1,13 @@
-name: Check the existing TestFlight directory
+name: Add the existing Farm Direct tester
 on:
   push:
-    branches: ['capture/team-testflight-lookup']
+    branches: ['capture/farmdirect-tester-63']
 permissions:
   contents: read
 jobs:
   status:
     runs-on: ubuntu-latest
+    timeout-minutes: 42
     steps:
       - uses: actions/checkout@v4
       - run: python -m pip -q install "PyJWT[crypto]==2.10.1" "requests==2.32.5"
@@ -17,9 +18,54 @@ jobs:
           ASC_KEY_P8: ${{ secrets.ASC_KEY_P8 }}
         run: |
           python - <<'PY'
-          import runpy
+          import runpy,time
           g=runpy.run_path('scripts/app-store-release.py')
-          rows=g['api']('GET','/v1/betaTesters',params={'filter[firstName]':'Emma','limit':200})
+          api,child,write,rel,ref=(g[name] for name in ('api','child','write','rel','ref'))
+          target=g['app']('au.farmdirect.app')
+          app_id=target['id']
+          rows=api('GET','/v1/betaTesters',params={'filter[firstName]':'Emma','limit':200})
           matches=[r for r in rows if (r['attributes'].get('firstName') or '').strip().lower()=='emma' and r['attributes'].get('email')]
-          print('Existing TestFlight testers named Emma with an email address:',len(matches))
+          if len(matches)!=1: raise RuntimeError('The existing tester identity is ambiguous.')
+          tester=matches[0]
+          groups=child(target,'betaGroups')
+          group=next((r for r in groups if r['attributes']['name']=='Farm Direct Testers' and not r['attributes']['isInternalGroup']),None)
+          if not group:
+              group=write('betaGroups',{'name':'Farm Direct Testers','isInternalGroup':False,'publicLinkEnabled':False},{'app':rel('apps',app_id)})
+          def attach(relationship,entity):
+              if not any(r['id']==entity['id'] for r in child(group,relationship)):
+                  api('POST','/v1/betaGroups/'+group['id']+'/relationships/'+relationship,body={'data':[ref(entity['type'],entity['id'])]})
+          attach('betaTesters',tester)
+          assert any(r['id']==tester['id'] for r in child(group,'betaTesters'))
+          print('Verified Emma is a member of the private Farm Direct Testers group.',flush=True)
+          locale=target['attributes']['primaryLocale']
+          copy={'description':'Find farmers’ markets, farm shops and independent butchers across Australia. Browse the directory, check market dates, save your weekend stops and share their addresses.','feedbackEmail':'support@visera.vision'}
+          locations=child(target,'betaAppLocalizations')
+          loc=next((r for r in locations if r['attributes']['locale']==locale),None)
+          if loc: write(loc['type'],copy,id=loc['id'])
+          else: write('betaAppLocalizations',dict(locale=locale,**copy),{'app':rel('apps',app_id)})
+          version=next(v for v in child(target,'appStoreVersions',params={'filter[platform]':'IOS'}) if v['attributes']['versionString'] in ('1.0','1.0.0'))
+          review=child(version,'appStoreReviewDetail')['attributes']
+          beta=child(target,'betaAppReviewDetail',optional=True)
+          if beta:
+              fields={k:review[k] for k in ['contactFirstName','contactLastName','contactEmail','contactPhone']}
+              fields.update(demoAccountRequired=False,notes='Guest access is available from the welcome screen. Select Explore as a guest to test the directory, Market dates and Saved. All features work without an account.')
+              write(beta['type'],fields,id=beta['id'])
+          for _ in range(110):
+              builds=api('GET','/v1/builds',params={'filter[app]':app_id,'filter[version]':'63','filter[preReleaseVersion.version]':'1.0.0'})
+              if builds and builds[0]['attributes']['processingState']=='VALID': break
+              time.sleep(18)
+          else: raise RuntimeError('Waiting for Apple to finish processing build 63.')
+          build=builds[0]
+          localizations=child(build,'betaBuildLocalizations')
+          testcopy={'whatsNew':'Try Markets, Butchers and Fruit in Explore. Open Market dates, save a market or butcher, then share a weekend shortlist. In Saved, touch and hold a place for more actions.'}
+          loc=next((r for r in localizations if r['attributes']['locale']==locale),None)
+          if loc: write(loc['type'],testcopy,id=loc['id'])
+          else: write('betaBuildLocalizations',dict(locale=locale,**testcopy),{'build':rel('builds',build['id'])})
+          attach('builds',build)
+          detail=child(build,'buildBetaDetail')
+          state=detail['attributes']['externalBuildState']
+          print('Private external group build 63 state:',state,flush=True)
+          if state=='READY_FOR_BETA_SUBMISSION':
+              review=write('betaAppReviewSubmissions',relations={'build':rel('builds',build['id'])})
+              print('External TestFlight review state:',review['attributes']['betaReviewState'],flush=True)
           PY
