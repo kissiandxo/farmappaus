@@ -1,7 +1,7 @@
-name: Add the existing Farm Direct tester
+name: Confirm the Australian Farm Direct release
 on:
   push:
-    branches: ['capture/farmdirect-tester-63']
+    branches: ['capture/confirm-submitted-63']
 permissions:
   contents: read
 jobs:
@@ -18,73 +18,25 @@ jobs:
           ASC_KEY_P8: ${{ secrets.ASC_KEY_P8 }}
         run: |
           python - <<'PY'
-          import runpy,time
-          g=runpy.run_path('scripts/app-store-release.py')
-          api,child,write,rel,ref=(g[name] for name in ('api','child','write','rel','ref'))
-          target=g['app']('au.farmdirect.app')
-          app_id=target['id']
-          rows=api('GET','/v1/betaTesters',params={'filter[firstName]':'Emma','limit':200})
-          matches=[r for r in rows if (r['attributes'].get('firstName') or '').strip().lower()=='emma' and r['attributes'].get('email')]
-          if len(matches)!=1: raise RuntimeError('The existing tester identity is ambiguous.')
-          tester=matches[0]
-          groups=child(target,'betaGroups')
-          internal=False
-          group=next((r for r in groups if r['attributes']['name']=='Farm Direct Testers' and not r['attributes']['isInternalGroup']),None)
-          if not group: raise RuntimeError('The private external tester group is missing.')
-          try:
-              users=api('GET','/v1/users',params={'filter[username]':tester['attributes']['email'],'limit':10})
-              exact=next((u for u in users if u['attributes']['username'].casefold()==tester['attributes']['email'].casefold()),None)
-              if exact:
-                  visible=exact['attributes'].get('allAppsVisible') or any(a['id']==app_id for a in child(exact,'visibleApps'))
-                  print('Existing team user already has Farm Direct access:',bool(visible),flush=True)
-          except RuntimeError as error:
-              if 'FORBIDDEN' not in str(error): raise
-          def attach(relationship,entity):
-              if not any(r['id']==entity['id'] for r in child(group,relationship)):
-                  api('POST','/v1/betaGroups/'+group['id']+'/relationships/'+relationship,body={'data':[ref(entity['type'],entity['id'])]})
-          if internal:
-              attach('betaTesters',tester)
-          elif not any(r['id']==tester['id'] for r in child(group,'betaTesters')):
-              attrs={k:tester['attributes'][k] for k in ['email','firstName','lastName'] if tester['attributes'].get(k)}
-              write('betaTesters',attrs,{'betaGroups':{'data':[ref('betaGroups',group['id'])]}})
-          members=child(group,'betaTesters')
-          assert any((r['attributes'].get('email') or '').casefold()==tester['attributes']['email'].casefold() for r in members)
-          print('Verified Emma belongs to the Farm Direct TestFlight group.',flush=True)
-          if internal and group['attributes']['hasAccessToAllBuilds']:
-              print('The internal group includes all processed builds.',flush=True)
-              raise SystemExit(0)
-          locale=target['attributes']['primaryLocale']
-          copy={'description':'Find farmers’ markets, farm shops and independent butchers across Australia. Browse the directory, check market dates, save your weekend stops and share their addresses.','feedbackEmail':'support@visera.vision'}
-          locations=child(target,'betaAppLocalizations')
-          loc=next((r for r in locations if r['attributes']['locale']==locale),None)
-          if loc: write(loc['type'],copy,id=loc['id'])
-          else: write('betaAppLocalizations',dict(locale=locale,**copy),{'app':rel('apps',app_id)})
-          version=next(v for v in child(target,'appStoreVersions',params={'filter[platform]':'IOS'}) if v['attributes']['versionString'] in ('1.0','1.0.0'))
-          review=child(version,'appStoreReviewDetail')['attributes']
-          beta=child(target,'betaAppReviewDetail',optional=True)
-          if beta:
-              fields={k:review[k] for k in ['contactFirstName','contactLastName','contactEmail','contactPhone']}
-              fields.update(demoAccountRequired=False,notes='Guest access is available from the welcome screen. Select Explore as a guest to test the directory, Market dates and Saved. All features work without an account.')
-              write(beta['type'],fields,id=beta['id'])
-          for _ in range(110):
-              builds=api('GET','/v1/builds',params={'filter[app]':app_id,'filter[version]':'63','filter[preReleaseVersion.version]':'1.0.0'})
-              if builds and builds[0]['attributes']['processingState']=='VALID': break
-              time.sleep(18)
-          else: raise RuntimeError('Waiting for Apple to finish processing build 63.')
-          build=builds[0]
-          localizations=child(build,'betaBuildLocalizations')
-          testcopy={'whatsNew':'Try Markets, Butchers and Fruit in Explore. Open Market dates, save a market or butcher, then share a weekend shortlist. In Saved, touch and hold a place for more actions.'}
-          loc=next((r for r in localizations if r['attributes']['locale']==locale),None)
-          if loc: write(loc['type'],testcopy,id=loc['id'])
-          else: write('betaBuildLocalizations',dict(locale=locale,**testcopy),{'build':rel('builds',build['id'])})
-          attach('builds',build)
-          if internal:
-              print('The internal tester group now has build 63.',flush=True)
-              raise SystemExit(0)
-          detail=child(build,'buildBetaDetail')
-          state=detail['attributes']['externalBuildState']
-          print('Private external group build 63 state:',state,flush=True)
-          if state=='READY_FOR_BETA_SUBMISSION':
-              review=write('betaAppReviewSubmissions',relations={'build':rel('builds',build['id'])})
-              print('External TestFlight review state:',review['attributes']['betaReviewState'],flush=True)
+          import runpy
+          g=runpy.run_path('scripts/app-store-release.py');child=g['child']
+          app=g['app']('au.farmdirect.app')
+          v=next(v for v in child(app,'appStoreVersions',params={'filter[platform]':'IOS'}) if v['attributes']['versionString'] in ('1.0','1.0.0'))
+          a=v['attributes']
+          b=child(v,'build')
+          print('Store version:',a['versionString'],'build:',b['attributes']['version'],'release:',a['releaseType'],'state:',a.get('appVersionState') or a['appStoreState'])
+          loc=g['localization'](v,'appStoreVersionLocalizations',app['attributes']['primaryLocale'])
+          for group in child(loc,'appScreenshotSets'):
+              if group['attributes']['screenshotDisplayType']=='APP_IPHONE_67':
+                  shots=child(group,'appScreenshots')
+                  print('Complete screenshots:',sum(s['attributes']['assetDeliveryState']['state']=='COMPLETE' for s in shots))
+          for group in child(loc,'appPreviewSets'):
+              if group['attributes']['previewType']=='IPHONE_67':
+                  print('Ready previews:',sum(p['attributes'].get('videoDeliveryState',{}).get('state')=='COMPLETE' for p in child(group,'appPreviews')))
+          print('External beta build:',child(b,'buildBetaDetail')['attributes']['externalBuildState'])
+          groups=child(app,'betaGroups')
+          for group in groups:
+              if group['attributes']['name']=='Farm Direct Testers':
+                  members=child(group,'betaTesters')
+                  print('Emma listed in private TestFlight group:',any((m['attributes'].get('firstName') or '').lower()=='emma' for m in members))
           PY
