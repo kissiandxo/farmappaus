@@ -37,13 +37,15 @@ export default function FarmListScreen() {
   const { chooseLocation, quickTour } = useLocalSearchParams<{ chooseLocation?: string; quickTour?: string }>();
   const locationAnchor = useRef<React.ComponentRef<typeof View>>(null);
   const filterAnchor = useRef<React.ComponentRef<typeof View>>(null);
-  const list = useRef<FlatList<FarmResult>>(null);
+  const [listGeneration, setListGeneration] = useState(0);
   const [tourVisible, setTourVisible] = useState(false);
   const [sheetAfterTour, setSheetAfterTour] = useState<'location' | 'filters' | null>(null);
   const closeTour = useCallback(() => setTourVisible(false), []);
   useEffect(() => {
-    if (quickTour !== '1' || !focused) return;
-    list.current?.scrollToOffset({ offset: 0, animated: false });
+    if (!focused || (quickTour !== '1' && quickTour !== 'replay')) return;
+    // UIKit sets the initial scroll offset from the large title and search bar.
+    // A literal zero would slide the location target underneath the status bar.
+    if (quickTour === 'replay') setListGeneration(value => value + 1);
     // Give the native welcome sheet time to dismiss before presenting another modal.
     const timer = setTimeout(() => {
       setTourVisible(true);
@@ -136,7 +138,7 @@ export default function FarmListScreen() {
     <View style={styles.screen}>
       <Stack.Screen options={searchBarOptions} />
       <FlatList
-        ref={list}
+        key={listGeneration}
         style={styles.screen}
         data={results}
         extraData={favourites}
