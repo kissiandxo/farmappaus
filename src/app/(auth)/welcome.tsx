@@ -8,7 +8,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { FeatureRow } from '../../components/auth/FeatureRow';
 import { Notice } from '../../components/FormBits';
-import { Button, success } from '../../components/ui';
+import { Button } from '../../components/ui';
 import { useAuth } from '../../state/AuthContext';
 import { colors, radius, space, type } from '../../theme';
 
@@ -92,7 +92,7 @@ export default function WelcomeScreen() {
         {available ? <Button variant="tinted" label="Continue with email" onPress={() => router.push('/(auth)/email')} /> : null}
         <Button variant={appleAvailable || available ? 'tinted' : 'filled'} label="Explore as a guest" onPress={finish} disabled={busy} />
         <Text style={[type.footnote, styles.footnote]}>
-          {available ? 'Signing in is optional.' : 'Your Apple profile stays on this iPhone. You can explore every place as a guest.'}
+          {appleAvailable && !available ? 'Your Apple profile stays on this iPhone. You can explore every place as a guest.' : 'Explore every place without creating an account.'}
         </Text>
         <Button variant="plain" size="small" label="Privacy policy" onPress={openPrivacy} style={styles.privacy} />
       </View>

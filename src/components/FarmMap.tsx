@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useImperativeHandle, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import {
   AccessibilityInfo,
   Platform,
@@ -97,9 +97,11 @@ export default function FarmMap({
   const palette = usePalette();
   const reduceMotion = useReduceMotion();
   const reduceMotionRef = useRef(reduceMotion);
-  reduceMotionRef.current = reduceMotion;
   const insetsRef = useRef(insets);
-  insetsRef.current = insets;
+  useLayoutEffect(() => {
+    insetsRef.current = insets;
+    reduceMotionRef.current = reduceMotion;
+  }, [insets, reduceMotion]);
 
   const initialRegion = useMemo(() => boundingRegion(framePoints(location, results), 0.3), []); // eslint-disable-line react-hooks/exhaustive-deps
   const [region, setRegion] = useState<MapRegion>(initialRegion);

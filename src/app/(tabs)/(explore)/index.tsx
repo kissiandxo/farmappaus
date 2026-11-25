@@ -39,25 +39,31 @@ export default function FarmListScreen() {
   const filterAnchor = useRef<React.ComponentRef<typeof View>>(null);
   const list = useRef<FlatList<FarmResult>>(null);
   const [tourVisible, setTourVisible] = useState(false);
-  const [filtersAfterTour, setFiltersAfterTour] = useState(false);
+  const [sheetAfterTour, setSheetAfterTour] = useState<'location' | 'filters' | null>(null);
   const closeTour = useCallback(() => setTourVisible(false), []);
   useEffect(() => {
     if (quickTour !== '1' || !focused) return;
     list.current?.scrollToOffset({ offset: 0, animated: false });
-    setTourVisible(true);
-    router.setParams({ quickTour: undefined });
+    // Give the native welcome sheet time to dismiss before presenting another modal.
+    const timer = setTimeout(() => {
+      setTourVisible(true);
+      router.setParams({ quickTour: undefined });
+    }, 500);
+    return () => clearTimeout(timer);
   }, [quickTour, focused]);
   useEffect(() => {
-    if (!filtersAfterTour || tourVisible) return;
-    const timer = setTimeout(() => { setFiltersAfterTour(false); setFiltersOpen(true); }, 300);
+    if (!sheetAfterTour || tourVisible) return;
+    const timer = setTimeout(() => {
+      if (sheetAfterTour === 'location') setLocationOpen(true);
+      else setFiltersOpen(true);
+      setSheetAfterTour(null);
+    }, 300);
     return () => clearTimeout(timer);
-  }, [filtersAfterTour, tourVisible]);
-  useEffect(() => {
-    if (chooseLocation === '1') {
-      setLocationOpen(true);
-      router.setParams({ chooseLocation: undefined });
-    }
-  }, [chooseLocation]);
+  }, [sheetAfterTour, tourVisible]);
+  const closeLocation = () => {
+    setLocationOpen(false);
+    if (chooseLocation === '1') router.setParams({ chooseLocation: undefined });
+  };
 
   const open = useCallback((id: string) => router.push(`/farm/${id}`), []);
 
@@ -182,8 +188,9 @@ export default function FarmListScreen() {
         keyboardDismissMode="on-drag"
       />
       {tourVisible && focused ? <ExploreWalkthrough location={locationAnchor} filters={filterAnchor} onClose={closeTour}
-        onFilters={() => { closeTour(); setFiltersAfterTour(true); }} /> : null}
-      <LocationModal visible={locationOpen} onClose={() => setLocationOpen(false)} />
+        onLocation={() => { closeTour(); setSheetAfterTour('location'); }}
+        onFilters={() => { closeTour(); setSheetAfterTour('filters'); }} /> : null}
+      <LocationModal visible={locationOpen || chooseLocation === '1'} onClose={closeLocation} />
       <FiltersModal visible={filtersOpen} onClose={() => setFiltersOpen(false)} />
     </View>
   );

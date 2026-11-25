@@ -1,6 +1,6 @@
 import * as Location from 'expo-location';
 import { useIsFocused } from 'expo-router';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import {
   Alert,
   Linking,
@@ -59,14 +59,13 @@ export default function MapScreen() {
   useAnnounceCount(shownCount, focused && !filtersOpen);
 
   // A place that a filter change removed from the map must not stay selected.
-  useEffect(() => {
-    if (selectedId && !mapResults.some((r) => r.farm.id === selectedId)) setSelectedId(null);
-  }, [mapResults, selectedId]);
+  const selected = selectedId ? mapResults.find((r) => r.farm.id === selectedId) : undefined;
+  if (selectedId && !selected) setSelectedId(null);
 
   // If location access was already granted (e.g. on the welcome screen), use it quietly instead of
   // showing distances from Sydney. Never asks for permission from here.
   const defaultRef = useRef(isDefaultLocation);
-  defaultRef.current = isDefaultLocation;
+  useLayoutEffect(() => { defaultRef.current = isDefaultLocation; }, [isDefaultLocation]);
   useEffect(() => {
     if (Platform.OS === 'web' || !isDefaultLocation) return;
     let cancelled = false;
@@ -88,7 +87,6 @@ export default function MapScreen() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const selected = selectedId ? mapResults.find((r) => r.farm.id === selectedId) : undefined;
   const controlsTop = insets.top + space.sm;
   const belowControls = controlsTop + (controlsHeight || MIN_TAP) + space.sm;
   const belowPills = belowControls + (pillsHeight > 0 ? pillsHeight + space.sm : 0);

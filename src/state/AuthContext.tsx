@@ -8,6 +8,7 @@ import {
   useContext,
   useEffect,
   useMemo,
+  useRef,
   useState,
   type ReactNode,
 } from 'react';
@@ -83,9 +84,11 @@ function randomNonce(): string {
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [session, setSession] = useState<Session | null>(null);
-  const [role, setRole] = useState<Role | null>(null);
+  const [loadedRole, setLoadedRole] = useState<{ id: string; role: Role } | null>(null);
+  const roleRequest = useRef<symbol | null>(null);
   const [ready, setReady] = useState(!isBackendConfigured);
   const userId = session?.user.id ?? null;
+  const role = loadedRole && loadedRole.id === userId ? loadedRole.role : null;
   const [localProfile, setLocalProfile] = useState<LocalProfile | null>(null);
   const [profileLoaded, setProfileLoaded] = useState(false);
   const [appleAvailable, setAppleAvailable] = useState(false);
@@ -152,16 +155,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const loadRole = useCallback(async () => {
-    if (!supabase || !userId) {
-      setRole(null);
-      return;
-    }
+    const request = Symbol('role');
+    roleRequest.current = request;
+    if (!supabase || !userId) return;
     const { data } = await supabase.from('profiles').select('role').eq('id', userId).maybeSingle();
-    setRole((data?.role as Role | undefined) ?? 'user');
+    if (request === roleRequest.current) setLoadedRole({ id: userId, role: (data?.role as Role | undefined) ?? 'user' });
   }, [userId]);
 
   useEffect(() => {
     loadRole().catch(() => {});
+    return () => { roleRequest.current = null; };
   }, [loadRole]);
 
   const signIn = useCallback<AuthState['signIn']>(async (email, password) => {

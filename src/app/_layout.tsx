@@ -139,8 +139,6 @@ function ScreenshotTour({ ready }: { ready: boolean }) {
   const router = useRouter();
   const { farms, setFilters, setQuery } = useSearch();
   const tour = useRef({ ticks: 0, appearance: Appearance.getColorScheme() as string | null | undefined });
-  const tourDeps = useRef({ farms, setFilters, setQuery });
-  tourDeps.current = { farms, setFilters, setQuery };
   useEffect(() => {
     if (!ready) return;
     const subscription = Appearance.addChangeListener(({ colorScheme }) => {
@@ -151,9 +149,8 @@ function ScreenshotTour({ ready }: { ready: boolean }) {
       tour.current.ticks = ticks;
       const scene = SCREENSHOT_SCENES[sceneIndexForTicks(ticks, SCREENSHOT_SCENES.length)];
       if (!scene) return;
-      const deps = tourDeps.current;
-      if (scene.filters) deps.setFilters(presetFilters(scene.filters, deps.farms));
-      if (scene.query !== undefined) deps.setQuery(scene.query);
+      if (scene.filters) setFilters(presetFilters(scene.filters, farms));
+      if (scene.query !== undefined) setQuery(scene.query);
       if (scene.href === '/?quickTour=1') {
         router.dismissTo({ pathname: '/', params: { quickTour: '1' } });
       } else {
@@ -161,7 +158,7 @@ function ScreenshotTour({ ready }: { ready: boolean }) {
       }
     });
     return () => subscription.remove();
-  }, [ready, router]);
+  }, [ready, router, farms, setFilters, setQuery]);
 
   return null;
 }

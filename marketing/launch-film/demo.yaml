@@ -1,0 +1,38 @@
+appId: au.farmdirect.app
+---
+- launchApp:
+    clearState: true
+- extendedWaitUntil:
+    visible: "Explore as a guest"
+    timeout: 60000
+- takeScreenshot: /tmp/farm-release-capture/09-welcome
+- tapOn: "Explore as a guest"
+- extendedWaitUntil:
+    visible: "Choose your area"
+    timeout: 15000
+- takeScreenshot: /tmp/farm-release-capture/10-tour
+- tapOn:
+    text: "Next"
+    optional: true
+- tapOn: "Try filters"
+- extendedWaitUntil:
+    visible: "What are you after?"
+    timeout: 20000
+- scrollUntilVisible:
+    element:
+      text: "Meat: beef, lamb, pork or chicken"
+    direction: DOWN
+- tapOn: "Meat: beef, lamb, pork or chicken"
+- takeScreenshot: /tmp/farm-release-capture/11-meat-filter
+- tapOn: "Show 86 places"
+- scrollUntilVisible:
+    element:
+      text: ".*Feather and Bone.*"
+    direction: DOWN
+- tapOn: ".*Feather and Bone.*"
+- extendedWaitUntil:
+    visible: "Save this place"
+    timeout: 20000
+- takeScreenshot: /tmp/farm-release-capture/12-butcher
+- tapOn: "Save this place"
+- assertVisible: "Saved – tap to remove"

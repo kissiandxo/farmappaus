@@ -10,14 +10,16 @@ on:
 
 jobs:
   screenshots:
-    if: github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '[screenshots]')
+    if: github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '[screenshots]') || contains(github.event.head_commit.message, '[launch-demo]')
+    permissions:
+      contents: write
     runs-on: macos-26
     timeout-minutes: 90
     env:
       EXPO_PUBLIC_SUPPORT_EMAIL: ${{ vars.SUPPORT_EMAIL || 'support@visera.vision' }}
       EXPO_PUBLIC_OPERATOR_NAME: ${{ vars.OPERATOR_NAME || 'Phoenix Jennings' }}
       # Skips the first-launch welcome and pre-saves three places. Simulator build only.
-      EXPO_PUBLIC_SCREENSHOT_MODE: "1"
+      EXPO_PUBLIC_SCREENSHOT_MODE: ${{ contains(github.event.head_commit.message, '[launch-demo]') && '0' || '1' }}
     steps:
       - uses: actions/checkout@v4
       - name: Check the contact and operator variables
@@ -67,7 +69,42 @@ jobs:
           xcrun simctl ui "$UDID" appearance light
           xcrun simctl status_bar "$UDID" override --time "9:41" --batteryState charged --batteryLevel 100 --cellularBars 4 --wifiBars 3
           xcrun simctl install "$UDID" build/Build/Products/Release-iphonesimulator/FarmDirect.app
+      - name: Exercise the release onboarding and record real taps
+        if: env.EXPO_PUBLIC_SCREENSHOT_MODE == '0'
+        timeout-minutes: 35
+        env:
+          MAESTRO_CLI_NO_ANALYTICS: 1
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/farm-release-capture
+          curl -fsSL --retry 3 https://github.com/mobile-dev-inc/maestro/releases/download/cli-2.12.1/maestro.zip -o /tmp/farm-maestro.zip
+          echo '54dbb0716425626604973cbb374c585ca30272375d9ce15177a1152765ddd9d7  /tmp/farm-maestro.zip' | shasum -a 256 -c -
+          unzip -q /tmp/farm-maestro.zip -d /tmp/farm-maestro
+          export JAVA_HOME=$(/usr/libexec/java_home -v 21)
+          xcrun simctl io "$UDID" recordVideo --force --codec=h264 /tmp/farm-release-capture/gestures.mp4 >/tmp/farm-record.log 2>&1 &
+          recorder=$!
+          trap 'kill -INT "$recorder" 2>/dev/null || true; wait "$recorder" || true' EXIT
+          /tmp/farm-maestro/maestro/bin/maestro --device "$UDID" test marketing/launch-film/demo.yaml
+      - name: Save the verified interaction recording
+        if: env.EXPO_PUBLIC_SCREENSHOT_MODE == '0'
+        run: |
+          set -euo pipefail
+          command -v ffmpeg >/dev/null || brew install ffmpeg
+          mkdir -p marketing/launch-film/source
+          ffmpeg -nostdin -y -loglevel error -i /tmp/farm-release-capture/gestures.mp4 -vf 'fps=30,scale=1080:-2' -an -c:v libx264 -preset fast -crf 20 -movflags +faststart marketing/launch-film/source/gestures.mp4
+          cp /tmp/farm-release-capture/*.png marketing/launch-film/source/
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add marketing/launch-film/source/
+          git commit -m 'Capture native onboarding, filter selection and saving a butcher'
+          git push origin HEAD:"capture/iphone-$GITHUB_RUN_ID"
+      - uses: actions/upload-artifact@v4
+        if: always() && env.EXPO_PUBLIC_SCREENSHOT_MODE == '0'
+        with:
+          name: interaction-capture
+          path: /tmp/farm-release-capture
       - name: Take screenshots
+        if: env.EXPO_PUBLIC_SCREENSHOT_MODE == '1'
         timeout-minutes: 40
         run: |
           set +e
@@ -112,17 +149,19 @@ jobs:
           ls shots/*.png >/dev/null 2>&1 && limit 60 sips -g pixelWidth -g pixelHeight shots/*.png
           exit 0
       - uses: actions/upload-artifact@v4
-        if: always()
+        if: always() && env.EXPO_PUBLIC_SCREENSHOT_MODE == '1'
         with:
           name: app-store-screenshots
           path: shots/*.png
           if-no-files-found: warn
 
       - name: Compress the iPhone screen recording for editing
+        if: env.EXPO_PUBLIC_SCREENSHOT_MODE == '1'
         run: |
           command -v ffmpeg >/dev/null || brew install ffmpeg
           ffmpeg -hide_banner -loglevel error -y -i media/simulator.mp4 -vf "fps=30,scale=1080:-2" -an -c:v libx264 -preset fast -crf 20 -movflags +faststart media/simulator-edit.mp4
       - uses: actions/upload-artifact@v4
+        if: env.EXPO_PUBLIC_SCREENSHOT_MODE == '1'
         with:
           name: simulator-footage
           path: media/simulator-edit.mp4

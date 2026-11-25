@@ -12,8 +12,8 @@ const STEPS = [
   { title: 'Find what’s on', text: 'Tap Filters to find independent butchers, fresh fruit or places open this weekend.' },
 ] as const;
 
-export function ExploreWalkthrough({ location, filters, onClose, onFilters }: {
-  location: Anchor; filters: Anchor; onClose: () => void; onFilters: () => void;
+export function ExploreWalkthrough({ location, filters, onClose, onLocation, onFilters }: {
+  location: Anchor; filters: Anchor; onClose: () => void; onLocation: () => void; onFilters: () => void;
 }) {
   const [step, setStep] = useState(0);
   const [box, setBox] = useState<Bounds | null>(null);
@@ -62,8 +62,8 @@ export function ExploreWalkthrough({ location, filters, onClose, onFilters }: {
           <View style={[styles.shade, { top: box.y + box.h, bottom: 0, left: 0, right: 0 }]} />
           <View style={[styles.shade, { top: box.y, height: box.h, left: 0, width: box.x }]} />
           <View style={[styles.shade, { top: box.y, height: box.h, left: box.x + box.w, right: 0 }]} />
-          <Pressable accessibilityRole="button" accessibilityLabel={last ? 'Open filters' : 'Next tip'}
-            onPress={last ? onFilters : next} style={[styles.highlight, { left: box.x, top: box.y, width: box.w, height: box.h }]} />
+          <Pressable accessibilityRole="button" accessibilityLabel={last ? 'Open filters' : 'Choose a location'}
+            onPress={last ? onFilters : onLocation} style={[styles.highlight, { left: box.x, top: box.y, width: box.w, height: box.h }]} />
         </> : <View style={[StyleSheet.absoluteFill, styles.shade]} />}
         <ScrollView style={[styles.card, cardPosition, { maxHeight: above && box ? box.y - safe.top - space.md : height - below - safe.bottom - space.md }]}
           contentContainerStyle={styles.content}>

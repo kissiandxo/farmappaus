@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { ActivityIndicator, Linking, Modal, ScrollView, StyleSheet, Text, View } from 'react-native';
 
 import { formatPlace, searchPlaces, type Place } from '../domain/places';
@@ -25,17 +25,18 @@ export function LocationModal({ visible, onClose }: LocationModalProps) {
 
   const matches = useMemo(() => (visible ? searchPlaces(query) : []), [query, visible]);
 
-  // Start fresh every time the sheet opens, however it was closed (Done, a choice, or a swipe down).
-  useEffect(() => {
-    if (!visible) {
-      setQuery('');
-      setProblem(null);
-    }
-  }, [visible]);
+  const request = useRef(0);
+  useEffect(() => () => { request.current++; }, [visible]);
 
-  const close = () => {
+  const reset = () => {
+    request.current++;
+    setBusy(false);
     setQuery('');
     setProblem(null);
+  };
+
+  const close = () => {
+    reset();
     onClose();
   };
 
@@ -47,9 +48,11 @@ export function LocationModal({ visible, onClose }: LocationModalProps) {
 
   const useMyLocation = async () => {
     if (busy) return;
+    const current = ++request.current;
     setBusy(true);
     setProblem(null);
     const result = await locateMe();
+    if (current !== request.current) return;
     setBusy(false);
     if (!result.ok) {
       setProblem({ text: result.message, canOpenSettings: result.canOpenSettings });
@@ -63,7 +66,7 @@ export function LocationModal({ visible, onClose }: LocationModalProps) {
   const noMatch = query.trim().length >= 2 && matches.length === 0;
 
   return (
-    <Modal visible={visible} animationType="slide" presentationStyle="pageSheet" onRequestClose={close}>
+    <Modal visible={visible} animationType="slide" presentationStyle="pageSheet" onRequestClose={close} onDismiss={reset}>
       <View style={styles.sheet}>
         <SheetHeader title="Where are you?" onDone={close} />
 
