@@ -225,6 +225,7 @@ def submit(target, version, number):
 
 def main():
     target = app("au.farmdirect.app")
+    write("apps", {"contentRightsDeclaration": "USES_THIRD_PARTY_CONTENT"}, id=target["id"])
     locale = target["attributes"]["primaryLocale"]
     if locale not in ("en-AU", "en-US", "en-GB"):
         raise RuntimeError("Unexpected primary language " + locale)
