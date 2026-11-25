@@ -59,6 +59,15 @@ jobs:
         run: |
           xcodebuild -workspace ios/FarmDirect.xcworkspace -scheme FarmDirect -configuration Release \
             -sdk iphonesimulator -derivedDataPath build CODE_SIGNING_ALLOWED=NO -quiet
+      - name: Preserve the release simulator build for interaction tests
+        if: env.EXPO_PUBLIC_SCREENSHOT_MODE == '0'
+        run: ditto -c -k --keepParent build/Build/Products/Release-iphonesimulator/FarmDirect.app /tmp/farm-iphone-build.zip
+      - uses: actions/upload-artifact@v4
+        if: env.EXPO_PUBLIC_SCREENSHOT_MODE == '0'
+        with:
+          name: iphone-simulator-build
+          path: /tmp/farm-iphone-build.zip
+          retention-days: 1
       - name: Boot a 6.9-inch iPhone simulator
         run: |
           xcrun simctl list devices available | grep -i "Pro Max" || true
@@ -84,7 +93,7 @@ jobs:
           xcrun simctl io "$UDID" recordVideo --force --codec=h264 /tmp/farm-release-capture/gestures.mp4 >/tmp/farm-record.log 2>&1 &
           recorder=$!
           trap 'kill -INT "$recorder" 2>/dev/null || true; wait "$recorder" || true' EXIT
-          /tmp/farm-maestro/maestro/bin/maestro --device "$UDID" test marketing/launch-film/demo.yaml
+          /tmp/farm-maestro/maestro/bin/maestro --device "$UDID" test --test-output-dir /tmp/farm-release-capture/test-results marketing/launch-film/demo.yaml
       - name: Save the verified interaction recording
         if: env.EXPO_PUBLIC_SCREENSHOT_MODE == '0'
         run: |
@@ -92,7 +101,9 @@ jobs:
           command -v ffmpeg >/dev/null || brew install ffmpeg
           mkdir -p marketing/launch-film/source
           ffmpeg -nostdin -y -loglevel error -i /tmp/farm-release-capture/gestures.mp4 -vf 'fps=30,scale=1080:-2' -an -c:v libx264 -preset fast -crf 20 -movflags +faststart marketing/launch-film/source/gestures.mp4
-          cp /tmp/farm-release-capture/*.png marketing/launch-film/source/
+          for shot in 09-welcome 10-tour 11-meat-filter 12-butcher; do
+            cp "/tmp/farm-release-capture/test-results/takeScreenshot/$shot.png" marketing/launch-film/source/
+          done
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add marketing/launch-film/source/
