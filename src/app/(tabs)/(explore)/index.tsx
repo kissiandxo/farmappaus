@@ -43,11 +43,11 @@ export default function FarmListScreen() {
   const closeTour = useCallback(() => setTourVisible(false), []);
   useEffect(() => {
     if (!focused || (quickTour !== '1' && quickTour !== 'replay')) return;
-    // UIKit sets the initial scroll offset from the large title and search bar.
-    // A literal zero would slide the location target underneath the status bar.
-    if (quickTour === 'replay') setListGeneration(value => value + 1);
     // Give the native welcome sheet time to dismiss before presenting another modal.
     const timer = setTimeout(() => {
+      // UIKit sets the initial scroll offset from the large title and search bar.
+      // A literal zero would slide the location target underneath the status bar.
+      if (quickTour === 'replay') setListGeneration(value => value + 1);
       setTourVisible(true);
       router.setParams({ quickTour: undefined });
     }, 500);
