@@ -10,9 +10,11 @@ import { HoursSection, irregularStatusLabel } from '../../components/place/Hours
 import { NearbySection } from '../../components/place/NearbySection';
 import { Badge, EmptyState, Icon, Row, Section, tapLight, type SFSymbol } from '../../components/ui';
 import { ROW_ICON_GAP, ROW_ICON_SIZE, ROW_PADDING } from '../../components/ui/Row';
+import { MARKET_CALENDARS } from '../../data/marketCalendars';
+import { placeOpenStatus, nextMarketDate, marketTimeLabel, publishedDateLabel } from '../../domain/marketDates';
 import { licenceBadge } from '../../domain/compliance';
 import { formatDistance, haversineKm } from '../../domain/geo';
-import { localDayAndMinutes, openStatus, timezoneForState } from '../../domain/hours';
+import { localDayAndMinutes, timezoneForState } from '../../domain/hours';
 import { addressLines, describeAge, formatDateAu, formatPrice, isStale, UNCLAIMED_STALE_AFTER_DAYS } from '../../domain/format';
 import { directionsUrl, sourceRows, telUrl, websiteUrl } from '../../domain/links';
 import { shareText } from '../../domain/share';
@@ -151,7 +153,9 @@ export default function FarmProfileScreen() {
   const showReview = role === 'admin' && farm.status === 'pending';
 
   const tz = timezoneForState(farm.state);
-  const status = openStatus(farm.hours, tz, now);
+  const calendar = MARKET_CALENDARS[farm.id];
+  const marketDate = calendar && nextMarketDate(calendar, now, tz);
+  const status = placeOpenStatus(farm, now, tz);
   const irregular = status.kind === 'irregular';
   const statusLabel = irregular ? irregularStatusLabel(farm.hours.note) : status.label;
   const statusColor = status.isOpen ? colors.green : status.opensToday ? colors.orange : colors.secondaryLabel;
@@ -303,6 +307,12 @@ export default function FarmProfileScreen() {
       </View>
 
       <ActionTiles actions={actions} />
+
+      {calendar && <Section header="Next published market">
+        <Row title={marketDate ? publishedDateLabel(marketDate) : 'Check the next market date'}
+          subtitle={[marketDate && calendar.specials?.[marketDate], marketDate && marketTimeLabel(calendar), calendar.publisher].filter(Boolean).join(' · ')}
+          icon="calendar" accessibilityHint="Opens the published calendar" onPress={() => openLink(calendar.source)} />
+      </Section>}
 
       <HoursSection hours={farm.hours} locality={farm.locality} today={today} />
 

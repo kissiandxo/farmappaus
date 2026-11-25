@@ -34,6 +34,13 @@ appId: au.farmdirect.app
 - tapOn: "Show 86 places"
 - tapOn: "Browse markets"
 - assertVisible: "67 places"
+- tapOn: "Market dates"
+- assertVisible: ".*Bream Creek Farmers Market.*"
+- takeScreenshot: 16-market-dates
+- swipe:
+    start: "1%,52%"
+    end: "92%,52%"
+    duration: 350
 - tapOn: "Browse fruit"
 - tapOn: "Browse fruit"
 - assertVisible: "151 places"

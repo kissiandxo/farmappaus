@@ -1,5 +1,7 @@
+import { MARKET_CALENDARS } from '../data/marketCalendars';
+import { placeOpenStatus, publishedWeekend } from './marketDates';
 import { haversineKm, type LatLng } from './geo';
-import { openStatus, timezoneForState, weekendSummary, type OpenStatus } from './hours';
+import { timezoneForState, weekendSummary, type OpenStatus } from './hours';
 import {
   MEAT_CATEGORIES,
   PRODUCT_LABELS,
@@ -109,11 +111,12 @@ export function searchFarms(
     if (filters.maxKm !== null && distanceKm > filters.maxKm) continue;
 
     const timeZone = timezoneForState(farm.state);
-    const status = openStatus(farm.hours, timeZone, now);
+    const status = placeOpenStatus(farm, now, timeZone);
     if (when === 'now' && !status.isOpen) continue;
 
     if (when === 'weekend') {
-      const weekend = weekendSummary(farm.hours, timeZone, now);
+      const calendar = MARKET_CALENDARS[farm.id];
+      const weekend = calendar ? publishedWeekend(calendar, now, timeZone) : weekendSummary(farm.hours, timeZone, now);
       if (weekend === null) continue;
       results.push({ farm, distanceKm, status, weekend });
       continue;

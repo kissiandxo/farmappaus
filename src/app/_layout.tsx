@@ -197,6 +197,7 @@ export default function RootLayout() {
                   animation: isFirstLaunchWelcome(route.params) ? 'none' : 'slide_from_bottom',
                 })}
               />
+              <Stack.Screen name="market-dates" options={{ title: 'Market dates', headerLargeTitle: true, headerBackButtonDisplayMode: 'minimal' }} />
               <Stack.Screen name="farmer/index" options={{ title: 'My listings', headerLargeTitle: true }} />
               <Stack.Screen name="farmer/[id]" options={{ title: 'Your listing' }} />
               <Stack.Screen name="farmer/stock/[id]" options={{ title: 'Update stock' }} />

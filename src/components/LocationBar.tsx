@@ -1,6 +1,8 @@
+import { router } from 'expo-router';
 import type { RefObject } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
+import { MARKET_CALENDARS } from '../data/marketCalendars';
 import { activeFilterCount } from '../domain/filters';
 import { useSearch } from '../state/SearchContext';
 import { colors, MIN_TAP, radius, space, type } from '../theme';
@@ -41,7 +43,8 @@ export function filtersLabel(count: number): string {
  * a small Filters capsule with the active count on the right, then the result count underneath.
  */
 export function LocationBar({ onChangeLocation, onOpenFilters, locationAnchor, filterAnchor, announce = true }: LocationBarProps) {
-  const { location, filters, results, query, isDefaultLocation } = useSearch();
+  const { farms, location, filters, results, query, isDefaultLocation } = useSearch();
+  const showCalendar = (!filters.types.length || filters.types.includes('farmers_market')) && farms.some(farm => MARKET_CALENDARS[farm.id]);
   const filterCount = activeFilterCount(filters);
   useAnnounceCount(results.length, announce);
 
@@ -84,10 +87,18 @@ export function LocationBar({ onChangeLocation, onOpenFilters, locationAnchor, f
         </Pressable>
       </View>
 
-      <Text style={styles.count} accessibilityLiveRegion="polite">
-        {countLine(results.length, query, isDefaultLocation)}
-      </Text>
-      {isDefaultLocation && <Text style={styles.hint}>{DEFAULT_LOCATION_LINE}</Text>}
+      <View style={styles.summary}>
+        <View style={styles.countGroup}>
+          <Text style={styles.count} accessibilityLiveRegion="polite">{countLine(results.length, query, isDefaultLocation)}</Text>
+          {isDefaultLocation && <Text style={styles.hint}>{DEFAULT_LOCATION_LINE}</Text>}
+        </View>
+        {showCalendar && <Pressable accessibilityRole="button" accessibilityLabel="Market dates"
+          accessibilityHint="Shows dates from selected market calendars" onPress={() => router.push('/market-dates')}
+          style={({ pressed }) => [styles.calendar, pressed && styles.pressed]}>
+          <Icon name="calendar" size={16} color={colors.tint} />
+          <Text style={styles.calendarText}>Market dates</Text>
+        </Pressable>}
+      </View>
     </View>
   );
 }
@@ -119,6 +130,10 @@ const styles = StyleSheet.create({
     backgroundColor: colors.tint,
   },
   countBadgeText: { ...type.caption, fontWeight: '600', color: colors.onTint },
+  summary: { flexDirection: 'row', alignItems: 'center', gap: space.sm },
+  countGroup: { flex: 1, gap: space.xs },
+  calendar: { minHeight: MIN_TAP, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: space.xs, flexShrink: 1 },
+  calendarText: { ...type.footnote, fontWeight: '600', color: colors.tint, flexShrink: 1 },
   pressed: { opacity: 0.6 },
   count: { ...type.footnote, color: colors.secondaryLabel },
   hint: { ...type.footnote, color: colors.secondaryLabel },

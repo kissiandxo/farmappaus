@@ -2,7 +2,8 @@ import { router } from 'expo-router';
 import { useMemo } from 'react';
 
 import { formatDistance, nearbyPlaces } from '../../domain/geo';
-import { openStatus, timezoneForState } from '../../domain/hours';
+import { timezoneForState } from '../../domain/hours';
+import { placeOpenStatus } from '../../domain/marketDates';
 import { VENUE_LABELS, type Farm } from '../../domain/types';
 import { useSearch } from '../../state/SearchContext';
 import { Row, Section } from '../ui';
@@ -20,7 +21,7 @@ export function NearbySection({ farm, now }: { farm: Farm; now: Date }) {
   return (
     <Section header="Nearby" footer="Distances are in a straight line.">
       {nearby.map(({ farm: other, distanceKm }) => {
-        const status = openStatus(other.hours, timezoneForState(other.state), now);
+        const status = placeOpenStatus(other, now, timezoneForState(other.state));
         const subtitle = `${VENUE_LABELS[other.type]} · ${other.locality} ${other.state} · ${status.label}`;
         const distance = formatDistance(distanceKm, !!(farm.locationApprox || other.locationApprox));
         return (

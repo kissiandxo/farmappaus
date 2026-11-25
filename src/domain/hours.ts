@@ -132,7 +132,7 @@ export interface HoursLine {
 
 const SHORT_DAY = (day: DayKey) => DAY_LABELS[day].slice(0, 3);
 
-function formatRanges(ranges: readonly TimeRange[]): string {
+export function formatRanges(ranges: readonly TimeRange[]): string {
   return ranges
     .map(([open, close]) => `${formatMinutes(parseMinutes(open))} – ${formatMinutes(parseMinutes(close))}`)
     .join(', ');
