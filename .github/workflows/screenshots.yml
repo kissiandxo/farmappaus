@@ -101,7 +101,7 @@ jobs:
           command -v ffmpeg >/dev/null || brew install ffmpeg
           mkdir -p marketing/launch-film/source
           ffmpeg -nostdin -y -loglevel error -i /tmp/farm-release-capture/gestures.mp4 -vf 'fps=30,scale=1080:-2' -an -c:v libx264 -preset fast -crf 20 -movflags +faststart marketing/launch-film/source/gestures.mp4
-          for shot in 09-welcome 10-tour 11-meat-filter 12-butcher; do
+          for shot in 09-welcome 10-tour 11-meat-filter 12-butcher 13-explore 14-butcher-browse 15-weekend; do
             capture=$(find /tmp/farm-release-capture/test-results -type f -path "*/takeScreenshot/$shot.png" -print -quit)
             test -n "$capture"
             cp "$capture" marketing/launch-film/source/

@@ -1,9 +1,11 @@
 import { Link, router } from 'expo-router';
-import { memo, useCallback, useMemo } from 'react';
+import { memo, useCallback, useMemo, useState } from 'react';
 import {
   AccessibilityInfo,
+  Alert,
   FlatList,
   Platform,
+  Pressable,
   Share,
   StyleSheet,
   Text,
@@ -12,15 +14,15 @@ import {
   type ListRenderItem,
 } from 'react-native';
 
-import { EmptyState, tapLight } from '../../../components/ui';
+import { Button, EmptyState, selection, tapLight } from '../../../components/ui';
 import { FarmCard, farmCardLabel } from '../../../components/FarmCard';
 import { DEFAULT_FILTERS, searchFarms, type FarmResult } from '../../../domain/filters';
 import { directionsUrl } from '../../../domain/links';
-import { shareText } from '../../../domain/share';
+import { shareStops, shareText } from '../../../domain/share';
 import { openLink } from '../../../lib/openLink';
 import { useFavourites } from '../../../state/FavouritesContext';
 import { useSearch } from '../../../state/SearchContext';
-import { colors, radius, space, type } from '../../../theme';
+import { colors, MIN_TAP, radius, space, type } from '../../../theme';
 
 const ACCESSIBILITY_ACTIONS = [
   { name: 'activate' as const },
@@ -103,11 +105,13 @@ export default function SavedScreen() {
   const { farms, location, isDefaultLocation, dataStatus, now } = useSearch();
   const { ids, toggleFavourite, hydrated } = useFavourites();
 
+  const [weekend, setWeekend] = useState(false);
+  const savedFarms = useMemo(() => farms.filter(farm => ids.includes(farm.id)), [farms, ids]);
   const saved = useMemo(() => {
-    const list = searchFarms(farms, DEFAULT_FILTERS, location, now).filter((r) => ids.includes(r.farm.id));
+    const list = searchFarms(savedFarms, weekend ? { ...DEFAULT_FILTERS, when: 'weekend' } : DEFAULT_FILTERS, location, now);
     // Distances from the default point mean nothing to the person, so sort by name until they choose a location.
     return isDefaultLocation ? [...list].sort((a, b) => a.farm.name.localeCompare(b.farm.name)) : list;
-  }, [farms, location, ids, now, isDefaultLocation]);
+  }, [savedFarms, location, now, isDefaultLocation, weekend]);
 
   const open = useCallback((id: string) => router.push(`/farm/${id}`), []);
   const remove = useCallback(
@@ -142,15 +146,41 @@ export default function SavedScreen() {
       ItemSeparatorComponent={ItemSeparator}
       contentInsetAdjustmentBehavior="automatic"
       contentContainerStyle={styles.list}
-      ListHeaderComponent={saved.length > 0 ? <Text style={styles.count}>{savedCountLabel(saved.length, isDefaultLocation)}</Text> : undefined}
+      ListHeaderComponent={savedFarms.length > 0 ? (
+        <View style={styles.header}>
+          <View style={styles.segments}>
+            {(['All saved', 'This weekend'] as const).map((label, index) => {
+              const isWeekend = index === 1;
+              const selected = weekend === isWeekend;
+              return (
+                <Pressable key={label} accessibilityRole="button" accessibilityLabel={label}
+                  accessibilityState={{ selected }} onPress={() => { selection(); setWeekend(isWeekend); }}
+                  style={({ pressed }) => [styles.segment, selected && styles.active, pressed && styles.pressed]}>
+                  <Text style={[styles.segmentText, selected && styles.activeText]}>{label}</Text>
+                </Pressable>
+              );
+            })}
+          </View>
+          <View style={styles.summary}>
+            <Text style={styles.count}>{savedCountLabel(saved.length, isDefaultLocation)}</Text>
+            {saved.length > 0 && <Button label="Share stops" icon="square.and.arrow.up" variant="plain" size="small"
+              onPress={() => Share.share({ message: shareStops(saved.map(result => result.farm), weekend) })
+                .catch(() => Alert.alert('Couldn’t open sharing', 'Try sharing these stops again.'))} />}
+          </View>
+        </View>
+      ) : undefined}
       ListEmptyComponent={
         // Until the saved list has been read from the phone, show nothing rather than a misleading empty state.
-        hydrated ? (
+        hydrated && weekend && savedFarms.length > 0 ? (
+          <EmptyState icon="calendar" title="No weekend hours listed"
+            message="Your saved places are still in All saved. Call ahead to check a place’s hours."
+            action={{ label: 'Show all saved', onPress: () => setWeekend(false) }} style={styles.empty} />
+        ) : hydrated ? (
           <EmptyState
             icon="heart"
             title="No saved places yet"
-            message="Open any place and tap “Save” to keep it here for next time."
-            action={{ label: 'Explore farms', onPress: () => router.navigate('/(tabs)/(explore)') }}
+            message="Tap a heart in Explore to keep a market, farm shop or butcher here."
+            action={{ label: 'Explore places', onPress: () => router.navigate('/(tabs)/(explore)') }}
             style={styles.empty}
           />
         ) : undefined
@@ -163,7 +193,15 @@ const styles = StyleSheet.create({
   screen: { flex: 1, backgroundColor: colors.groupedBackground },
   list: { paddingHorizontal: space.lg, paddingBottom: space.xl * 2, paddingTop: space.xs, flexGrow: 1 },
   gap: { height: space.md },
-  count: { ...type.subheadline, color: colors.secondaryLabel, paddingBottom: space.md, paddingHorizontal: space.xs },
+  header: { gap: space.sm, paddingBottom: space.sm },
+  segments: { flexDirection: 'row', alignItems: 'stretch', borderRadius: radius.group, padding: 3, backgroundColor: colors.fill },
+  segment: { flex: 1, minHeight: MIN_TAP, alignItems: 'center', justifyContent: 'center', padding: space.xs, borderRadius: radius.control },
+  active: { backgroundColor: colors.cell },
+  pressed: { opacity: 0.7 },
+  segmentText: { ...type.subheadline, color: colors.secondaryLabel, textAlign: 'center' },
+  activeText: { fontWeight: '600', color: colors.label },
+  summary: { flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', columnGap: space.sm },
+  count: { ...type.subheadline, color: colors.secondaryLabel, paddingHorizontal: space.xs },
   empty: { flex: 1, paddingVertical: space.xxl },
   trigger: { borderRadius: radius.card, borderCurve: 'continuous' },
 });

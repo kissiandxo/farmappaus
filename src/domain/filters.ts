@@ -37,6 +37,22 @@ export const DEFAULT_FILTERS: FarmFilters = {
   types: [],
 };
 
+export type BrowseCategory = 'farmers_market' | 'butcher' | 'fruit';
+
+export function matchesBrowseCategory(filters: FarmFilters, category: BrowseCategory): boolean {
+  if (category === 'fruit') {
+    return filters.types.length === 0 && filters.products.length === 1 && filters.products[0] === 'fruit';
+  }
+  return filters.products.length === 0 && filters.types.length === 1 && filters.types[0] === category;
+}
+
+/** The tiles switch shopping categories. Distance, opening time and farm tags stay in effect. */
+export function browseFilters(filters: FarmFilters, category: BrowseCategory): FarmFilters {
+  const cleared = { ...filters, types: [], products: [] };
+  if (matchesBrowseCategory(filters, category)) return cleared;
+  return category === 'fruit' ? { ...cleared, products: ['fruit'] } : { ...cleared, types: [category] };
+}
+
 export const DISTANCE_OPTIONS_KM = [10, 25, 50, 100, 250] as const;
 
 export interface FarmResult {

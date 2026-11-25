@@ -3,6 +3,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { FlatList, Platform, StyleSheet, View, type ListRenderItem } from 'react-native';
 import type { SearchBarCommands } from 'react-native-screens';
 
+import { BrowseCategories } from '../../../components/BrowseCategories';
 import { ExploreWalkthrough } from '../../../components/ExploreWalkthrough';
 import { DataBanner } from '../../../components/DataBanner';
 import { FarmCard } from '../../../components/FarmCard';
@@ -24,7 +25,7 @@ const NATIVE_SEARCH = Platform.OS !== 'web';
 
 export default function FarmListScreen() {
   const { results, filters, setFilters, query, setQuery, refresh, refreshing, dataStatus, isDefaultLocation } = useSearch();
-  const { ids: favourites, isFavourite } = useFavourites();
+  const { ids: favourites, isFavourite, toggleFavourite } = useFavourites();
   const [locationOpen, setLocationOpen] = useState(false);
   const [filtersOpen, setFiltersOpen] = useState(false);
   // NativeTabs keeps this screen mounted while another tab is showing; only the visible tab speaks its count.
@@ -76,11 +77,12 @@ export default function FarmListScreen() {
         result={item}
         onPress={open}
         saved={isFavourite(item.farm.id)}
+        onToggleSave={toggleFavourite}
         showUnclaimedBadge={showUnclaimedBadge}
         distanceFromDefault={isDefaultLocation}
       />
     ),
-    [open, isFavourite, showUnclaimedBadge, isDefaultLocation],
+    [open, isFavourite, toggleFavourite, showUnclaimedBadge, isDefaultLocation],
   );
 
   useEffect(() => {
@@ -165,6 +167,7 @@ export default function FarmListScreen() {
               onOpenFilters={() => setFiltersOpen(true)}
               announce={focused && !filtersOpen}
             />
+            <BrowseCategories />
             <LocationPrompt onChooseSuburb={() => setLocationOpen(true)} />
             <DataBanner />
           </View>

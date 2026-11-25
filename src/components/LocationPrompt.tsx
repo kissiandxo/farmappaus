@@ -72,28 +72,6 @@ export function LocationPrompt({ onChooseSuburb }: LocationPromptProps) {
 
   return (
     <View style={styles.card}>
-      <View style={styles.top}>
-        <Icon name="location.circle" size={28} color={colors.tint} />
-        <View style={styles.text}>
-          <Text style={styles.title} accessibilityRole="header">
-            See what’s near you
-          </Text>
-          <Text style={styles.body}>
-            Places are sorted from Sydney until you set your location.
-          </Text>
-        </View>
-        <Pressable
-          onPress={dismiss}
-          accessibilityRole="button"
-          accessibilityLabel="Close"
-          accessibilityHint="Hides this suggestion"
-          hitSlop={8}
-          style={({ pressed }) => [styles.close, pressed && styles.pressed]}
-        >
-          <Icon name="xmark" size={13} weight="semibold" color={colors.secondaryLabel} />
-        </Pressable>
-      </View>
-
       <View style={styles.actions}>
         <Button
           label="Use my location"
@@ -105,6 +83,16 @@ export function LocationPrompt({ onChooseSuburb }: LocationPromptProps) {
           accessibilityHint="Asks for your location to measure distances"
         />
         <Button label="Choose a suburb" variant="plain" size="small" onPress={onChooseSuburb} />
+        <Pressable
+          onPress={dismiss}
+          accessibilityRole="button"
+          accessibilityLabel="Hide location suggestion"
+          accessibilityHint="Hides this suggestion"
+          hitSlop={8}
+          style={({ pressed }) => [styles.close, pressed && styles.pressed]}
+        >
+          <Icon name="xmark" size={13} weight="semibold" color={colors.secondaryLabel} />
+        </Pressable>
       </View>
 
       {problem && (
@@ -121,21 +109,12 @@ export function LocationPrompt({ onChooseSuburb }: LocationPromptProps) {
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: colors.cell,
-    borderRadius: radius.card,
-    borderCurve: 'continuous',
-    padding: space.lg,
-    gap: space.md,
+    gap: space.sm,
   },
-  top: { flexDirection: 'row', alignItems: 'flex-start', gap: space.md },
-  text: { flex: 1, gap: 2 },
-  title: { ...type.headline, color: colors.label },
-  body: { ...type.subheadline, color: colors.secondaryLabel },
   close: {
     width: MIN_TAP,
     height: MIN_TAP,
-    marginTop: -space.md,
-    marginRight: -space.md,
+    marginLeft: 'auto',
     alignItems: 'center',
     justifyContent: 'center',
   },

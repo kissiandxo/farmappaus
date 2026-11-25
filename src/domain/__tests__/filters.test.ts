@@ -1,5 +1,7 @@
 import {
   activeFilterCount,
+  browseFilters,
+  matchesBrowseCategory,
   DEFAULT_FILTERS,
   matchesQuery,
   normaliseText,
@@ -435,5 +437,22 @@ describe('search text', () => {
       expect(sellers.length).toBeGreaterThan(0);
       expect(sellers.filter((f) => !matchesQuery(f, 'meat')).map((f) => f.name)).toEqual([]);
     });
+  });
+});
+
+describe('Explore category shortcuts', () => {
+  const nearbyWeekend = makeFilters({ maxKm: 25, when: 'weekend', tags: ['organic'] });
+  it('switches category without losing distance, timing or tag choices', () => {
+    const butchers = browseFilters(nearbyWeekend, 'butcher');
+    const fruit = browseFilters(butchers, 'fruit');
+    expect(fruit).toEqual({ ...nearbyWeekend, products: ['fruit'] });
+    expect(matchesBrowseCategory(fruit, 'butcher')).toBe(false);
+    expect(browseFilters(fruit, 'fruit')).toEqual(nearbyWeekend);
+  });
+
+  it('keeps a custom mixed filter distinct from the single-category shortcut', () => {
+    const custom = makeFilters({ types: ['farmers_market', 'butcher'], products: ['eggs'] });
+    expect(matchesBrowseCategory(custom, 'farmers_market')).toBe(false);
+    expect(browseFilters(custom, 'farmers_market')).toEqual(makeFilters({ types: ['farmers_market'] }));
   });
 });

@@ -1,4 +1,4 @@
-import { shareText } from '../share';
+import { shareStops, shareText } from '../share';
 import { makeFarm } from './fixtures';
 
 describe('shareText', () => {
@@ -50,4 +50,13 @@ describe('shareText', () => {
       `http://maps.apple.com/?q=${encodeURIComponent('Bilpin District Hall, Bells Line of Road, Bilpin NSW 2758')}`,
     );
   });
+});
+
+it('shares saved stops in display order with addresses and a Maps link for each', () => {
+  const farms = [makeFarm({ name: 'Shop A', address: '14 High St' }), makeFarm({ name: 'Market B' })];
+  const message = shareStops(farms, true);
+  expect(message).toMatch(/^My weekend food stops\n\n1\. Shop A\n14 High St, Testville, NSW/);
+  expect(message).toContain('2. Market B\nTestville, NSW');
+  expect(message.match(/maps\.apple\.com/g)).toHaveLength(2);
+  expect(shareStops(farms.slice(0, 1), false)).not.toContain('Market B');
 });

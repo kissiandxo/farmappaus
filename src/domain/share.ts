@@ -18,3 +18,13 @@ export function shareText(farm: Farm): string {
   lines.push(mapsPlaceUrl(farm));
   return lines.join('\n');
 }
+
+/** Share only visible saved stops. Opening times and the shopper's starting point stay out of the message. */
+export function shareStops(farms: readonly Farm[], weekend: boolean): string {
+  const title = weekend ? 'My weekend food stops' : 'My saved food stops';
+  const stops = farms.map((farm, index) => {
+    const area = [farm.address?.trim(), farm.locality, farm.state].filter(Boolean).join(', ');
+    return `${index + 1}. ${farm.name}\n${area}\n${mapsPlaceUrl(farm)}`;
+  });
+  return [title, ...stops].join('\n\n');
+}

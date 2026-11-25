@@ -3,11 +3,12 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { licenceBadge } from '../domain/compliance';
 import type { FarmResult } from '../domain/filters';
+import { pinStyle } from '../domain/mapPins';
 import { isStale } from '../domain/format';
 import { formatDistance } from '../domain/geo';
 import { PRODUCT_LABELS, TAG_LABELS, VENUE_LABELS, type Farm, type ProductCategory } from '../domain/types';
-import { colors, radius, space, type } from '../theme';
-import { Badge, Icon } from './ui';
+import { colors, MIN_TAP, radius, space, type } from '../theme';
+import { Badge, Icon, tapLight } from './ui';
 
 /** Produce badges shown before the rest collapse into "+N". */
 const MAX_PRODUCE_BADGES = 5;
@@ -22,6 +23,7 @@ export interface FarmCardProps {
   /** Called with the place's id. Pass a stable callback (useCallback) so cards are not re-rendered needlessly. */
   onPress: (id: string) => void;
   saved: boolean;
+  onToggleSave?: (id: string) => void;
   /** Show the "Unclaimed" capsule. Explore passes `dataStatus.kind !== 'public'` (with no backend every place is unclaimed). */
   showUnclaimedBadge?: boolean;
   /** True while distances are measured from the default (Sydney) location: the distance is then hidden. */
@@ -100,6 +102,7 @@ export function farmCardPropsEqual(prev: FarmCardProps, next: FarmCardProps): bo
     prev.saved === next.saved &&
     (prev.showUnclaimedBadge ?? false) === (next.showUnclaimedBadge ?? false) &&
     (prev.distanceFromDefault ?? false) === (next.distanceFromDefault ?? false) &&
+    prev.onToggleSave === next.onToggleSave &&
     prev.onPress === next.onPress
   );
 }
@@ -107,8 +110,9 @@ export function farmCardPropsEqual(prev: FarmCardProps, next: FarmCardProps): bo
 /** White grouped card for a place in a list: name, distance, meta, status, produce and licence. Memoised for long lists. */
 export const FarmCard = memo(FarmCardView, farmCardPropsEqual);
 
-function FarmCardView({ result, onPress, saved, showUnclaimedBadge = false, distanceFromDefault = false }: FarmCardProps) {
+function FarmCardView({ result, onPress, saved, onToggleSave, showUnclaimedBadge = false, distanceFromDefault = false }: FarmCardProps) {
   const { farm, distanceKm, status, weekend } = result;
+  const venue = pinStyle(farm.type);
   const now = new Date();
   const produce = inStockProduce(farm);
   const shownProduce = produce.slice(0, MAX_PRODUCE_BADGES);
@@ -120,77 +124,84 @@ function FarmCardView({ result, onPress, saved, showUnclaimedBadge = false, dist
   const unclaimedBadge = showUnclaimedBadge && !!farm.unclaimed;
 
   return (
-    <Pressable
-      onPress={() => onPress(farm.id)}
-      accessibilityRole="button"
-      accessibilityHint="Opens details"
-      style={({ pressed }) => [styles.card, pressed && styles.pressed]}
-      accessibilityLabel={farmCardLabel(result, { saved, distanceFromDefault, now })}
-    >
-      <View style={styles.titleRow}>
-        <Text style={styles.name} numberOfLines={2}>
-          {farm.name}
-        </Text>
-        {(saved || distance) && (
-          <View style={styles.trail}>
-            {saved && <Icon name="heart.fill" size={16} color={colors.red} />}
-            {distance && <Text style={styles.distance}>{distance}</Text>}
+    <View>
+      <Pressable
+        onPress={() => onPress(farm.id)}
+        accessibilityRole="button"
+        accessibilityHint="Opens details"
+        style={({ pressed }) => [styles.card, pressed && styles.pressed]}
+        accessibilityLabel={farmCardLabel(result, { saved, distanceFromDefault, now })}
+      >
+        <View style={[styles.titleRow, onToggleSave && styles.spaceForSave]}>
+          <View style={[styles.venueIcon, { backgroundColor: colors[venue.color] }]}>
+            <Icon name={venue.symbol} size={18} color={colors.onPin} weight="semibold" />
+          </View>
+          <View style={styles.identity}>
+            <Text style={styles.name}>{farm.name}</Text>
+            <Text style={styles.meta}>{venue.label} · {farm.locality}, {farm.state}</Text>
+          </View>
+          {!onToggleSave && saved && <Icon name="heart.fill" size={16} color={colors.red} />}
+        </View>
+
+
+        {(farm.isSample || unclaimedBadge) && (
+          <View style={styles.badges}>
+            {farm.isSample && <Badge label="Sample" tone="orange" />}
+            {unclaimedBadge && <Badge label="Unclaimed" />}
           </View>
         )}
-      </View>
 
-      <Text style={styles.meta} numberOfLines={2}>
-        {VENUE_LABELS[farm.type]} · {farm.locality}, {farm.state}
-      </Text>
-
-      {(farm.isSample || unclaimedBadge) && (
-        <View style={styles.badges}>
-          {farm.isSample && <Badge label="Sample" tone="orange" />}
-          {unclaimedBadge && <Badge label="Unclaimed" />}
+        <View>
+          <View style={styles.statusRow}>
+            <View style={[styles.dot, { backgroundColor: tone }]} />
+            <Text style={[styles.status, { color: tone }]}>{status.label}</Text>
+            {distance && <Text style={styles.distance}>{distance}</Text>}
+          </View>
+          {!!weekend && <Text style={[styles.footnote, styles.weekend]}>This weekend: {weekend}</Text>}
         </View>
-      )}
 
-      <View>
-        <View style={styles.statusRow}>
-          <View style={[styles.dot, { backgroundColor: tone }]} />
-          <Text style={[styles.status, { color: tone }]}>{status.label}</Text>
-        </View>
-        {!!weekend && <Text style={[styles.footnote, styles.weekend]}>This weekend: {weekend}</Text>}
-      </View>
+        {status.kind === 'irregular' && !!farm.hours.note && (
+          <Text style={styles.footnote} numberOfLines={3}>
+            {farm.hours.note}
+          </Text>
+        )}
 
-      {status.kind === 'irregular' && !!farm.hours.note && (
-        <Text style={styles.footnote} numberOfLines={3}>
-          {farm.hours.note}
-        </Text>
-      )}
+        {(shownProduce.length > 0 || farm.tags.length > 0) && (
+          <View style={styles.badges}>
+            {shownProduce.map((c) => (
+              <Badge key={c} label={PRODUCT_LABELS[c]} />
+            ))}
+            {moreProduce > 0 && <Badge label={`+${moreProduce}`} />}
+            {farm.tags.map((t) => (
+              <Badge key={t} label={TAG_LABELS[t]} tone="tint" />
+            ))}
+          </View>
+        )}
 
-      {(shownProduce.length > 0 || farm.tags.length > 0) && (
-        <View style={styles.badges}>
-          {shownProduce.map((c) => (
-            <Badge key={c} label={PRODUCT_LABELS[c]} />
-          ))}
-          {moreProduce > 0 && <Badge label={`+${moreProduce}`} />}
-          {farm.tags.map((t) => (
-            <Badge key={t} label={TAG_LABELS[t]} tone="tint" />
-          ))}
-        </View>
-      )}
+        {badge === 'checked' && (
+          <View style={styles.inline}>
+            <Icon name="checkmark.seal.fill" size={14} color={colors.tint} />
+            <Text style={styles.footnote}>Licence checked</Text>
+          </View>
+        )}
+        {badge === 'declared' && <Text style={styles.footnote}>Licence declared by farmer</Text>}
 
-      {badge === 'checked' && (
-        <View style={styles.inline}>
-          <Icon name="checkmark.seal.fill" size={14} color={colors.tint} />
-          <Text style={styles.footnote}>Licence checked</Text>
-        </View>
+        {stale && (
+          <View style={styles.inline}>
+            <Icon name="exclamationmark.triangle" size={14} color={colors.orange} />
+            <Text style={styles.stale}>{STALE_TEXT}</Text>
+          </View>
+        )}
+      </Pressable>
+      {onToggleSave && (
+        <Pressable accessibilityRole="button" accessibilityState={{ selected: saved }}
+          accessibilityLabel={saved ? `Remove ${farm.name} from Saved` : `Save ${farm.name}`}
+          onPress={() => { tapLight(); onToggleSave(farm.id); }}
+          style={({ pressed }) => [styles.save, pressed && styles.pressed]}>
+          <Icon name={saved ? 'heart.fill' : 'heart'} size={21} color={saved ? colors.red : colors.secondaryLabel} />
+        </Pressable>
       )}
-      {badge === 'declared' && <Text style={styles.footnote}>Licence declared by farmer</Text>}
-
-      {stale && (
-        <View style={styles.inline}>
-          <Icon name="exclamationmark.triangle" size={14} color={colors.orange} />
-          <Text style={styles.stale}>{STALE_TEXT}</Text>
-        </View>
-      )}
-    </Pressable>
+    </View>
   );
 }
 
@@ -204,11 +215,14 @@ const styles = StyleSheet.create({
   },
   pressed: { opacity: 0.8 },
   titleRow: { flexDirection: 'row', alignItems: 'flex-start', gap: space.md },
-  name: { ...type.headline, flex: 1, color: colors.label },
-  trail: { flexDirection: 'row', alignItems: 'center', gap: space.xs },
-  distance: { ...type.subheadline, color: colors.secondaryLabel },
+  venueIcon: { width: 36, height: 36, borderRadius: radius.control, alignItems: 'center', justifyContent: 'center' },
+  identity: { flex: 1, gap: 2 },
+  name: { ...type.headline, color: colors.label },
+  spaceForSave: { paddingRight: MIN_TAP - space.sm },
+  save: { position: 'absolute', top: space.xs, right: space.xs, height: MIN_TAP, width: MIN_TAP, alignItems: 'center', justifyContent: 'center' },
+  distance: { ...type.footnote, color: colors.secondaryLabel, marginLeft: 'auto' },
   meta: { ...type.subheadline, color: colors.secondaryLabel },
-  statusRow: { flexDirection: 'row', alignItems: 'center', gap: space.sm },
+  statusRow: { flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center', gap: space.sm },
   dot: { width: DOT, height: DOT, borderRadius: DOT / 2 },
   status: { ...type.subheadline, fontWeight: '600', flexShrink: 1 },
   weekend: { marginLeft: DOT + space.sm, marginTop: 2 },

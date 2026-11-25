@@ -13,7 +13,7 @@ import { useAuth } from '../../state/AuthContext';
 import { colors, radius, space, type } from '../../theme';
 
 const APP_ICON = require('../../../assets/images/icon.png');
-const ICON_SIZE = 96;
+const MARKET_IMAGE = require('../../../assets/images/browse/markets.jpg');
 const APPLE_BUTTON_HEIGHT = 50;
 const APPLE_BUTTON_RADIUS = 14;
 
@@ -62,18 +62,18 @@ export default function WelcomeScreen() {
       onLayout={hideSplashOnce}
     >
       <View style={styles.top}>
-        <Image source={APP_ICON} style={styles.icon} accessibilityLabel="Farm Direct app icon" />
-        <Text style={[type.largeTitle, styles.title]} accessibilityRole="header">
-          Farm Direct
-        </Text>
+        <Image source={MARKET_IMAGE} accessible={false} contentFit="cover" style={styles.market} />
+        <View style={styles.identity}>
+          <Image source={APP_ICON} accessible={false} style={styles.icon} />
+          <Text style={[type.largeTitle, styles.title]} accessibilityRole="header">Farm Direct</Text>
+        </View>
         <Text style={[type.body, styles.tagline]}>
-          Find a farmers’ market, a farm shop or an independent butcher for your next stop.
+          Find a farmers’ market, farm shop or independent butcher near you.
         </Text>
 
         <View style={styles.features}>
-          <FeatureRow icon="map" title="Pick your starting point" message="Search your suburb or use your current location." />
-          <FeatureRow icon="clock" title="Plan a market morning" message="Filter by produce and weekend opening hours." />
-          <FeatureRow icon="heart" title="Save your favourites" message="Keep the places you love in one list." />
+          <FeatureRow icon="mappin.and.ellipse" title="Start in your suburb" message="See what’s nearby and get directions." />
+          <FeatureRow icon="calendar" title="Make a weekend shortlist" message="Save stops, check opening hours and share your list." />
         </View>
       </View>
 
@@ -104,11 +104,13 @@ const styles = StyleSheet.create({
   screen: { backgroundColor: colors.background },
   // flexGrow lets the buttons sit at the bottom on tall screens and scroll on large Dynamic Type.
   content: { flexGrow: 1, justifyContent: 'space-between', paddingHorizontal: space.xl, gap: space.xl },
-  top: { alignItems: 'center', gap: space.md },
-  icon: { width: ICON_SIZE, height: ICON_SIZE, borderRadius: radius.hero, borderCurve: 'continuous', marginBottom: space.sm },
-  title: { color: colors.label, textAlign: 'center' },
-  tagline: { color: colors.secondaryLabel, textAlign: 'center' },
-  features: { alignSelf: 'stretch', gap: space.xl, marginTop: space.xl },
+  top: { gap: space.md },
+  market: { width: '100%', height: 162, borderRadius: radius.hero, backgroundColor: colors.tintFill },
+  identity: { flexDirection: 'row', alignItems: 'center', gap: space.md, marginTop: space.sm },
+  icon: { width: 46, height: 46, borderRadius: radius.group, borderCurve: 'continuous' },
+  title: { flexShrink: 1, color: colors.label },
+  tagline: { color: colors.secondaryLabel },
+  features: { gap: space.lg, marginTop: space.md },
   bottom: { gap: space.sm },
   appleButton: { height: APPLE_BUTTON_HEIGHT, alignSelf: 'stretch' },
   busy: { opacity: 0.6 },

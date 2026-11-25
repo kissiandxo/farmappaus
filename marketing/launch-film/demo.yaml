@@ -32,14 +32,36 @@ appId: au.farmdirect.app
 - tapOn: "Meat: beef, lamb, pork or chicken"
 - takeScreenshot: 11-meat-filter
 - tapOn: "Show 86 places"
+- tapOn: "Browse markets"
+- assertVisible: "67 places"
+- tapOn: "Browse fruit"
+- tapOn: "Browse fruit"
+- assertVisible: "151 places"
+- takeScreenshot: 13-explore
+- tapOn: "Browse butchers"
+- assertVisible: "45 places"
+- takeScreenshot: 14-butcher-browse
 - scrollUntilVisible:
     element:
-      text: ".*Feather and Bone.*"
+      text: "Save Feather and Bone"
     direction: DOWN
-- tapOn: ".*Feather and Bone.*"
+- tapOn: "Save Feather and Bone"
+- assertVisible: "Remove Feather and Bone from Saved"
+- tapOn: "Remove Feather and Bone from Saved"
+- tapOn: "^Feather and Bone[.].*"
 - extendedWaitUntil:
     visible: "Save this place"
     timeout: 20000
 - takeScreenshot: 12-butcher
 - tapOn: "Save this place"
 - assertVisible: "Saved – tap to remove"
+- swipe:
+    start: "1%,52%"
+    end: "92%,52%"
+    duration: 350
+- tapOn: "Saved"
+- tapOn: "This weekend"
+- assertVisible: "^Feather and Bone[.].*This weekend.*"
+- takeScreenshot: 15-weekend
+- tapOn: "Share stops"
+- assertVisible: "Copy"
