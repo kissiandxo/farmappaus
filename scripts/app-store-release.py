@@ -125,7 +125,11 @@ def screenshots(loc):
         group = write("appScreenshotSets", {"screenshotDisplayType": kind},
                       {"appStoreVersionLocalization": rel(loc["type"], loc["id"])})
     existing = {x["attributes"]["fileName"]: x for x in child(group, "appScreenshots")}
-    for name in ("03-place-farm-shop.png", "04-place-market.png", "05-saved.png"):
+    names = (
+        "01-explore.png", "08-place-butcher.png", "04-place-market.png",
+        "03-place-farm-shop.png", "05-saved.png",
+    )
+    for name in names:
         image = (ROOT / "marketing/app-store-screenshots" / name).read_bytes()
         row = existing.get(name)
         if not row:
@@ -142,6 +146,25 @@ def screenshots(loc):
             write(row["type"], {"uploaded": True, "sourceFileChecksum": hashlib.md5(image).hexdigest()}, id=row["id"])
         elif attrs["assetDeliveryState"]["state"] == "FAILED":
             raise RuntimeError("Apple rejected the screenshot " + name)
+
+    # Apple displays these in relationship order, independently of their file names.
+    for _ in range(30):
+        rows = child(group, "appScreenshots")
+        by_name = {row["attributes"]["fileName"]: row for row in rows}
+        if all(name in by_name and by_name[name]["attributes"]["assetDeliveryState"]["state"] == "COMPLETE"
+               for name in names):
+            break
+        time.sleep(5)
+    else:
+        raise RuntimeError("Apple has yet to finish processing the requested screenshots")
+    ordered = [by_name[name] for name in names]
+    ordered.extend(row for row in rows if row["attributes"]["fileName"] not in names)
+    if [row["id"] for row in ordered] != [row["id"] for row in rows]:
+        api("PATCH", f"/v1/appScreenshotSets/{group['id']}/relationships/appScreenshots",
+            body={"data": [ref("appScreenshots", row["id"]) for row in ordered]})
+    observed = child(group, "appScreenshots")
+    if [row["id"] for row in observed] != [row["id"] for row in ordered]:
+        raise RuntimeError("Apple did not confirm the requested screenshot order")
 
 
 def pricing(target):
