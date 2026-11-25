@@ -1,4 +1,4 @@
-name: Capture a real three-place weekend shortlist
+name: Capture the Farm Direct gallery and weekend shortlist
 on:
   push:
     branches: ["capture/weekend-shortlist-63"]
@@ -51,6 +51,7 @@ jobs:
         timeout-minutes: 35
         env:
           MAESTRO_CLI_NO_ANALYTICS: 1
+          MAESTRO_DRIVER_STARTUP_TIMEOUT: "360000"
         run: |
           set -euo pipefail
           mkdir -p /tmp/farm-release-capture
@@ -58,19 +59,34 @@ jobs:
           echo '54dbb0716425626604973cbb374c585ca30272375d9ce15177a1152765ddd9d7  /tmp/farm-maestro.zip' | shasum -a 256 -c -
           unzip -q /tmp/farm-maestro.zip -d /tmp/farm-maestro
           export JAVA_HOME=$(/usr/libexec/java_home -v 21)
+          xcrun simctl io "$UDID" recordVideo --force --codec=h264 /tmp/farm-release-capture/gestures.mp4 >/tmp/farm-record.log 2>&1 &
+          recorder=$!
+          trap 'kill -INT "$recorder" 2>/dev/null || true; wait "$recorder" || true' EXIT
+          /tmp/farm-maestro/maestro/bin/maestro --device "$UDID" test --test-output-dir /tmp/farm-release-capture/test-results marketing/launch-film/demo.yaml
+      - name: Check three real stops and capture the populated weekend list
+        if: always() && env.UDID != ''
+        env:
+          MAESTRO_CLI_NO_ANALYTICS: 1
+          MAESTRO_DRIVER_STARTUP_TIMEOUT: "360000"
+        run: |
+          export JAVA_HOME=$(/usr/libexec/java_home -v 21)
           /tmp/farm-maestro/maestro/bin/maestro --device "$UDID" test --test-output-dir /tmp/farm-release-capture/test-results marketing/launch-film/shortlist.yaml
       - name: Save the verified interaction recording
         if: env.EXPO_PUBLIC_SCREENSHOT_MODE == '0'
         run: |
           set -euo pipefail
-          image=$(find /tmp/farm-release-capture/test-results -name '18-weekend-shortlist.png' -print -quit)
-          test -s "$image"
+          command -v ffmpeg >/dev/null || brew install ffmpeg
           mkdir -p marketing/launch-film/source
-          cp "$image" marketing/launch-film/source/
+          ffmpeg -nostdin -y -loglevel error -i /tmp/farm-release-capture/gestures.mp4 -vf 'fps=30,scale=1080:-2' -an -c:v libx264 -preset fast -crf 20 -movflags +faststart marketing/launch-film/source/gestures.mp4
+          for shot in 09-welcome 10-tour 11-meat-filter 12-butcher 13-explore 14-butcher-browse 15-weekend 16-market-dates 18-weekend-shortlist; do
+            capture=$(find /tmp/farm-release-capture/test-results -type f -name "$shot.png" -print -quit)
+            test -n "$capture"
+            cp "$capture" marketing/launch-film/source/
+          done
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add marketing/launch-film/source/
-          git commit -m 'Capture three user-saved weekend stops on iPhone'
+          git commit -m 'Capture native onboarding, filter selection and saving a butcher'
           git push origin HEAD:"refs/heads/capture/iphone-$GITHUB_RUN_ID"
       - uses: actions/upload-artifact@v4
         if: always() && env.EXPO_PUBLIC_SCREENSHOT_MODE == '0'

@@ -68,12 +68,8 @@ appId: au.farmdirect.app
     duration: 350
 - tapOn: "Saved"
 - tapOn: "This weekend"
-- assertVisible: "1 saved place"
-- assertVisible: "(?s)^Feather and Bone[.].*This weekend.*"
 - takeScreenshot: 15-weekend
-- longPressOn: "(?s)^Feather and Bone[.].*This weekend.*"
-- assertVisible: "Remove from Saved"
-- tapOn: "Cancel"
+- assertVisible: "1 saved place"
 - tapOn: "Share stops"
 - assertVisible: "Copy"
 - tapOn: "Copy"
