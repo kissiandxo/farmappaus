@@ -28,22 +28,17 @@ jobs:
           if len(matches)!=1: raise RuntimeError('The existing tester identity is ambiguous.')
           tester=matches[0]
           groups=child(target,'betaGroups')
-          memberships=child(tester,'betaGroups')
-          internal=any(r['attributes']['isInternalGroup'] for r in memberships)
+          internal=False
+          group=next((r for r in groups if r['attributes']['name']=='Farm Direct Testers' and not r['attributes']['isInternalGroup']),None)
+          if not group: raise RuntimeError('The private external tester group is missing.')
           try:
               users=api('GET','/v1/users',params={'filter[username]':tester['attributes']['email'],'limit':10})
-              internal=internal or any(u['attributes']['username'].casefold()==tester['attributes']['email'].casefold() for u in users)
+              exact=next((u for u in users if u['attributes']['username'].casefold()==tester['attributes']['email'].casefold()),None)
+              if exact:
+                  visible=exact['attributes'].get('allAppsVisible') or any(a['id']==app_id for a in child(exact,'visibleApps'))
+                  print('Existing team user already has Farm Direct access:',bool(visible),flush=True)
           except RuntimeError as error:
               if 'FORBIDDEN' not in str(error): raise
-          print('Existing tester has internal team membership:',internal,flush=True)
-          if internal:
-              targets=[r for r in groups if r['attributes']['isInternalGroup']]
-              if len(targets)!=1: raise RuntimeError('Farm Direct has no unique internal group.')
-              group=targets[0]
-          else:
-              group=next((r for r in groups if r['attributes']['name']=='Farm Direct Testers' and not r['attributes']['isInternalGroup']),None)
-              if not group:
-                  group=write('betaGroups',{'name':'Farm Direct Testers','isInternalGroup':False,'publicLinkEnabled':False},{'app':rel('apps',app_id)})
           def attach(relationship,entity):
               if not any(r['id']==entity['id'] for r in child(group,relationship)):
                   api('POST','/v1/betaGroups/'+group['id']+'/relationships/'+relationship,body={'data':[ref(entity['type'],entity['id'])]})
