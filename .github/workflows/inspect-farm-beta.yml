@@ -28,15 +28,36 @@ jobs:
           if len(matches)!=1: raise RuntimeError('The existing tester identity is ambiguous.')
           tester=matches[0]
           groups=child(target,'betaGroups')
-          group=next((r for r in groups if r['attributes']['name']=='Farm Direct Testers' and not r['attributes']['isInternalGroup']),None)
-          if not group:
-              group=write('betaGroups',{'name':'Farm Direct Testers','isInternalGroup':False,'publicLinkEnabled':False},{'app':rel('apps',app_id)})
+          memberships=child(tester,'betaGroups')
+          internal=any(r['attributes']['isInternalGroup'] for r in memberships)
+          try:
+              users=api('GET','/v1/users',params={'filter[username]':tester['attributes']['email'],'limit':10})
+              internal=internal or any(u['attributes']['username'].casefold()==tester['attributes']['email'].casefold() for u in users)
+          except RuntimeError as error:
+              if 'FORBIDDEN' not in str(error): raise
+          print('Existing tester has internal team membership:',internal,flush=True)
+          if internal:
+              targets=[r for r in groups if r['attributes']['isInternalGroup']]
+              if len(targets)!=1: raise RuntimeError('Farm Direct has no unique internal group.')
+              group=targets[0]
+          else:
+              group=next((r for r in groups if r['attributes']['name']=='Farm Direct Testers' and not r['attributes']['isInternalGroup']),None)
+              if not group:
+                  group=write('betaGroups',{'name':'Farm Direct Testers','isInternalGroup':False,'publicLinkEnabled':False},{'app':rel('apps',app_id)})
           def attach(relationship,entity):
               if not any(r['id']==entity['id'] for r in child(group,relationship)):
                   api('POST','/v1/betaGroups/'+group['id']+'/relationships/'+relationship,body={'data':[ref(entity['type'],entity['id'])]})
-          attach('betaTesters',tester)
-          assert any(r['id']==tester['id'] for r in child(group,'betaTesters'))
-          print('Verified Emma is a member of the private Farm Direct Testers group.',flush=True)
+          if internal:
+              attach('betaTesters',tester)
+          elif not any(r['id']==tester['id'] for r in child(group,'betaTesters')):
+              attrs={k:tester['attributes'][k] for k in ['email','firstName','lastName'] if tester['attributes'].get(k)}
+              write('betaTesters',attrs,{'betaGroups':{'data':[ref('betaGroups',group['id'])]}})
+          members=child(group,'betaTesters')
+          assert any((r['attributes'].get('email') or '').casefold()==tester['attributes']['email'].casefold() for r in members)
+          print('Verified Emma belongs to the Farm Direct TestFlight group.',flush=True)
+          if internal and group['attributes']['hasAccessToAllBuilds']:
+              print('The internal group includes all processed builds.',flush=True)
+              raise SystemExit(0)
           locale=target['attributes']['primaryLocale']
           copy={'description':'Find farmers’ markets, farm shops and independent butchers across Australia. Browse the directory, check market dates, save your weekend stops and share their addresses.','feedbackEmail':'support@visera.vision'}
           locations=child(target,'betaAppLocalizations')
@@ -62,6 +83,9 @@ jobs:
           if loc: write(loc['type'],testcopy,id=loc['id'])
           else: write('betaBuildLocalizations',dict(locale=locale,**testcopy),{'build':rel('builds',build['id'])})
           attach('builds',build)
+          if internal:
+              print('The internal tester group now has build 63.',flush=True)
+              raise SystemExit(0)
           detail=child(build,'buildBetaDetail')
           state=detail['attributes']['externalBuildState']
           print('Private external group build 63 state:',state,flush=True)
