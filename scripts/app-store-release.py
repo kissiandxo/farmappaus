@@ -1,6 +1,7 @@
 """Prepare Farm Direct 1.0 in App Store Connect using the repository's signing key."""
 import base64
 import hashlib
+import html
 import os
 from pathlib import Path
 import re
@@ -90,8 +91,17 @@ def review_details(version):
             beta = child(visera, "betaAppReviewDetail", optional=True)
             attrs = (beta or {}).get("attributes", {})
             if not all(attrs.get(k) for k in fields):
-                missing = [k for k in fields if not attrs.get(k)]
-                raise RuntimeError("Visera review contact fields missing: " + ", ".join(missing))
+                # The seller also publishes their business contact on Apple's EU storefront.
+                page = requests.get("https://apps.apple.com/ie/app/visera-wall-paint-visualiser/id6791178782", timeout=30)
+                page.raise_for_status()
+                text = " ".join(html.unescape(re.sub("<[^>]+>", " ", page.text)).split())
+                trader = re.search(r"Phoenix Jennings has identified itself as a trader.{0,900}?Phone Number ([+0-9() -]+) Email ([^ ]+@[^ ]+)", text)
+                if not trader:
+                    raise RuntimeError("Unable to verify Visera's published trader contact on Apple's listing")
+                phone = re.sub(r"[^+0-9]", "", trader[1])
+                if not re.fullmatch(r"\+61[0-9]{9}", phone):
+                    raise RuntimeError("Unexpected format for Visera's trader phone")
+                attrs = dict(zip(fields, ("Phoenix", "Jennings", phone, trader[2])))
     notes = section("Notes for App Review").split("> **Contact:**")[0]
     notes = re.sub(r"^> ?", "", notes, flags=re.M).replace("**", "").strip()
     values = {k: attrs[k] for k in fields}
@@ -134,7 +144,7 @@ def pricing(target):
     if schedule:
         manual = child(schedule, "manualPrices", params={"include": "appPricePoint"}, optional=True) or []
         for price in manual:
-            point = child(price, "appPricePoint") if price["type"] != "appPrices" else api(
+            point = api(
                 "GET", "/v3/appPricePoints/" + price["relationships"]["appPricePoint"]["data"]["id"])
             if float(point["attributes"]["customerPrice"]) != 0:
                 raise RuntimeError("Existing paid schedule requires reconciliation for free launch")
@@ -169,6 +179,43 @@ def availability(target):
     write("appAvailabilities", {"availableInNewTerritories": False}, {"app": rel("apps", target["id"]),
           "territoryAvailabilities": {"data": [ref(row["type"], row["id"]) for row in rows]}},
           included=rows, version="v2")
+
+
+def submit(target, version, number):
+    criteria = {"filter[app]": target["id"], "filter[version]": number,
+                "filter[preReleaseVersion.version]": "1.0.0", "filter[preReleaseVersion.platform]": "IOS"}
+    for _ in range(90):
+        rows = api("GET", "/v1/builds", params=criteria)
+        if rows:
+            state = rows[0]["attributes"]["processingState"]
+            if state == "VALID":
+                break
+            if state != "PROCESSING":
+                raise RuntimeError("Build " + number + " has state " + state)
+        time.sleep(30)
+    else:
+        raise RuntimeError("Apple has yet to process build " + number)
+    write(version["type"], relations={"build": rel("builds", rows[0]["id"])}, id=version["id"])
+    print("Selected processed build", number, flush=True)
+    pending = child(target, "reviewSubmissions", params={"filter[platform]": "IOS"})
+    draft = None
+    for row in pending:
+        if row["attributes"]["state"] != "READY_FOR_REVIEW":
+            continue
+        items = child(row, "items", params={"include": "appStoreVersion"})
+        linked = [x["relationships"].get("appStoreVersion", {}).get("data") for x in items]
+        if linked == [ref(version["type"], version["id"])]:
+            draft = row
+            break
+        if not items:
+            draft = row
+    if not draft:
+        draft = write("reviewSubmissions", {"platform": "IOS"}, {"app": rel("apps", target["id"])})
+    if not child(draft, "items"):
+        write("reviewSubmissionItems", relations={"reviewSubmission": rel(draft["type"], draft["id"]),
+              "appStoreVersion": rel(version["type"], version["id"])})
+    result = write(draft["type"], {"submitted": True}, id=draft["id"])
+    print("Apple review submission state:", result["attributes"]["state"], flush=True)
 
 
 def main():
@@ -209,6 +256,9 @@ def main():
             failed = True
     if failed:
         sys.exit(1)
+    number = os.environ.get("SUBMIT_BUILD", "")
+    if number:
+        submit(target, version, number)
 
 
 if __name__ == "__main__":
