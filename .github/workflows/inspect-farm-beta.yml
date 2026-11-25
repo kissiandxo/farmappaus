@@ -1,7 +1,7 @@
-name: Check Farm Direct release and tester status
+name: Verify Farm Direct review readiness
 on:
   push:
-    branches: ['capture/release-status-61']
+    branches: ['capture/check-privacy-61']
 permissions:
   contents: read
 jobs:
@@ -17,24 +17,31 @@ jobs:
           ASC_KEY_P8: ${{ secrets.ASC_KEY_P8 }}
         run: |
           python - <<'PY'
-          import runpy,re
+          import runpy
           g=runpy.run_path('scripts/app-store-release.py')
-          get=lambda path,params={}:g['api']('GET',path,params=params)
+          api,child,write,rel=(g[name] for name in ('api','child','write','rel'))
           target=g['app']('au.farmdirect.app')
-          visera=g['app']('com.visera.Visera')
-          version=g['child'](target,'appStoreVersions',params={'filter[platform]':'IOS'})[0]
-          print('App Store version state:',version['attributes']['appStoreState'])
-          selected=g['child'](version,'build',optional=True)
-          print('Selected build:',selected['attributes']['version'] if selected else 'none')
-          unique=set()
-          for name,app in [('Farm Direct',target),('Visera',visera)]:
-            testers=get('/v1/betaTesters',{'filter[apps]':app['id'],'limit':200})
-            matches=[t for t in testers if (t['attributes'].get('firstName') or '').strip().lower()=='emma' or re.match(r'^emma(?:$|[._+0-9-])',(t['attributes'].get('email') or '').partition('@')[0].lower())]
-            unique.update(t['id'] for t in matches)
-            print(name,'registered Emma testers:',len(matches))
-            if name=='Farm Direct':
-              groups=g['child'](app,'betaGroups')
-              print('Farm Direct external groups:',sum(not group['attributes']['isInternalGroup'] for group in groups))
-              print('Farm Direct internal groups:',sum(group['attributes']['isInternalGroup'] for group in groups))
-          print('Distinct matching identities:',len(unique))
+          version=next(v for v in child(target,'appStoreVersions',params={'filter[platform]':'IOS'}) if v['attributes']['versionString'] in ('1.0','1.0.0'))
+          if g['already_submitted'](version,None):
+              raise SystemExit(0)
+          builds=api('GET','/v1/builds',params={'filter[app]':target['id'],'filter[version]':'61','filter[preReleaseVersion.version]':'1.0.0'})
+          if not builds or builds[0]['attributes']['processingState']!='VALID':
+              raise RuntimeError('Apple has not finished processing build 61')
+          build=builds[0]
+          selected=child(version,'build',optional=True)
+          if not selected or selected['id']!=build['id']:
+              write(version['type'],relations={'build':rel('builds',build['id'])},id=version['id'])
+          print('Using the processed market-calendar build:',build['attributes']['version'])
+          drafts=child(target,'reviewSubmissions',params={'filter[platform]':'IOS'})
+          empty=None
+          for draft in drafts:
+              if draft['attributes']['state']!='READY_FOR_REVIEW': continue
+              items=child(draft,'items',params={'include':'appStoreVersion'})
+              if not items: empty=draft
+              if any((i['relationships'].get('appStoreVersion',{}).get('data') or {}).get('id')==version['id'] for i in items):
+                  print('Apple already accepted this version into the review draft.')
+                  raise SystemExit(0)
+          draft=empty or write('reviewSubmissions',{'platform':'IOS'},{'app':rel('apps',target['id'])})
+          item=write('reviewSubmissionItems',relations={'reviewSubmission':rel(draft['type'],draft['id']),'appStoreVersion':rel(version['type'],version['id'])})
+          print('Apple accepted the review item, including its App Privacy prerequisite. Item state:',item['attributes']['state'])
           PY
