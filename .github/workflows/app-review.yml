@@ -20,5 +20,4 @@ jobs:
           ASC_KEY_ID: RLG22BW6CR
           ASC_ISSUER_ID: a8d1088f-f4d4-4d6f-ba48-88aee1bc2623
           ASC_KEY_P8: ${{ secrets.ASC_KEY_P8 }}
-          SUBMIT_BUILD: ${{ contains(github.event.head_commit.message, '[submit-42]') && '42' || '' }}
         run: python scripts/app-store-release.py

@@ -102,13 +102,15 @@ jobs:
           mkdir -p marketing/launch-film/source
           ffmpeg -nostdin -y -loglevel error -i /tmp/farm-release-capture/gestures.mp4 -vf 'fps=30,scale=1080:-2' -an -c:v libx264 -preset fast -crf 20 -movflags +faststart marketing/launch-film/source/gestures.mp4
           for shot in 09-welcome 10-tour 11-meat-filter 12-butcher; do
-            cp "/tmp/farm-release-capture/test-results/takeScreenshot/$shot.png" marketing/launch-film/source/
+            capture=$(find /tmp/farm-release-capture/test-results -type f -path "*/takeScreenshot/$shot.png" -print -quit)
+            test -n "$capture"
+            cp "$capture" marketing/launch-film/source/
           done
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add marketing/launch-film/source/
           git commit -m 'Capture native onboarding, filter selection and saving a butcher'
-          git push origin HEAD:"capture/iphone-$GITHUB_RUN_ID"
+          git push origin HEAD:"refs/heads/capture/iphone-$GITHUB_RUN_ID"
       - uses: actions/upload-artifact@v4
         if: always() && env.EXPO_PUBLIC_SCREENSHOT_MODE == '0'
         with:

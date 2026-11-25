@@ -2,6 +2,7 @@
 import base64
 import hashlib
 import html
+import json
 import os
 from pathlib import Path
 import re
@@ -14,7 +15,7 @@ import requests
 ROOT = Path(__file__).resolve().parents[1]
 API = "https://api.appstoreconnect.apple.com"
 COPY = (ROOT / "docs/APP_STORE.md").read_text()
-PUBLIC = "https://github.com/kissiandxo/farmappaus/blob/18b7cbd46098a557975c15d5e7bab5fe7a4f7699/docs/"
+PUBLIC = "https://github.com/kissiandxo/farmappaus/blob/ca0247902258d29a3e4212989eaf16d145a86c0a/docs/"
 KEY = os.environ["ASC_KEY_P8"].strip()
 if "BEGIN PRIVATE KEY" not in KEY:
     KEY = base64.b64decode(KEY)
@@ -117,6 +118,48 @@ def review_details(version):
         write("appStoreReviewDetails", values, {"appStoreVersion": rel(version["type"], version["id"])})
 
 
+def transfer_asset(row, payload):
+    attrs = row["attributes"]
+    state = attrs["assetDeliveryState"]["state"]
+    if state == "FAILED":
+        raise RuntimeError("Apple rejected " + attrs["fileName"] + ": " + str(attrs["assetDeliveryState"].get("errors")))
+    if state != "AWAITING_UPLOAD":
+        return
+    for part in attrs["uploadOperations"]:
+        start = part["offset"]
+        response = requests.request(part["method"], part["url"], data=payload[start:start + part["length"]],
+                                    headers={h["name"]: h["value"] for h in part["requestHeaders"]}, timeout=120)
+        if not response.ok:
+            raise RuntimeError(f"Asset transfer failed for {attrs['fileName']}: HTTP {response.status_code}")
+    write(row["type"], {"uploaded": True, "sourceFileChecksum": hashlib.md5(payload).hexdigest()}, id=row["id"])
+
+
+def app_preview(loc):
+    asset = ROOT / "marketing/launch-film/farm-direct-hero.mp4"
+    payload = asset.read_bytes()
+    preview_sets = child(loc, "appPreviewSets")
+    group = next((item for item in preview_sets if item["attributes"]["previewType"] == "IPHONE_67"), None)
+    if not group:
+        group = write("appPreviewSets", {"previewType": "IPHONE_67"},
+                      {"appStoreVersionLocalization": rel(loc["type"], loc["id"])})
+    previews = child(group, "appPreviews")
+    preview = next((item for item in previews if item["attributes"]["fileName"] == asset.name), None)
+    if not preview:
+        preview = write("appPreviews", {"fileName": asset.name, "fileSize": len(payload), "mimeType": "video/mp4",
+                        "previewFrameTimeCode": "00:00:02:00"}, {"appPreviewSet": rel(group["type"], group["id"])})
+    transfer_asset(preview, payload)
+    for _ in range(120):
+        attrs = api("GET", "/v1/appPreviews/" + preview["id"])["attributes"]
+        delivery = attrs["assetDeliveryState"]
+        video = attrs.get("videoDeliveryState") or {}
+        if "FAILED" in (delivery["state"], video.get("state")):
+            raise RuntimeError("Preview processing failed: " + str(delivery.get("errors") or video.get("errors")))
+        if video.get("state") == "COMPLETE":
+            return
+        time.sleep(10)
+    raise RuntimeError("The uploaded app preview is still processing at Apple")
+
+
 def screenshots(loc):
     kind = "APP_IPHONE_67"
     sets = child(loc, "appScreenshotSets")
@@ -126,8 +169,8 @@ def screenshots(loc):
                       {"appStoreVersionLocalization": rel(loc["type"], loc["id"])})
     existing = {x["attributes"]["fileName"]: x for x in child(group, "appScreenshots")}
     names = (
-        "01-explore.png", "08-place-butcher.png", "04-place-market.png",
-        "03-place-farm-shop.png", "05-saved.png",
+        "store-01-explore.png", "store-02-butcher.png", "store-03-market.png",
+        "03-place-farm-shop.png", "05-saved.png", "09-welcome.png", "10-tour.png",
     )
     for name in names:
         image = (ROOT / "marketing/app-store-screenshots" / name).read_bytes()
@@ -135,17 +178,7 @@ def screenshots(loc):
         if not row:
             row = write("appScreenshots", {"fileName": name, "fileSize": len(image)},
                         {"appScreenshotSet": rel(group["type"], group["id"])})
-        attrs = row["attributes"]
-        if attrs["assetDeliveryState"]["state"] == "AWAITING_UPLOAD":
-            for part in attrs["uploadOperations"]:
-                start = part["offset"]
-                resp = requests.put(part["url"], data=image[start:start + part["length"]],
-                                    headers={h["name"]: h["value"] for h in part["requestHeaders"]}, timeout=60)
-                if not resp.ok:
-                    raise RuntimeError(f"Screenshot transfer failed for {name}: HTTP {resp.status_code}")
-            write(row["type"], {"uploaded": True, "sourceFileChecksum": hashlib.md5(image).hexdigest()}, id=row["id"])
-        elif attrs["assetDeliveryState"]["state"] == "FAILED":
-            raise RuntimeError("Apple rejected the screenshot " + name)
+        transfer_asset(row, image)
 
     # Apple displays these in relationship order, independently of their file names.
     for _ in range(30):
@@ -157,6 +190,17 @@ def screenshots(loc):
         time.sleep(5)
     else:
         raise RuntimeError("Apple has yet to finish processing the requested screenshots")
+    # Each cover preserves the same native frame. Retire only our exact, backed-up
+    # originals once Apple has processed every replacement, preserving other artwork.
+    originals = ("01-explore.png", "08-place-butcher.png", "04-place-market.png")
+    for name in originals:
+        row = by_name.get(name)
+        if not row:
+            continue
+        local = (ROOT / "marketing/app-store-screenshots" / name).read_bytes()
+        if row["attributes"].get("sourceFileChecksum") == hashlib.md5(local).hexdigest():
+            api("DELETE", "/v1/appScreenshots/" + row["id"])
+    rows = child(group, "appScreenshots")
     ordered = [by_name[name] for name in names]
     ordered.extend(row for row in rows if row["attributes"]["fileName"] not in names)
     if [row["id"] for row in ordered] != [row["id"] for row in rows]:
@@ -248,7 +292,6 @@ def submit(target, version, number):
 
 def main():
     target = app("au.farmdirect.app")
-    write("apps", {"contentRightsDeclaration": "USES_THIRD_PARTY_CONTENT"}, id=target["id"])
     locale = target["attributes"]["primaryLocale"]
     if locale not in ("en-AU", "en-US", "en-GB"):
         raise RuntimeError("Unexpected primary language " + locale)
@@ -257,8 +300,24 @@ def main():
     version = next((v for v in versions if v["attributes"]["versionString"] in ("1.0.0", "1.0")), None)
     if not version:
         version = write("appStoreVersions", {"versionString": "1.0.0", "platform": "IOS"}, {"app": rel("apps", target["id"])})
+    event_path = os.environ.get("GITHUB_EVENT_PATH")
+    event = json.loads(Path(event_path).read_text()) if event_path else {}
+    match = re.search(r"\[submit-(\d+)\]", event.get("head_commit", {}).get("message", ""))
+    state = version["attributes"].get("appVersionState") or version["attributes"]["appStoreState"]
+    print("Apple version state:", state, flush=True)
+    after_submission = {"WAITING_FOR_REVIEW", "IN_REVIEW", "ACCEPTED", "PENDING_APPLE_RELEASE",
+                        "PENDING_DEVELOPER_RELEASE", "PROCESSING_FOR_DISTRIBUTION", "READY_FOR_DISTRIBUTION",
+                        "PROCESSING_FOR_APP_STORE", "READY_FOR_SALE"}
+    if state in after_submission:
+        build = child(version, "build", optional=True)
+        current = (build or {}).get("attributes", {}).get("version")
+        if match and current != match.group(1):
+            raise RuntimeError(f"Apple already has build {current} in state {state}")
+        print("Apple already has build", current, "in state", state, flush=True)
+        return
+    write("apps", {"contentRightsDeclaration": "USES_THIRD_PARTY_CONTENT"}, id=target["id"])
     info = next(x for x in child(target, "appInfos") if x["attributes"]["appStoreState"] in
-                ("PREPARE_FOR_SUBMISSION", "DEVELOPER_REJECTED", "REJECTED", "METADATA_REJECTED"))
+                ("PREPARE_FOR_SUBMISSION", "READY_FOR_REVIEW", "DEVELOPER_REJECTED", "REJECTED", "METADATA_REJECTED"))
     info_loc = localization(info, "appInfoLocalizations", locale)
     loc = localization(version, "appStoreVersionLocalizations", locale)
     write(info_loc["type"], {"subtitle": "Farm shops, markets & butchers", "privacyPolicyUrl": PUBLIC + "PRIVACY-1.0.md"}, id=info_loc["id"])
@@ -274,7 +333,7 @@ def main():
     answers["alcoholTobaccoOrDrugUseOrReferences"] = "INFREQUENT"
     tasks = [("Age rating", lambda: write(rating["type"], answers, id=rating["id"])),
              ("Reviewer contact", lambda: review_details(version)), ("Screenshots", lambda: screenshots(loc)),
-             ("Free price", lambda: pricing(target)), ("Australian availability", lambda: availability(target))]
+             ("App preview", lambda: app_preview(loc)), ("Free price", lambda: pricing(target)), ("Australian availability", lambda: availability(target))]
     failed = False
     for label, task in tasks:
         try:
@@ -285,9 +344,8 @@ def main():
             failed = True
     if failed:
         sys.exit(1)
-    number = os.environ.get("SUBMIT_BUILD", "")
-    if number:
-        submit(target, version, number)
+    if match:
+        submit(target, version, match.group(1))
 
 
 if __name__ == "__main__":

@@ -10,14 +10,14 @@ Text for App Store Connect, in Australian English. Version 1.0.0 is a **free dir
 
 | Field | Text | Count / limit |
 |---|---|---|
-| Name | Farm Direct (check it is free when you create the record) | 11 / 30 |
+| Name | Farm Direct | 11 / 30 |
 | Subtitle | Farm shops, markets & butchers | 30 / 30 |
 | Category | Food & Drink (primary), Lifestyle (secondary) | |
 | Price | Free, no in-app purchases | |
-| Copyright | *Owner to supply*, e.g. "2026 Your Name or Company" | |
-| Support URL | *Owner to supply* (see the checklist) | |
+| Copyright | 2026 Phoenix Jennings | |
+| Support URL | Public support page in this repository (docs/SUPPORT.md) | |
 | Marketing URL | Optional, leave blank | |
-| Privacy policy URL | *Owner to supply* (host `docs/PRIVACY.md`) | |
+| Privacy policy URL | Public privacy policy in this repository (docs/PRIVACY-1.0.md) | |
 
 ## Promotional text (154 / 170)
 
@@ -29,32 +29,21 @@ Find independent butchers, farm shops and farmers’ markets across Australia. S
 
 Comma-separated, no spaces after commas. There is no "organic", "free range" or "grass fed" here because the places carry no such labels in the app (some descriptions mention them, but the app has no tag data for unclaimed places), and none of them would be true of the butcher shops.
 
-## Description (2202 / 4000)
+## Description (1363 / 4000)
 
-Farm Direct is a free directory of farmers’ markets, farm shops, farms, farm-gate stalls and independent butchers across Australia. Find good food near you, check when a place is open, and get there.
+Looking for a butcher for Saturday’s barbecue, a farm shop on the drive home or a farmers’ market near you? Farm Direct helps you find a place, check its published hours and get directions.
 
-The app starts with 151 real places in every state and territory: 67 farmers’ markets, 26 farm shops, 8 farms, 5 farm-gate stalls and 45 independent butcher shops. 86 of them list beef, lamb, pork or chicken. Butchers are listed as shops: the app doesn’t say where their meat comes from. The details come from public sources such as each place’s own website and council or tourism pages. The owners haven’t confirmed them yet, so the app says so and shows where each place’s details came from.
+Browse 151 places across Australia, including 67 farmers’ markets, 45 independent butchers, 26 farm shops, 8 farms and 5 farm-gate stalls. Start with your suburb or postcode, or let your iPhone find nearby places.
 
-• Search by name, town, postcode or produce
-• Filter by type of place: farmers’ markets, farm shops, farm-gate stalls, farms or butchers
-• Filter by what’s sold: milk, eggs, chicken, beef, lamb, pork, honey, fruit or vegetables, with one Meat button for beef, lamb, pork and chicken
-• Choose when you can go: any time, open now, or this weekend, with this weekend’s published times on each place
-• Choose how far you’ll travel, and see places on a list sorted by distance or on a map
-• Use your location, or search any suburb or postcode
-• See opening hours, address, phone and website where a place has published them
-• Get directions in Apple Maps, and share a place with a friend
-• See up to three other places nearby on each place page
-• Save the places you like. They stay on your iPhone
-• Works without reception: the places are built into the app, so the list and your saved places are always there (maps need a connection)
-• Large text that follows your iPhone’s text size setting, with light and dark appearance
+• Search for fruit, vegetables or eggs. The Meat shortcut finds 86 places that list beef, lamb, pork or chicken.
+• Use Open now or This weekend to see which places list hours that fit your plans.
+• Open a place to see its address, hours, website and phone number where available. Call ahead if you’re after a particular cut or something in season.
+• Get directions in Apple Maps, share a stop with a friend or find another place nearby.
+• Save favourites on your iPhone. Your list and the directory work offline. Viewing maps needs a connection.
 
-Explore as a guest or continue with Apple to create a profile on this iPhone. A short guided tour shows you where to set your area and filter places. Your saved places stay on your iPhone. Farm Direct never receives your location.
+Explore as a guest or continue with Apple to create a profile on this iPhone. A short, skippable tour shows you how to choose your area and filter the directory.
 
-Details can change, so check before you travel. See something wrong? Tap “Report a problem” on any place to send us an email.
-
-Run a farm, stall, market or butcher shop? Get in touch from the About tab and we’ll help you claim your listing or add your place.
-
-Farm Direct is a directory only. It doesn’t sell or deliver anything, and there are no payments in the app.
+Listing details come from public sources linked on each place page. Owners haven’t confirmed them yet, and opening times and availability can change. Use “Report a problem” to suggest a correction, or contact us from About to add or claim a place.
 
 The "Report a problem" and "Get in touch" sentences are only true when the build has a support email (`SUPPORT_EMAIL`, see the checklist). Never submit a build without one.
 
@@ -73,7 +62,7 @@ Answer Apple's questionnaire honestly. Expect **4+**.
 | Medical or treatment information | None |
 | Simulated gambling, contests | None |
 | Unrestricted web access | **No.** Place pages link to the place's own website and its sources, which open in the system browser (Safari), not inside the app. |
-| User-generated content | **No.** There are no accounts and nobody can post inside the app. |
+| User-generated content | **No.** Shoppers can create a local Apple profile. Nobody can post inside the app. |
 
 ## App Privacy (the "nutrition label")
 
@@ -130,20 +119,15 @@ Before you submit, check that no build variable turns on a backend: leave `EXPO_
 
 Look at every image before you upload it. Every place has no photos, so no screenshot should expect one. Do not upload a screenshot that shows a contact row unless the build had the real support email.
 
-## What you must supply before you submit
+## Launch record
 
-- [ ] **Support email.** Set the GitHub repository variable `SUPPORT_EMAIL` (Settings, Secrets and variables, Actions, Variables). The workflow passes it to the app as `EXPO_PUBLIC_SUPPORT_EMAIL`. Without it the build still runs (with a warning), but the app hides "Suggest a place", "Contact us", "List or claim your place", "Report a problem" and "Is this your place?", and the description above would be wrong. Use an address you read daily. **Do not submit a build made without it.**
-- [ ] **Operator name.** Set the repository variable `OPERATOR_NAME` (your legal name or business name; add the ABN if you have one) so the privacy policy says who runs the app.
-- [ ] **Support URL.** A simple public page with the support email. Required by App Store Connect.
-- [ ] **Privacy policy URL.** Host `docs/PRIVACY.md` (regenerate it with `npm run build:privacy` and the two variables set) at a public address. Have it reviewed by an Australian privacy lawyer.
-- [ ] **App Review contact:** first and last name, phone number (with country code) and email.
-- [ ] **Copyright line**, for example "2026 Your Name".
-- [x] GeoNames postcode data licensed and credited (see `docs/DATA.md`).
-- [ ] **App ID.** `au.farmdirect.app` is registered with the Sign in with Apple capability (see `docs/RELEASE.md`), and the app name "Farm Direct" is free in App Store Connect (otherwise choose another and change `name` in `app.json`).
-- [ ] Screenshots uploaded, age rating questionnaire answered, App Privacy set to **Data Not Collected**, price set to Free.
-- [ ] Export compliance: the app only uses Apple's standard encryption, already declared with `ITSAppUsesNonExemptEncryption: false`.
-- [ ] Version is 1.0.0 in `app.json` and `package.json`.
-- [ ] Supabase variables are **not** set for this build.
+- Farm Direct uses bundle ID `au.farmdirect.app`. The signed release pipeline uses Apple’s distribution certificate and the Sign in with Apple capability.
+- The release identifies Phoenix Jennings as the operator and uses support@visera.vision for listing corrections and support. The public support page and privacy policy are hosted in this repository. Copyright is 2026 Phoenix Jennings.
+- App Review contact details are held privately in App Store Connect. The release script restores the existing Visera contact if the review record is empty.
+- Farm Direct is free in the Australian storefront and uses automatic release after Apple approves it. Version 1.0 uses the bundled directory and standard Apple encryption.
+- Publish **Data Not Collected** under **App Privacy** in App Store Connect. Apple checks for a published questionnaire when a version is added to review.
+- The signed iPhone build uses the backend-free configuration. GeoNames and OpenStreetMap credits are in the app.
+
 - [ ] Phone check on the TestFlight build (see "Not checked on a device" in `docs/POLISH_PLAN.md`): the welcome offers Continue with Apple and Explore as a guest; search, the Meat button and This weekend filter the list; the map pins, groups and place card work; Share opens the share sheet; the About tab has the three email rows; "Report a problem" opens a pre-filled email; a place with no phone number has no Call button; with location denied you can still search by suburb.
 
 ## Review risks to be aware of
