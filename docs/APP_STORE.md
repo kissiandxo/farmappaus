@@ -29,17 +29,18 @@ Find independent butchers, farm shops and farmers’ markets across Australia. S
 
 Comma-separated, no spaces after commas. There is no "organic", "free range" or "grass fed" here because the places carry no such labels in the app (some descriptions mention them, but the app has no tag data for unclaimed places), and none of them would be true of the butcher shops.
 
-## Description (1363 / 4000)
+## Description (1640 / 4000)
 
 Looking for a butcher for Saturday’s barbecue, a farm shop on the drive home or a farmers’ market near you? Farm Direct helps you find a place, check its published hours and get directions.
 
 Browse 151 places across Australia, including 67 farmers’ markets, 45 independent butchers, 26 farm shops, 8 farms and 5 farm-gate stalls. Start with your suburb or postcode, or let your iPhone find nearby places.
 
-• Search for fruit, vegetables or eggs. The Meat shortcut finds 86 places that list beef, lamb, pork or chicken.
-• Use Open now or This weekend to see which places list hours that fit your plans.
+• Tap Markets, Butchers or Fruit in Explore, or search for a suburb, store or ingredient. The Meat shortcut finds 86 places that list beef, lamb, pork or chicken.
+• Use Open now or This weekend to see which places list hours that fit your plans. Open Market dates for published dates and special events at selected markets.
 • Open a place to see its address, hours, website and phone number where available. Call ahead if you’re after a particular cut or something in season.
 • Get directions in Apple Maps, share a stop with a friend or find another place nearby.
-• Save favourites on your iPhone. Your list and the directory work offline. Viewing maps needs a connection.
+• Tap a heart in the results to save a place. In Saved, choose This weekend to see which stops have published hours. Share your shortlist with addresses and Apple Maps links.
+• Your favourites and the directory work offline. Viewing maps needs a connection.
 
 Explore as a guest or continue with Apple to create a profile on this iPhone. A short, skippable tour shows you how to choose your area and filter the directory.
 
@@ -91,10 +92,10 @@ Before you submit, check that no build variable turns on a backend: leave `EXPO_
 >
 > **How to try each feature:**
 > 1. First launch shows a short welcome. Tap **Explore as a guest** or **Continue with Apple**. A skippable 24-second tour highlights the location pin and Filters. Replay from About.
-> 2. **Explore** tab: places sorted by distance. Type in the search bar (name, town, postcode or produce, e.g. "lamb" or "Tasmania"). Tap **Filters** for the type of place, produce (the **Meat** button selects beef, lamb, pork and chicken), distance, and **When**: Any time, Open now or This weekend (each place then shows this weekend's times). The location at the top sets your suburb or postcode.
+> 2. **Explore** tab: places sorted by distance. Type in the search bar (name, town, postcode or produce, e.g. "lamb" or "Tasmania"). Tap **Filters** for the type of place, produce (the **Meat** button selects beef, lamb, pork and chicken), distance, and **When**: Any time, Open now or This weekend (each place then shows this weekend's times). The location at the top sets your suburb or postcode. Select **Market dates** to see four source-linked calendars and open an upcoming market.
 > 3. **Map** tab: pins for each place, grouped when zoomed out (tap a group to zoom in). Tap a pin for a card with **Directions**, **Share** and **Save**. The locate button asks for location permission (optional).
 > 4. Tap any place: hours, address, produce, sources, **Directions** (opens Apple Maps), **Call** and **Website** where the place published them, **Save**, **Share** (top right), and up to three **Nearby** places within 60 km.
-> 5. **Saved** tab: places you saved, stored on the device only. Touch and hold a place to remove it, get directions or share it.
+> 5. **Saved** tab: switch between All saved and This weekend, then tap Share stops to share the visible places. Favourites are stored on the device only. Touch and hold a place to remove it, get directions or share it.
 > 6. **About** tab: what the app is, **Suggest a place**, **Contact us**, **List or claim your place** (each opens a pre-filled email), **Privacy policy**, the OpenStreetMap credit and the app version.
 >
 > **Location:** used only when you tap "Use my current location" in the location sheet, or the locate button on the map, and only while the app is in use, to show nearby places. The app works fully without it: you can search any suburb or postcode instead. Distances are calculated on the device. If no nearby suburb is found offline, Apple’s geocoding service can receive coordinates to identify the area.

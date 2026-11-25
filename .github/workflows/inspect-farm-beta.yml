@@ -1,7 +1,7 @@
-name: Verify Farm Direct review readiness
+name: Update Farm Direct store copy
 on:
   push:
-    branches: ['capture/check-privacy-61']
+    branches: ['capture/store-copy-ready']
 permissions:
   contents: read
 jobs:
@@ -22,26 +22,16 @@ jobs:
           api,child,write,rel=(g[name] for name in ('api','child','write','rel'))
           target=g['app']('au.farmdirect.app')
           version=next(v for v in child(target,'appStoreVersions',params={'filter[platform]':'IOS'}) if v['attributes']['versionString'] in ('1.0','1.0.0'))
-          if g['already_submitted'](version,None):
-              raise SystemExit(0)
-          builds=api('GET','/v1/builds',params={'filter[app]':target['id'],'filter[version]':'61','filter[preReleaseVersion.version]':'1.0.0'})
-          if not builds or builds[0]['attributes']['processingState']!='VALID':
-              raise RuntimeError('Apple has not finished processing build 61')
-          build=builds[0]
-          selected=child(version,'build',optional=True)
-          if not selected or selected['id']!=build['id']:
-              write(version['type'],relations={'build':rel('builds',build['id'])},id=version['id'])
-          print('Using the processed market-calendar build:',build['attributes']['version'])
-          drafts=child(target,'reviewSubmissions',params={'filter[platform]':'IOS'})
-          empty=None
-          for draft in drafts:
-              if draft['attributes']['state']!='READY_FOR_REVIEW': continue
-              items=child(draft,'items',params={'include':'appStoreVersion'})
-              if not items: empty=draft
-              if any((i['relationships'].get('appStoreVersion',{}).get('data') or {}).get('id')==version['id'] for i in items):
-                  print('Apple already accepted this version into the review draft.')
-                  raise SystemExit(0)
-          draft=empty or write('reviewSubmissions',{'platform':'IOS'},{'app':rel('apps',target['id'])})
-          item=write('reviewSubmissionItems',relations={'reviewSubmission':rel(draft['type'],draft['id']),'appStoreVersion':rel(version['type'],version['id'])})
-          print('Apple accepted the review item, including its App Privacy prerequisite. Item state:',item['attributes']['state'])
+          if g['already_submitted'](version,None): raise SystemExit(0)
+          locale=target['attributes']['primaryLocale']
+          loc=g['localization'](version,'appStoreVersionLocalizations',locale)
+          description=g['section']('Description').split('\nThe "Report')[0].strip()
+          write(loc['type'],{'description':description,'promotionalText':g['section']('Promotional text')},id=loc['id'])
+          assert api('GET','/v1/appStoreVersionLocalizations/'+loc['id'])['attributes']['description']==description
+          g['review_details'](version)
+          print('Verified the market-date and weekend-shopping description and saved the reviewer walkthrough.')
+          builds=api('GET','/v1/builds',params={'filter[app]':target['id'],'filter[version]':'62','filter[preReleaseVersion.version]':'1.0.0'})
+          if builds and builds[0]['attributes']['processingState']=='VALID':
+              write(version['type'],relations={'build':rel('builds',builds[0]['id'])},id=version['id'])
+              print('Processed build selected in the unsubmitted draft:',child(version,'build')['attributes']['version'])
           PY
