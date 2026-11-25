@@ -14,9 +14,16 @@ appId: au.farmdirect.app
 - tapOn:
     text: "Next"
     optional: true
-- tapOn: "Try filters"
+- tapOn:
+    text: "Try filters"
+    optional: true
+- runFlow:
+    when:
+      notVisible: "Show 151 places"
+    commands:
+      - tapOn: "Filters"
 - extendedWaitUntil:
-    visible: "What are you after?"
+    visible: "Show 151 places"
     timeout: 20000
 - scrollUntilVisible:
     element:
