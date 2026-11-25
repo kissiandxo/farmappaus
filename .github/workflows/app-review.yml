@@ -11,7 +11,7 @@ jobs:
   prepare:
     if: contains(github.event.head_commit.message, '[app-review]')
     runs-on: ubuntu-latest
-    timeout-minutes: 55
+    timeout-minutes: ${{ contains(github.event.head_commit.message, '[await-privacy]') && 359 || 55 }}
     steps:
       - uses: actions/checkout@v4
       - run: python -m pip install "PyJWT[crypto]==2.10.1" "requests==2.32.5"

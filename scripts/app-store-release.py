@@ -21,6 +21,10 @@ if "BEGIN PRIVATE KEY" not in KEY:
     KEY = base64.b64decode(KEY)
 
 
+class PrivacyAnswersPending(RuntimeError):
+    """Apple requires the account holder to publish the privacy questionnaire."""
+
+
 def api(method, path, *, params=None, body=None, optional=False):
     token = jwt.encode({"iss": os.environ["ASC_ISSUER_ID"], "exp": int(time.time()) + 600,
                         "aud": "appstoreconnect-v1"}, KEY, algorithm="ES256",
@@ -31,11 +35,15 @@ def api(method, path, *, params=None, body=None, optional=False):
         return None
     if not response.ok:
         errors = response.json().get("errors", [])
+        requirements = set()
         if path == "/v1/reviewSubmissionItems" or path.startswith("/v1/reviewSubmissions/"):
             for error in errors:
                 for group in error.get("meta", {}).get("associatedErrors", {}).values():
                     for item in group:
+                        requirements.add(item.get("code"))
                         print("Apple review requirement:", item.get("code"), item.get("detail"), flush=True)
+        if path == "/v1/reviewSubmissionItems" and len(errors) == 1 and requirements == {"STATE_ERROR.APP_DATA_USAGES_REQUIRED"}:
+            raise PrivacyAnswersPending("Apple is waiting for the App Privacy answers to be published")
         raise RuntimeError(f"{method} {path}: " + "; ".join(
             f"{e.get('code')}: {e.get('detail', '')}" for e in errors))
     return response.json().get("data") if response.content else None
@@ -253,6 +261,22 @@ def availability(target):
           included=rows, version="v2")
 
 
+def already_submitted(version, number):
+    state = version["attributes"].get("appVersionState") or version["attributes"]["appStoreState"]
+    print("Apple version state:", state, flush=True)
+    after_submission = {"WAITING_FOR_REVIEW", "IN_REVIEW", "ACCEPTED", "PENDING_APPLE_RELEASE",
+                        "PENDING_DEVELOPER_RELEASE", "PROCESSING_FOR_DISTRIBUTION", "READY_FOR_DISTRIBUTION",
+                        "PROCESSING_FOR_APP_STORE", "READY_FOR_SALE"}
+    if state in after_submission:
+        build = child(version, "build", optional=True)
+        current = (build or {}).get("attributes", {}).get("version")
+        if number is not None and current != number:
+            raise RuntimeError(f"Apple already has build {current} in state {state}")
+        print("Apple already has build", current, "in state", state, flush=True)
+        return True
+    return False
+
+
 def submit(target, version, number):
     criteria = {"filter[app]": target["id"], "filter[version]": number,
                 "filter[preReleaseVersion.version]": "1.0.0", "filter[preReleaseVersion.platform]": "IOS"}
@@ -267,7 +291,9 @@ def submit(target, version, number):
         time.sleep(30)
     else:
         raise RuntimeError("Apple has yet to process build " + number)
-    write(version["type"], relations={"build": rel("builds", rows[0]["id"])}, id=version["id"])
+    selected = child(version, "build", optional=True)
+    if not selected or selected["id"] != rows[0]["id"]:
+        write(version["type"], relations={"build": rel("builds", rows[0]["id"])}, id=version["id"])
     print("Selected processed build", number, flush=True)
     pending = child(target, "reviewSubmissions", params={"filter[platform]": "IOS"})
     draft = None
@@ -303,17 +329,8 @@ def main():
     event_path = os.environ.get("GITHUB_EVENT_PATH")
     event = json.loads(Path(event_path).read_text()) if event_path else {}
     match = re.search(r"\[submit-(\d+)\]", event.get("head_commit", {}).get("message", ""))
-    state = version["attributes"].get("appVersionState") or version["attributes"]["appStoreState"]
-    print("Apple version state:", state, flush=True)
-    after_submission = {"WAITING_FOR_REVIEW", "IN_REVIEW", "ACCEPTED", "PENDING_APPLE_RELEASE",
-                        "PENDING_DEVELOPER_RELEASE", "PROCESSING_FOR_DISTRIBUTION", "READY_FOR_DISTRIBUTION",
-                        "PROCESSING_FOR_APP_STORE", "READY_FOR_SALE"}
-    if state in after_submission:
-        build = child(version, "build", optional=True)
-        current = (build or {}).get("attributes", {}).get("version")
-        if match and current != match.group(1):
-            raise RuntimeError(f"Apple already has build {current} in state {state}")
-        print("Apple already has build", current, "in state", state, flush=True)
+    number = match.group(1) if match else None
+    if already_submitted(version, number):
         return
     write("apps", {"contentRightsDeclaration": "USES_THIRD_PARTY_CONTENT"}, id=target["id"])
     info = next(x for x in child(target, "appInfos") if x["attributes"]["appStoreState"] in
@@ -344,8 +361,27 @@ def main():
             failed = True
     if failed:
         sys.exit(1)
-    if match:
-        submit(target, version, match.group(1))
+    if number:
+        wait_for_privacy = "[await-privacy]" in event.get("head_commit", {}).get("message", "")
+        deadline = time.monotonic() + (345 * 60 if wait_for_privacy else 0)
+        while True:
+            try:
+                submit(target, version, number)
+                break
+            except PrivacyAnswersPending:
+                remaining = deadline - time.monotonic()
+                if remaining <= 0:
+                    raise
+                delay = min(600, remaining)
+                print("Waiting for the account holder to publish App Privacy. Next check in",
+                      round(delay / 60), "minutes.", flush=True)
+                time.sleep(delay)
+                version = api("GET", "/v1/appStoreVersions/" + version["id"])
+                if already_submitted(version, number):
+                    break
+                selected = child(version, "build", optional=True)
+                if not selected or selected["attributes"]["version"] != number:
+                    raise RuntimeError("The selected build changed while waiting for App Privacy")
 
 
 if __name__ == "__main__":
