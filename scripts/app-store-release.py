@@ -25,6 +25,10 @@ class PrivacyAnswersPending(RuntimeError):
     """Apple requires the account holder to publish the privacy questionnaire."""
 
 
+class DraftMediaLocked(RuntimeError):
+    """Apple locks new media while the version is attached to an unsent review draft."""
+
+
 def api(method, path, *, params=None, body=None, optional=False):
     token = jwt.encode({"iss": os.environ["ASC_ISSUER_ID"], "exp": int(time.time()) + 600,
                         "aud": "appstoreconnect-v1"}, KEY, algorithm="ES256",
@@ -35,6 +39,10 @@ def api(method, path, *, params=None, body=None, optional=False):
         return None
     if not response.ok:
         errors = response.json().get("errors", [])
+        if method == "POST" and path in ("/v1/appScreenshots", "/v1/appPreviews") and any(
+            e.get("code") == "STATE_ERROR" and "while ready for review" in e.get("detail", "").lower() for e in errors
+        ):
+            raise DraftMediaLocked("Apple requires editing the unsent review item before adding media")
         requirements = set()
         if path == "/v1/reviewSubmissionItems" or path.startswith("/v1/reviewSubmissions/"):
             for error in errors:
@@ -291,6 +299,28 @@ def already_submitted(version, number):
     return False
 
 
+def reopen_media_draft(target, version):
+    current = api("GET", "/v1/appStoreVersions/" + version["id"])
+    state = current["attributes"].get("appVersionState") or current["attributes"]["appStoreState"]
+    if state != "READY_FOR_REVIEW":
+        raise RuntimeError("Cannot reopen media in version state " + state)
+    for draft in child(target, "reviewSubmissions", params={"filter[platform]": "IOS"}):
+        if draft["attributes"]["state"] != "READY_FOR_REVIEW":
+            continue
+        for item in child(draft, "items", params={"include": "appStoreVersion"}):
+            linked = item["relationships"].get("appStoreVersion", {}).get("data")
+            if linked == ref(version["type"], version["id"]) and item["attributes"]["state"] == "READY_FOR_REVIEW":
+                api("DELETE", "/v1/reviewSubmissionItems/" + item["id"])
+                print("Reopened the unsent Farm Direct version for new media.", flush=True)
+                for _ in range(20):
+                    updated = api("GET", "/v1/appStoreVersions/" + version["id"])["attributes"]
+                    if (updated.get("appVersionState") or updated["appStoreState"]) == "PREPARE_FOR_SUBMISSION":
+                        return
+                    time.sleep(2)
+                raise RuntimeError("Apple has not yet unlocked the draft for media changes")
+    raise RuntimeError("No matching, unsent Farm Direct review item to reopen")
+
+
 def submit(target, version, number):
     criteria = {"filter[app]": target["id"], "filter[version]": number,
                 "filter[preReleaseVersion.version]": "1.0.0", "filter[preReleaseVersion.platform]": "IOS"}
@@ -368,7 +398,13 @@ def main():
     failed = False
     for label, task in tasks:
         try:
-            task()
+            try:
+                task()
+            except DraftMediaLocked:
+                if not number:
+                    raise
+                reopen_media_draft(target, version)
+                task()
             print(label, "saved", flush=True)
         except Exception as exc:
             print(label, "failed:", exc, flush=True)
