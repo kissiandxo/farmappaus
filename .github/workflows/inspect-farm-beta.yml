@@ -1,0 +1,40 @@
+name: Check Farm Direct release and tester status
+on:
+  push:
+    branches: ['capture/release-status-61']
+permissions:
+  contents: read
+jobs:
+  status:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python -m pip -q install "PyJWT[crypto]==2.10.1" "requests==2.32.5"
+      - name: Check Apple records
+        env:
+          ASC_KEY_ID: RLG22BW6CR
+          ASC_ISSUER_ID: a8d1088f-f4d4-4d6f-ba48-88aee1bc2623
+          ASC_KEY_P8: ${{ secrets.ASC_KEY_P8 }}
+        run: |
+          python - <<'PY'
+          import runpy,re
+          g=runpy.run_path('scripts/app-store-release.py')
+          get=lambda path,params={}:g['api']('GET',path,params=params)
+          target=g['app']('au.farmdirect.app')
+          visera=g['app']('com.visera.Visera')
+          version=g['child'](target,'appStoreVersions',params={'filter[platform]':'IOS'})[0]
+          print('App Store version state:',version['attributes']['appStoreState'])
+          selected=g['child'](version,'build',optional=True)
+          print('Selected build:',selected['attributes']['version'] if selected else 'none')
+          unique=set()
+          for name,app in [('Farm Direct',target),('Visera',visera)]:
+            testers=get('/v1/betaTesters',{'filter[apps]':app['id'],'limit':200})
+            matches=[t for t in testers if (t['attributes'].get('firstName') or '').strip().lower()=='emma' or re.match(r'^emma(?:$|[._+0-9-])',(t['attributes'].get('email') or '').partition('@')[0].lower())]
+            unique.update(t['id'] for t in matches)
+            print(name,'registered Emma testers:',len(matches))
+            if name=='Farm Direct':
+              groups=g['child'](app,'betaGroups')
+              print('Farm Direct external groups:',sum(not group['attributes']['isInternalGroup'] for group in groups))
+              print('Farm Direct internal groups:',sum(group['attributes']['isInternalGroup'] for group in groups))
+          print('Distinct matching identities:',len(unique))
+          PY
