@@ -1,0 +1,94 @@
+{
+  "campaign": "Farm Direct Reels: real meat from real farmers",
+  "format": { "width": 1080, "height": 1920, "fps": 30, "video": "H.264 High, yuv420p", "audio": "silent stereo AAC 48 kHz (add licensed audio in Instagram)", "safeZones": { "topPx": 220, "bottomPx": 380, "rightPx": 130, "endCardLockupBottomPx": 300 } },
+  "status": "HOLD: do not post until the place counts are fixed (see blockers)",
+  "checkedOn": "2026-11-13",
+  "dataCheck": {
+    "source": "src/data/realListings.json",
+    "meatRule": "products include beef, lamb, pork or chicken",
+    "now": { "places": 151, "meatPlaces": 86, "butchers": 45, "meatPlacesWithWeekendHours": 73, "states": "all eight states and territories" },
+    "withoutButchers": { "places": 106, "meatPlaces": 41, "meatByType": { "farmers_market": 25, "farm_shop": 12, "farm": 3, "farm_gate_stall": 1 }, "meatPlacesWithWeekendHours": 29, "meatStates": ["NSW", "VIC", "QLD", "WA", "SA", "ACT", "TAS"] },
+    "note": "Commit 3034cbd (13 Nov 2026 23:49, marked [testflight]) added 45 independent butchers. The app now shows 151 places and the Meat filter returns 86. The videos and the App Store screenshots they use were made from the earlier 106-place build."
+  },
+  "blockers": [
+    "All three videos and their Instagram captions use counts from the 106-place build (106 places, 41 with meat, about 40, nearly 30). The current build shows 151 places and Meat returns 86 (73 with weekend hours). Videos 01 and 02 show 'Tap Filters, pick Meat: 106 -> 41 places', which the app no longer does. Rule 1.",
+    "45 of the 86 Meat results are now butcher shops, which are retailers, not producers. 'Ask the farmer the rest' (01) and 'Real meat. Real farmers.' (02), shown straight after the Meat filter, can imply the Meat results are all farmers. docs/APP_STORE.md says the copy must not say where a butcher's meat comes from. Rules 1 and 2.",
+    "Videos 02 and 03 show the Dynamic Island cut-out from the screenshots inside the CSS phone, which makes it read as an iPhone (video 01 paints it over). Rule 5, possible risk."
+  ],
+  "videos": [
+    {
+      "dir": "01-paddock-not-petri",
+      "name": "Paddock, Not Petri Dish",
+      "files": { "soon": "out/01-paddock-not-petri-soon.mp4", "live": "out/01-paddock-not-petri-live.mp4" },
+      "durationSeconds": 13.2,
+      "sizeMB": { "soon": 2.95, "live": 2.97 },
+      "angle": "Bold 'paddock, not petri dish' hook, then proof in the app: tap Filters, pick Meat, the list drops to the places that list beef, lamb, pork or chicken. Ends with the honest next step: ask the farmer the rest.",
+      "onScreenWords": ["From a PADDOCK,", "not a petri dish.", "106 places", "across Australia", "Tap Filters.", "Pick [Meat]", "106 -> 41 places", "list meat.", "Beef, lamb,", "pork, chicken.", "Check first.", "Ask the farmer", "the rest.", "Farm Direct", "Coming soon to iPhone / Free for iPhone"],
+      "timeline": ["0.00 hook: From a PADDOCK,", "0.55 not a petri dish.", "1.90 106 places", "2.50 across Australia", "2.93 Tap Filters. (tap at 3.00)", "3.50 Pick [Meat]", "4.25 106 -> 41 places", "5.20 list meat.", "5.80 Beef, lamb,", "6.60 pork, chicken.", "7.60 Check first. (outlines the 'not yet confirmed' note)", "8.95 Ask the farmer", "9.45 the rest.", "11.10 end card: icon, Farm Direct, availability line; still to 13.20"],
+      "instagramCaption": { "soon": "From a paddock, not a petri dish. Farm Direct finds farmers' markets, farm shops and farms across Australia. Turn on Meat: 41 places list beef, lamb, pork or chicken. Ask the farmer the rest. Follow for the launch.", "live": "From a paddock, not a petri dish. Farm Direct finds farmers' markets, farm shops and farms across Australia. Turn on Meat: 41 places list beef, lamb, pork or chicken. Ask the farmer the rest. Free for iPhone." },
+      "hashtags": ["buylocal", "farmersmarket", "australianfood", "supportlocalfarmers", "farmshop", "shoplocal"],
+      "coverFrameSeconds": 0.0,
+      "claims": [
+        "106 places: STALE. True of the screenshot build; the current data has 151.",
+        "41 places list meat after the Meat filter: STALE. The current Meat filter returns 86 (41 are not butchers).",
+        "Meat is reached by tapping Filters, then Meat (docs/APP_STORE.md).",
+        "The Meat filter covers beef, lamb, pork and chicken (docs/APP_STORE.md).",
+        "Places come from public sources and are not yet confirmed by their owners (the app's own note).",
+        "'From a paddock, not a petri dish' is positioning about Farm Direct, not a claim about anyone else.",
+        "'Ask the farmer the rest' is an invitation, no claim about how animals were raised, quality, price, health or safety (but see the butcher blocker)."
+      ],
+      "screensUsed": ["01-explore.png", "02-explore-meat.png", "marketing/ads/shared/icon.png"],
+      "status": "HOLD: counts stale; 'Ask the farmer' after a Meat list that now includes butchers"
+    },
+    {
+      "dir": "02-meat-postcode-map",
+      "name": "Meat With a Postcode",
+      "files": { "soon": "out/02-meat-postcode-map-soon.mp4", "live": "out/02-meat-postcode-map-live.mp4" },
+      "durationSeconds": 13.5,
+      "sizeMB": { "soon": 3.31, "live": 3.32 },
+      "angle": "Phone-in-hand demo: search a town or postcode, tap Filters, pick Meat, then the map where every place has a pin, with hours, directions and save a tap away.",
+      "onScreenWords": ["Meat with a postcode.", "Search a town", "or postcode.", "Filters.", "Meat.", "106 -> 41 places", "list meat.", "Or the map.", "Every place", "has a pin.", "Tap one.", "Hours / Directions / Save", "Then go.", "Real meat.", "Real farmers.", "Farm Direct", "Coming soon to iPhone / Free for iPhone"],
+      "timeline": ["0.30 Meat / 0.57 with a / 0.80 postcode. (on a paper tag)", "1.60 Search a town", "2.20 or postcode.", "2.80 Filters. (tap)", "3.30 Meat.", "3.55 106 -> 41 places (settled 3.93-4.37)", "4.43 list meat.", "4.80 Or the map.", "5.30 Every place", "5.93 has a pin.", "7.80 Tap one.", "8.20-8.50 Hours / Directions / Save", "8.60 Then go.", "9.90 Real meat.", "10.40 Real farmers.", "11.40 end card; still to 13.50"],
+      "instagramCaption": { "soon": "Meat with a postcode. Search a town or postcode, turn on Meat, and find farmers' markets and farm shops on the map, each with hours and directions. Free, no sign-up. Follow for the launch.", "live": "Meat with a postcode. Search a town or postcode, turn on Meat, and find farmers' markets and farm shops on the map, each with hours and directions. Free, no sign-up." },
+      "hashtags": ["buylocal", "farmersmarket", "farmshop", "australianfood", "shoplocal", "supportlocalfarmers"],
+      "coverFrameSeconds": 1.2,
+      "claims": [
+        "Search by name, town, postcode or produce (docs/APP_STORE.md).",
+        "Meat chosen from Filters (docs/APP_STORE.md).",
+        "106 -> 41 places: STALE. Current data: 151 places, Meat returns 86.",
+        "Every place has a pin on the map (docs/APP_STORE.md). The map shown is unfiltered and carries no count.",
+        "Pin card and place page give hours or open status, Directions (Apple Maps) and Save (docs/APP_STORE.md). The video never says every place has hours.",
+        "Free, no sign-up (docs/APP_STORE.md).",
+        "'Meat with a postcode' and 'Real meat. Real farmers.' are positioning lines (but see the butcher blocker).",
+        "Only postcode on screen is the chosen location chip, Sydney NSW 2000."
+      ],
+      "screensUsed": ["01-explore.png", "02-explore-meat.png", "06-map.png", "marketing/ads/shared/icon.png"],
+      "status": "HOLD: counts stale; 'Real farmers' after a Meat list that now includes butchers; Dynamic Island visible"
+    },
+    {
+      "dir": "03-weekend-meat-run",
+      "name": "Weekend Meat Run",
+      "files": { "soon": "out/03-weekend-meat-run-soon.mp4", "live": "out/03-weekend-meat-run-live.mp4" },
+      "durationSeconds": 15.0,
+      "sizeMB": { "soon": 3.16, "live": 3.17 },
+      "angle": "Real meat as part of the Aussie weekend: coffee, market, real meat. Meat filter on, the places with weekend hours, pins on the map for the drive, saved places that work with no signal.",
+      "onScreenWords": ["Coffee.", "Market.", "Real meat.", "Meat filter on.", "About 40 places", "[Meat] [This weekend]", "Nearly 30", "list weekend hours", "Pin it.", "Drive there.", "Save a few.", "List works", "with no signal.", "Check the hours", "before you go.", "Farm Direct", "Coming soon to iPhone / Free for iPhone"],
+      "timeline": ["0.05 Coffee. / 0.40 Market. / 0.75 Real meat. (checklist)", "1.60 Meat filter on.", "2.30 About 40 places", "3.00-3.15 [Meat] [This weekend]", "3.40 Nearly 30", "3.75 list weekend hours", "5.00 dark map; 5.60 Pin it.; 6.50 Drive there.", "8.00 Saved; 8.50 Save a few.", "9.40 List works / 9.55 with no signal.", "10.60 wipe; 11.10 Check the hours; 11.60 before you go.", "12.90 end card; still to 15.00"],
+      "instagramCaption": { "soon": "Weekend list: coffee, market, real meat. Nearly 30 of the places listing meat publish Saturday or Sunday hours. Save a few, check the hours, then hit the road. Follow for the launch.", "live": "Weekend list: coffee, market, real meat. Nearly 30 of the places listing meat publish Saturday or Sunday hours. Save a few, check the hours, then hit the road. Free for iPhone." },
+      "hashtags": ["farmersmarket", "buylocal", "weekendmarket", "australianfood", "farmshop", "roadtripaustralia", "shoplocal"],
+      "coverFrameSeconds": 1.0,
+      "claims": [
+        "Meat filter on in the screenshot (02-explore-meat.png).",
+        "About 40 places list meat: STALE. Current Meat filter returns 86.",
+        "This weekend filter exists (docs/APP_STORE.md; src/components/FilterPanel.tsx).",
+        "Nearly 30 publish weekend hours: STALE. 29 of the 41 non-butcher meat places; 73 of the current 86.",
+        "Pins on the map, dark appearance (07-map-dark.png); no route lines.",
+        "Save places (05-saved.png; docs/APP_STORE.md).",
+        "List and saved places work without reception; maps need a connection (docs/APP_STORE.md).",
+        "'Check the hours before you go' matches the app's own note."
+      ],
+      "screensUsed": ["02-explore-meat.png", "07-map-dark.png", "05-saved.png", "marketing/ads/shared/icon.png"],
+      "status": "HOLD: counts stale; Dynamic Island visible"
+    }
+  ]
+}

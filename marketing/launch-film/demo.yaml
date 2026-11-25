@@ -1,0 +1,79 @@
+appId: au.farmdirect.app
+---
+- launchApp:
+    clearState: true
+- extendedWaitUntil:
+    visible: "Explore as a guest"
+    timeout: 60000
+- takeScreenshot: 09-welcome
+- tapOn: "Explore as a guest"
+- extendedWaitUntil:
+    visible: "Choose your area"
+    timeout: 15000
+- takeScreenshot: 10-tour
+- tapOn:
+    text: "Next"
+    optional: true
+- tapOn:
+    text: "Try filters"
+    optional: true
+- runFlow:
+    when:
+      notVisible: "Show 151 places"
+    commands:
+      - tapOn: "Filters"
+- extendedWaitUntil:
+    visible: "Show 151 places"
+    timeout: 20000
+- scrollUntilVisible:
+    element:
+      text: "Meat: beef, lamb, pork or chicken"
+    direction: DOWN
+- tapOn: "Meat: beef, lamb, pork or chicken"
+- takeScreenshot: 11-meat-filter
+- tapOn: "Show 86 places"
+- tapOn: "Browse markets"
+- assertVisible: "67 places"
+- tapOn: "Market dates"
+- assertVisible: ".*Bream Creek Farmers Market.*"
+- takeScreenshot: 16-market-dates
+- swipe:
+    start: "1%,52%"
+    end: "92%,52%"
+    duration: 350
+- tapOn: "Browse fruit"
+- tapOn: "Browse fruit"
+- assertVisible: "151 places"
+- takeScreenshot: 13-explore
+- tapOn: "Browse butchers"
+- assertVisible: "45 places"
+- takeScreenshot: 14-butcher-browse
+- scrollUntilVisible:
+    element:
+      text: "Save Feather and Bone"
+    direction: DOWN
+- tapOn: "Save Feather and Bone"
+- assertVisible: "Remove Feather and Bone from Saved"
+- tapOn: "Remove Feather and Bone from Saved"
+- tapOn: "^Feather and Bone[.].*"
+- extendedWaitUntil:
+    visible: "Save this place"
+    timeout: 20000
+- takeScreenshot: 12-butcher
+- tapOn: "Save this place"
+- assertVisible: "Saved – tap to remove"
+- swipe:
+    start: "1%,52%"
+    end: "92%,52%"
+    duration: 350
+- tapOn: "Saved"
+- tapOn: "This weekend"
+- assertVisible: "1 saved place"
+- assertVisible: "(?s)^Feather and Bone[.].*This weekend.*"
+- takeScreenshot: 15-weekend
+- longPressOn: "(?s)^Feather and Bone[.].*This weekend.*"
+- assertVisible: "Remove from Saved"
+- tapOn: "Cancel"
+- tapOn: "Share stops"
+- assertVisible: "Copy"
+- tapOn: "Copy"

@@ -1,0 +1,745 @@
+{
+  "researchedOn": "2026-11-13",
+  "region": "QLD/NT",
+  "listings": [
+    {
+      "name": "Jan Powers Farmers Markets – Powerhouse",
+      "type": "farmers_market",
+      "address": "Lamington Street (Brisbane Powerhouse)",
+      "locality": "New Farm",
+      "state": "QLD",
+      "postcode": "4005",
+      "products": [
+        "fruit",
+        "veg"
+      ],
+      "otherProducts": "Artisan cheeses, smallgoods, bread, pasta, coffee and food vendors.",
+      "tags": [],
+      "hours": {
+        "kind": "weekly",
+        "days": {
+          "sat": [
+            [
+              "06:00",
+              "12:00"
+            ]
+          ]
+        },
+        "note": "Christmas break: last market 19 Dec 2026, back 16 Jan 2027."
+      },
+      "hoursAsStated": "Every Saturday, 6am to 12 noon.",
+      "website": "https://www.janpowersfarmersmarkets.com.au",
+      "phone": null,
+      "description": "Long-running Saturday farmers market at the Brisbane Powerhouse riverside venue in New Farm.",
+      "sources": [
+        "https://www.janpowersfarmersmarkets.com.au/powerhouse-farmers-markets",
+        "https://www.janpowersfarmersmarkets.com.au"
+      ],
+      "confidence": "high",
+      "caveats": "Site announces a Christmas break (Powerhouse and Manly final market 19 Dec 2026, returning 16 Jan 2027; Eagle Farm final market 20 Dec, returning 24 Jan 2027). Source gives 'Lamington St, Newfarm' only; street number and postcode 4005 not stated on the page."
+    },
+    {
+      "name": "Jan Powers Farmers Markets – Manly",
+      "type": "farmers_market",
+      "address": "Manly Harbour, Royal Esplanade (between Cambridge and Cardigan Parades), Little Bayside Park",
+      "locality": "Manly",
+      "state": "QLD",
+      "postcode": "4179",
+      "products": [
+        "fruit",
+        "veg"
+      ],
+      "otherProducts": "Bread and baked goods, spices, other food and crafted treats.",
+      "tags": [],
+      "hours": {
+        "kind": "weekly",
+        "days": {
+          "sat": [
+            [
+              "06:00",
+              "12:00"
+            ]
+          ]
+        },
+        "note": "First and third Saturday of each month only. Christmas break: last market 19 Dec 2026, back 16 Jan 2027."
+      },
+      "hoursAsStated": "1st and 3rd Saturday of the month, 6am to 12 noon.",
+      "website": "https://www.janpowersfarmersmarkets.com.au",
+      "phone": null,
+      "description": "Twice-monthly waterfront farmers market beside Manly Harbour in Brisbane's bayside.",
+      "sources": [
+        "https://www.janpowersfarmersmarkets.com.au/manly-farmers-markets",
+        "https://www.janpowersfarmersmarkets.com.au"
+      ],
+      "confidence": "high",
+      "caveats": "Site announces a Christmas break (Powerhouse and Manly final market 19 Dec 2026, returning 16 Jan 2027; Eagle Farm final market 20 Dec, returning 24 Jan 2027). Postcode 4179 not stated on the page."
+    },
+    {
+      "name": "Jan Powers Farmers Markets – Eagle Farm",
+      "type": "farmers_market",
+      "address": "Eagle Farm Racecourse, Racecourse Road (Gate 4 for disabled parking; public parking via Gate 7, Nudgee Road)",
+      "locality": "Ascot",
+      "state": "QLD",
+      "postcode": "4007",
+      "products": [],
+      "otherProducts": "Farm-fresh produce, coffee, flowers, hot and cold food, bakery goods, plants and artisan products.",
+      "tags": [],
+      "hours": {
+        "kind": "weekly",
+        "days": {
+          "sun": [
+            [
+              "06:00",
+              "12:00"
+            ]
+          ]
+        },
+        "note": "New market; started 2026. Christmas break: last market 20 Dec 2026, back 24 Jan 2027."
+      },
+      "hoursAsStated": "Every Sunday, 6am to 12 noon.",
+      "website": "https://www.janpowersfarmersmarkets.com.au",
+      "phone": null,
+      "description": "Sunday farmers market held at Eagle Farm Racecourse in Brisbane's inner north.",
+      "sources": [
+        "https://www.janpowersfarmersmarkets.com.au/eagle-farm-markets",
+        "https://www.janpowersfarmersmarkets.com.au"
+      ],
+      "confidence": "high",
+      "caveats": "Site announces a Christmas break (Powerhouse and Manly final market 19 Dec 2026, returning 16 Jan 2027; Eagle Farm final market 20 Dec, returning 24 Jan 2027). Page describes the market as new, so check it is still running. Postcode 4007 not stated on the page."
+    },
+    {
+      "name": "Northey Street Organic Farmers Market",
+      "type": "farmers_market",
+      "address": "Northey Street City Farm, 16 Victoria Street",
+      "locality": "Windsor",
+      "state": "QLD",
+      "postcode": "4030",
+      "products": [
+        "fruit",
+        "veg",
+        "eggs",
+        "honey",
+        "milk"
+      ],
+      "otherProducts": "Organic breads, local meats, sustainable seafood, cheese and other dairy, grains, preserves, nursery plants, coffee and brunch.",
+      "tags": [
+        "organic"
+      ],
+      "hours": {
+        "kind": "weekly",
+        "days": {
+          "sun": [
+            [
+              "06:00",
+              "11:00"
+            ]
+          ]
+        },
+        "note": "Runs rain, hail or shine; the farm nursery stays open to noon."
+      },
+      "hoursAsStated": "Open Sundays 6am-11am; most farmers leave around 11am, nursery open until 12.00pm.",
+      "website": "https://www.nscf.org.au/organic-farmers-market/",
+      "phone": null,
+      "description": "Sunday organic market run at a community permaculture city farm in Brisbane.",
+      "sources": [
+        "https://nscf.org.au/organic-farmers-market/",
+        "https://www.brisbane.qld.gov.au/events/northey-street-organic-farmers-market/203772594"
+      ],
+      "confidence": "high",
+      "caveats": "Address comes from the Brisbane City Council event page (an older dated event); farm site says 'Windsor, Brisbane'. Postcode 4030 not stated on either page. Organic claim is the market's own ('certified organic' produce)."
+    },
+    {
+      "name": "Kenilworth Dairies",
+      "type": "farm_shop",
+      "address": "45 Charles Street",
+      "locality": "Kenilworth",
+      "state": "QLD",
+      "postcode": "4574",
+      "products": [
+        "milk"
+      ],
+      "otherProducts": "Cheese, yoghurt, mousse, plus an on-site cafe.",
+      "tags": [],
+      "hours": {
+        "kind": "weekly",
+        "days": {
+          "sun": [
+            [
+              "07:30",
+              "15:00"
+            ]
+          ],
+          "mon": [
+            [
+              "07:30",
+              "15:00"
+            ]
+          ],
+          "tue": [
+            [
+              "07:30",
+              "15:00"
+            ]
+          ],
+          "wed": [
+            [
+              "07:30",
+              "15:00"
+            ]
+          ],
+          "thu": [
+            [
+              "07:30",
+              "15:00"
+            ]
+          ],
+          "fri": [
+            [
+              "07:30",
+              "15:00"
+            ]
+          ],
+          "sat": [
+            [
+              "07:30",
+              "15:00"
+            ]
+          ]
+        },
+        "note": "Closed Christmas Day and Good Friday. Cafe food service ends an hour before close."
+      },
+      "hoursAsStated": "Monday to Sunday 7.30am to 3.00pm; same on school and public holidays; closed Christmas Day and Good Friday.",
+      "website": "https://kenilworthdairies.com.au",
+      "phone": "07 5446 0144",
+      "description": "Dairy producer in the Mary Valley with an on-site shop and cafe selling its milk, cheese and yoghurt.",
+      "sources": [
+        "https://kenilworthdairies.com.au/contact-us/",
+        "https://www.kenilworthdairies.com.au"
+      ],
+      "confidence": "high",
+      "caveats": null
+    },
+    {
+      "name": "Maleny Dairies MilkBar",
+      "type": "farm_shop",
+      "address": "70 McCarthy Road",
+      "locality": "Maleny",
+      "state": "QLD",
+      "postcode": "4552",
+      "products": [],
+      "otherProducts": "Maleny Dairies dairy products sold through the MilkBar.",
+      "tags": [],
+      "hours": {
+        "kind": "weekly",
+        "days": {
+          "wed": [
+            [
+              "09:00",
+              "16:00"
+            ]
+          ],
+          "thu": [
+            [
+              "09:00",
+              "16:00"
+            ]
+          ],
+          "fri": [
+            [
+              "09:00",
+              "16:00"
+            ]
+          ]
+        },
+        "note": "Closed Monday, Tuesday, weekends and public holidays. Farm and factory tours no longer run."
+      },
+      "hoursAsStated": "MilkBar open Wednesday to Friday, 9am to 4pm; closed public holidays and weekends.",
+      "website": "https://malenydairies.com",
+      "phone": "07 5494 2392",
+      "description": "Dairy processor's on-site MilkBar selling its products to the public in the Maleny hinterland.",
+      "sources": [
+        "https://malenydairies.com",
+        "https://malenydairies.com/contact"
+      ],
+      "confidence": "high",
+      "caveats": "It is a dairy factory outlet that sources milk from contracted farms, not a farm gate sale by the farmers themselves. Exact product list not stated on the pages read."
+    },
+    {
+      "name": "Scenic Rim Farm Shop & Cafe",
+      "type": "farm_shop",
+      "address": "541 Kents Lagoon Road",
+      "locality": "Kalbar",
+      "state": "QLD",
+      "postcode": "4309",
+      "products": [],
+      "otherProducts": "Local produce, cheeses and gourmet pantry items; cut flowers from Elderflower Farm on site; Fifth Acre produce stall.",
+      "tags": [],
+      "hours": {
+        "kind": "weekly",
+        "days": {
+          "thu": [
+            [
+              "08:30",
+              "16:00"
+            ]
+          ],
+          "fri": [
+            [
+              "08:30",
+              "16:00"
+            ]
+          ],
+          "sat": [
+            [
+              "08:30",
+              "16:00"
+            ]
+          ],
+          "sun": [
+            [
+              "08:30",
+              "16:00"
+            ]
+          ]
+        },
+        "note": "Fifth Acre full produce stall Saturday and Sunday; self-serve produce stall Thursday and Friday. Kitchen closes at 2pm."
+      },
+      "hoursAsStated": "Thursday to Sunday 8:30am - 4pm (kitchen closes 2pm).",
+      "website": "https://www.scenicrimfarmshop.com.au",
+      "phone": "0493 437 220",
+      "description": "Farm shop and cafe among working farms near Kalbar, with an on-site produce stall at weekends.",
+      "sources": [
+        "https://www.scenicrimfarmshop.com.au",
+        "https://www.visitscenicrim.com.au/insiders-guide-to-fresh-produce-within-the-scenic-rim/"
+      ],
+      "confidence": "high",
+      "caveats": "The 8:30-4 hours are the site's cafe/shop opening hours; produce stall days are separate. Product list taken partly from tourism page. Phone is a mobile listed on the site."
+    },
+    {
+      "name": "Green Shed Market",
+      "type": "farmers_market",
+      "address": "Tamborine Mountain State High School (street address not stated)",
+      "locality": "Tamborine Mountain",
+      "state": "QLD",
+      "postcode": "4272",
+      "products": [
+        "honey"
+      ],
+      "otherProducts": "Freshly picked produce from growers, flowers, bread, coffee, jams, herbs and plants.",
+      "tags": [],
+      "hours": {
+        "kind": "weekly",
+        "days": {
+          "sun": [
+            [
+              "08:00",
+              "12:00"
+            ]
+          ]
+        },
+        "note": null
+      },
+      "hoursAsStated": "Every Sunday, 8am to 12pm.",
+      "website": null,
+      "phone": null,
+      "description": "Weekly Sunday market run by the Tamborine Mountain Local Producers Association, described as bringing together organic growers.",
+      "sources": [
+        "https://www.visitscenicrim.com.au/scenic-rim-weekend-country-markets/"
+      ],
+      "confidence": "medium",
+      "caveats": "Only the regional tourism page was opened (not the market's own site); other sources give 7-11am or 7am-noon, so confirm hours. 'Organic growers' is the tourism page's wording, not a certification, so no organic tag set. Postcode 4272 and street address not on the page."
+    },
+    {
+      "name": "Mulgowie Farmers Market",
+      "type": "farmers_market",
+      "address": "Mulgowie Hall and Recreational Reserve, 7 Mulgowie Road",
+      "locality": "Mulgowie",
+      "state": "QLD",
+      "postcode": "4341",
+      "products": [],
+      "otherProducts": "Fresh local produce, homemade treats and rustic crafts.",
+      "tags": [],
+      "hours": {
+        "kind": "weekly",
+        "days": {
+          "sat": [
+            [
+              "08:00",
+              "11:00"
+            ]
+          ]
+        },
+        "note": "Lockyer Valley tourism listing shows Saturday 5 Dec 2026 only; monthly pattern (reported as first Saturday) is not confirmed."
+      },
+      "hoursAsStated": "Saturday 5 December 2026, 8:00am - 11:00am.",
+      "website": null,
+      "phone": null,
+      "description": "Country farmers market in the Lockyer Valley held at the Mulgowie hall grounds.",
+      "sources": [
+        "https://www.luvyalockyer.com.au/whats-on/events/event/24513-mulgowie-farmers-market"
+      ],
+      "confidence": "medium",
+      "caveats": "Single dated event listing; recurrence unverified. Set kind to weekly only as a placeholder."
+    },
+    {
+      "name": "Toowoomba Farmers Market",
+      "type": "farmers_market",
+      "address": "Corner of Campbell and Lindsay Streets (beside Cobb & Co Museum, opposite Queens Park)",
+      "locality": "Toowoomba",
+      "state": "QLD",
+      "postcode": "4350",
+      "products": [
+        "honey",
+        "eggs"
+      ],
+      "otherProducts": "Seasonal produce, local meats, bread, pasta, jams, seafood, herbs, plus artisan stalls.",
+      "tags": [],
+      "hours": {
+        "kind": "weekly",
+        "days": {
+          "sat": [
+            [
+              "07:00",
+              "12:00"
+            ]
+          ]
+        },
+        "note": null
+      },
+      "hoursAsStated": "Every Saturday under the windmills at Cobb & Co, 7am to 12pm.",
+      "website": "https://www.toowoombafarmersmarket.com.au",
+      "phone": "0427 802 448",
+      "description": "Weekly Saturday farmers market in East Toowoomba selling produce direct from regional growers.",
+      "sources": [
+        "https://www.toowoombafarmersmarket.com.au",
+        "https://www.toowoombafarmersmarket.com.au/how-to-find-us/"
+      ],
+      "confidence": "high",
+      "caveats": "Postcode 4350 and suburb East Toowoomba not stated on the market's site (locality given as Toowoomba). Carnival of Flowers period had extended special hours (Sept-Oct)."
+    },
+    {
+      "name": "Noosa Farmers Market",
+      "type": "farmers_market",
+      "address": "155 Weyba Road",
+      "locality": "Noosaville",
+      "state": "QLD",
+      "postcode": "4566",
+      "products": [],
+      "otherProducts": "Organic produce, nuts, olives, herbs, seafood, bread and cheese.",
+      "tags": [],
+      "hours": {
+        "kind": "weekly",
+        "days": {
+          "sun": [
+            [
+              "07:00",
+              "12:00"
+            ]
+          ]
+        },
+        "note": null
+      },
+      "hoursAsStated": "Sunday: 7:00am - midday.",
+      "website": "https://noosafarmersmarket.com.au",
+      "phone": null,
+      "description": "Sunday farmers market at 155 Weyba Road, Noosaville.",
+      "sources": [
+        "https://noosafarmersmarket.com.au"
+      ],
+      "confidence": "high",
+      "caveats": "Site mentions 'fresh organic produce' as a stall type, not market-wide certification."
+    },
+    {
+      "name": "Tolga Markets",
+      "type": "farmers_market",
+      "address": "Morrow Park (next to Tolga Racecourse)",
+      "locality": "Tolga",
+      "state": "QLD",
+      "postcode": "4882",
+      "products": [],
+      "otherProducts": "Fresh produce, preserves, plants, arts and crafts.",
+      "tags": [],
+      "hours": {
+        "kind": "weekly",
+        "days": {
+          "sun": [
+            [
+              "07:00",
+              "12:00"
+            ]
+          ]
+        },
+        "note": "First Sunday of the month."
+      },
+      "hoursAsStated": "First Sunday of the Month, 7am-12noon, Morrow Park.",
+      "website": null,
+      "phone": null,
+      "description": "Monthly community market in Tolga on the Atherton Tablelands.",
+      "sources": [
+        "https://trc.qld.gov.au/tablelands-markets",
+        "https://www.athertontablelands.com.au/cant-miss-markets/"
+      ],
+      "confidence": "medium",
+      "caveats": "Tablelands Regional Council lists time/place but not what Tolga stalls sell; tourism blog calls it supporting local farmers (spelled 'Marrow park'). Postcode not on the pages."
+    },
+    {
+      "name": "Atherton Artisan & Farmers Night Markets",
+      "type": "farmers_market",
+      "address": "Priors Creek Parklands, Mabi Way",
+      "locality": "Atherton",
+      "state": "QLD",
+      "postcode": "4883",
+      "products": [],
+      "otherProducts": null,
+      "tags": [],
+      "hours": {
+        "kind": "weekly",
+        "days": {
+          "fri": [
+            [
+              "17:00",
+              "20:00"
+            ]
+          ]
+        },
+        "note": "First Friday of the month."
+      },
+      "hoursAsStated": "First Friday of the Month, 5-8pm.",
+      "website": null,
+      "phone": null,
+      "description": "Monthly evening artisan and farmers market in Atherton.",
+      "sources": [
+        "https://trc.qld.gov.au/tablelands-markets"
+      ],
+      "confidence": "medium",
+      "caveats": "Only the council list was opened; no product detail beyond the market name."
+    },
+    {
+      "name": "Freds Pass Rural Markets",
+      "type": "farmers_market",
+      "address": null,
+      "locality": "Freds Pass",
+      "state": "NT",
+      "postcode": "",
+      "products": [
+        "fruit",
+        "veg",
+        "eggs"
+      ],
+      "otherProducts": "Plants, poultry, crafts and food stalls.",
+      "tags": [],
+      "hours": {
+        "kind": "weekly",
+        "days": {
+          "sat": [
+            [
+              "08:00",
+              "13:00"
+            ]
+          ]
+        },
+        "note": null
+      },
+      "hoursAsStated": "Saturdays (all year), 8.00am to 1.00pm.",
+      "website": null,
+      "phone": null,
+      "description": "Weekly rural market at the Freds Pass Sport and Recreation Reserve outside Darwin.",
+      "sources": [
+        "https://litchfield.nt.gov.au/community/living-litchfield/markets",
+        "https://northernterritory.com/us/en/articles/markets-in-the-nt"
+      ],
+      "confidence": "medium",
+      "caveats": "Council and NT tourism agree Saturday 8-1 (some web results say Sunday, ignore). Street address and postcode not given on pages; venue is the Multi-Purpose Hall at Freds Pass Sport and Recreation Reserve. NT tourism says produce is 'mostly organic' (not certified). Market's own website was not found."
+    },
+    {
+      "name": "Rapid Creek Markets",
+      "type": "farmers_market",
+      "address": "48 Trower Road (Rapid Creek Business Village)",
+      "locality": "Rapid Creek",
+      "state": "NT",
+      "postcode": "0810",
+      "products": [
+        "fruit",
+        "veg",
+        "milk"
+      ],
+      "otherProducts": "Asian and tropical produce, seafood, meat, dairy, bakery, preserves.",
+      "tags": [],
+      "hours": {
+        "kind": "weekly",
+        "days": {
+          "sat": [
+            [
+              "07:00",
+              "14:00"
+            ]
+          ],
+          "sun": [
+            [
+              "07:00",
+              "14:00"
+            ]
+          ]
+        },
+        "note": null
+      },
+      "hoursAsStated": "Every Saturday and Sunday, 7am - 2pm, rain, hail or shine.",
+      "website": "https://rapidcreekmarkets.com.au",
+      "phone": "(08) 8948 4866",
+      "description": "Darwin's oldest market, selling tropical produce, some grown in Darwin's rural area.",
+      "sources": [
+        "https://rapidcreekmarkets.com.au",
+        "https://northernterritory.com/us/en/articles/markets-in-the-nt",
+        "https://discover.darwin.nt.gov.au/blogs/darwin-markets"
+      ],
+      "confidence": "medium",
+      "caveats": "The market site still shows an old COVID-19 'temporarily suspended' banner (2020) at the top while the body and a 2026 copyright show it open; NT tourism confirms the hours. Confirm before publishing."
+    },
+    {
+      "name": "Nightcliff Markets",
+      "type": "farmers_market",
+      "address": "Nightcliff Shopping Centre, Dick Ward Drive",
+      "locality": "Nightcliff",
+      "state": "NT",
+      "postcode": "0810",
+      "products": [
+        "fruit"
+      ],
+      "otherProducts": "Crafts, food stalls, plants.",
+      "tags": [],
+      "hours": {
+        "kind": "weekly",
+        "days": {
+          "sun": [
+            [
+              "08:00",
+              "14:00"
+            ]
+          ]
+        },
+        "note": null
+      },
+      "hoursAsStated": "Every Sunday from 8am to 2pm.",
+      "website": null,
+      "phone": null,
+      "description": "Weekly Sunday community market in Nightcliff where local farmers sell fresh fruit.",
+      "sources": [
+        "https://northernterritory.com/us/en/articles/markets-in-the-nt",
+        "https://discover.darwin.nt.gov.au/blogs/darwin-markets"
+      ],
+      "confidence": "medium",
+      "caveats": "Mixed craft/food market; farm produce stated only by the Darwin council page. No street number, postcode inferred 0810 not stated. Market's own site not found."
+    },
+    {
+      "name": "Berry Springs Markets",
+      "type": "farmers_market",
+      "address": "Berry Springs hall (street address not stated)",
+      "locality": "Berry Springs",
+      "state": "NT",
+      "postcode": "0838",
+      "products": [],
+      "otherProducts": "Local produce and gifts sold by community residents.",
+      "tags": [],
+      "hours": {
+        "kind": "weekly",
+        "days": {
+          "sun": [
+            [
+              "08:00",
+              "12:00"
+            ]
+          ]
+        },
+        "note": "Last Sunday of each month, March to December only."
+      },
+      "hoursAsStated": "Sunday (last Sunday of each month), 8.00am - 12.00 midday, March to December.",
+      "website": null,
+      "phone": null,
+      "description": "Small monthly community market under the Berry Springs hall.",
+      "sources": [
+        "https://litchfield.nt.gov.au/community/living-litchfield/markets"
+      ],
+      "confidence": "medium",
+      "caveats": "Only the Litchfield Council listing was opened. Postcode 0838 taken from Berry Springs address on another page. Council also lists a market phone and email; omitted as not from the market's own site."
+    }
+  ],
+  "unverified": [
+    {
+      "name": "Strawberry Fields (pick your own)",
+      "locality": "Palmview",
+      "state": "QLD",
+      "why": "Own site returned nothing; only search snippets (open 7 days 8-4, PYO June-Nov).",
+      "leadUrl": "https://www.visitsunshinecoast.com/attraction/5eb9d86e8f2bab5442558e4b/strawberry-fields"
+    },
+    {
+      "name": "Maleny Cheese",
+      "locality": "Maleny",
+      "state": "QLD",
+      "why": "Site blocked bot check; older snippet hours conflict.",
+      "leadUrl": "https://www.malenycheese.com.au"
+    },
+    {
+      "name": "Crazy Acres farm shop",
+      "locality": "Berry Springs",
+      "state": "NT",
+      "why": "Dry-season hours (May-Sept) only; likely closed in November; 70 Reedbeds Road, 0838 per Tourism Top End.",
+      "leadUrl": "https://www.tourismtopend.com.au/darwin-region/crazy-acres"
+    },
+    {
+      "name": "Gallo Dairyland",
+      "locality": "Atherton Tablelands",
+      "state": "QLD",
+      "why": "Site opened but no address or opening hours found.",
+      "leadUrl": "https://www.gallodairyland.com.au"
+    },
+    {
+      "name": "Parap Village Markets",
+      "locality": "Parap",
+      "state": "NT",
+      "why": "Own site subpages 404; NT tourism says Saturdays 8am-2pm but produce focus unclear.",
+      "leadUrl": "https://www.parapvillage.com.au"
+    },
+    {
+      "name": "Palmerston Markets",
+      "locality": "Palmerston",
+      "state": "NT",
+      "why": "Dry-season Friday evening market; council page 404; likely not running in November.",
+      "leadUrl": "https://palmerston.nt.gov.au/node/83"
+    },
+    {
+      "name": "Boonah Country Markets",
+      "locality": "Boonah",
+      "state": "QLD",
+      "why": "Only regional tourism page seen; not produce-focused.",
+      "leadUrl": "https://www.visitscenicrim.com.au/scenic-rim-weekend-country-markets/"
+    },
+    {
+      "name": "Plainland Country Markets",
+      "locality": "Plainland",
+      "state": "QLD",
+      "why": "Dated event listing shows market/crafts and a seafood van; no farm produce stated.",
+      "leadUrl": "https://www.luvyalockyer.com.au/whats-on/events/event/24269-plainland-country-markets"
+    },
+    {
+      "name": "Yungaburra Markets",
+      "locality": "Yungaburra",
+      "state": "QLD",
+      "why": "Craft-heavy; council lists Bruce Jones Park 4th Saturday 7.30-12.30 only.",
+      "leadUrl": "https://trc.qld.gov.au/tablelands-markets"
+    },
+    {
+      "name": "Yandina Country Markets / Kawana Waters / Witta / Marcoola farmers markets",
+      "locality": "Sunshine Coast",
+      "state": "QLD",
+      "why": "Only the Visit Sunshine Coast guide snippet seen; own sites not found or empty.",
+      "leadUrl": "https://www.visitsunshinecoast.com/guide/harvest-sunshine-at-these-sunshine-coast-farmers-markets"
+    },
+    {
+      "name": "Skybury Coffee / Wondaree Macadamias / Tropiculture / Rolin Farms / McMartins Farm",
+      "locality": "Tablelands / Moreton Bay / Sunshine Coast",
+      "state": "QLD/NT",
+      "why": "Sites unusable (parked domain, wrong site) or no hours found.",
+      "leadUrl": "https://www.skybury.com.au"
+    }
+  ]
+}

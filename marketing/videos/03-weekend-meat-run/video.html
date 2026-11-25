@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<title>Farm Direct video 03: Weekend Meat Run</title>
+<!-- Video 03 "Weekend Meat Run" (15 s). Render: node marketing/videos/render.mjs 03-weekend-meat-run
+     Preview: video.html?cta=soon&guides=1&t=2.4 -->
+<link rel="stylesheet" href="../shared/engine.css">
+<style>
+  /* Hook checklist rows (own markup; left-aligned, not engine captions) */
+  .wk-row-text { position: absolute; left: 210px; font-size: 120px; color: #111111;
+                 transform-origin: 0 60%; will-change: transform, opacity; }
+  .wk-row-text.accent { color: #1B7335; text-decoration: underline; text-decoration-color: #1B7335;
+                        text-decoration-thickness: 6px; text-underline-offset: 16px; text-decoration-skip-ink: none; }
+  .wk-box { position: absolute; left: 107.5px; width: 77px; height: 77px; overflow: visible; }
+  .wk-row { position: absolute; inset: 0; will-change: opacity; }
+  /* Faint lighter rim so the graphite bezel separates from the forest ground */
+  .fd-phone.on-dark { box-shadow: 0 0 0 2px rgba(247,245,239,0.16), 0 30px 80px rgba(0,0,0,0.45); }
+  /* Expanding rings (own markup, inside a screen's source layer, so sizes are source px) */
+  .wk-ring { position: absolute; pointer-events: none; box-sizing: border-box; transform-origin: 50% 50%; }
+</style>
+</head>
+<body>
+<div class="fd-stage"></div>
+<script src="../shared/engine.js"></script>
+<script src="../shared/preview.js"></script>
+<script>
+FD.video({
+  duration: 15.0,
+  ground: FD.C.offwhite,
+  setup(FD) {
+    const { C, UI } = FD;
+    const NS = 'http://www.w3.org/2000/svg';
+    const svgEl = (tag, attrs) => {
+      const e = document.createElementNS(NS, tag);
+      Object.keys(attrs).forEach((k) => e.setAttribute(k, attrs[k]));
+      return e;
+    };
+
+    // ---------------------------------------------------------------
+    // 0.00-1.40 HOOK: weekend checklist on off-white.
+    // Three rows; text x 210, baselines 760 / 920 / 1080; 72 px boxes at x 110-182.
+    // ---------------------------------------------------------------
+    const hook = FD.layer();
+    hook.style.transformOrigin = '505px 920px';
+    const rows = [
+      { text: 'Coffee.', base: 760, at: 0.05, tick: C.green },
+      { text: 'Market.', base: 920, at: 0.40, tick: C.green },
+      { text: 'Real meat.', base: 1080, at: 0.75, tick: C.gold, accent: true },   // the video's only gold mark
+    ];
+    rows.forEach((r) => {
+      const row = document.createElement('div'); row.className = 'wk-row'; hook.appendChild(row);
+      // box: 72 px rounded square, 5 px ink stroke, centred on the cap height of the text
+      const svg = svgEl('svg', { class: 'wk-box', viewBox: '0 0 77 77' });
+      svg.style.top = (r.base - 44 - 38.5) + 'px';
+      svg.appendChild(svgEl('rect', { x: 2.5, y: 2.5, width: 72, height: 72, rx: 16, fill: 'none', stroke: C.ink, 'stroke-width': 5 }));
+      const tick = svgEl('polyline', { points: '19,40 33,54 59,24', fill: 'none', stroke: r.tick, 'stroke-width': 10,
+                                       'stroke-linecap': 'round', 'stroke-linejoin': 'round' });
+      svg.appendChild(tick);
+      row.appendChild(svg);
+      const tx = document.createElement('div');
+      tx.className = 'fd-type wk-row-text' + (r.accent ? ' accent' : '');
+      tx.textContent = r.text;
+      row.appendChild(tx);
+      FD.baselineTop(tx, r.base);
+      r.row = row;
+      FD.popIn(tx, r.at);                                         // family pop, 8 frames
+      FD.draw(tick, r.at, r.at + 0.20, 'outCubic');               // tick stroke-draws in 0.2 s
+    });
+    FD.dim(rows[0].row, 0.40, 0.45);
+    FD.dim(rows[1].row, 0.75, 0.45);
+    FD.punch(hook, 0.75, { peak: 1.06, frames: 4 });
+    FD.show(hook, -Infinity, 1.40);
+
+    // ---------------------------------------------------------------
+    // 1.40-3.00 MEAT FILTER ON: hard cut to app grey, phone rises with 02.
+    // ---------------------------------------------------------------
+    FD.groundTo(1.40, C.grey);
+    const p1 = FD.phone()
+      .screen('meat', '02-explore-meat.png', 'list')
+      .enter(1.40, { tilt: [3, 1.5] });
+    // 'Filters 1' proof: a 6 px outline holds, and a thicker glowing ring scales out 1.0 -> 1.25 and fades, twice.
+    p1.outline('meat', 1.70, { box: UI.filtersBox, mode: 'pulse', hold: 0.7, width: 6 });
+    {
+      const L = p1.screens.meat, sc = L.view.scale;
+      const [bx, by, bw, bh] = UI.filtersBox;
+      const [sx, sy] = p1.frameToSrc('meat', bx - 6, by - 6);
+      [1.70, 1.97].forEach((t0) => {
+        const ring = document.createElement('div'); ring.className = 'wk-ring';
+        Object.assign(ring.style, {
+          left: sx + 'px', top: sy + 'px', width: (bw + 12) / sc + 'px', height: (bh + 12) / sc + 'px',
+          borderRadius: 30 / sc + 'px', border: (7 / sc) + 'px solid ' + C.green,
+          boxShadow: '0 0 ' + (18 / sc) + 'px ' + (4 / sc) + 'px rgba(27,115,53,0.55)',
+        });
+        L.src.appendChild(ring);
+        FD.onFrame((t) => {
+          const a = FD.T(ring), t1 = t0 + 0.45;
+          if (t < t0 - 1e-6 || t >= t1 - 1e-6) { a.hidden = true; return; }
+          const p = FD.ease.outCubic((t - t0) / (t1 - t0));
+          a.scale *= 1 + 0.25 * p;
+          a.opacity *= Math.min(1, (t - t0) / FD.f(2) + 0.34) * (1 - p);
+        });
+      });
+    }
+    FD.show(p1.el, -Infinity, 3.00);
+    FD.caption('*Meat* filter on.', 1.60, 2.30);
+    FD.caption('About *40* places', 2.30, 3.00);
+
+    // ---------------------------------------------------------------
+    // 3.00-4.60 THE WEEKEND: type panel on forest.
+    // ---------------------------------------------------------------
+    FD.groundTo(3.00, C.forest);
+    const panel = FD.layer();
+    FD.show(panel, 3.00, Infinity);
+    FD.text([{ pill: 'Meat', size: 72, radius: 48, at: 3.00 },
+             { pill: 'This weekend', size: 72, radius: 48, light: true, at: 3.15 }],
+            3.00, Infinity, { y: 620, size: 72, minSize: 72, tone: 'dark', parent: panel });
+    // 'Nearly 30' at 3.40, subline at 3.75, whip at 5.00: the full line holds 1.25 s.
+    FD.text('Nearly *30*', 3.40, Infinity,
+            { y: 900, size: 160, minSize: 120, tone: 'dark', stagger: 0, parent: panel,
+              pop: { from: 1.12, peak: 0.97, frames: 9 } });   // slam; peak width stays inside x 60-950
+    const sub = FD.text([{ text: 'list weekend hours', accent: true }], 3.75, Infinity,
+            { y: 1030, size: 80, minSize: 80, tone: 'dark', stagger: 0, parent: panel,
+              pop: { from: 1, peak: 1, frames: 8, fade: 0 } });
+    FD.riseIn(sub.el, 3.75, { dy: 40, frames: 8 });
+
+    // ---------------------------------------------------------------
+    // 5.00-5.40 WHIP: panel whips out left, phone slides in from the right on the night map.
+    // ---------------------------------------------------------------
+    FD.whip(5.00, panel, null);
+    const MAP_VIEW = { scale: 0.85, srcX: 360, srcY: 520, map: true };
+    const p2 = FD.phone({ dark: true })
+      .screen('map', '07-map-dark.png', MAP_VIEW)
+      .screen('saved', '05-saved.png', 'list')
+      .enter(5.00, { from: 'right', dur: 0.4, tilt: [3, 1.5] });
+
+    // 5.40-8.00 PIN IT, DRIVE THERE: pan north (source row 520 -> 360 at the window top).
+    // The app's floating location / Filters capsules sit at source rows ~210-340, so the pan
+    // stops at row 360 and they never enter the window (no 'SW 2000' crop, no capsules riding the map).
+    p2.pan('map', 5.40, 8.00, { y: [520, 360] });
+    // Interior pins only, in source px (07-map-dark.png): Sydney coast, Lithgow, Central Coast.
+    // All are well inside the window (x 272-587) and the safe area (y < 1330) whenever they pulse.
+    const PINS1 = [[876, 1410], [577, 1191], [947, 1139]];
+    const PINS2 = [[947, 1139], [577, 1191], [876, 1410]];
+    const mapL = p2.screens.map, msc = mapL.view.scale;
+    const ringPin = (s, t0) => {
+      // ring grows from radius 46 to 90 frame px, opacity 0.8 -> 0, in off-white
+      const ring = document.createElement('div'); ring.className = 'wk-ring';
+      Object.assign(ring.style, { borderRadius: '50%', border: (5 / msc) + 'px solid ' + C.offwhite,
+                                  boxShadow: '0 0 ' + (10 / msc) + 'px rgba(205,232,196,0.6)' });
+      mapL.src.appendChild(ring);
+      FD.onFrame((t) => {
+        const a = FD.T(ring), t1 = t0 + 0.50;
+        if (t < t0 - 1e-6 || t >= t1 - 1e-6) { a.hidden = true; return; }
+        const p = FD.ease.outCubic((t - t0) / (t1 - t0));
+        const r = (46 + 44 * p) / msc;
+        Object.assign(ring.style, { left: (s[0] - r) + 'px', top: (s[1] - r) + 'px', width: 2 * r + 'px', height: 2 * r + 'px' });
+        a.opacity *= 0.8 * (1 - p);
+      });
+    };
+    PINS1.forEach((s, i) => { p2.pulse('map', 5.60 + i * 0.15, { src: s, r: 46 }); ringPin(s, 5.60 + i * 0.15); });
+    PINS2.forEach((s, i) => { p2.pulse('map', 6.70 + i * 0.15, { src: s, r: 46 }); ringPin(s, 6.70 + i * 0.15); });
+    FD.caption('*Pin* it.', 5.60, 6.50, { tone: 'dark' });
+    FD.caption('Drive *there.*', 6.50, 8.00, { tone: 'dark' });
+
+    // 8.00-8.40 SLIDE TO SAVED inside the window; ground fades forest -> grey (6 frames, mid-slide).
+    p2.slide(8.00, 'saved', { dir: 'left', dur: 0.35 });
+    FD.groundTo(8.07, C.grey, { mode: 'fade', dur: FD.f(6) });
+
+    // 8.40-10.60 SAVED FOR THE TRIP (all three cards at equal size, no zoom).
+    // Hand-held sway on top of the engine drift (about 2.5 px and 0.3 deg) so the beat is not frozen.
+    p2.motion((t, st) => {
+      if (t < 8.00) return;
+      const k = Math.min(1, (t - 8.00) / 0.4);
+      st.x += k * 2.5 * Math.sin(2 * Math.PI * 0.45 * (t - 8.00));
+      st.rot += k * 0.3 * Math.sin(2 * Math.PI * 0.32 * (t - 8.00));
+    });
+    FD.caption('*Save* a few.', 8.50, 9.40);
+    // One two-line caption: 'List works' then 'with no signal.' (emphasised), exiting together.
+    FD.text('List works', 9.40, 10.60, { y: 266, size: 84, minSize: 84, tone: 'light' });
+    FD.text('with *no signal.*', 9.55, 10.60, { y: 350, size: 84, minSize: 84, tone: 'light' });
+
+    // 10.60-11.00 EXIT: phone drops, bottom-to-top wipe to forest.
+    p2.exit(10.60);
+    FD.wipe(10.60, C.forest);
+
+    // 11.00-12.90 CHECK FIRST.
+    const l1 = FD.typeLine('Check the *hours*', 11.10, { y: 800, size: 112, maxWidth: 840, pop: { peak: 1.04 } });
+    const l2 = FD.typeLine([{ text: 'before you go.', accent: true }], 11.60, { y: 930, size: 112, maxWidth: 840, pop: { peak: 1.04 } });
+
+    // 12.90-15.00 END CARD (last 2.1 s; still for the final 1.5 s).
+    FD.endCard(12.90, { lines: [l1, l2] });
+  },
+});
+</script>
+</body>
+</html>

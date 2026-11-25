@@ -1,0 +1,64 @@
+{
+  "expo": {
+    "name": "Farm Direct",
+    "slug": "farm-direct",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/icon.png",
+    "scheme": "farmdirect",
+    "userInterfaceStyle": "automatic",
+    "ios": {
+      "bundleIdentifier": "au.farmdirect.app",
+      "supportsTablet": false,
+      "usesAppleSignIn": true,
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      },
+      "appleTeamId": "JAFHQKKHVK"
+    },
+    "web": {
+      "output": "single",
+      "favicon": "./assets/images/favicon.png"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-apple-authentication",
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#FFFFFF",
+          "image": "./assets/images/splash-icon.png",
+          "imageWidth": 120,
+          "dark": {
+            "backgroundColor": "#000000"
+          }
+        }
+      ],
+      [
+        "expo-location",
+        {
+          "locationWhenInUsePermission": "Farm Direct uses your location only while you are using the app, to show how far farms, stalls and markets are from you.",
+          "locationAlwaysAndWhenInUsePermission": "Farm Direct uses your location only while you are using the app, to show how far farms, stalls and markets are from you. It never tracks you in the background.",
+          "motionUsagePermission": false
+        }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Farm Direct needs your photos so you can add pictures of your farm, stall or produce to your listing.",
+          "cameraPermission": "Farm Direct uses your camera so you can take pictures of your farm, stall or produce for your listing.",
+          "microphonePermission": false
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": false
+    },
+    "updates": {
+      "enabled": false
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    }
+  }
+}

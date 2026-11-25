@@ -1,0 +1,438 @@
+"""Prepare Farm Direct 1.0 in App Store Connect using the repository's signing key."""
+import base64
+import hashlib
+import html
+import json
+import os
+from pathlib import Path
+import re
+import sys
+import time
+
+import jwt
+import requests
+
+ROOT = Path(__file__).resolve().parents[1]
+API = "https://api.appstoreconnect.apple.com"
+COPY = (ROOT / "docs/APP_STORE.md").read_text()
+PUBLIC = "https://github.com/kissiandxo/farmappaus/blob/ca0247902258d29a3e4212989eaf16d145a86c0a/docs/"
+KEY = os.environ["ASC_KEY_P8"].strip()
+if "BEGIN PRIVATE KEY" not in KEY:
+    KEY = base64.b64decode(KEY)
+
+
+class PrivacyAnswersPending(RuntimeError):
+    """Apple requires the account holder to publish the privacy questionnaire."""
+
+
+class DraftMediaLocked(RuntimeError):
+    """Apple locks new media while the version is attached to an unsent review draft."""
+
+
+def api(method, path, *, params=None, body=None, optional=False):
+    token = jwt.encode({"iss": os.environ["ASC_ISSUER_ID"], "exp": int(time.time()) + 600,
+                        "aud": "appstoreconnect-v1"}, KEY, algorithm="ES256",
+                       headers={"kid": os.environ["ASC_KEY_ID"]})
+    response = requests.request(method, API + path, params=params, json=body, timeout=60,
+                                headers={"Authorization": "Bearer " + token})
+    if optional and response.status_code == 404:
+        return None
+    if not response.ok:
+        errors = response.json().get("errors", [])
+        if method == "POST" and path in ("/v1/appScreenshots", "/v1/appPreviews") and any(
+            e.get("code") == "STATE_ERROR" and "while ready for review" in e.get("detail", "").lower() for e in errors
+        ):
+            raise DraftMediaLocked("Apple requires editing the unsent review item before adding media")
+        requirements = set()
+        if path == "/v1/reviewSubmissionItems" or path.startswith("/v1/reviewSubmissions/"):
+            for error in errors:
+                for group in error.get("meta", {}).get("associatedErrors", {}).values():
+                    for item in group:
+                        requirements.add(item.get("code"))
+                        print("Apple review requirement:", item.get("code"), item.get("detail"), flush=True)
+        if path == "/v1/reviewSubmissionItems" and len(errors) == 1 and requirements == {"STATE_ERROR.APP_DATA_USAGES_REQUIRED"}:
+            raise PrivacyAnswersPending("Apple is waiting for the App Privacy answers to be published")
+        raise RuntimeError(f"{method} {path}: " + "; ".join(
+            f"{e.get('code')}: {e.get('detail', '')}" for e in errors))
+    return response.json().get("data") if response.content else None
+
+
+def ref(kind, id):
+    return {"type": kind, "id": id}
+
+
+def rel(kind, id):
+    return {"data": ref(kind, id)}
+
+
+def write(kind, attrs=None, relations=None, *, id=None, included=None, version="v1"):
+    data = {"type": kind}
+    if attrs:
+        data["attributes"] = attrs
+    if relations:
+        data["relationships"] = relations
+    body = {"data": data}
+    if included:
+        body["included"] = included
+    if id:
+        data["id"] = id
+        return api("PATCH", f"/{version}/{kind}/{id}", body=body)
+    return api("POST", f"/{version}/{kind}", body=body)
+
+
+def app(bundle):
+    return api("GET", "/v1/apps", params={"filter[bundleId]": bundle})[0]
+
+
+def child(parent, name, **kwargs):
+    return api("GET", f"/v1/{parent['type']}/{parent['id']}/{name}", **kwargs)
+
+
+def section(title):
+    return re.split(r"^## ", COPY.split(f"## {title}", 1)[1], flags=re.M)[0].split("\n", 1)[1].strip()
+
+
+def localization(parent, kind, locale):
+    rows = child(parent, kind)
+    return next((r for r in rows if r["attributes"]["locale"] == locale), None)
+
+
+def review_details(version):
+    detail = child(version, "appStoreReviewDetail", optional=True)
+    fields = ["contactFirstName", "contactLastName", "contactPhone", "contactEmail"]
+    attrs = (detail or {}).get("attributes", {})
+    if not all(attrs.get(k) for k in fields):
+        visera = app("com.visera.Visera")
+        versions = child(visera, "appStoreVersions", params={"filter[platform]": "IOS", "limit": 200})
+        for row in versions:
+            saved = child(row, "appStoreReviewDetail", optional=True)
+            attrs = (saved or {}).get("attributes", {})
+            if all(attrs.get(k) for k in fields):
+                break
+        else:
+            beta = child(visera, "betaAppReviewDetail", optional=True)
+            attrs = (beta or {}).get("attributes", {})
+            if not all(attrs.get(k) for k in fields):
+                # The seller also publishes their business contact on Apple's EU storefront.
+                page = requests.get("https://apps.apple.com/ie/app/visera-wall-paint-visualiser/id6791178782", timeout=30)
+                page.raise_for_status()
+                text = " ".join(html.unescape(re.sub("<[^>]+>", " ", page.text)).split())
+                trader = re.search(r"Phoenix Jennings has identified itself as a trader.{0,900}?Phone Number ([+0-9() -]+) Email ([^ ]+@[^ ]+)", text)
+                if not trader:
+                    raise RuntimeError("Unable to verify Visera's published trader contact on Apple's listing")
+                phone = re.sub(r"[^+0-9]", "", trader[1])
+                if not re.fullmatch(r"\+61[0-9]{9}", phone):
+                    raise RuntimeError("Unexpected format for Visera's trader phone")
+                attrs = dict(zip(fields, ("Phoenix", "Jennings", phone, trader[2])))
+    notes = section("Notes for App Review").split("> **Contact:**")[0]
+    notes = re.sub(r"^> ?", "", notes, flags=re.M).replace("**", "").strip()
+    values = {k: attrs[k] for k in fields}
+    values.update(notes=notes, demoAccountRequired=False)
+    if detail:
+        write(detail["type"], values, id=detail["id"])
+    else:
+        write("appStoreReviewDetails", values, {"appStoreVersion": rel(version["type"], version["id"])})
+
+
+def transfer_asset(row, payload):
+    attrs = row["attributes"]
+    state = attrs["assetDeliveryState"]["state"]
+    if state == "FAILED":
+        raise RuntimeError("Apple rejected " + attrs["fileName"] + ": " + str(attrs["assetDeliveryState"].get("errors")))
+    if state != "AWAITING_UPLOAD":
+        return
+    for part in attrs["uploadOperations"]:
+        start = part["offset"]
+        response = requests.request(part["method"], part["url"], data=payload[start:start + part["length"]],
+                                    headers={h["name"]: h["value"] for h in part["requestHeaders"]}, timeout=120)
+        if not response.ok:
+            raise RuntimeError(f"Asset transfer failed for {attrs['fileName']}: HTTP {response.status_code}")
+    write(row["type"], {"uploaded": True, "sourceFileChecksum": hashlib.md5(payload).hexdigest()}, id=row["id"])
+
+
+def app_preview(loc):
+    asset = ROOT / "marketing/launch-film/farm-direct-hero.mp4"
+    payload = asset.read_bytes()
+    upload_name = "farm-direct-hero-" + hashlib.md5(payload).hexdigest()[:12] + ".mp4"
+    preview_sets = child(loc, "appPreviewSets")
+    group = next((item for item in preview_sets if item["attributes"]["previewType"] == "IPHONE_67"), None)
+    if not group:
+        group = write("appPreviewSets", {"previewType": "IPHONE_67"},
+                      {"appStoreVersionLocalization": rel(loc["type"], loc["id"])})
+    previews = child(group, "appPreviews")
+    preview = next((item for item in previews if item["attributes"]["fileName"] == upload_name), None)
+    if not preview:
+        preview = write("appPreviews", {"fileName": upload_name, "fileSize": len(payload), "mimeType": "video/mp4",
+                        "previewFrameTimeCode": "00:00:02:00"}, {"appPreviewSet": rel(group["type"], group["id"])})
+    transfer_asset(preview, payload)
+    for _ in range(120):
+        attrs = api("GET", "/v1/appPreviews/" + preview["id"])["attributes"]
+        delivery = attrs["assetDeliveryState"]
+        video = attrs.get("videoDeliveryState") or {}
+        if "FAILED" in (delivery["state"], video.get("state")):
+            raise RuntimeError("Preview processing failed: " + str(delivery.get("errors") or video.get("errors")))
+        if video.get("state") == "COMPLETE":
+            for previous in previews:
+                old = previous["attributes"]
+                if (old["fileName"] == "farm-direct-hero.mp4"
+                        and old.get("sourceFileChecksum") == "4885903fc2b92e6cbfa6bc58e116638a"):
+                    api("DELETE", "/v1/appPreviews/" + previous["id"])
+            return
+        time.sleep(10)
+    raise RuntimeError("The uploaded app preview is still processing at Apple")
+
+
+def screenshots(loc):
+    kind = "APP_IPHONE_67"
+    sets = child(loc, "appScreenshotSets")
+    group = next((x for x in sets if x["attributes"]["screenshotDisplayType"] == kind), None)
+    if not group:
+        group = write("appScreenshotSets", {"screenshotDisplayType": kind},
+                      {"appStoreVersionLocalization": rel(loc["type"], loc["id"])})
+    existing = {x["attributes"]["fileName"]: x for x in child(group, "appScreenshots")}
+    directory = ROOT / "marketing/app-store-screenshots"
+    # Keep the previous native images locally. Replace one at a time so the
+    # gallery fits Apple's ten-image limit even on a retry after a partial upload.
+    replacements = {
+        "store-01-discover.png": "store-01-explore.png",
+        "store-02-butchers.png": "store-02-butcher.png",
+        "store-03-market-dates.png": None,
+        "03-place-farm-shop.png": None,
+        "store-05-weekend.png": "05-saved.png",
+        "store-03-market.png": None,
+        "09-market-welcome.png": "09-welcome.png",
+        "10-browse-tour.png": "10-tour.png",
+    }
+    names = list(replacements)
+    processed = {}
+    # Free the slots occupied by old versions before adding the new market calendar.
+    for name, old_name in sorted(replacements.items(), key=lambda pair: pair[1] is None):
+        image = (directory / name).read_bytes()
+        row = existing.get(name)
+        if not row:
+            row = write("appScreenshots", {"fileName": name, "fileSize": len(image)},
+                        {"appScreenshotSet": rel(group["type"], group["id"])})
+        transfer_asset(row, image)
+        for _ in range(30):
+            row = api("GET", "/v1/appScreenshots/" + row["id"])
+            state = row["attributes"]["assetDeliveryState"]["state"]
+            if state == "COMPLETE":
+                checksum = row["attributes"].get("sourceFileChecksum")
+                if checksum and checksum.lower() != hashlib.md5(image).hexdigest():
+                    raise RuntimeError("Apple has different image contents for " + name)
+                break
+            if state == "FAILED":
+                raise RuntimeError("Apple rejected screenshot " + name)
+            time.sleep(5)
+        else:
+            raise RuntimeError("Apple is still processing screenshot " + name)
+        processed[name] = row
+        old = existing.get(old_name)
+        if old and old["attributes"].get("sourceFileChecksum") == hashlib.md5((directory / old_name).read_bytes()).hexdigest():
+            api("DELETE", "/v1/appScreenshots/" + old["id"])
+    rows = child(group, "appScreenshots")
+    ordered = [processed[name] for name in names]
+    ordered.extend(row for row in rows if row["attributes"]["fileName"] not in names)
+    if [row["id"] for row in ordered] != [row["id"] for row in rows]:
+        api("PATCH", f"/v1/appScreenshotSets/{group['id']}/relationships/appScreenshots",
+            body={"data": [ref("appScreenshots", row["id"]) for row in ordered]})
+    observed = child(group, "appScreenshots")
+    if [row["id"] for row in observed] != [row["id"] for row in ordered]:
+        raise RuntimeError("Apple did not confirm the requested screenshot order")
+
+
+def pricing(target):
+    schedule = child(target, "appPriceSchedule", optional=True)
+    if schedule:
+        manual = child(schedule, "manualPrices", params={"include": "appPricePoint"}, optional=True) or []
+        for price in manual:
+            point = api(
+                "GET", "/v3/appPricePoints/" + price["relationships"]["appPricePoint"]["data"]["id"])
+            if float(point["attributes"]["customerPrice"]) != 0:
+                raise RuntimeError("Existing paid schedule requires reconciliation for free launch")
+        if manual:
+            return
+    prices = child(target, "appPricePoints", params={"filter[territory]": "AUS", "limit": 200})
+    free = next(x for x in prices if float(x["attributes"]["customerPrice"]) == 0)
+    local = ref("appPrices", "${free}")
+    write("appPriceSchedules", relations={"app": rel("apps", target["id"]), "baseTerritory": rel("territories", "AUS"),
+          "manualPrices": {"data": [local]}}, included=[{**local, "attributes": {"startDate": None},
+          "relationships": {"appPricePoint": rel("appPricePoints", free["id"])}}])
+
+
+def availability(target):
+    current = child(target, "appAvailabilityV2", optional=True)
+    if current:
+        rows = api("GET", f"/v2/appAvailabilities/{current['id']}/territoryAvailabilities",
+                   params={"include": "territory", "limit": 200})
+        au = next((r for r in rows if r["relationships"]["territory"]["data"]["id"] == "AUS"), None)
+        if au and au["attributes"]["available"]:
+            return
+        if au:
+            write("territoryAvailabilities", {"available": True}, id=au["id"])
+            return
+    territories = api("GET", "/v1/territories", params={"limit": 200})
+    rows = []
+    for territory in territories:
+        code = territory["id"]
+        rows.append({**ref("territoryAvailabilities", "${" + code + "}"),
+                     "attributes": {"available": code == "AUS"},
+                     "relationships": {"territory": rel("territories", code)}})
+    write("appAvailabilities", {"availableInNewTerritories": False}, {"app": rel("apps", target["id"]),
+          "territoryAvailabilities": {"data": [ref(row["type"], row["id"]) for row in rows]}},
+          included=rows, version="v2")
+
+
+def already_submitted(version, number):
+    state = version["attributes"].get("appVersionState") or version["attributes"]["appStoreState"]
+    print("Apple version state:", state, flush=True)
+    after_submission = {"WAITING_FOR_REVIEW", "IN_REVIEW", "ACCEPTED", "PENDING_APPLE_RELEASE",
+                        "PENDING_DEVELOPER_RELEASE", "PROCESSING_FOR_DISTRIBUTION", "READY_FOR_DISTRIBUTION",
+                        "PROCESSING_FOR_APP_STORE", "READY_FOR_SALE"}
+    if state in after_submission:
+        build = child(version, "build", optional=True)
+        current = (build or {}).get("attributes", {}).get("version")
+        if number is not None and current != number:
+            raise RuntimeError(f"Apple already has build {current} in state {state}")
+        print("Apple already has build", current, "in state", state, flush=True)
+        return True
+    return False
+
+
+def reopen_media_draft(target, version):
+    current = api("GET", "/v1/appStoreVersions/" + version["id"])
+    state = current["attributes"].get("appVersionState") or current["attributes"]["appStoreState"]
+    if state != "READY_FOR_REVIEW":
+        raise RuntimeError("Cannot reopen media in version state " + state)
+    for draft in child(target, "reviewSubmissions", params={"filter[platform]": "IOS"}):
+        if draft["attributes"]["state"] != "READY_FOR_REVIEW":
+            continue
+        for item in child(draft, "items", params={"include": "appStoreVersion"}):
+            linked = item["relationships"].get("appStoreVersion", {}).get("data")
+            if linked == ref(version["type"], version["id"]) and item["attributes"]["state"] == "READY_FOR_REVIEW":
+                api("DELETE", "/v1/reviewSubmissionItems/" + item["id"])
+                print("Reopened the unsent Farm Direct version for new media.", flush=True)
+                for _ in range(20):
+                    updated = api("GET", "/v1/appStoreVersions/" + version["id"])["attributes"]
+                    if (updated.get("appVersionState") or updated["appStoreState"]) == "PREPARE_FOR_SUBMISSION":
+                        return
+                    time.sleep(2)
+                raise RuntimeError("Apple has not yet unlocked the draft for media changes")
+    raise RuntimeError("No matching, unsent Farm Direct review item to reopen")
+
+
+def submit(target, version, number):
+    criteria = {"filter[app]": target["id"], "filter[version]": number,
+                "filter[preReleaseVersion.version]": "1.0.0", "filter[preReleaseVersion.platform]": "IOS"}
+    for _ in range(90):
+        rows = api("GET", "/v1/builds", params=criteria)
+        if rows:
+            state = rows[0]["attributes"]["processingState"]
+            if state == "VALID":
+                break
+            if state != "PROCESSING":
+                raise RuntimeError("Build " + number + " has state " + state)
+        time.sleep(30)
+    else:
+        raise RuntimeError("Apple has yet to process build " + number)
+    selected = child(version, "build", optional=True)
+    if not selected or selected["id"] != rows[0]["id"]:
+        write(version["type"], relations={"build": rel("builds", rows[0]["id"])}, id=version["id"])
+    print("Selected processed build", number, flush=True)
+    pending = child(target, "reviewSubmissions", params={"filter[platform]": "IOS"})
+    draft = None
+    for row in pending:
+        if row["attributes"]["state"] != "READY_FOR_REVIEW":
+            continue
+        items = child(row, "items", params={"include": "appStoreVersion"})
+        linked = [x["relationships"].get("appStoreVersion", {}).get("data") for x in items]
+        if linked == [ref(version["type"], version["id"])]:
+            draft = row
+            break
+        if not items:
+            draft = row
+    if not draft:
+        draft = write("reviewSubmissions", {"platform": "IOS"}, {"app": rel("apps", target["id"])})
+    if not child(draft, "items"):
+        write("reviewSubmissionItems", relations={"reviewSubmission": rel(draft["type"], draft["id"]),
+              "appStoreVersion": rel(version["type"], version["id"])})
+    result = write(draft["type"], {"submitted": True}, id=draft["id"])
+    print("Apple review submission state:", result["attributes"]["state"], flush=True)
+
+
+def main():
+    target = app("au.farmdirect.app")
+    locale = target["attributes"]["primaryLocale"]
+    if locale not in ("en-AU", "en-US", "en-GB"):
+        raise RuntimeError("Unexpected primary language " + locale)
+    print("App Store Connect app", target["id"], "primary language", locale, flush=True)
+    versions = child(target, "appStoreVersions", params={"filter[platform]": "IOS"})
+    version = next((v for v in versions if v["attributes"]["versionString"] in ("1.0.0", "1.0")), None)
+    if not version:
+        version = write("appStoreVersions", {"versionString": "1.0.0", "platform": "IOS"}, {"app": rel("apps", target["id"])})
+    event_path = os.environ.get("GITHUB_EVENT_PATH")
+    event = json.loads(Path(event_path).read_text()) if event_path else {}
+    match = re.search(r"\[submit-(\d+)\]", event.get("head_commit", {}).get("message", ""))
+    number = match.group(1) if match else None
+    if already_submitted(version, number):
+        return
+    write("apps", {"contentRightsDeclaration": "USES_THIRD_PARTY_CONTENT"}, id=target["id"])
+    info = next(x for x in child(target, "appInfos") if x["attributes"]["appStoreState"] in
+                ("PREPARE_FOR_SUBMISSION", "READY_FOR_REVIEW", "DEVELOPER_REJECTED", "REJECTED", "METADATA_REJECTED"))
+    info_loc = localization(info, "appInfoLocalizations", locale)
+    loc = localization(version, "appStoreVersionLocalizations", locale)
+    write(info_loc["type"], {"subtitle": "Farm shops, markets & butchers", "privacyPolicyUrl": PUBLIC + "PRIVACY-1.0.md"}, id=info_loc["id"])
+    write(info["type"], relations={"primaryCategory": rel("appCategories", "FOOD_AND_DRINK"),
+          "secondaryCategory": rel("appCategories", "LIFESTYLE")}, id=info["id"])
+    write(version["type"], {"copyright": "2026 Phoenix Jennings", "releaseType": "AFTER_APPROVAL"}, id=version["id"])
+    write(loc["type"], {"description": section("Description").split('\nThe "Report')[0].strip(),
+          "keywords": section("Keywords").splitlines()[0].strip("`"), "promotionalText": section("Promotional text"),
+          "supportUrl": PUBLIC + "SUPPORT.md"}, id=loc["id"])
+    rating = child(info, "ageRatingDeclaration")
+    answers = {k: False for k in ("advertising ageAssurance datingAndRelationships gambling healthOrWellnessTopics lootBox messagingAndChat parentalControls sharedLocation socialMedia socialMediaAgeRestricted unrestrictedWebAccess userGeneratedContent").split()}
+    answers.update({k: "NONE" for k in ("contests gamblingSimulated gunsOrOtherWeapons medicalOrTreatmentInformation profanityOrCrudeHumor sexualContentGraphicAndNudity sexualContentOrNudity horrorOrFearThemes matureOrSuggestiveThemes violenceCartoonOrFantasy violenceRealisticProlongedGraphicOrSadistic violenceRealistic").split()})
+    answers["alcoholTobaccoOrDrugUseOrReferences"] = "INFREQUENT"
+    tasks = [("Age rating", lambda: write(rating["type"], answers, id=rating["id"])),
+             ("Reviewer contact", lambda: review_details(version)), ("Screenshots", lambda: screenshots(loc)),
+             ("App preview", lambda: app_preview(loc)), ("Free price", lambda: pricing(target)), ("Australian availability", lambda: availability(target))]
+    failed = False
+    for label, task in tasks:
+        try:
+            try:
+                task()
+            except DraftMediaLocked:
+                if not number:
+                    raise
+                reopen_media_draft(target, version)
+                task()
+            print(label, "saved", flush=True)
+        except Exception as exc:
+            print(label, "failed:", exc, flush=True)
+            failed = True
+    if failed:
+        sys.exit(1)
+    if number:
+        wait_for_privacy = "[await-privacy]" in event.get("head_commit", {}).get("message", "")
+        deadline = time.monotonic() + (345 * 60 if wait_for_privacy else 0)
+        while True:
+            try:
+                submit(target, version, number)
+                break
+            except PrivacyAnswersPending:
+                remaining = deadline - time.monotonic()
+                if remaining <= 0:
+                    raise
+                delay = min(600, remaining)
+                print("Waiting for the account holder to publish App Privacy. Next check in",
+                      round(delay / 60), "minutes.", flush=True)
+                time.sleep(delay)
+                version = api("GET", "/v1/appStoreVersions/" + version["id"])
+                if already_submitted(version, number):
+                    break
+                selected = child(version, "build", optional=True)
+                if not selected or selected["attributes"]["version"] != number:
+                    raise RuntimeError("The selected build changed while waiting for App Privacy")
+
+
+if __name__ == "__main__":
+    main()

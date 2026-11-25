@@ -1,0 +1,876 @@
+{
+  "researchedOn": "2026-11-14",
+  "region": "SA/WA butchers",
+  "listings": [
+    {
+      "name": "Lyndoch Valley Butcher",
+      "type": "butcher",
+      "address": "36 Barossa Valley Way",
+      "locality": "Lyndoch",
+      "state": "SA",
+      "postcode": "5351",
+      "products": [
+        "beef",
+        "lamb",
+        "pork",
+        "chicken"
+      ],
+      "otherProducts": "Sausages, mettwurst, salami, ham and bacon",
+      "tags": [],
+      "hours": {
+        "kind": "weekly",
+        "days": {
+          "mon": [
+            [
+              "08:00",
+              "17:30"
+            ]
+          ],
+          "tue": [
+            [
+              "08:00",
+              "17:30"
+            ]
+          ],
+          "wed": [
+            [
+              "08:00",
+              "17:30"
+            ]
+          ],
+          "thu": [
+            [
+              "08:00",
+              "17:30"
+            ]
+          ],
+          "fri": [
+            [
+              "08:00",
+              "17:30"
+            ]
+          ],
+          "sat": [
+            [
+              "08:00",
+              "13:00"
+            ]
+          ]
+        },
+        "note": null
+      },
+      "hoursAsStated": "Monday to Friday 8am to 5:30pm, Saturday 8am to 1pm, closed Sunday.",
+      "website": "https://lyndochvalleybutcher.com.au/",
+      "phone": "(08) 8524 4078",
+      "description": "A butcher shop on the main road through Lyndoch in the southern Barossa selling fresh meat and house-made smallgoods.",
+      "sources": [
+        "https://lyndochvalleybutcher.com.au/",
+        "https://www.barossa.com/wp-content/uploads/2025/07/Barossa-Visitor-Centre-Food-Farm-Gate-Experiences-Factsheet.pdf"
+      ],
+      "confidence": "high",
+      "caveats": "The Barossa Visitor Centre factsheet (July 2025) gives the same address and hours."
+    },
+    {
+      "name": "Goodwood Quality Meats",
+      "type": "butcher",
+      "address": "121 Goodwood Road",
+      "locality": "Goodwood",
+      "state": "SA",
+      "postcode": "",
+      "products": [
+        "beef"
+      ],
+      "otherProducts": "Sausages and smallgoods",
+      "tags": [],
+      "hours": {
+        "kind": "weekly",
+        "days": {
+          "mon": [
+            [
+              "07:00",
+              "17:30"
+            ]
+          ],
+          "tue": [
+            [
+              "07:00",
+              "17:30"
+            ]
+          ],
+          "wed": [
+            [
+              "07:00",
+              "17:30"
+            ]
+          ],
+          "thu": [
+            [
+              "07:00",
+              "17:30"
+            ]
+          ],
+          "fri": [
+            [
+              "07:00",
+              "17:30"
+            ]
+          ],
+          "sat": [
+            [
+              "07:00",
+              "12:00"
+            ]
+          ]
+        },
+        "note": null
+      },
+      "hoursAsStated": "Monday to Friday 7am to 5:30pm, Saturday 7am to 12pm, Sunday closed.",
+      "website": "https://www.goodwoodqualitymeats.com.au/",
+      "phone": "08 8271 4183",
+      "description": "A suburban butcher shop on Goodwood Road in Adelaide's inner south selling fresh meat, sausages and smallgoods.",
+      "sources": [
+        "https://www.goodwoodqualitymeats.com.au/"
+      ],
+      "confidence": "high",
+      "caveats": "Postcode not shown on the page. The home page still carries a Christmas/New Year trading notice from the 2025 holidays, with normal hours after that. Only beef is named in the text I could read; other meats are likely but not stated."
+    },
+    {
+      "name": "Bos Taurus Butchery",
+      "type": "butcher",
+      "address": "Shop 17, 161 Norwood Place, The Parade",
+      "locality": "Norwood",
+      "state": "SA",
+      "postcode": "5067",
+      "products": [
+        "beef"
+      ],
+      "otherProducts": "Dry-aged meats, meat trays and barbecue packs",
+      "tags": [],
+      "hours": {
+        "kind": "weekly",
+        "days": {
+          "mon": [
+            [
+              "07:00",
+              "18:00"
+            ]
+          ],
+          "tue": [
+            [
+              "07:00",
+              "18:00"
+            ]
+          ],
+          "wed": [
+            [
+              "07:00",
+              "18:00"
+            ]
+          ],
+          "thu": [
+            [
+              "07:00",
+              "21:00"
+            ]
+          ],
+          "fri": [
+            [
+              "07:00",
+              "18:00"
+            ]
+          ],
+          "sat": [
+            [
+              "07:00",
+              "17:00"
+            ]
+          ],
+          "sun": [
+            [
+              "08:00",
+              "17:00"
+            ]
+          ]
+        },
+        "note": null
+      },
+      "hoursAsStated": "Mon to Wed 7am-6pm, Thu 7am-9pm, Fri 7am-6pm, Sat 7am-5pm, Sun 8am-5pm.",
+      "website": "https://bostaurusbutchery.com.au/",
+      "phone": "08 7130 0213",
+      "description": "A butcher shop in the Norwood Place shopping arcade on The Parade that also makes up meat trays and barbecue packs.",
+      "sources": [
+        "https://bostaurusbutchery.com.au/"
+      ],
+      "confidence": "high",
+      "caveats": "Web search results showed business-for-sale listings for this shop (not opened); confirm it is still trading under this name. Only beef is named in the text I could read."
+    },
+    {
+      "name": "Mathie's Meat Shoppe",
+      "type": "butcher",
+      "address": "275 Main North Road",
+      "locality": "Clare",
+      "state": "SA",
+      "postcode": "5453",
+      "products": [
+        "lamb",
+        "chicken"
+      ],
+      "otherProducts": "Sausages, bacon, ham, mettwurst and other smallgoods",
+      "tags": [],
+      "hours": {
+        "kind": "weekly",
+        "days": {
+          "mon": [
+            [
+              "07:30",
+              "17:30"
+            ]
+          ],
+          "tue": [
+            [
+              "07:30",
+              "17:30"
+            ]
+          ],
+          "wed": [
+            [
+              "07:30",
+              "17:30"
+            ]
+          ],
+          "thu": [
+            [
+              "07:30",
+              "17:30"
+            ]
+          ],
+          "fri": [
+            [
+              "07:30",
+              "17:30"
+            ]
+          ],
+          "sat": [
+            [
+              "08:00",
+              "12:30"
+            ]
+          ]
+        },
+        "note": null
+      },
+      "hoursAsStated": "Open Monday to Friday 7:30am - 5:30pm, Saturday 8:00am - 12:30pm.",
+      "website": "https://www.mathiesmeatshoppe.com.au/",
+      "phone": "08 8842 2818",
+      "description": "A butcher shop on the main road through Clare that sells fresh cuts alongside its own sausages and smallgoods.",
+      "sources": [
+        "https://www.mathiesmeatshoppe.com.au/"
+      ],
+      "confidence": "high",
+      "caveats": "Sunday not mentioned on the page; treated as closed. Beef and pork not named in the text I could read (lamb and chicken appear in the shop specials)."
+    },
+    {
+      "name": "Fox's Chook House",
+      "type": "butcher",
+      "address": "193 Commercial Street West",
+      "locality": "Mount Gambier",
+      "state": "SA",
+      "postcode": "5290",
+      "products": [
+        "lamb",
+        "chicken"
+      ],
+      "otherProducts": "Turkey and game meats such as venison, goat and kangaroo",
+      "tags": [],
+      "hours": {
+        "kind": "weekly",
+        "days": {
+          "mon": [
+            [
+              "07:00",
+              "17:30"
+            ]
+          ],
+          "tue": [
+            [
+              "07:00",
+              "17:30"
+            ]
+          ],
+          "wed": [
+            [
+              "07:00",
+              "17:30"
+            ]
+          ],
+          "thu": [
+            [
+              "07:00",
+              "17:30"
+            ]
+          ],
+          "fri": [
+            [
+              "07:00",
+              "17:30"
+            ]
+          ],
+          "sat": [
+            [
+              "08:00",
+              "13:00"
+            ]
+          ]
+        },
+        "note": "Closed most public holidays."
+      },
+      "hoursAsStated": "Mount Gambier: Monday - Friday 7am - 5:30pm, Saturday 8am - 1pm; closed most public holidays.",
+      "website": "https://foxschookhouse.com.au/",
+      "phone": "08 8773 8194",
+      "description": "A Mount Gambier meat shop run by a qualified butcher that specialises in chicken, turkey and game meats.",
+      "sources": [
+        "https://foxschookhouse.com.au/",
+        "https://southaustralia.com/products/limestone-coast/food-and-drink/foxs-chookhouse-and-game-meat"
+      ],
+      "confidence": "high",
+      "caveats": "Specialist chicken and game shop rather than a general butcher; reviewer to decide fit. It also sells online with delivery. A second shop operates at 10 George Street, Millicent (Mon-Fri 10am-5:30pm, Sat 9am-12:30pm per the same page). The SA tourism listing shows different hours for Millicent, so I used the business's own page."
+    },
+    {
+      "name": "McLoughlin Butchers",
+      "type": "butcher",
+      "address": "58 Westchester Road",
+      "locality": "Malaga",
+      "state": "WA",
+      "postcode": "6090",
+      "products": [
+        "beef",
+        "lamb",
+        "pork",
+        "chicken"
+      ],
+      "otherProducts": "Irish and European-style sausages, bacon, black pudding and smallgoods",
+      "tags": [],
+      "hours": {
+        "kind": "weekly",
+        "days": {
+          "mon": [
+            [
+              "09:00",
+              "17:00"
+            ]
+          ],
+          "tue": [
+            [
+              "09:00",
+              "17:00"
+            ]
+          ],
+          "wed": [
+            [
+              "09:00",
+              "17:00"
+            ]
+          ],
+          "thu": [
+            [
+              "09:00",
+              "17:00"
+            ]
+          ],
+          "fri": [
+            [
+              "09:00",
+              "17:00"
+            ]
+          ],
+          "sat": [
+            [
+              "08:00",
+              "15:00"
+            ]
+          ]
+        },
+        "note": "Closed public holidays."
+      },
+      "hoursAsStated": "Mon-Fri 9am-5pm, Sat 8am-3pm, Sun closed, public holidays closed.",
+      "website": "https://www.mcloughlinbutchers.com.au/",
+      "phone": "08 9249 8039",
+      "description": "A family-run butcher shop in Malaga known for Irish and European-style smallgoods made on site.",
+      "sources": [
+        "https://www.mcloughlinbutchers.com.au/",
+        "https://www.mcloughlinbutchers.com.au/contact-us/",
+        "https://www.swan.wa.gov.au/business-support/business-directory/mcloughlin-butchers"
+      ],
+      "confidence": "high",
+      "caveats": "Malaga is a light-industrial area and the business also does wholesale and online orders; the site has a retail section and City of Swan directory lists it, so walk-in retail appears to be offered."
+    },
+    {
+      "name": "Fussy Meats Applecross",
+      "type": "butcher",
+      "address": "777 Canning Highway",
+      "locality": "Applecross",
+      "state": "WA",
+      "postcode": "6153",
+      "products": [
+        "beef",
+        "lamb",
+        "chicken"
+      ],
+      "otherProducts": "Pies, sausage rolls and cooked foods",
+      "tags": [],
+      "hours": {
+        "kind": "weekly",
+        "days": {
+          "mon": [
+            [
+              "07:00",
+              "19:00"
+            ]
+          ],
+          "tue": [
+            [
+              "07:00",
+              "19:00"
+            ]
+          ],
+          "wed": [
+            [
+              "07:00",
+              "19:00"
+            ]
+          ],
+          "thu": [
+            [
+              "07:00",
+              "19:00"
+            ]
+          ],
+          "fri": [
+            [
+              "07:00",
+              "19:00"
+            ]
+          ],
+          "sat": [
+            [
+              "07:00",
+              "18:30"
+            ]
+          ],
+          "sun": [
+            [
+              "07:00",
+              "18:30"
+            ]
+          ]
+        },
+        "note": null
+      },
+      "hoursAsStated": "Applecross: Mon-Fri 7am-7pm, Sat-Sun 7am-6:30pm.",
+      "website": "https://fussymeats.com.au/",
+      "phone": "08 9417 3878",
+      "description": "A butcher shop on Canning Highway in Applecross that also sells its own pies and sausage rolls.",
+      "sources": [
+        "https://fussymeats.com.au/"
+      ],
+      "confidence": "high",
+      "caveats": "The business has a second butcher shop at 86 Hammond Rd, Cockburn Central, and a pie shop in Yangebup (three outlets, under the chain limit). Poultry is described generally; chicken is named."
+    },
+    {
+      "name": "Barbaro Bros Butchers",
+      "type": "butcher",
+      "address": "Shop 2, 120 Cockman Road",
+      "locality": "Greenwood",
+      "state": "WA",
+      "postcode": "6024",
+      "products": [
+        "beef",
+        "lamb",
+        "pork",
+        "chicken"
+      ],
+      "otherProducts": "Sausages, smallgoods, pies, duck and rabbit",
+      "tags": [],
+      "hours": {
+        "kind": "weekly",
+        "days": {
+          "mon": [
+            [
+              "07:00",
+              "17:00"
+            ]
+          ],
+          "tue": [
+            [
+              "07:00",
+              "17:00"
+            ]
+          ],
+          "wed": [
+            [
+              "07:00",
+              "17:00"
+            ]
+          ],
+          "thu": [
+            [
+              "07:00",
+              "17:00"
+            ]
+          ],
+          "fri": [
+            [
+              "07:00",
+              "17:00"
+            ]
+          ],
+          "sat": [
+            [
+              "07:00",
+              "13:00"
+            ]
+          ]
+        },
+        "note": null
+      },
+      "hoursAsStated": "Monday to Friday 7:00am to 5:00pm, Saturday 7:00am to 1:00pm, Sunday closed.",
+      "website": "https://barbarobutchers.com/",
+      "phone": "(08) 9247 4244",
+      "description": "A family butcher shop in Greenwood in Perth's northern suburbs that also offers catering.",
+      "sources": [
+        "https://barbarobutchers.com/"
+      ],
+      "confidence": "high",
+      "caveats": null
+    },
+    {
+      "name": "Silvestro Butchers",
+      "type": "butcher",
+      "address": "Shop 7, 227 Main Street",
+      "locality": "Osborne Park",
+      "state": "WA",
+      "postcode": "6017",
+      "products": [
+        "beef",
+        "lamb",
+        "pork",
+        "chicken"
+      ],
+      "otherProducts": "Sausages, marinated meats and goat",
+      "tags": [],
+      "hours": {
+        "kind": "weekly",
+        "days": {
+          "mon": [
+            [
+              "08:00",
+              "17:00"
+            ]
+          ],
+          "tue": [
+            [
+              "08:00",
+              "17:00"
+            ]
+          ],
+          "wed": [
+            [
+              "08:00",
+              "17:00"
+            ]
+          ],
+          "thu": [
+            [
+              "08:00",
+              "17:00"
+            ]
+          ],
+          "fri": [
+            [
+              "08:00",
+              "17:00"
+            ]
+          ],
+          "sat": [
+            [
+              "07:00",
+              "14:00"
+            ]
+          ]
+        },
+        "note": null
+      },
+      "hoursAsStated": "Monday to Friday 8am to 5pm, Saturday 7am to 2pm, closed Sunday.",
+      "website": "https://silvestrobutchers.com.au/",
+      "phone": "(08) 6478 0894",
+      "description": "A family-operated butcher shop in the Crystal Shopping Plaza on Main Street, Osborne Park, open since 2019.",
+      "sources": [
+        "https://silvestrobutchers.com.au/"
+      ],
+      "confidence": "high",
+      "caveats": "Also supplies cafes and restaurants wholesale."
+    },
+    {
+      "name": "Spry's Meat Market",
+      "type": "butcher",
+      "address": "144 Atkinson Street North",
+      "locality": "Collie",
+      "state": "WA",
+      "postcode": "6225",
+      "products": [
+        "beef",
+        "lamb",
+        "chicken"
+      ],
+      "otherProducts": "Sausages, burgers, rissoles and meat packs",
+      "tags": [],
+      "hours": {
+        "kind": "weekly",
+        "days": {
+          "mon": [
+            [
+              "07:00",
+              "17:30"
+            ]
+          ],
+          "tue": [
+            [
+              "07:00",
+              "17:30"
+            ]
+          ],
+          "wed": [
+            [
+              "07:00",
+              "17:30"
+            ]
+          ],
+          "thu": [
+            [
+              "07:00",
+              "17:30"
+            ]
+          ],
+          "fri": [
+            [
+              "07:00",
+              "17:30"
+            ]
+          ],
+          "sat": [
+            [
+              "07:00",
+              "12:30"
+            ]
+          ]
+        },
+        "note": null
+      },
+      "hoursAsStated": "Mon - Fri 7:00am - 5:30pm, Saturday 7:00am - 12:30pm, Sunday closed.",
+      "website": "https://www.sprysmeatmarket.com.au/",
+      "phone": "(08) 9734 1277",
+      "description": "A butcher shop in the town of Collie, inland from Bunbury, that sells fresh cuts and ready-made meat packs.",
+      "sources": [
+        "https://www.sprysmeatmarket.com.au/"
+      ],
+      "confidence": "high",
+      "caveats": "Meats named via product and pack listings (rump steak, beef roast, lamb cutlets, chicken). Site footer copyright reads 2023; hours not dated."
+    },
+    {
+      "name": "Ryan's Quality Meats Bunbury Outlet",
+      "type": "butcher",
+      "address": "17 Palmer Crescent",
+      "locality": "Davenport",
+      "state": "WA",
+      "postcode": "6230",
+      "products": [
+        "beef",
+        "lamb",
+        "pork",
+        "chicken"
+      ],
+      "otherProducts": null,
+      "tags": [],
+      "hours": {
+        "kind": "weekly",
+        "days": {
+          "mon": [
+            [
+              "08:00",
+              "17:00"
+            ]
+          ],
+          "tue": [
+            [
+              "08:00",
+              "17:00"
+            ]
+          ],
+          "wed": [
+            [
+              "08:00",
+              "17:00"
+            ]
+          ],
+          "thu": [
+            [
+              "08:00",
+              "17:00"
+            ]
+          ],
+          "fri": [
+            [
+              "08:00",
+              "17:00"
+            ]
+          ],
+          "sat": [
+            [
+              "08:00",
+              "13:00"
+            ]
+          ]
+        },
+        "note": null
+      },
+      "hoursAsStated": "Bunbury Outlet: Sunday closed, Monday - Friday 8am to 5pm, Saturday 8am to 1pm.",
+      "website": "https://ryansqualitymeats.com.au/",
+      "phone": "(08) 9725 7246",
+      "description": "The Bunbury-area outlet of a WA family meat business, located in the Davenport light-industrial area.",
+      "sources": [
+        "https://ryansqualitymeats.com.au/",
+        "https://ryansqualitymeats.com.au/our-stores/"
+      ],
+      "confidence": "medium",
+      "caveats": "The business is a large food-service and wholesale supplier with two outlets (Jandakot and Bunbury). Confirm the Davenport outlet operates as a walk-in retail butcher before listing."
+    }
+  ],
+  "unverified": [
+    {
+      "name": "Barossa SmokeHouse Butchers",
+      "locality": "Angaston",
+      "state": "SA",
+      "why": "Barossa Visitor Centre factsheet (July 2025) gives 42 Murray Street and hours (Mon-Fri 6:30am-5:30pm, Sat 6:30am-12pm) but names no meat species; no own website found.",
+      "leadUrl": "https://www.barossa.com/wp-content/uploads/2025/07/Barossa-Visitor-Centre-Food-Farm-Gate-Experiences-Factsheet.pdf"
+    },
+    {
+      "name": "Mount Pleasant Butchers",
+      "locality": "Mount Pleasant",
+      "state": "SA",
+      "why": "Same Barossa factsheet gives 98 Melrose Street and hours (Mon-Fri 7am-5:30pm, Sat 7am-11:30am) but names no meat species; no own website found; barossa.com listing pages returned 403.",
+      "leadUrl": "https://www.barossa.com/wp-content/uploads/2025/07/Barossa-Visitor-Centre-Food-Farm-Gate-Experiences-Factsheet.pdf"
+    },
+    {
+      "name": "Collins Court Butcher",
+      "locality": "Mount Gambier",
+      "state": "SA",
+      "why": "Own site gives 174 Jubilee Hwy and names beef, lamb, pork and chicken, but shows no opening hours.",
+      "leadUrl": "https://collinscourtbutcher.com.au/"
+    },
+    {
+      "name": "Southern Cross Meats",
+      "locality": "Warradale",
+      "state": "SA",
+      "why": "City of Marion business page gives 111 Diagonal Road and names beef, lamb and pork, but its opening-hours field is empty and no website link is given.",
+      "leadUrl": "https://www.marion.sa.gov.au/things-to-do/southern-cross-meats"
+    },
+    {
+      "name": "Lincoln South Butchers",
+      "locality": "Port Lincoln",
+      "state": "SA",
+      "why": "Own website loads but contains no address, hours or products; only an aggregator gives 2 Shepherd Ave and hours.",
+      "leadUrl": "https://lincolnsouthbutchers.com.au/"
+    },
+    {
+      "name": "Ellis Butchers",
+      "locality": "McLaren Vale",
+      "state": "SA",
+      "why": "Only third-party pages (Shop 18, Central Shopping Centre); guessed own domain did not resolve.",
+      "leadUrl": "https://www.koiknives.com/blogs/butchery-smallgoods-stores/ellis-butchers"
+    },
+    {
+      "name": "Goolwa Central Meats",
+      "locality": "Goolwa",
+      "state": "SA",
+      "why": "Visit Alexandrina tourism page returned 404 / empty content; search snippet only says 'open 7 days' at 7/33 Hutchinson St.",
+      "leadUrl": "https://www.visitalexandrina.com/hotels-taverns/goolwa/goolwa-central-meats"
+    },
+    {
+      "name": "Pinkertons Butchery",
+      "locality": "Kingston SE",
+      "state": "SA",
+      "why": "Kingston District Council business page blocked by a bot check; not opened.",
+      "leadUrl": "https://www.kingstondc.sa.gov.au/our-community/community-information/buinesses/food-and-dining/pinkertons-butchery"
+    },
+    {
+      "name": "Max Noske & Son",
+      "locality": "Hahndorf",
+      "state": "SA",
+      "why": "Only a community wiki page (78c Main Street); news reports the deaths of the owners, so current trading status is unknown.",
+      "leadUrl": "https://localwiki.org/adelaide-hills/Max_Noske_and_Son,_Butchers_-_Hahndorf"
+    },
+    {
+      "name": "Linke's Central Meat Store",
+      "locality": "Nuriootpa",
+      "state": "SA",
+      "why": "Search results report the shop closed after 95 years; do not list.",
+      "leadUrl": "https://www.barossaleader.com/its-very-sad-linkes-central-meat-store-closes-after-95-years/"
+    },
+    {
+      "name": "Kev's Country Meats",
+      "locality": "Harvey",
+      "state": "WA",
+      "why": "Harvey Region (Shire of Harvey) tourism page gives 84 Uduc Road and hours (Tue 8-12, Wed 8-4, Thu-Fri 8-5, Sat 8-12) but names no meat species; no own website found.",
+      "leadUrl": "https://harveyregion.com.au/?p=14714"
+    },
+    {
+      "name": "Mick Davey Butchers",
+      "locality": "Geraldton",
+      "state": "WA",
+      "why": "Own site gives 165 Marine Terrace and names beef, lamb, pork and chicken, but no opening hours found on its pages.",
+      "leadUrl": "https://www.mickdaveybutchers.com.au/"
+    },
+    {
+      "name": "Gearing Butchers",
+      "locality": "Geraldton",
+      "state": "WA",
+      "why": "Own site is script-rendered; could not read address or hours.",
+      "leadUrl": "https://www.gearingbutchers.com.au/"
+    },
+    {
+      "name": "Swan Valley Meats (Click n Pay)",
+      "locality": "Herne Hill",
+      "state": "WA",
+      "why": "Own site gives 624 Great Northern Hwy and names beef, lamb, chicken (halal) but shows no opening hours; seems new and partly delivery-focused.",
+      "leadUrl": "https://clicknpay.com.au/contact.html"
+    },
+    {
+      "name": "Reeves & Co Quality Butcher",
+      "locality": "Albany",
+      "state": "WA",
+      "why": "Named in Business News; no website or official page found.",
+      "leadUrl": "https://www.businessnews.com.au/article/Reeves-reaps-regional-benefits"
+    },
+    {
+      "name": "Rumps & T-Bones",
+      "locality": "Mandurah",
+      "state": "WA",
+      "why": "Own domain returned a server error; only a radio-station directory listing.",
+      "leadUrl": "https://www.917thewave.com.au/directory/business/rumps-and-t-bones"
+    },
+    {
+      "name": "The Goose and Goat Butcher",
+      "locality": "Bunbury",
+      "state": "WA",
+      "why": "Only a 2025 news article (Busselton market stall); no official page with a street address and hours.",
+      "leadUrl": "https://busseltonmail.com.au/south-west-butcher-expands-to-busselton-market/"
+    },
+    {
+      "name": "Gingin Premium Meats",
+      "locality": "Gingin",
+      "state": "WA",
+      "why": "Own domain did not resolve; news says the business was put up for sale.",
+      "leadUrl": "https://countryman.com.au/countryman/gingins-fewster-family-loving-running-butcher-shop-and-supplying-home-grown-meat-to-local-families-ng-b882062854z"
+    }
+  ]
+}

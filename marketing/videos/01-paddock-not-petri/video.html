@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<title>Farm Direct video 01: Paddock, Not Petri Dish</title>
+<!-- Video 01 "Paddock, Not Petri Dish" (13.2 s). Render:
+     node marketing/videos/render.mjs 01-paddock-not-petri
+     Preview: video.html?cta=soon&guides=1&t=0.6 -->
+<link rel="stylesheet" href="../shared/engine.css">
+<style>
+  .hook-art { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; overflow: visible; }
+  /* flip counter: each digit flips once (old folds shut, new opens) inside a hard mask,
+     so only whole digits of 106 and 41 ever show */
+  .flip { display: inline-flex; vertical-align: baseline; font-variant-numeric: tabular-nums; font-feature-settings: "tnum" 1; }
+  .flip-col { display: inline-block; position: relative; overflow: hidden; height: 1.1em; vertical-align: top; }
+  .flip-col > span { position: absolute; left: 0; right: 0; height: 1.1em; line-height: 1.1em; text-align: center; }
+  .hook-art .ln { fill: none; stroke: #F7F5EF; stroke-width: 6; stroke-linecap: round; stroke-linejoin: round; }
+</style>
+</head>
+<body>
+<div class="fd-stage"></div>
+<script src="../shared/engine.js"></script>
+<script src="../shared/preview.js"></script>
+<script>
+FD.video({
+  duration: 13.2,
+  ground: FD.C.forest,
+  setup(FD) {
+    const { C, UI } = FD;
+    const NOPOP = { from: 1, peak: 1, frames: 1, fade: 0 };
+    // centre of a line box from its baseline (Inter Display, line-height 1.0)
+    const cy = (baseline, size) => Math.round(baseline - 0.364 * size);
+
+    // ---------------------------------------------------------------- 0.00-1.50 HOOK
+    // Type only on forest. Everything here lives in `hook` so the whip moves it as one.
+    const hook = FD.layer();
+
+    // 'From a' + 'PADDOCK,' slam in together as one group (1.18 -> 0.97 -> 1.0, 9 frames).
+    // Started one frame early so frame 0 (the Reel cover) is fully legible.
+    const slamGroup = FD.layer(null, { parent: hook });
+    slamGroup.style.transformOrigin = '505px 690px';
+    FD.typeLine('From a', 0, { y: cy(632, 104), size: 104, parent: slamGroup, pop: NOPOP });
+    FD.typeLine([{ text: 'PADDOCK,', accent: true }], 0, { y: cy(780, 150), size: 150, parent: slamGroup, pop: NOPOP });
+    FD.slam(slamGroup, -FD.f(1));
+
+    // 'not a petri dish.' rises 40 px and fades in over 8 frames at 0.55.
+    const petri = FD.typeLine('not a petri dish.', 0.55, { y: cy(960, 88), size: 88, parent: hook, pop: NOPOP });
+    FD.riseIn(petri.el, 0.55, { dy: 40, frames: 8 });
+
+    // Original line drawing: a low hill behind a fence (four posts, two rails), drawn left to right.
+    const art = FD.layer(
+      '<svg class="hook-art" viewBox="0 0 1080 1920" xmlns="http://www.w3.org/2000/svg">' +
+        '<path class="ln" id="hill" d="M80 1236 C 200 1176, 300 1138, 400 1138 C 520 1138, 600 1200, 700 1214 C 790 1226, 860 1210, 930 1196"/>' +
+        '<path class="ln rail" d="M120 1232 L 860 1232"/>' +
+        '<path class="ln rail" d="M120 1274 L 860 1274"/>' +
+        '<path class="ln post" d="M140 1206 L 140 1300"/>' +
+        '<path class="ln post" d="M380 1206 L 380 1300"/>' +
+        '<path class="ln post" d="M620 1206 L 620 1300"/>' +
+        '<path class="ln post" d="M840 1206 L 840 1300"/>' +
+        '<circle id="sun" cx="800" cy="1148" r="28" fill="#E9B44C"/>' +
+      '</svg>', { parent: hook });
+    const svg = art.querySelector('svg');
+    FD.draw(svg.querySelector('#hill'), 0.10, 0.60, 'inOutSine');
+    svg.querySelectorAll('.rail').forEach((r) => FD.draw(r, 0.16, 0.63, 'inOutSine'));
+    svg.querySelectorAll('.post').forEach((p) => {
+      const x = parseFloat(p.getAttribute('d').slice(1));
+      const t0 = 0.12 + (x - 80) / 850 * 0.40;
+      FD.draw(p, t0, t0 + FD.f(3), 'outCubic');
+    });
+    // the video's only warm mark: a small wattle-gold sun pops in above the hill at 0.95
+    const sun = svg.querySelector('#sun');
+    sun.style.transformBox = 'fill-box'; sun.style.transformOrigin = '50% 50%';
+    FD.onFrame((t) => {
+      const c = FD.popCurve(t, 0.95, { from: 0.4, peak: 1.12, frames: 9, fade: 2 });
+      sun.style.opacity = c.opacity.toFixed(3);
+      sun.style.transform = 'scale(' + c.scale.toFixed(4) + ')';
+    });
+
+    // ---------------------------------------------------------------- 1.50 WHIP INTO THE APP
+    FD.whip(1.50, hook, null, { ground: C.grey });
+    const phone = FD.phone()
+      .screen('all', '01-explore.png', 'list')
+      .screen('meat', '02-explore-meat.png', 'list')
+      .enter(1.50, { tilt: [4, 1.5] })
+      .zoom(1.90, 3.00, 1.00, 1.03);           // slow 3% push-in, holds at 1.03
+
+    // Pinned chrome, as on the device: the status bar and the floating tab bar stay put
+    // while only the list between them scrolls. Both are cut from 02-explore-meat.png's
+    // own pixels (01 has the same chrome) and sit above the screens (z 5).
+    const K = 0.518, SHOT = 'url("' + FD.SCREENS + '02-explore-meat.png")';
+    const bar = document.createElement('div');
+    Object.assign(bar.style, {
+      position: 'absolute', left: '0', top: '0', width: '684px', height: Math.round(200 * K) + 'px',
+      backgroundImage: SHOT, backgroundSize: '684px auto',
+      backgroundPosition: '0 0', backgroundRepeat: 'no-repeat', zIndex: 5,
+    });
+    // paint the island over with the status-bar grey: keeps the phone a plain generic outline
+    const islandCover = document.createElement('div');
+    Object.assign(islandCover.style, { position: 'absolute', left: '238px', top: '17px', width: '208px', height: '67px',
+      borderRadius: '34px', background: '#F2F2F7' });
+    // iOS-style scroll-edge fade under the status bar, so nothing is sliced by a hard edge
+    const barFade = document.createElement('div');
+    Object.assign(barFade.style, { position: 'absolute', left: '0', top: '100%', width: '100%', height: '28px',
+      background: 'linear-gradient(to bottom, #F2F2F7, rgba(242,242,247,0))' });
+    bar.append(islandCover, barFade);
+    phone.win.insertBefore(bar, phone.overlay);
+
+    // Tab bar: pinned at its real place (source rows 2616-2808), over a grey scroll-edge
+    // fade that starts at source row 2440 and is solid from 2570 to the bottom of the window.
+    const TAB_TOP = 2440;
+    const tabStrip = document.createElement('div');
+    Object.assign(tabStrip.style, {
+      position: 'absolute', left: '0', top: Math.round(TAB_TOP * K) + 'px', width: '684px', bottom: '0', zIndex: 5,
+      background: 'linear-gradient(to bottom, rgba(242,242,247,0) 0px, #F2F2F7 ' + Math.round((2570 - TAB_TOP) * K) + 'px, #F2F2F7 100%)',
+    });
+    const capsule = document.createElement('div');
+    const cx0 = 64, cy0 = 2622, cw = 1192, ch = 182;
+    Object.assign(capsule.style, {
+      position: 'absolute', left: (cx0 * K) + 'px', top: ((cy0 - TAB_TOP) * K) + 'px', width: (cw * K) + 'px', height: (ch * K) + 'px',
+      borderRadius: (ch * K / 2) + 'px', backgroundImage: SHOT, backgroundSize: '684px auto', backgroundRepeat: 'no-repeat',
+      backgroundPosition: (-cx0 * K) + 'px ' + (-cy0 * K) + 'px', boxShadow: '0 4px 14px rgba(0,0,0,0.08), 0 0 0 0.5px rgba(0,0,0,0.04)',
+    });
+    tabStrip.appendChild(capsule);
+    phone.win.insertBefore(tabStrip, phone.overlay);
+
+    // The screenshot's real content ends where the next card runs under the tab bar
+    // (source row ~2546, already dimmed by iOS's own edge effect, then ghosted). Cover that
+    // card with a plain white card top so a scrolled list never reveals ghost text.
+    const patch = document.createElement('div');
+    Object.assign(patch.style, { position: 'absolute', left: '48px', top: '2546px', width: '1224px', height: '322px', background: '#FFFFFF', borderRadius: '44px 44px 0 0' });
+    phone.screens.meat.src.appendChild(patch);
+
+    // Flip counter for the caption band: all digits flip together, so a paused frame shows 106 or 41 (squashed), never a mix.
+    function flipCounter(from, to, at) {
+      const n = Math.max(from.length, to.length);
+      const F = from.padStart(n, ' '), T = to.padStart(n, ' ');
+      const el = document.createElement('span'); el.className = 'flip';
+      const cols = [];
+      for (let i = 0; i < n; i++) {
+        const col = document.createElement('span'); col.className = 'flip-col';
+        const a = document.createElement('span'), b = document.createElement('span');
+        a.style.top = b.style.top = '0';
+        a.textContent = F[i] === ' ' ? '' : F[i]; b.textContent = T[i] === ' ' ? '' : T[i];
+        col.append(a, b); el.appendChild(col);
+        cols.push({ col, a, b, wa: F[i] === ' ' ? 0 : 1, wb: T[i] === ' ' ? 0 : 1, t0: at, same: F[i] === T[i] });
+      }
+      let dw = null;
+      FD.onFrame((t) => {
+        if (dw == null) {
+          const probe = document.createElement('span'); probe.textContent = '0'; el.appendChild(probe);
+          dw = probe.offsetWidth / (parseFloat(getComputedStyle(probe).fontSize) || 100); el.removeChild(probe);
+        }
+        cols.forEach((c) => {
+          const q = c.same ? 0 : FD.ease.inOutCubic(Math.min(1, Math.max(0, (t - c.t0) / 0.20)));
+          // card flip about the horizontal axis: the old digit folds shut, then the new one
+          // opens. Every frame shows one whole (squashed) digit, never two half glyphs.
+          c.a.style.transform = 'scaleY(' + Math.max(0, 1 - 2 * q).toFixed(4) + ')';
+          c.b.style.transform = 'scaleY(' + Math.max(0, 2 * q - 1).toFixed(4) + ')';
+          c.a.style.visibility = q < 0.5 ? '' : 'hidden';
+          c.b.style.visibility = q >= 0.5 ? '' : 'hidden';
+          c.col.style.width = ((c.wa + (c.wb - c.wa) * q) * dw).toFixed(4) + 'em';
+        });
+      });
+      return el;
+    }
+
+    // ---------------------------------------------------------------- 1.90 THE FULL LIST
+    FD.caption('*106* places', 1.90, 2.50);
+    FD.caption('across *Australia*', 2.50, 3.00 - FD.f(2), { size: 84, stagger: 0.05 });
+
+    // ---------------------------------------------------------------- 3.00 TAP FILTERS
+    // caption lands 2 frames before the press (while the dot is already showing) with no
+    // stagger, so 'Filters.' is full green on the tap frame
+    phone.tap(3.00, { at: UI.filtersTap, dim: UI.filtersBox });
+    FD.caption('Tap *Filters.*', 3.00 - FD.f(2), 3.50, { stagger: 0 });
+
+    // ---------------------------------------------------------------- 3.50 PICK MEAT, THE DROP
+    phone.cut(3.50, 'meat', { flash: 2 }).bump(3.50);
+    FD.caption(['Pick', { pill: 'Meat', size: 72 }], 3.50, 4.25, { stagger: 0 });
+    FD.caption([{ node: flipCounter('106', '41', 4.25), accent: true },
+                { text: 'places', size: 96 }], 4.25, 5.20, { size: 120, stagger: 0 });
+    phone.outline('meat', 4.75, { box: UI.placesLine, mode: 'pulse', hold: 0.6 });
+    FD.caption('list *meat.*', 5.20, 5.80);
+
+    // ---------------------------------------------------------------- 5.80 THE LIST, HONESTLY
+    // 170 source rows (88 px): stops where the screenshot's real content runs out above the
+    // pinned tab bar; Integrity Meats comes fully clear of the fade, two whole cards always visible
+    phone.pan('meat', 5.80, 8.20, { y: [0, 170] });
+    FD.caption([{ text: 'Beef,', accent: true, at: 5.80, accentAt: 5.87 },
+                { text: 'lamb,', accent: true, at: 6.00, accentAt: 6.07 }], 5.80, 6.60);
+    FD.caption([{ text: 'pork,', accent: true, at: 6.60, accentAt: 6.67 },
+                { text: 'chicken.', accent: true, at: 6.80, accentAt: 6.87 }], 6.60, 7.60);
+    phone.outline('meat', 7.60, { box: UI.noteBox, mode: 'draw', dur: 0.4, t1: 8.60 });
+    FD.caption('Check *first.*', 7.60, 8.60);
+
+    // ---------------------------------------------------------------- 8.60 EXIT
+    phone.exit(8.60);
+    FD.wipe(8.60, C.forest);
+
+    // ---------------------------------------------------------------- 9.00 THE ASK
+    // lands as the wipe completes (8.95), so the cut hits type, not a blank card
+    const a = FD.typeLine('Ask the *farmer*', 8.95, { y: 800, size: 112 });
+    const b = FD.typeLine([{ text: 'the rest.', accent: true }], 9.45, { y: 930, size: 112 });
+
+    // ---------------------------------------------------------------- 11.10 END CARD
+    // ask sits 90 px lower than the default (650/770) so it and the icon read as one lockup
+    FD.endCard(11.10, { lines: [a, b], lineYs: [650, 770] });
+  },
+});
+</script>
+</body>
+</html>
