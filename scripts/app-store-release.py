@@ -30,6 +30,11 @@ def api(method, path, *, params=None, body=None, optional=False):
         return None
     if not response.ok:
         errors = response.json().get("errors", [])
+        if path == "/v1/reviewSubmissionItems" or path.startswith("/v1/reviewSubmissions/"):
+            for error in errors:
+                for group in error.get("meta", {}).get("associatedErrors", {}).values():
+                    for item in group:
+                        print("Apple review requirement:", item.get("code"), item.get("detail"), flush=True)
         raise RuntimeError(f"{method} {path}: " + "; ".join(
             f"{e.get('code')}: {e.get('detail', '')}" for e in errors))
     return response.json().get("data") if response.content else None
