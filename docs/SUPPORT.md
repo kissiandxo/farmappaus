@@ -1,5 +1,7 @@
 # Farm Direct support
 
+Email [support@visera.vision](mailto:support@visera.vision) for help with Farm Direct. Farm Direct is operated by Phoenix Jennings.
+
 **Need to correct a listing?** Open the place in Farm Direct and tap **Report a problem**. Include the place name, suburb and what has changed. A link to the business’s published hours or address helps us verify the correction.
 
 **Looking in the wrong area?** Tap the location at the top of Explore and enter an Australian suburb or postcode. You can use this search with location permission turned off.

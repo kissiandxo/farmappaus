@@ -36,8 +36,8 @@ jobs:
       WITH_BACKEND: ${{ inputs.with_backend }}
       EXPO_PUBLIC_SUPABASE_URL: ${{ secrets.EXPO_PUBLIC_SUPABASE_URL }}
       EXPO_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.EXPO_PUBLIC_SUPABASE_ANON_KEY }}
-      EXPO_PUBLIC_SUPPORT_EMAIL: ${{ vars.SUPPORT_EMAIL }}
-      EXPO_PUBLIC_OPERATOR_NAME: ${{ vars.OPERATOR_NAME }}
+      EXPO_PUBLIC_SUPPORT_EMAIL: ${{ vars.SUPPORT_EMAIL || 'support@visera.vision' }}
+      EXPO_PUBLIC_OPERATOR_NAME: ${{ vars.OPERATOR_NAME || 'Phoenix Jennings' }}
     steps:
       - uses: actions/checkout@v4
       - name: Check the Apple key secret is set

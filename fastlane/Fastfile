@@ -2,9 +2,6 @@
 # Used by .github/workflows/testflight.yml. No Mac or Expo account needed.
 default_platform(:ios)
 
-# Distribution certificates created by earlier CI runs whose private keys are lost.
-STALE_CI_CERTIFICATES = ["U8T7B7HT2F"].freeze
-
 def revoke_certificates(ids)
   return if ids.empty?
   Spaceship::ConnectAPI::Certificate.all.select { |c| ids.include?(c.id) }.each do |cert|
@@ -33,7 +30,6 @@ platform :ios do
     # reuse one (its private key is gone with the old machine). So: clear out certificates left
     # behind by earlier CI runs, make a new one for this run, and revoke it again when the run ends.
     # Builds already uploaded keep working: Apple re-signs TestFlight and App Store builds.
-    revoke_certificates(STALE_CI_CERTIFICATES)
 
     created_cert = nil
     begin
